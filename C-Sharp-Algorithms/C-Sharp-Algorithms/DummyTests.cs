@@ -39,6 +39,10 @@ namespace C_Sharp_Algorithms
 
             Console.WriteLine("Removed 4th & 5th: " + listOfNumbers.ToReadable());
 
+            listOfNumbers.Remove(sixth);
+
+            Console.WriteLine("Removed 6th: " + listOfNumbers.ToReadable());
+
             listOfNumbers.Remove(seventh);
 
             Console.WriteLine("Removed 7th: " + listOfNumbers.ToReadable());
