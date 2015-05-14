@@ -7,22 +7,32 @@ namespace DataStructures
     /// <summary>
     /// Doubly-Linked List Data Structure.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">Type</typeparam>
     public class DLList<T>
     {
-        private DLListNode<T> firstNode = null;
-        private DLListNode<T> lastNode = null;
-        private int count = 0;
+		private int count { get; set; }
+		private DLListNode<T> firstNode { get; set; }
+		private DLListNode<T> lastNode { get; set; }
 
         /// <summary>
         /// The Doubly-Linked List Node class.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Type</typeparam>
         public class DLListNode<T>
         {
-            public DLListNode<T> Next = null;
-            public DLListNode<T> Previous = null;
-            public T Data = default(T);
+			public T Data { get; set; }
+			public DLListNode<T> Next { get; set; }
+			public DLListNode<T> Previous { get; set; }
+
+			public DLListNode() {
+				Data = default(T);
+				Next = Previous = null;
+			}
+
+			public DLListNode(T dataItem) {
+				Data = dataItem;
+				Next = Previous = null;
+			}
         }
 
         /// <summary>
@@ -30,125 +40,176 @@ namespace DataStructures
         /// </summary>
         public int Count
         {
-            get
-            {
+            get {
                 return count;
             }
         }
 
+		/// <summary>
+		/// Determines whether this List is empty.
+		/// </summary>
+		/// <returns><c>true</c> if this list is empty; otherwise, <c>false</c>.</returns>
+		public bool IsEmpty()
+		{
+			return (count == 0);
+		}
+
         /// <summary>
         /// Getter function that returns the first element
         /// </summary>
-        public DLListNode<T> First
+        public T First
         {
-            get
-            {
-                return firstNode;
+            get {
+				if (firstNode == null) {
+					throw new Exception ("Empty list.");
+				} else {
+					return firstNode.Data;
+				}
             }
         }
 
         /// <summary>
         /// Getter function that returns the last element
         /// </summary>
-        public DLListNode<T> Last
+        public T Last
         {
-            get
-            {
-                if (firstNode != null && lastNode == null)
-                {
+            get {
+                if (firstNode != null && lastNode == null) {
                     var currentNode = firstNode;
-                    while (currentNode.Next != null)
-                    {
+                    while (currentNode.Next != null) {
                         currentNode = currentNode.Next;
                     }
                     lastNode = currentNode;
-                    return currentNode;
-                }
-                else
-                {
-                    return lastNode;
+					return currentNode.Data;
+                } else {
+					throw new Exception ("Empty list.");
                 }
             }
         }
 
-        /// <summary>
-        /// Inserts a data value into the list.
-        /// </summary>
-        /// <param name="dataItem">The data value to be inserted to the list</param>
-        /// <returns>A Singly-Lined List Node object.</returns>
-        public DLListNode<T> Append(T dataItem)
-        {
-            DLListNode<T> newNode = new DLListNode<T>() { Data = dataItem };
+		/// <summary>
+		/// Prepend the specified dataItem at the beginning of the list.
+		/// </summary>
+		/// <param name="dataItem">Data item.</param>
+		public void Prepend(T dataItem)
+		{
+			DLListNode<T> newNode = new DLListNode<T> (dataItem);
 
-            if (firstNode == null)
-            {
-                firstNode = newNode;
-                lastNode = newNode;
-            }
-            else
-            {
+			if (firstNode == null) {
+				firstNode = lastNode = newNode;
+			} else {
+				var currentNode = firstNode;
+				newNode.Next = currentNode;
+				currentNode.Previous = newNode;
+				firstNode = newNode;
+			}
+
+			// Increment the count.
+			++count;
+		}
+
+        /// <summary>
+        /// Append the specified dataItem at the end of the list.
+        /// </summary>
+        /// <param name="dataItem">Data item.</param>
+        public void Append(T dataItem)
+        {
+			DLListNode<T> newNode = new DLListNode<T>(dataItem);
+
+            if (firstNode == null) {
+                firstNode = lastNode = newNode;
+            } else {
                 var currentNode = lastNode;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
                 lastNode = newNode;
             }
 
-            count++;
-
-            return newNode;
+			// Increment the count.
+			++count;
         }
+
+		/// <summary>
+		/// Inserts the dataItem at the specified index.
+		/// </summary>
+		/// <param name="dataItem">Data item.</param>
+		/// <param name="index">Index.</param>
+		public void InsertAt(T dataItem, int index) {
+			if (index == 0) {
+				Prepend (dataItem);
+			} else if (index == count) {
+				Append (dataItem);
+			} else if (index > 0 && index < count) {
+				var currentNode = firstNode;
+				DLListNode<T> newNode = new DLListNode<T> (dataItem);
+
+				for(int i = 1; i < index; ++i) {
+					currentNode = currentNode.Next;
+				}
+
+				newNode.Next = currentNode.Next;
+				currentNode.Next = newNode;
+				newNode.Previous = currentNode;
+
+				// Increment the count
+				++count;
+			} else {
+				throw new IndexOutOfRangeException();
+			}
+		}
 
         /// <summary>
-        /// Removes a given list-node from the list.
+        /// Removes the item at the specified index.
         /// </summary>
-        /// <param name="listNode">The list node to be removed.</param>
-        /// <returns>True if removed successfully, false otherwise.</returns>
-        public bool Remove(DLListNode<T> listNode)
+		/// <returns>True if removed successfully, false otherwise.</returns>
+        /// <param name="index">Index of item.</param>
+		public void RemoveAt(int index)
         {
-            bool removeStatus = false;
+			// Handle index out of bound errors
+			if (index >= count || count == 0) {
+				throw new IndexOutOfRangeException ();
+			}
 
-            // Null-value check.
-            if (listNode == null || count == 0) return removeStatus;
+			// Remove
+			if (index == 0) {
+				firstNode = firstNode.Next;
 
-            if (firstNode == listNode)
-            {
-                firstNode = firstNode.Next;
-                firstNode.Previous = null;
-                removeStatus = true;
-                --count;
-            }
-            else
-            {
-                var currentNode = firstNode;
-                while (currentNode.Next != null)
-                {
-                    if (currentNode.Next == listNode)
-                    {
-                        try
-                        {
-                            if (currentNode.Next.Next != null)
-                            {
-                                (currentNode.Next.Next).Previous = currentNode;
-                            }
-                            currentNode.Next = currentNode.Next.Next;
+				if (firstNode != null) {
+					firstNode.Previous = null;
+				}
 
-                            removeStatus = true;
-                            --count;
+				// Decrement count.
+				--count;
+			} else {
+				int i = 0;
+				var currentNode = firstNode;
+				while (currentNode.Next != null) {
+					if (i+1 == index) {
+                        if (currentNode.Next.Next != null) {
+                            (currentNode.Next.Next).Previous = currentNode;
                         }
-                        catch(Exception ex)
-                        {
-                            throw ex.InnerException;
-                        }
-                        
+
+                        currentNode.Next = currentNode.Next.Next;
+
+						// Decrement count
+                        --count;
+
                         break;
-                    }
+                    }//end-if
 
                     currentNode = currentNode.Next;
-                }
-            }
-
-            return removeStatus;
+                }//end-while
+            }//end-else
         }
+
+		/// <summary>
+		/// Clears the list.
+		/// </summary>
+		public void Clear()
+		{
+			firstNode = lastNode = null;
+			count = 0;
+		}
 
         /// <summary>
         /// Returns the list items as a readable multi--line string.
@@ -160,8 +221,7 @@ namespace DataStructures
             int i = 0;
             var currentNode = firstNode;
 
-            while (currentNode != null)
-            {
+            while (currentNode != null) {
                 listAsString = String.Format("{0}[{1}] => {2}\r\n", listAsString, i, currentNode.Data);
                 currentNode = currentNode.Next;
                 ++i;

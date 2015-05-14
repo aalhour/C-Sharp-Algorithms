@@ -100,7 +100,8 @@ namespace DataStructures
 				firstNode = newNode;
 				lastNode = newNode;
 			} else {
-				newNode.Next = firstNode;
+				var currentNode = firstNode;
+				newNode.Next = currentNode;
 				firstNode = newNode;
 			}
 
@@ -117,16 +118,12 @@ namespace DataStructures
 			SLListNode<T> newNode = new SLListNode<T>(dataItem);
 
             if(firstNode == null) {
-                firstNode = newNode;
-                lastNode = newNode;
+				firstNode = newNode;
+				lastNode = newNode;
             } else {
-                try {
-                    var currentNode = lastNode;
-                    currentNode.Next = newNode;
-                    lastNode = newNode;
-				} catch (Exception ex) {
-                    throw ex.InnerException;
-                }
+                var currentNode = lastNode;
+                currentNode.Next = newNode;
+                lastNode = newNode;
             }
 
 			// Increment the count.
@@ -149,6 +146,7 @@ namespace DataStructures
 			} else if (index > 0 && index < count) {
 				var currentNode = firstNode;
 				SLListNode<T> newNode = new SLListNode<T> (dataItem);
+
 				for(int i = 1; i < index; ++i) {
 					currentNode = currentNode.Next;
 				}

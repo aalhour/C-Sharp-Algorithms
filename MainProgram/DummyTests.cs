@@ -19,8 +19,8 @@ namespace C_Sharp_Algorithms
 
             listOfNumbers.Append(10);
             listOfNumbers.Append(124);
-            listOfNumbers.Append(654);
-            listOfNumbers.Append(8);
+			listOfNumbers.Prepend(654);
+			listOfNumbers.Prepend(8);
             listOfNumbers.Append(127485693);
             listOfNumbers.Append(34);
             listOfNumbers.Append(823);
@@ -28,21 +28,33 @@ namespace C_Sharp_Algorithms
             Console.WriteLine(listOfNumbers.ToReadable());
 
             listOfNumbers.RemoveAt(0);
-            Console.WriteLine("Removed 1st: " + listOfNumbers.ToReadable());
+			Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
 
             listOfNumbers.RemoveAt(3);
             listOfNumbers.RemoveAt(4);
-            Console.WriteLine("Removed 3rd & 4th: " + listOfNumbers.ToReadable());
+			Console.WriteLine("Removed 3rd & 4th:\r\n" + listOfNumbers.ToReadable());
 
 			listOfNumbers.RemoveAt(2);
-            Console.WriteLine("Removed 3rd: " + listOfNumbers.ToReadable());
+			Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
 
 			listOfNumbers.RemoveAt(2);
 
-            Console.WriteLine("Removed 3rd: " + listOfNumbers.ToReadable());
+			Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
 
 			listOfNumbers.RemoveAt(0);
-            Console.WriteLine("Remove 1st: " + listOfNumbers.ToReadable());
+            Console.WriteLine("Remove 1st:\r\n" + listOfNumbers.ToReadable());
+
+			listOfNumbers.Prepend (3);
+			listOfNumbers.Prepend (2);
+			listOfNumbers.Prepend (1);
+			// Print List and Count
+			Console.WriteLine(listOfNumbers.ToReadable());
+			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
+
+			listOfNumbers.InsertAt (444, listOfNumbers.Count);
+			listOfNumbers.InsertAt (555, listOfNumbers.Count);
+			Console.WriteLine(listOfNumbers.ToReadable());
+			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
 
 			// Capture the console.
             Console.ReadLine();
@@ -52,40 +64,38 @@ namespace C_Sharp_Algorithms
         {
             DLList<string> listOfNumbers = new DLList<string>();
 
-            var w1 = listOfNumbers.Append("fst");
-            var w2 = listOfNumbers.Append("sec");
-            var w3 = listOfNumbers.Append("trd");
-            var w4 = listOfNumbers.Append("for");
-            var w5 = listOfNumbers.Append("fft");
-            var w6 = listOfNumbers.Append("sxt");
-            var w7 = listOfNumbers.Append("svn");
-            var w8 = listOfNumbers.Append("egt");
+            listOfNumbers.Append("fst");
+            listOfNumbers.Append("sec");
+            listOfNumbers.Append("trd");
+            listOfNumbers.Append("for");
+            listOfNumbers.Append("fft");
+            listOfNumbers.Append("sxt");
+            listOfNumbers.Append("svn");
+            listOfNumbers.Append("egt");
 
             // Print
             Console.WriteLine(listOfNumbers.ToReadable());
 
-            // Remove w1 - try to cause a bug
-            listOfNumbers.Remove(w1);
-            listOfNumbers.Remove(w1);
-            listOfNumbers.Remove(w1);
+            // Remove 1st
+            listOfNumbers.RemoveAt(0);
             Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
 
-            // Remove w5 and w6
-            listOfNumbers.Remove(w5);
-            listOfNumbers.Remove(w6);
+            // Remove 5th and 6th
+            listOfNumbers.RemoveAt(4);
+            listOfNumbers.RemoveAt(5);
             Console.WriteLine("Removed 5th & 6th:\r\n" + listOfNumbers.ToReadable());
 
-            // Remove w7
-            listOfNumbers.Remove(w7);
-            Console.WriteLine("Removed 7th:\r\n" + listOfNumbers.ToReadable());
+            // Remove 4th
+            listOfNumbers.RemoveAt(3);
+            Console.WriteLine("Removed last:\r\n" + listOfNumbers.ToReadable());
 
-            // Remove w8 - last
-            listOfNumbers.Remove(w8);
-            Console.WriteLine("Removed 8th (last):\r\n" + listOfNumbers.ToReadable());
+            // Remove 3rd
+            listOfNumbers.RemoveAt(2);
+            Console.WriteLine("Removed last:\r\n" + listOfNumbers.ToReadable());
 
-            // Try to remove w1 again
-            listOfNumbers.Remove(w1);
-            Console.WriteLine("Try remove old 1st:\r\n" + listOfNumbers.ToReadable());
+            // Remove 1st
+            listOfNumbers.RemoveAt(0);
+            Console.WriteLine("Remove 1st:\r\n" + listOfNumbers.ToReadable());
 
             // Print count
             Console.WriteLine("Count: " + listOfNumbers.Count);
