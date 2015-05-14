@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataStrcutres
+namespace DataStructures
 {
     /// <summary>
     /// Singly Linked List Data Structure

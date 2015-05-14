@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DataStrcutres;
+using DataStructures;
 
 namespace C_Sharp_Algorithms
 {
