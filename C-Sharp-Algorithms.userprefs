@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainProgram/DummyTests.cs">
+    <Files>
+      <File FileName="DataStructures/SLList.cs" Line="173" Column="11" />
+      <File FileName="MainProgram/DummyTests.cs" Line="20" Column="38" />
+      <File FileName="MainProgram/Program.cs" Line="14" Column="36" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

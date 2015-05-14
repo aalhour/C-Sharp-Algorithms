@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 
 using DataStructures;
 
@@ -17,39 +17,34 @@ namespace C_Sharp_Algorithms
         {
             SLList<int> listOfNumbers = new SLList<int>();
 
-            var first = listOfNumbers.Append(10);
-            var second = listOfNumbers.Append(124);
-            var third = listOfNumbers.Append(654);
-            var fourth = listOfNumbers.Append(8);
-            var fifth = listOfNumbers.Append(127485693);
-            var sixth = listOfNumbers.Append(34);
-            var seventh = listOfNumbers.Append(823);
+            listOfNumbers.Append(10);
+            listOfNumbers.Append(124);
+            listOfNumbers.Append(654);
+            listOfNumbers.Append(8);
+            listOfNumbers.Append(127485693);
+            listOfNumbers.Append(34);
+            listOfNumbers.Append(823);
 
             Console.WriteLine(listOfNumbers.ToReadable());
 
-            listOfNumbers.Remove(first);
-            listOfNumbers.Remove(first);
-            listOfNumbers.Remove(first);
-
+            listOfNumbers.RemoveAt(0);
             Console.WriteLine("Removed 1st: " + listOfNumbers.ToReadable());
 
-            listOfNumbers.Remove(fourth);
-            listOfNumbers.Remove(fifth);
+            listOfNumbers.RemoveAt(3);
+            listOfNumbers.RemoveAt(4);
+            Console.WriteLine("Removed 3rd & 4th: " + listOfNumbers.ToReadable());
 
-            Console.WriteLine("Removed 4th & 5th: " + listOfNumbers.ToReadable());
+			listOfNumbers.RemoveAt(2);
+            Console.WriteLine("Removed 3rd: " + listOfNumbers.ToReadable());
 
-            listOfNumbers.Remove(sixth);
+			listOfNumbers.RemoveAt(2);
 
-            Console.WriteLine("Removed 6th: " + listOfNumbers.ToReadable());
+            Console.WriteLine("Removed 3rd: " + listOfNumbers.ToReadable());
 
-            listOfNumbers.Remove(seventh);
+			listOfNumbers.RemoveAt(0);
+            Console.WriteLine("Remove 1st: " + listOfNumbers.ToReadable());
 
-            Console.WriteLine("Removed 7th: " + listOfNumbers.ToReadable());
-
-            listOfNumbers.Remove(first);
-
-            Console.WriteLine("Try remove old 1st: " + listOfNumbers.ToReadable());
-
+			// Capture the console.
             Console.ReadLine();
         }
 
