@@ -85,9 +85,16 @@ namespace DataStructures
             }
             else
             {
-                var currentNode = lastNode;
-                currentNode.Next = newNode;
-                lastNode = newNode;
+                try
+                {
+                    var currentNode = lastNode;
+                    currentNode.Next = newNode;
+                    lastNode = newNode;
+                }
+                catch (Exception ex)
+                {
+                    throw ex.InnerException;
+                }
             }
 
             count++;
@@ -120,10 +127,17 @@ namespace DataStructures
                 {
                     if(currentNode.Next == listNode)
                     {
-                        currentNode.Next = currentNode.Next.Next;
-                        --count;
-                        removeStatus = true;
-                        break;
+                        try
+                        {
+                            currentNode.Next = currentNode.Next.Next;
+                            removeStatus = true;
+                            --count;
+                            break;
+                        }
+                        catch(Exception ex)
+                        {
+                            throw ex.InnerException;
+                        }
                     }
 
                     currentNode = currentNode.Next;
