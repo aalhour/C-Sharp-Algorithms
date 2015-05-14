@@ -7,7 +7,7 @@
     <ProjectGuid>{464251A0-3667-42BA-A3D5-0581D65C442B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataStrcutres</RootNamespace>
+    <RootNamespace>DataStructures</RootNamespace>
     <AssemblyName>DataStrcutres</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

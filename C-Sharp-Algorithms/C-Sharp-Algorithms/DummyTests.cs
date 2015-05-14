@@ -53,5 +53,50 @@ namespace C_Sharp_Algorithms
 
             Console.ReadLine();
         }
+
+        public static void Test_DoublyLinkedList()
+        {
+            DLList<string> listOfNumbers = new DLList<string>();
+
+            var w1 = listOfNumbers.Append("fst");
+            var w2 = listOfNumbers.Append("sec");
+            var w3 = listOfNumbers.Append("trd");
+            var w4 = listOfNumbers.Append("for");
+            var w5 = listOfNumbers.Append("fft");
+            var w6 = listOfNumbers.Append("sxt");
+            var w7 = listOfNumbers.Append("svn");
+            var w8 = listOfNumbers.Append("egt");
+
+            // Print
+            Console.WriteLine(listOfNumbers.ToReadable());
+
+            // Remove w1 - try to cause a bug
+            listOfNumbers.Remove(w1);
+            listOfNumbers.Remove(w1);
+            listOfNumbers.Remove(w1);
+            Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
+
+            // Remove w5 and w6
+            listOfNumbers.Remove(w5);
+            listOfNumbers.Remove(w6);
+            Console.WriteLine("Removed 5th & 6th:\r\n" + listOfNumbers.ToReadable());
+
+            // Remove w7
+            listOfNumbers.Remove(w7);
+            Console.WriteLine("Removed 7th:\r\n" + listOfNumbers.ToReadable());
+
+            // Remove w8 - last
+            listOfNumbers.Remove(w8);
+            Console.WriteLine("Removed 8th (last):\r\n" + listOfNumbers.ToReadable());
+
+            // Try to remove w1 again
+            listOfNumbers.Remove(w1);
+            Console.WriteLine("Try remove old 1st:\r\n" + listOfNumbers.ToReadable());
+
+            // Print count
+            Console.WriteLine("Count: " + listOfNumbers.Count);
+
+            Console.ReadLine();
+        }
     }
 }
