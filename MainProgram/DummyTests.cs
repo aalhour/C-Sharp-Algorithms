@@ -53,6 +53,7 @@ namespace C_Sharp_Algorithms
 
 			listOfNumbers.InsertAt (444, listOfNumbers.Count);
 			listOfNumbers.InsertAt (555, listOfNumbers.Count);
+            listOfNumbers.InsertAt(222, 2);
 			Console.WriteLine(listOfNumbers.ToReadable());
 			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
 
