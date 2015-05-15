@@ -87,7 +87,7 @@ namespace C_Sharp_Algorithms
         public static void Test_DoublyLinkedList()
         {
             int index = 0;
-            DLList<string> listOfStrings = new DLList<string>();
+			DLinkedList<string> listOfStrings = new DLinkedList<string>();
 
             listOfStrings.Append("fst");
             listOfStrings.Append("sec");
@@ -161,7 +161,7 @@ namespace C_Sharp_Algorithms
             var secondRange = firstRange.GetRange(4, 10);
             Console.WriteLine("From Previous GetRange(4, 10):\r\n" + secondRange.ToReadable());
 
-            var thirdRange = (new DLList<string>()).GetRange(0, 10);
+			var thirdRange = (new DLinkedList<string>()).GetRange(0, 10);
             Console.WriteLine("Empty List: GetRange(0, 10):\r\n" + thirdRange.ToReadable());
 
             var arrayVersion = listOfStrings.ToArray();

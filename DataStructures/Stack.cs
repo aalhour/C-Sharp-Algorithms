@@ -15,7 +15,7 @@ namespace DataStructures
         /// Collection: Doubly-Linked List.
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
-        private DLList<T> Collection { get; set; }
+		private DLinkedList<T> Collection { get; set; }
         public int Count { get { return Collection.Count; } }
 
 
@@ -26,7 +26,7 @@ namespace DataStructures
         {
             // The internal collection is implemented as a doubly-linked list.
             // See the DLList.cs for the list implementation.
-            Collection = new DLList<T>();
+			Collection = new DLinkedList<T>();
         }
 
 

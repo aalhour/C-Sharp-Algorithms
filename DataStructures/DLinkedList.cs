@@ -8,25 +8,25 @@ namespace DataStructures
     /// Doubly-Linked List Data Structure.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public class DLList<T>
+    public class DLinkedList<T>
     {
         /// <summary>
         /// The Doubly-Linked List Node class.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public class DLListNode<T>
+        public class DLinkedListNode<T>
         {
             public T Data { get; set; }
-            public DLListNode<T> Next { get; set; }
-            public DLListNode<T> Previous { get; set; }
+			public DLinkedListNode<T> Next { get; set; }
+			public DLinkedListNode<T> Previous { get; set; }
 
-            public DLListNode()
+			public DLinkedListNode()
             {
                 Data = default(T);
                 Next = Previous = null;
             }
 
-            public DLListNode(T dataItem)
+			public DLinkedListNode(T dataItem)
             {
                 Data = dataItem;
                 Next = Previous = null;
@@ -37,8 +37,8 @@ namespace DataStructures
         /// <summary>
         /// Instance variables.
         /// </summary>
-        private DLListNode<T> firstNode { get; set; }
-        private DLListNode<T> lastNode { get; set; }
+		private DLinkedListNode<T> firstNode { get; set; }
+		private DLinkedListNode<T> lastNode { get; set; }
         public int Count { private set; get; }
 
 
@@ -61,7 +61,7 @@ namespace DataStructures
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public DLList()
+		public DLinkedList()
         {
             firstNode = null;
             lastNode = null;
@@ -133,7 +133,7 @@ namespace DataStructures
         /// <param name="dataItem">Data item.</param>
         public void Prepend(T dataItem)
         {
-            DLListNode<T> newNode = new DLListNode<T>(dataItem);
+			DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
             if (firstNode == null)
             {
@@ -158,7 +158,7 @@ namespace DataStructures
         /// <param name="dataItem">Data item.</param>
         public void Append(T dataItem)
         {
-            DLListNode<T> newNode = new DLListNode<T>(dataItem);
+			DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
             if (firstNode == null)
             {
@@ -199,8 +199,8 @@ namespace DataStructures
             }
             else if (index > 0 && index < Count)
             {
-                DLListNode<T> currentNode = null;
-                DLListNode<T> newNode = new DLListNode<T>(dataItem);
+				DLinkedListNode<T> currentNode = null;
+				DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (lastNode reference)
@@ -249,8 +249,8 @@ namespace DataStructures
             }
             else if (index >= 0 && index < Count)
             {
-                DLListNode<T> currentNode = null;
-                DLListNode<T> newNode = new DLListNode<T>(dataItem);
+				DLinkedListNode<T> currentNode = null;
+				DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (lastNode reference)
@@ -371,7 +371,7 @@ namespace DataStructures
             }
             else if (index > 0 && index < (Count - 1))
             {
-                DLListNode<T> currentNode = null;
+				DLinkedListNode<T> currentNode = null;
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (lastNode reference)
@@ -407,11 +407,11 @@ namespace DataStructures
         /// </summary>
         /// <param name="index">Starting index.</param>
         /// <param name="countOfElements">The number of elements to return.</param>
-        /// <returns>Singly-Linked List of elements</returns>
-        public DLList<T> GetRange(int index, int countOfElements)
+        /// <returns>Doubly-Linked List of elements</returns>
+        public DLinkedList<T> GetRange(int index, int countOfElements)
         {
-            DLListNode<T> currentNode = null;
-            DLList<T> newList = new DLList<T>();
+			DLinkedListNode<T> currentNode = null;
+            DLinkedList<T> newList = new DLinkedList<T>();
 
             // Handle Index out of Bound errors
             if (Count == 0)
@@ -486,7 +486,7 @@ namespace DataStructures
         /// <returns>System.List of elements</returns>
         public List<T> ToList()
         {
-            List<T> list = new List<T>();
+			List<T> list = new List<T>(Count);
 
             var currentNode = firstNode;
             for (int i = 0; i < Count; ++i)
