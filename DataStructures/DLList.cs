@@ -328,19 +328,37 @@ namespace DataStructures
         /// <returns>Singly-Linked List of elements</returns>
         public DLList<T> GetRange(int index, int countOfElements)
         {
+            DLListNode<T> currentNode = null;
             DLList<T> newList = new DLList<T>();
-            var currentNode = this.firstNode;
-
+            
             // Handle Index out of Bound errors
-            if (index < 0 || index > Count)
+            if(Count == 0)
+            {
+                return newList;
+            }
+            else if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }
 
-            // Move the currentNode reference to the specified index
-            for (int i = 0; i < index; ++i)
+            // Decide from which reference to traverse the list, and then move the currentNode reference to the index
+            // If index > half then traverse it from the end (lastNode reference)
+            // Otherwise, traverse it from the beginning (firstNode refrence)
+            if (index > (Count / 2))
             {
-                currentNode = currentNode.Next;
+                currentNode = this.lastNode;
+                for (int i = (Count - 1); i > index; --i)
+                {
+                    currentNode = currentNode.Previous;
+                }
+            }
+            else
+            {
+                currentNode = this.firstNode;
+                for (int i = 0; i < index; ++i)
+                {
+                    currentNode = currentNode.Next;
+                }
             }
 
             // Append the elements to the new list using the currentNode reference

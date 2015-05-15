@@ -20,8 +20,8 @@ namespace C_Sharp_Algorithms
 
             listOfNumbers.Append(10);
             listOfNumbers.Append(124);
-			listOfNumbers.Prepend(654);
-			listOfNumbers.Prepend(8);
+            listOfNumbers.Prepend(654);
+            listOfNumbers.Prepend(8);
             listOfNumbers.Append(127485693);
             listOfNumbers.Append(34);
             listOfNumbers.Append(823);
@@ -29,34 +29,34 @@ namespace C_Sharp_Algorithms
             Console.WriteLine(listOfNumbers.ToReadable());
 
             listOfNumbers.RemoveAt(0);
-			Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
+            Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
 
             listOfNumbers.RemoveAt(3);
             listOfNumbers.RemoveAt(4);
-			Console.WriteLine("Removed 3rd & 4th:\r\n" + listOfNumbers.ToReadable());
+            Console.WriteLine("Removed 3rd & 4th:\r\n" + listOfNumbers.ToReadable());
 
-			listOfNumbers.RemoveAt(2);
-			Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
+            listOfNumbers.RemoveAt(2);
+            Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
 
-			listOfNumbers.RemoveAt(2);
+            listOfNumbers.RemoveAt(2);
 
-			Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
+            Console.WriteLine("Removed 3rd:\r\n" + listOfNumbers.ToReadable());
 
-			listOfNumbers.RemoveAt(0);
+            listOfNumbers.RemoveAt(0);
             Console.WriteLine("Remove 1st:\r\n" + listOfNumbers.ToReadable());
 
-			listOfNumbers.Prepend (3);
-			listOfNumbers.Prepend (2);
-			listOfNumbers.Prepend (1);
-			// Print List and Count
-			Console.WriteLine(listOfNumbers.ToReadable());
-			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
+            listOfNumbers.Prepend(3);
+            listOfNumbers.Prepend(2);
+            listOfNumbers.Prepend(1);
+            // Print List and Count
+            Console.WriteLine(listOfNumbers.ToReadable());
+            Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
 
-			listOfNumbers.InsertAt (444, listOfNumbers.Count);
-			listOfNumbers.InsertAt (555, listOfNumbers.Count);
+            listOfNumbers.InsertAt(444, listOfNumbers.Count);
+            listOfNumbers.InsertAt(555, listOfNumbers.Count);
             listOfNumbers.InsertAt(222, 2);
-			Console.WriteLine(listOfNumbers.ToReadable());
-			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
+            Console.WriteLine(listOfNumbers.ToReadable());
+            Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
 
             index = 0;
             Console.WriteLine("Get At " + index + ": " + listOfNumbers.GetAt(index));
@@ -76,7 +76,7 @@ namespace C_Sharp_Algorithms
 
             var arrayVersion = listOfNumbers.ToArray();
 
-			// Capture the console.
+            // Capture the console.
             Console.ReadLine();
         }
 
@@ -148,7 +148,14 @@ namespace C_Sharp_Algorithms
 
             Console.WriteLine();
 
-            Console.WriteLine("GetRange(0, 3):\r\n" + listOfStrings.GetRange(0, 3).ToReadable());
+            var firstRange = listOfStrings.GetRange(4, 6);
+            Console.WriteLine("GetRange(4, 6):\r\n" + firstRange.ToReadable());
+
+            var secondRange = firstRange.GetRange(4, 10);
+            Console.WriteLine("From Previous GetRange(4, 10):\r\n" + secondRange.ToReadable());
+
+            var thirdRange = (new DLList<string>()).GetRange(0, 10);
+            Console.WriteLine("Empty List: GetRange(0, 10):\r\n" + thirdRange.ToReadable());
 
             var arrayVersion = listOfStrings.ToArray();
 

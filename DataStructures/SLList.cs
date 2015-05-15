@@ -313,7 +313,11 @@ namespace DataStructures
             var currentNode = this.firstNode;
 
             // Handle Index out of Bound errors
-            if (index < 0 || index > Count)
+            if (Count == 0)
+            {
+                return newList;
+            }
+            else if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }
