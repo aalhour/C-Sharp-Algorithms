@@ -366,6 +366,32 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Returns a System.List version of this SLList instace.
+        /// </summary>
+        /// <returns>System.List of elements</returns>
+        public List<T> ToList()
+        {
+            List<T> list = new List<T>();
+
+            var currentNode = firstNode;
+            for (int i = 0; i < Count; ++i)
+            {
+                if (currentNode != null)
+                {
+                    list.Add(currentNode.Data);
+                    currentNode = currentNode.Next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return list;
+        }
+
+
+        /// <summary>
         /// Returns the list items as a readable multi--line string.
         /// </summary>
         /// <returns></returns>
