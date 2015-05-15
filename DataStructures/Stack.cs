@@ -86,7 +86,7 @@ namespace DataStructures
 
 
         /// <summary>
-        /// Given a variable top, assign the Top Element's value to it and then remove it from stack.
+        /// Removes the Top Element from stack, and assigns it's value to the "top" parameter.
         /// </summary>
         /// <param name="top">Varialbe to hold the Top Element value.</param>
         public void Pop(out T top)
@@ -106,7 +106,7 @@ namespace DataStructures
         /// <summary>
         /// Returns an array version of this stack.
         /// </summary>
-        /// <returns>System.Array of stack elements.</returns>
+        /// <returns>System.Array.</returns>
         public T[] ToArray()
         {
             return Collection.ToArray();
@@ -116,7 +116,7 @@ namespace DataStructures
         /// <summary>
         /// Returns a System.List version of this stack.
         /// </summary>
-        /// <returns>System.List of elements.</returns>
+        /// <returns>System.List.</returns>
         public List<T> ToList()
         {
             return Collection.ToList();
@@ -124,9 +124,9 @@ namespace DataStructures
 
 
         /// <summary>
-        /// Returns a readable, multi-line print-out (string) of the stack.
+        /// Returns a readable, multi-line print-out (string) of stack.
         /// </summary>
-        /// <returns>String</returns>
+        /// <returns>String.</returns>
         public string ToReadable()
         {
             return Collection.ToReadable();
