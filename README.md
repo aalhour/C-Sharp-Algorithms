@@ -6,4 +6,5 @@ I am writing this organized collection of classes as part of my preparation for 
 ### Data Structures:
 * SLList.cs (Singly-Linked List).
 * DLList.cs (Doubly-Linked List).
-* Stack.cs (Stack - LIFO).
+* Stack.cs (Stack - LIFO. Using the DLList implementation).
+* Queue.cs (Queue - FIFO. Using the DLList implementation).
