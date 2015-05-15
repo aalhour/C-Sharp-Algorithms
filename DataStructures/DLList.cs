@@ -86,7 +86,7 @@ namespace DataStructures
         {
             get
             {
-                if (firstNode == null)
+                if (Count == 0)
                 {
                     throw new Exception("Empty list.");
                 }
@@ -105,7 +105,11 @@ namespace DataStructures
         {
             get
             {
-                if (firstNode != null && lastNode == null)
+                if (Count == 0)
+                {
+                    throw new Exception("Empty list.");
+                }
+                else if (lastNode == null)
                 {
                     var currentNode = firstNode;
                     while (currentNode.Next != null)
@@ -117,7 +121,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    throw new Exception("Empty list.");
+                    return lastNode.Data;   
                 }
             }
         }
@@ -282,6 +286,97 @@ namespace DataStructures
         {
             firstNode = lastNode = null;
             Count = 0;
+        }
+
+
+        /// <summary>
+        /// Get the element at the specified index
+        /// </summary>
+        /// <param name="index">Index of element</param>
+        /// <returns>Element</returns>
+        public T GetAt(int index)
+        {
+            if (index == 0)
+            {
+                return First;
+            }
+            else if (index == (Count - 1))
+            {
+                return Last;
+            }
+            else if (index > 0 && index < (Count - 1))
+            {
+                var currentNode = firstNode;
+                for (int i = 0; i < index; ++i)
+                {
+                    currentNode = currentNode.Next;
+                }
+                return currentNode.Data;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a number of elements as specified by countOfElements, starting from the specified index.
+        /// </summary>
+        /// <param name="index">Starting index.</param>
+        /// <param name="countOfElements">The number of elements to return.</param>
+        /// <returns>Singly-Linked List of elements</returns>
+        public DLList<T> GetRange(int index, int countOfElements)
+        {
+            DLList<T> newList = new DLList<T>();
+            var currentNode = this.firstNode;
+
+            // Handle Index out of Bound errors
+            if (index < 0 || index > Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            // Move the currentNode reference to the specified index
+            for (int i = 0; i < index; ++i)
+            {
+                currentNode = currentNode.Next;
+            }
+
+            // Append the elements to the new list using the currentNode reference
+            while (currentNode != null && newList.Count <= countOfElements)
+            {
+                newList.Append(currentNode.Data);
+                currentNode = currentNode.Next;
+            }
+
+            return newList;
+        }
+
+
+        /// <summary>
+        /// Return an array version of this list.
+        /// </summary>
+        /// <returns></returns>
+        public T[] ToArray()
+        {
+            T[] array = new T[Count];
+
+            var currentNode = firstNode;
+            for (int i = 0; i < Count; ++i)
+            {
+                if (currentNode != null)
+                {
+                    array[i] = currentNode.Data;
+                    currentNode = currentNode.Next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return array;
         }
 
 

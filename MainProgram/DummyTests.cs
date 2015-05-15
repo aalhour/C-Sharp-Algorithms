@@ -15,6 +15,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Test_SinglyLinkedList()
         {
+            int index = 0;
             SLList<int> listOfNumbers = new SLList<int>();
 
             listOfNumbers.Append(10);
@@ -57,12 +58,31 @@ namespace C_Sharp_Algorithms
 			Console.WriteLine(listOfNumbers.ToReadable());
 			Console.WriteLine("Count: " + listOfNumbers.Count + "\r\n");
 
+            index = 0;
+            Console.WriteLine("Get At " + index + ": " + listOfNumbers.GetAt(index));
+
+            index = (listOfNumbers.Count / 2) + 1;
+            Console.WriteLine("Get At " + index + ": " + listOfNumbers.GetAt(index));
+
+            index = (listOfNumbers.Count / 2) + 2;
+            Console.WriteLine("Get At " + index + ": " + listOfNumbers.GetAt(index));
+
+            index = (listOfNumbers.Count - 1);
+            Console.WriteLine("Get At " + index + ": " + listOfNumbers.GetAt(index));
+
+            Console.WriteLine();
+
+            Console.WriteLine("GetRange(0, 3):\r\n" + listOfNumbers.GetRange(0, 3).ToReadable());
+
+            var arrayVersion = listOfNumbers.ToArray();
+
 			// Capture the console.
             Console.ReadLine();
         }
 
         public static void Test_DoublyLinkedList()
         {
+            int index = 0;
             DLList<string> listOfStrings = new DLList<string>();
 
             listOfStrings.Append("fst");
@@ -111,6 +131,26 @@ namespace C_Sharp_Algorithms
 
             // Print count
             Console.WriteLine("Count: " + listOfStrings.Count);
+
+            Console.WriteLine();
+
+            index = 0;
+            Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+
+            index = (listOfStrings.Count / 2) + 1;
+            Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+
+            index = (listOfStrings.Count / 2) + 2;
+            Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+
+            index = (listOfStrings.Count - 1);
+            Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+
+            Console.WriteLine();
+
+            Console.WriteLine("GetRange(0, 3):\r\n" + listOfStrings.GetRange(0, 3).ToReadable());
+
+            var arrayVersion = listOfStrings.ToArray();
 
             Console.ReadLine();
         }
