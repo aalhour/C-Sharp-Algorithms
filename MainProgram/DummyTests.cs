@@ -13,6 +13,43 @@ namespace C_Sharp_Algorithms
     /// </summary>
     public static class DummyTests
     {
+        public static void Test_Queue()
+        {
+            string top;
+            DataStructures.Queue<string> queue = new DataStructures.Queue<string>();
+
+            queue.Push("aaa");
+            queue.Push("bbb");
+            queue.Push("ccc");
+            queue.Push("ddd");
+            queue.Push("eee");
+            queue.Push("fff");
+            queue.Push("ggg");
+            queue.Push("hhh");
+
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
+
+            var array = queue.ToArray();
+            var list = queue.ToList();
+
+            queue.Pop();
+            queue.Pop();
+            queue.Pop(out top);
+
+            Console.WriteLine("Old 3nd-last: " + top + "\r\n");
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
+
+            queue.Pop();
+            queue.Pop();
+
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
+
+            var array2 = queue.ToArray();
+            var list2 = queue.ToList();
+
+            Console.ReadLine();
+        }
+
         public static void Test_Stack()
         {
             int top;
