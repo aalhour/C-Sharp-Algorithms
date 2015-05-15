@@ -199,13 +199,33 @@ namespace DataStructures
             }
             else if (index > 0 && index < Count)
             {
-                var currentNode = firstNode;
+                DLListNode<T> currentNode = null;
                 DLListNode<T> newNode = new DLListNode<T>(dataItem);
 
-                for (int i = 1; i < index; ++i)
+                // Decide from which reference to traverse the list, and then move the currentNode reference to the index
+                // If index > half then traverse it from the end (lastNode reference)
+                // Otherwise, traverse it from the beginning (firstNode refrence)
+                if (index > (Count / 2))
                 {
-                    currentNode = currentNode.Next;
+                    currentNode = this.lastNode;
+                    for (int i = (Count - 1); i > index - 1; --i)
+                    {
+                        currentNode = currentNode.Previous;
+                    }
                 }
+                else
+                {
+                    currentNode = this.firstNode;
+                    for (int i = 0; i < index - 1; ++i)
+                    {
+                        currentNode = currentNode.Next;
+                    }
+                }
+
+                //for (int i = 1; i < index; ++i)
+                //{
+                //    currentNode = currentNode.Next;
+                //}
 
                 newNode.Next = currentNode.Next;
                 currentNode.Next = newNode;
@@ -306,11 +326,28 @@ namespace DataStructures
             }
             else if (index > 0 && index < (Count - 1))
             {
-                var currentNode = firstNode;
-                for (int i = 0; i < index; ++i)
+                DLListNode<T> currentNode = null;
+
+                // Decide from which reference to traverse the list, and then move the currentNode reference to the index
+                // If index > half then traverse it from the end (lastNode reference)
+                // Otherwise, traverse it from the beginning (firstNode refrence)
+                if (index > (Count / 2))
                 {
-                    currentNode = currentNode.Next;
+                    currentNode = this.lastNode;
+                    for (int i = (Count - 1); i > index; --i) 
+                    {
+                        currentNode = currentNode.Previous;
+                    }
                 }
+                else
+                {
+                    currentNode = this.firstNode;
+                    for (int i = 0; i < index; ++i)
+                    {
+                        currentNode = currentNode.Next;
+                    }
+                }
+                
                 return currentNode.Data;
             }
             else
