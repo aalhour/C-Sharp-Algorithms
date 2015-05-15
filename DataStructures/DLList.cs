@@ -10,11 +10,7 @@ namespace DataStructures
     /// <typeparam name="T">Type</typeparam>
     public class DLList<T>
     {
-		private int count { get; set; }
-		private DLListNode<T> firstNode { get; set; }
-		private DLListNode<T> lastNode { get; set; }
-
-        /// <summary>
+		/// <summary>
         /// The Doubly-Linked List Node class.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
@@ -35,15 +31,41 @@ namespace DataStructures
 			}
         }
 
+
         /// <summary>
-        /// Getter function that returns the count of the list
+        /// Instance variables.
         /// </summary>
-        public int Count
+        private DLListNode<T> firstNode { get; set; }
+        private DLListNode<T> lastNode { get; set; }
+        public int Count { private set; get; }
+
+
+        /// <summary>
+        /// A function that is used to update the lastNode reference.
+        /// </summary>
+        private void UpdateLastNode()
         {
-            get {
-                return count;
+            var currentNode = firstNode;
+
+            while (currentNode.Next != null)
+            {
+                currentNode = currentNode.Next;
             }
+
+            lastNode = currentNode;
         }
+
+
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
+        public DLList()
+        {
+            firstNode = null;
+            lastNode = null;
+            Count = 0;
+        }
+
 
 		/// <summary>
 		/// Determines whether this List is empty.
@@ -51,8 +73,9 @@ namespace DataStructures
 		/// <returns><c>true</c> if this list is empty; otherwise, <c>false</c>.</returns>
 		public bool IsEmpty()
 		{
-			return (count == 0);
+			return (Count == 0);
 		}
+
 
         /// <summary>
         /// Getter function that returns the first element
@@ -67,6 +90,7 @@ namespace DataStructures
 				}
             }
         }
+
 
         /// <summary>
         /// Getter function that returns the last element
@@ -87,6 +111,7 @@ namespace DataStructures
             }
         }
 
+
 		/// <summary>
 		/// Prepend the specified dataItem at the beginning of the list.
 		/// </summary>
@@ -105,8 +130,9 @@ namespace DataStructures
 			}
 
 			// Increment the count.
-			++count;
+			++Count;
 		}
+
 
         /// <summary>
         /// Append the specified dataItem at the end of the list.
@@ -119,6 +145,10 @@ namespace DataStructures
             if (firstNode == null) {
                 firstNode = lastNode = newNode;
             } else {
+                if (lastNode == null) {
+                    UpdateLastNode();
+                }
+
                 var currentNode = lastNode;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
@@ -126,8 +156,9 @@ namespace DataStructures
             }
 
 			// Increment the count.
-			++count;
+			++Count;
         }
+
 
 		/// <summary>
 		/// Inserts the dataItem at the specified index.
@@ -137,9 +168,9 @@ namespace DataStructures
 		public void InsertAt(T dataItem, int index) {
 			if (index == 0) {
 				Prepend (dataItem);
-			} else if (index == count) {
+			} else if (index == Count) {
 				Append (dataItem);
-			} else if (index > 0 && index < count) {
+			} else if (index > 0 && index < Count) {
 				var currentNode = firstNode;
 				DLListNode<T> newNode = new DLListNode<T> (dataItem);
 
@@ -152,11 +183,12 @@ namespace DataStructures
 				newNode.Previous = currentNode;
 
 				// Increment the count
-				++count;
+				++Count;
 			} else {
 				throw new IndexOutOfRangeException();
 			}
 		}
+
 
         /// <summary>
         /// Removes the item at the specified index.
@@ -166,7 +198,7 @@ namespace DataStructures
 		public void RemoveAt(int index)
         {
 			// Handle index out of bound errors
-			if (index >= count || count == 0) {
+			if (index >= Count || Count == 0) {
 				throw new IndexOutOfRangeException ();
 			}
 
@@ -179,7 +211,7 @@ namespace DataStructures
 				}
 
 				// Decrement count.
-				--count;
+				--Count;
 			} else {
 				int i = 0;
 				var currentNode = firstNode;
@@ -191,8 +223,12 @@ namespace DataStructures
 
                         currentNode.Next = currentNode.Next.Next;
 
+                        if (index == (Count - 1)) {
+                            lastNode = null;
+                        }
+
 						// Decrement count
-                        --count;
+                        --Count;
 
                         break;
                     }//end-if
@@ -202,14 +238,16 @@ namespace DataStructures
             }//end-else
         }
 
+
 		/// <summary>
 		/// Clears the list.
 		/// </summary>
 		public void Clear()
 		{
 			firstNode = lastNode = null;
-			count = 0;
+			Count = 0;
 		}
+
 
         /// <summary>
         /// Returns the list items as a readable multi--line string.

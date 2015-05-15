@@ -11,8 +11,8 @@ namespace C_Sharp_Algorithms
     {
         static void Main(string[] args)
         {
-			DummyTests.Test_SinglyLinkedList ();
-			//DummyTests.Test_DoublyLinkedList();
+			//DummyTests.Test_SinglyLinkedList ();
+			DummyTests.Test_DoublyLinkedList();
         }
     }
 }

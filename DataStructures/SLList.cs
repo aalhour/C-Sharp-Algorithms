@@ -138,8 +138,9 @@ namespace DataStructures
             if(firstNode == null) {
 				firstNode = lastNode = newNode;
             } else {
-                if (lastNode == null)
+                if (lastNode == null) {
                     UpdateLastNode();
+                }
 
                 var currentNode = lastNode;
                 currentNode.Next = newNode;

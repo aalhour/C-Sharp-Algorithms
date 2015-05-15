@@ -63,43 +63,54 @@ namespace C_Sharp_Algorithms
 
         public static void Test_DoublyLinkedList()
         {
-            DLList<string> listOfNumbers = new DLList<string>();
+            DLList<string> listOfStrings = new DLList<string>();
 
-            listOfNumbers.Append("fst");
-            listOfNumbers.Append("sec");
-            listOfNumbers.Append("trd");
-            listOfNumbers.Append("for");
-            listOfNumbers.Append("fft");
-            listOfNumbers.Append("sxt");
-            listOfNumbers.Append("svn");
-            listOfNumbers.Append("egt");
+            listOfStrings.Append("fst");
+            listOfStrings.Append("sec");
+            listOfStrings.Append("trd");
+            listOfStrings.Append("for");
+            listOfStrings.Append("fft");
+            listOfStrings.Append("sxt");
+            listOfStrings.Append("svn");
+            listOfStrings.Append("egt");
 
             // Print
-            Console.WriteLine(listOfNumbers.ToReadable());
+            Console.WriteLine(listOfStrings.ToReadable());
 
             // Remove 1st
-            listOfNumbers.RemoveAt(0);
-            Console.WriteLine("Removed 1st:\r\n" + listOfNumbers.ToReadable());
+            listOfStrings.RemoveAt(0);
+            Console.WriteLine("Removed 1st:\r\n" + listOfStrings.ToReadable());
 
             // Remove 5th and 6th
-            listOfNumbers.RemoveAt(4);
-            listOfNumbers.RemoveAt(5);
-            Console.WriteLine("Removed 5th & 6th:\r\n" + listOfNumbers.ToReadable());
+            listOfStrings.RemoveAt(4);
+            listOfStrings.RemoveAt(5);
+            Console.WriteLine("Removed 5th & 6th:\r\n" + listOfStrings.ToReadable());
 
             // Remove 4th
-            listOfNumbers.RemoveAt(3);
-            Console.WriteLine("Removed last:\r\n" + listOfNumbers.ToReadable());
+            listOfStrings.RemoveAt(3);
+            Console.WriteLine("Removed last:\r\n" + listOfStrings.ToReadable());
 
             // Remove 3rd
-            listOfNumbers.RemoveAt(2);
-            Console.WriteLine("Removed last:\r\n" + listOfNumbers.ToReadable());
+            listOfStrings.RemoveAt(2);
+            Console.WriteLine("Removed last:\r\n" + listOfStrings.ToReadable());
 
             // Remove 1st
-            listOfNumbers.RemoveAt(0);
-            Console.WriteLine("Remove 1st:\r\n" + listOfNumbers.ToReadable());
+            listOfStrings.RemoveAt(0);
+            Console.WriteLine("Remove 1st:\r\n" + listOfStrings.ToReadable());
+
+            listOfStrings.Prepend("semsem3");
+            listOfStrings.Prepend("semsem2");
+            listOfStrings.Prepend("semsem1");
+            Console.WriteLine("Prepend 3 items:\r\n" + listOfStrings.ToReadable());
+            Console.WriteLine("Count: " + listOfStrings.Count);
+
+            listOfStrings.InsertAt("InsertedAtLast1", listOfStrings.Count);
+            listOfStrings.InsertAt("InsertedAtLast2", listOfStrings.Count);
+            listOfStrings.InsertAt("InsertedAtMiddle", (listOfStrings.Count / 2));
+            Console.WriteLine("Inserts 3 items At:\r\n" + listOfStrings.ToReadable());
 
             // Print count
-            Console.WriteLine("Count: " + listOfNumbers.Count);
+            Console.WriteLine("Count: " + listOfStrings.Count);
 
             Console.ReadLine();
         }
