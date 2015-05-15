@@ -7,24 +7,24 @@ namespace DataStructures
     /// <summary>
     /// Singly Linked List Data Structure
     /// </summary>
-    public class SLList<T>
+    public class SLinkedList<T>
     {
         /// <summary>
         /// The Singly-Linked List Node class
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public class SLListNode<T>
+        public class SLinkedListNode<T>
         {
-            public SLListNode<T> Next { get; set; }
+			public SLinkedListNode<T> Next { get; set; }
             public T Data { get; set; }
 
-            public SLListNode()
+			public SLinkedListNode()
             {
                 Next = null;
                 Data = default(T);
             }
 
-            public SLListNode(T dataItem)
+			public SLinkedListNode(T dataItem)
             {
                 Next = null;
                 Data = dataItem;
@@ -35,8 +35,8 @@ namespace DataStructures
         /// <summary>
         /// Instance variables
         /// </summary>
-        private SLListNode<T> firstNode { get; set; }
-        private SLListNode<T> lastNode { get; set; }
+        private SLinkedListNode<T> firstNode { get; set; }
+        private SLinkedListNode<T> lastNode { get; set; }
         public int Count { private set; get; }
 
 
@@ -59,7 +59,7 @@ namespace DataStructures
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public SLList()
+        public SLinkedList()
         {
             firstNode = null;
             lastNode = null;
@@ -124,7 +124,7 @@ namespace DataStructures
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Prepend(T dataItem)
         {
-            SLListNode<T> newNode = new SLListNode<T>(dataItem);
+            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
             if (firstNode == null)
             {
@@ -148,7 +148,7 @@ namespace DataStructures
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Append(T dataItem)
         {
-            SLListNode<T> newNode = new SLListNode<T>(dataItem);
+            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
             if (firstNode == null)
             {
@@ -191,7 +191,7 @@ namespace DataStructures
             else if (index > 0 && index < Count)
             {
                 var currentNode = firstNode;
-                SLListNode<T> newNode = new SLListNode<T>(dataItem);
+                SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
                 for (int i = 1; i < index; ++i)
                 {
@@ -307,9 +307,9 @@ namespace DataStructures
         /// <param name="index">Starting index.</param>
         /// <param name="countOfElements">The number of elements to return.</param>
         /// <returns>Singly-Linked List of elements</returns>
-        public SLList<T> GetRange(int index, int countOfElements)
+        public SLinkedList<T> GetRange(int index, int countOfElements)
         {
-            SLList<T> newList = new SLList<T>();
+            SLinkedList<T> newList = new SLinkedList<T>();
             var currentNode = this.firstNode;
 
             // Handle Index out of Bound errors
@@ -366,7 +366,7 @@ namespace DataStructures
 
 
         /// <summary>
-        /// Returns a System.List version of this SLList instace.
+        /// Returns a System.List version of this SLinkedList instace.
         /// </summary>
         /// <returns>System.List of elements</returns>
         public List<T> ToList()

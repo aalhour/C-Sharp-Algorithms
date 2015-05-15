@@ -12,10 +12,9 @@ namespace C_Sharp_Algorithms
         static void Main(string[] args)
         {
             DummyTests.Test_Queue();
-
-            //DummyTests.Test_Stack();
-            //DummyTests.Test_DoublyLinkedList();
-			//DummyTests.Test_SinglyLinkedList ();
+            DummyTests.Test_Stack();
+            DummyTests.Test_DoublyLinkedList();
+			DummyTests.Test_SinglyLinkedList ();
         }
     }
 }

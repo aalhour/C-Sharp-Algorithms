@@ -172,7 +172,7 @@ namespace C_Sharp_Algorithms
         public static void Test_SinglyLinkedList()
         {
             int index = 0;
-            SLList<int> listOfNumbers = new SLList<int>();
+			SLinkedList<int> listOfNumbers = new SLinkedList<int>();
 
             listOfNumbers.Append(10);
             listOfNumbers.Append(124);
