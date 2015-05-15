@@ -14,6 +14,8 @@ namespace DataStructures
     {
         /// <summary>
         /// Instance variables.
+        /// Collection: Doubly-Linked List.
+        /// Count: Public Getter for returning the number of elements.
         /// </summary>
         private DLList<T> Collection { get; set; }
         public int Count { get { return Collection.Count; } }
@@ -24,6 +26,8 @@ namespace DataStructures
         /// </summary>
         public Stack()
         {
+            // The internal collection is implemented as a doubly-linked list.
+            // See the DLList.cs for the list implementation.
             Collection = new DLList<T>();
         }
 
