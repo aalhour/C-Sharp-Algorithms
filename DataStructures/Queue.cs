@@ -15,7 +15,7 @@ namespace DataStructures
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
         private DLList<T> Collection { get; set; }
-        public int Count { private set; get; }
+        public int Count { get { return Collection.Count; } }
 
 
         /// <summary>
