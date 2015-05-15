@@ -222,11 +222,6 @@ namespace DataStructures
                     }
                 }
 
-                //for (int i = 1; i < index; ++i)
-                //{
-                //    currentNode = currentNode.Next;
-                //}
-
                 newNode.Next = currentNode.Next;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
@@ -276,11 +271,6 @@ namespace DataStructures
                         currentNode = currentNode.Next;
                     }
                 }
-
-                //for (int i = 1; i < index; ++i)
-                //{
-                //    currentNode = currentNode.Next;
-                //}
 
                 newNode.Next = currentNode.Next;
                 currentNode.Next = newNode;
