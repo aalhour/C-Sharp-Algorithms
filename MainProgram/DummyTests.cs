@@ -129,6 +129,7 @@ namespace C_Sharp_Algorithms
             listOfStrings.InsertAt("InsertedAtMiddle", (listOfStrings.Count / 2));
             listOfStrings.InsertAt("InsertedAt 4", 4);
             listOfStrings.InsertAt("InsertedAt 9", 9);
+            listOfStrings.InsertAfter("InsertedAfter 11", 11);
             Console.WriteLine("Inserts 3 items At:\r\n" + listOfStrings.ToReadable());
 
             // Print count

@@ -242,6 +242,61 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Inserts the dataItem after specified index.
+        /// </summary>
+        /// <param name="dataItem">Data item.</param>
+        /// <param name="index">Index.</param>
+        public void InsertAfter(T dataItem, int index)
+        {
+            if (index == (Count - 1))
+            {
+                Append(dataItem);
+            }
+            else if (index >= 0 && index < Count)
+            {
+                DLListNode<T> currentNode = null;
+                DLListNode<T> newNode = new DLListNode<T>(dataItem);
+
+                // Decide from which reference to traverse the list, and then move the currentNode reference to the index
+                // If index > half then traverse it from the end (lastNode reference)
+                // Otherwise, traverse it from the beginning (firstNode refrence)
+                if (index > (Count / 2))
+                {
+                    currentNode = this.lastNode;
+                    for (int i = (Count - 1); i > index; --i)
+                    {
+                        currentNode = currentNode.Previous;
+                    }
+                }
+                else
+                {
+                    currentNode = this.firstNode;
+                    for (int i = 0; i < index; ++i)
+                    {
+                        currentNode = currentNode.Next;
+                    }
+                }
+
+                //for (int i = 1; i < index; ++i)
+                //{
+                //    currentNode = currentNode.Next;
+                //}
+
+                newNode.Next = currentNode.Next;
+                currentNode.Next = newNode;
+                newNode.Previous = currentNode;
+
+                // Increment the count
+                ++Count;
+            }
+            else
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+
+        /// <summary>
         /// Removes the item at the specified index.
         /// </summary>
         /// <returns>True if removed successfully, false otherwise.</returns>
