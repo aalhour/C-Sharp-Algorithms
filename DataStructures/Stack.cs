@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace DataStructures
@@ -12,11 +11,11 @@ namespace DataStructures
     {
         /// <summary>
         /// Instance variables.
-        /// Collection: Doubly-Linked List.
+        /// _collection: Doubly-Linked List.
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
-		private DLinkedList<T> Collection { get; set; }
-        public int Count { get { return Collection.Count; } }
+		private DLinkedList<T> _collection { get; set; }
+        public int Count { get { return _collection.Count; } }
 
 
         /// <summary>
@@ -26,7 +25,7 @@ namespace DataStructures
         {
             // The internal collection is implemented as a doubly-linked list.
             // See the DLList.cs for the list implementation.
-			Collection = new DLinkedList<T>();
+			_collection = new DLinkedList<T>();
         }
 
 
@@ -36,7 +35,7 @@ namespace DataStructures
         /// <returns>True if stack is empty, false otherwise.</returns>
         public bool IsEmpty()
         {
-            return Collection.IsEmpty();
+            return _collection.IsEmpty();
         }
 
 
@@ -49,7 +48,7 @@ namespace DataStructures
             {
                 try
                 {
-                    return Collection.First;
+                    return _collection.First;
                 }
                 catch (Exception)
                 {
@@ -65,7 +64,7 @@ namespace DataStructures
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-            Collection.Prepend(dataItem);
+            _collection.Prepend(dataItem);
         }
 
 
@@ -76,7 +75,7 @@ namespace DataStructures
         {
             if (Count > 0)
             {
-                Collection.RemoveAt(0);
+                _collection.RemoveAt(0);
             }
             else
             {
@@ -94,7 +93,7 @@ namespace DataStructures
             if (Count > 0)
             {
                 top = Top;
-                Collection.RemoveAt(0);
+                _collection.RemoveAt(0);
             }
             else
             {
@@ -109,7 +108,7 @@ namespace DataStructures
         /// <returns>System.Array.</returns>
         public T[] ToArray()
         {
-            return Collection.ToArray();
+            return _collection.ToArray();
         }
 
 
@@ -119,7 +118,7 @@ namespace DataStructures
         /// <returns>System.List.</returns>
         public List<T> ToList()
         {
-            return Collection.ToList();
+            return _collection.ToList();
         }
 
 
@@ -129,7 +128,7 @@ namespace DataStructures
         /// <returns>String.</returns>
         public string ToReadable()
         {
-            return Collection.ToReadable();
+            return _collection.ToReadable();
         }
 
     }

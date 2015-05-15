@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Linq;
 
 namespace DataStructures
 {
 	/// <summary>
 	/// The Array-Based List Data Structure.
 	/// </summary>
-	public class ArrayList
+	public class ArrayList<T>
 	{
+		private T[] _collection { get; set; }
+
 		public ArrayList ()
 		{
 			

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace DataStructures
@@ -35,24 +34,24 @@ namespace DataStructures
         /// <summary>
         /// Instance variables
         /// </summary>
-        private SLinkedListNode<T> firstNode { get; set; }
-        private SLinkedListNode<T> lastNode { get; set; }
+        private SLinkedListNode<T> _firstNode { get; set; }
+        private SLinkedListNode<T> _lastNode { get; set; }
         public int Count { private set; get; }
 
 
         /// <summary>
-        /// A function that is used to update the lastNode reference.
+        /// A function that is used to update the _lastNode reference.
         /// </summary>
         private void UpdateLastNode()
         {
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
 
             while (currentNode.Next != null)
             {
                 currentNode = currentNode.Next;
             }
 
-            lastNode = currentNode;
+            _lastNode = currentNode;
         }
 
 
@@ -61,8 +60,8 @@ namespace DataStructures
         /// </summary>
         public SLinkedList()
         {
-            firstNode = null;
-            lastNode = null;
+            _firstNode = null;
+            _lastNode = null;
             Count = 0;
         }
 
@@ -84,7 +83,7 @@ namespace DataStructures
         {
             get
             {
-                return (firstNode == null ? default(T) : firstNode.Data);
+                return (_firstNode == null ? default(T) : _firstNode.Data);
             }
         }
 
@@ -100,19 +99,19 @@ namespace DataStructures
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (lastNode == null)
+                else if (_lastNode == null)
                 {
-                    var currentNode = firstNode;
+                    var currentNode = _firstNode;
                     while (currentNode.Next != null)
                     {
                         currentNode = currentNode.Next;
                     }
-                    lastNode = currentNode;
+                    _lastNode = currentNode;
                     return currentNode.Data;
                 }
                 else
                 {
-                    return lastNode.Data;
+                    return _lastNode.Data;
                 }
             }
         }
@@ -126,15 +125,15 @@ namespace DataStructures
         {
             SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
-            if (firstNode == null)
+            if (_firstNode == null)
             {
-                firstNode = lastNode = newNode;
+                _firstNode = _lastNode = newNode;
             }
             else
             {
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 newNode.Next = currentNode;
-                firstNode = newNode;
+                _firstNode = newNode;
             }
 
             // Increment the count.
@@ -150,20 +149,20 @@ namespace DataStructures
         {
             SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
-            if (firstNode == null)
+            if (_firstNode == null)
             {
-                firstNode = lastNode = newNode;
+                _firstNode = _lastNode = newNode;
             }
             else
             {
-                if (lastNode == null)
+                if (_lastNode == null)
                 {
                     UpdateLastNode();
                 }
 
-                var currentNode = lastNode;
+                var currentNode = _lastNode;
                 currentNode.Next = newNode;
-                lastNode = newNode;
+                _lastNode = newNode;
             }
 
             // Increment the count.
@@ -190,7 +189,7 @@ namespace DataStructures
             }
             else if (index > 0 && index < Count)
             {
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
                 for (int i = 1; i < index; ++i)
@@ -226,7 +225,7 @@ namespace DataStructures
             // Remove
             if (index == 0)
             {
-                firstNode = firstNode.Next;
+                _firstNode = _firstNode.Next;
 
                 // Decrement the count.
                 --Count;
@@ -234,7 +233,7 @@ namespace DataStructures
             else
             {
                 int i = 0;
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 while (currentNode.Next != null)
                 {
                     if (i + 1 == index)
@@ -246,7 +245,7 @@ namespace DataStructures
 
                         if (index == (Count - 1))
                         {
-                            lastNode = null;
+                            _lastNode = null;
                         }
 
                         break;
@@ -264,8 +263,8 @@ namespace DataStructures
         /// </summary>
         public void Clear()
         {
-            firstNode = null;
-            lastNode = null;
+            _firstNode = null;
+            _lastNode = null;
             Count = 0;
         }
 
@@ -287,7 +286,7 @@ namespace DataStructures
             }
             else if (index > 0 && index < (Count - 1))
             {
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 for (int i = 0; i < index; ++i)
                 {
                     currentNode = currentNode.Next;
@@ -310,7 +309,7 @@ namespace DataStructures
         public SLinkedList<T> GetRange(int index, int countOfElements)
         {
             SLinkedList<T> newList = new SLinkedList<T>();
-            var currentNode = this.firstNode;
+            var currentNode = this._firstNode;
 
             // Handle Index out of Bound errors
             if (Count == 0)
@@ -347,7 +346,7 @@ namespace DataStructures
         {
             T[] array = new T[Count];
 
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
             for (int i = 0; i < Count; ++i)
             {
                 if (currentNode != null)
@@ -373,7 +372,7 @@ namespace DataStructures
         {
             List<T> list = new List<T>();
 
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
             for (int i = 0; i < Count; ++i)
             {
                 if (currentNode != null)
@@ -398,7 +397,7 @@ namespace DataStructures
         public string ToReadable()
         {
             int i = 0;
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
             string listAsString = string.Empty;
 
             while (currentNode != null)

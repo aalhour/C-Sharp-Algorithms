@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace DataStructures
@@ -37,24 +36,24 @@ namespace DataStructures
         /// <summary>
         /// Instance variables.
         /// </summary>
-		private DLinkedListNode<T> firstNode { get; set; }
-		private DLinkedListNode<T> lastNode { get; set; }
+		private DLinkedListNode<T> _firstNode { get; set; }
+		private DLinkedListNode<T> _lastNode { get; set; }
         public int Count { private set; get; }
 
 
         /// <summary>
-        /// A function that is used to update the lastNode reference.
+        /// A function that is used to update the _lastNode reference.
         /// </summary>
         private void UpdateLastNode()
         {
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
 
             while (currentNode.Next != null)
             {
                 currentNode = currentNode.Next;
             }
 
-            lastNode = currentNode;
+            _lastNode = currentNode;
         }
 
 
@@ -63,8 +62,8 @@ namespace DataStructures
         /// </summary>
 		public DLinkedList()
         {
-            firstNode = null;
-            lastNode = null;
+            _firstNode = null;
+            _lastNode = null;
             Count = 0;
         }
 
@@ -92,7 +91,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    return firstNode.Data;
+                    return _firstNode.Data;
                 }
             }
         }
@@ -109,19 +108,19 @@ namespace DataStructures
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (lastNode == null)
+                else if (_lastNode == null)
                 {
-                    var currentNode = firstNode;
+                    var currentNode = _firstNode;
                     while (currentNode.Next != null)
                     {
                         currentNode = currentNode.Next;
                     }
-                    lastNode = currentNode;
+                    _lastNode = currentNode;
                     return currentNode.Data;
                 }
                 else
                 {
-                    return lastNode.Data;
+                    return _lastNode.Data;
                 }
             }
         }
@@ -135,16 +134,16 @@ namespace DataStructures
         {
 			DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
-            if (firstNode == null)
+            if (_firstNode == null)
             {
-                firstNode = lastNode = newNode;
+                _firstNode = _lastNode = newNode;
             }
             else
             {
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 newNode.Next = currentNode;
                 currentNode.Previous = newNode;
-                firstNode = newNode;
+                _firstNode = newNode;
             }
 
             // Increment the count.
@@ -160,21 +159,21 @@ namespace DataStructures
         {
 			DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
-            if (firstNode == null)
+            if (_firstNode == null)
             {
-                firstNode = lastNode = newNode;
+                _firstNode = _lastNode = newNode;
             }
             else
             {
-                if (lastNode == null)
+                if (_lastNode == null)
                 {
                     UpdateLastNode();
                 }
 
-                var currentNode = lastNode;
+                var currentNode = _lastNode;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
-                lastNode = newNode;
+                _lastNode = newNode;
             }
 
             // Increment the count.
@@ -203,11 +202,11 @@ namespace DataStructures
 				DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-                // If index > half then traverse it from the end (lastNode reference)
-                // Otherwise, traverse it from the beginning (firstNode refrence)
+                // If index > half then traverse it from the end (_lastNode reference)
+                // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this.lastNode;
+                    currentNode = this._lastNode;
                     for (int i = (Count - 1); i > index - 1; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -215,7 +214,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    currentNode = this.firstNode;
+                    currentNode = this._firstNode;
                     for (int i = 0; i < index - 1; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -253,11 +252,11 @@ namespace DataStructures
 				DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-                // If index > half then traverse it from the end (lastNode reference)
-                // Otherwise, traverse it from the beginning (firstNode refrence)
+                // If index > half then traverse it from the end (_lastNode reference)
+                // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this.lastNode;
+                    currentNode = this._lastNode;
                     for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -265,7 +264,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    currentNode = this.firstNode;
+                    currentNode = this._firstNode;
                     for (int i = 0; i < index; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -302,11 +301,11 @@ namespace DataStructures
             // Remove
             if (index == 0)
             {
-                firstNode = firstNode.Next;
+                _firstNode = _firstNode.Next;
 
-                if (firstNode != null)
+                if (_firstNode != null)
                 {
-                    firstNode.Previous = null;
+                    _firstNode.Previous = null;
                 }
 
                 // Decrement count.
@@ -315,7 +314,7 @@ namespace DataStructures
             else
             {
                 int i = 0;
-                var currentNode = firstNode;
+                var currentNode = _firstNode;
                 while (currentNode.Next != null)
                 {
                     if (i + 1 == index)
@@ -329,7 +328,7 @@ namespace DataStructures
 
                         if (index == (Count - 1))
                         {
-                            lastNode = null;
+                            _lastNode = null;
                         }
 
                         // Decrement count
@@ -349,7 +348,7 @@ namespace DataStructures
         /// </summary>
         public void Clear()
         {
-            firstNode = lastNode = null;
+            _firstNode = _lastNode = null;
             Count = 0;
         }
 
@@ -374,11 +373,11 @@ namespace DataStructures
 				DLinkedListNode<T> currentNode = null;
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-                // If index > half then traverse it from the end (lastNode reference)
-                // Otherwise, traverse it from the beginning (firstNode refrence)
+                // If index > half then traverse it from the end (_lastNode reference)
+                // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this.lastNode;
+                    currentNode = this._lastNode;
                     for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -386,7 +385,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    currentNode = this.firstNode;
+                    currentNode = this._firstNode;
                     for (int i = 0; i < index; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -424,11 +423,11 @@ namespace DataStructures
             }
 
             // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-            // If index > half then traverse it from the end (lastNode reference)
-            // Otherwise, traverse it from the beginning (firstNode refrence)
+            // If index > half then traverse it from the end (_lastNode reference)
+            // Otherwise, traverse it from the beginning (_firstNode refrence)
             if (index > (Count / 2))
             {
-                currentNode = this.lastNode;
+                currentNode = this._lastNode;
                 for (int i = (Count - 1); i > index; --i)
                 {
                     currentNode = currentNode.Previous;
@@ -436,7 +435,7 @@ namespace DataStructures
             }
             else
             {
-                currentNode = this.firstNode;
+                currentNode = this._firstNode;
                 for (int i = 0; i < index; ++i)
                 {
                     currentNode = currentNode.Next;
@@ -462,7 +461,7 @@ namespace DataStructures
         {
             T[] array = new T[Count];
 
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
             for (int i = 0; i < Count; ++i)
             {
                 if (currentNode != null)
@@ -488,7 +487,7 @@ namespace DataStructures
         {
 			List<T> list = new List<T>(Count);
 
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
             for (int i = 0; i < Count; ++i)
             {
                 if (currentNode != null)
@@ -514,7 +513,7 @@ namespace DataStructures
         {
             string listAsString = string.Empty;
             int i = 0;
-            var currentNode = firstNode;
+            var currentNode = _firstNode;
 
             while (currentNode != null)
             {
