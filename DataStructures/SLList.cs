@@ -15,18 +15,18 @@ namespace DataStructures
         /// <typeparam name="T"></typeparam>
         public class SLListNode<T>
         {
-			public SLListNode<T> Next { get; set; }
-			public T Data { get; set; }
+		public SLListNode<T> Next { get; set; }
+		public T Data { get; set; }
 
-			public SLListNode() {
-				Next = null;
-				Data = default(T);
-			}
+		public SLListNode() {
+			Next = null;
+			Data = default(T);
+		}
 
-			public SLListNode(T dataItem) {
-				Next = null;
-				Data = dataItem;
-			}
+		public SLListNode(T dataItem) {
+			Next = null;
+			Data = dataItem;
+		}
         }
 
 
@@ -57,22 +57,22 @@ namespace DataStructures
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-		public SLList()
-		{
-			firstNode = null;
-			lastNode = null;
-			Count = 0;
-		}
+	public SLList()
+	{
+		firstNode = null;
+		lastNode = null;
+		Count = 0;
+	}
 
 
-		/// <summary>
-		/// The Is List Empty check.
-		/// </summary>
-		/// <returns>true, if the list is empty, false otherwise.</returns>
-		public bool IsEmpty()
-		{
-			return (Count == 0);
-		}
+	/// <summary>
+	/// The Is List Empty check.
+	/// </summary>
+	/// <returns>true, if the list is empty, false otherwise.</returns>
+	public bool IsEmpty()
+	{
+		return (Count == 0);
+	}
 
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace DataStructures
         public T First 
         { 
             get {
-				return (firstNode == null ? default(T) : firstNode.Data);
+		return (firstNode == null ? default(T) : firstNode.Data);
             }
         }
 
@@ -93,14 +93,14 @@ namespace DataStructures
         {
             get {
                 if (firstNode != null && lastNode == null) {
-                    var currentNode = firstNode;
-                    while (currentNode.Next != null) {
-                        currentNode = currentNode.Next;
-                    }
-                    lastNode = currentNode;
-					return currentNode.Data;
+                    	var currentNode = firstNode;
+                    	while (currentNode.Next != null) {
+                        	currentNode = currentNode.Next;
+                    	}
+                    	lastNode = currentNode;
+			return currentNode.Data;
                 } else {
-					return default(T);
+			return default(T);
                 }
             }
         }
@@ -133,107 +133,107 @@ namespace DataStructures
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Append(T dataItem)
         {
-			SLListNode<T> newNode = new SLListNode<T>(dataItem);
+		SLListNode<T> newNode = new SLListNode<T>(dataItem);
 
-            if(firstNode == null) {
-				firstNode = lastNode = newNode;
-            } else {
-                if (lastNode == null) {
-                    UpdateLastNode();
-                }
-
-                var currentNode = lastNode;
-                currentNode.Next = newNode;
-                lastNode = newNode;
-            }
-
-			// Increment the count.
-            ++Count;
-        }
-
-
-		/// <summary>
-		/// Inserts a specified item dataItem at an index.
-		/// </summary>
-		/// <param name="dataItem">Data item.</param>
-		/// <param name="index">Index.</param>
-		public void InsertAt(T dataItem, int index)
-		{
-			// Handle scope of insertion.
-			// Prepend? Append? Or Insert in the range?
-			if (index == 0) {
-				Prepend (dataItem);
-			} else if (index == Count) {
-				Append (dataItem);
-			} else if (index > 0 && index < Count) {
-				var currentNode = firstNode;
-				SLListNode<T> newNode = new SLListNode<T> (dataItem);
-
-				for(int i = 1; i < index; ++i) {
-					currentNode = currentNode.Next;
-				}
-
-				newNode.Next = currentNode.Next;
-				currentNode.Next = newNode;
-
-				// Increment the count
-				++Count;
-			} else {
-				throw new IndexOutOfRangeException ();
-			}
+            	if(firstNode == null) {
+			firstNode = lastNode = newNode;
+            	} else {
+	                if (lastNode == null) {
+	                    UpdateLastNode();
+	                }
+	
+	                var currentNode = lastNode;
+	                currentNode.Next = newNode;
+	                lastNode = newNode;
 		}
+
+		// Increment the count.
+            	++Count;
+	}
+
+
+	/// <summary>
+	/// Inserts a specified item dataItem at an index.
+	/// </summary>
+	/// <param name="dataItem">Data item.</param>
+	/// <param name="index">Index.</param>
+	public void InsertAt(T dataItem, int index)
+	{
+		// Handle scope of insertion.
+		// Prepend? Append? Or Insert in the range?
+		if (index == 0) {
+			Prepend (dataItem);
+		} else if (index == Count) {
+			Append (dataItem);
+		} else if (index > 0 && index < Count) {
+			var currentNode = firstNode;
+			SLListNode<T> newNode = new SLListNode<T> (dataItem);
+			
+			for(int i = 1; i < index; ++i) {
+				currentNode = currentNode.Next;
+			}
+
+			newNode.Next = currentNode.Next;
+			currentNode.Next = newNode;
+
+			// Increment the count
+			++Count;
+		} else {
+			throw new IndexOutOfRangeException ();
+		}
+	}
 
 
         /// <summary>
         /// Removes the item at the specified index.
         /// </summary>
         /// <param name="index">The index of the list node to be removed.</param>
-		public void RemoveAt(int index)
+	public void RemoveAt(int index)
         {
-			// Handle index out of bound errors
-			if (Count == 0 || index >= Count) {
-				throw new IndexOutOfRangeException ();
-			}
+		// Handle index out of bound errors
+		if (Count == 0 || index >= Count) {
+			throw new IndexOutOfRangeException ();
+		}
+	
+		// Remove
+		if (index == 0) {
+                	firstNode = firstNode.Next;
 
-			// Remove
-			if (index == 0) {
-                firstNode = firstNode.Next;
+			// Decrement the count.
+			--Count;
+            	} else {
+			int i = 0;
+                	var currentNode = firstNode;
+			while (currentNode.Next != null) {
+				if (i+1 == index) {
+					currentNode.Next = currentNode.Next.Next;
 
-				// Decrement the count.
-				--Count;
-            } else {
-				int i = 0;
-                var currentNode = firstNode;
-				while (currentNode.Next != null) {
-					if (i+1 == index) {
-						currentNode.Next = currentNode.Next.Next;
+					// Decrement the count.
+					--Count;
 
-						// Decrement the count.
-						--Count;
+                			if (index == (Count - 1)) {
+            					lastNode = null;
+                			}
 
-                        if (index == (Count - 1)) {
-                            lastNode = null;
-                        }
+                			break;
+				}
 
-                        break;
-					}
-
-					++i;
-                    currentNode = currentNode.Next;
-                }
-            }
+				++i;
+            			currentNode = currentNode.Next;
+        		}
+            	}
         }
 
 
-		/// <summary>
-		/// Clears all the items in the list.
-		/// </summary>
-		public void Clear()
-		{
-			firstNode = null;
-			lastNode = null;
-			Count = 0;
-		}
+	/// <summary>
+	/// Clears all the items in the list.
+	/// </summary>
+	public void Clear()
+	{
+		firstNode = null;
+		lastNode = null;
+		Count = 0;
+	}
 
 
         /// <summary>
@@ -242,18 +242,17 @@ namespace DataStructures
         /// <returns></returns>
         public string ToReadable()
         {
-            string listAsString = string.Empty;
-            int i = 0;
-            var currentNode = firstNode;
-
-            while (currentNode != null)
-            {
-                listAsString = String.Format("{0}[{1}] => {2}\r\n", listAsString, i, currentNode.Data);
-                currentNode = currentNode.Next;
-                ++i;
-            }
-
-            return listAsString;
+        	int i = 0;
+        	var currentNode = firstNode;
+    		string listAsString = string.Empty;
+		
+		while (currentNode != null) {
+			listAsString = String.Format("{0}[{1}] => {2}\r\n", listAsString, i, currentNode.Data);
+			currentNode = currentNode.Next;
+			++i;
+		}
+		
+		return listAsString;
         }
 
     }
