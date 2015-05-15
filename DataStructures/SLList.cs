@@ -277,7 +277,7 @@ namespace DataStructures
         /// <returns>Element</returns>
         public T GetAt(int index)
         {
-            if(index == 0)
+            if (index == 0)
             {
                 return First;
             }

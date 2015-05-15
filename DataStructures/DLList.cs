@@ -121,7 +121,7 @@ namespace DataStructures
                 }
                 else
                 {
-                    return lastNode.Data;   
+                    return lastNode.Data;
                 }
             }
         }
@@ -389,7 +389,7 @@ namespace DataStructures
                 if (index > (Count / 2))
                 {
                     currentNode = this.lastNode;
-                    for (int i = (Count - 1); i > index; --i) 
+                    for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
                     }
@@ -402,7 +402,7 @@ namespace DataStructures
                         currentNode = currentNode.Next;
                     }
                 }
-                
+
                 return currentNode.Data;
             }
             else
@@ -422,9 +422,9 @@ namespace DataStructures
         {
             DLListNode<T> currentNode = null;
             DLList<T> newList = new DLList<T>();
-            
+
             // Handle Index out of Bound errors
-            if(Count == 0)
+            if (Count == 0)
             {
                 return newList;
             }
