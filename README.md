@@ -13,7 +13,7 @@ I am writing this organized collection of classes as part of my preparation for 
 
 
 ### Algorithms
-* InsertionSort (InsertionSorter.cs)
+* Insertion Sort (InsertionSorter.cs)
   * Implements insertion sort as an extention method for the following collections: System.List, System.Array, and my ArrayList data structure.
   * Supports value comparers.
     ```
@@ -25,4 +25,10 @@ I am writing this organized collection of classes as part of my preparation for 
     list2.Add("two");
     list2.Add("three");
     list2.InsertionSort();
+    ```
+* Quick Sort (QuickSorter.cs)
+  * Implements quick sort as an extension method for all classes that implement IList<T>. Which includes, but is not limited to, System.List and System.Array.
+    ```
+    List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+			 list.QuickSort ();
     ```
