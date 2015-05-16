@@ -5,9 +5,9 @@ I am writing this organized collection of classes as part of my preparation for 
 
 
 ### Data Structures:
-* Singly-Linked List (SLinkedList.cs).
-* Doubly-Linked List (DLinkedList.cs).
-* ArrayList (ArrayList.cs). An arrays-based list. Implements auto-resizing.
+* Single-Linked List (SLinkedList.cs).
+* Double-Linked List (DLinkedList.cs).
+* Array List (ArrayList.cs). An arrays-based list. Implements auto-resizing.
 * Stack (Stack.cs). Using my ArrayList implementation.
 * Queue (Queue.cs). Using my ArrayList implementation.
 
