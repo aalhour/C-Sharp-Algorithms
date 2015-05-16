@@ -53,6 +53,10 @@
       <Project>{464251A0-3667-42BA-A3D5-0581D65C442B}</Project>
       <Name>DataStructures</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algorithms\Algorithms.csproj">
+      <Project>{8F59D573-A1B8-438F-A67A-A7F11FACF201}</Project>
+      <Name>Algorithms</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
