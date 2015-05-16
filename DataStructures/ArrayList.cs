@@ -171,6 +171,134 @@ namespace DataStructures
 
 
 		/// <summary>
+		/// Inserts a new element at an index. Doesn't override the cell at index.
+		/// </summary>
+		/// <param name="dataItem">Data item to insert.</param>
+		/// <param name="index">Index of insertion.</param>
+		public void InsertAt(T dataItem, int index)
+		{
+			if (index < 0 || (uint)index > (uint)_size)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// If the inner array is full and there are no extra spaces, 
+			// ... then maximize it's capacity to a minimum of _size + 1.
+			if (_size == _collection.Length)
+			{
+				EnsureCapacity(_size + 1);
+			}
+
+			// If the index is not "at the end", then copy the elements of the array
+			// ... between the specified index and the last index to the new range (index + 1, _size);
+			// The cell at "index" will become available.
+			if (index < _size)
+			{
+				Array.Copy (_collection, index, _collection, index + 1, (_size - index));
+			}
+
+			// Write the dataItem to the available cell.
+			_collection[index] = dataItem;
+
+			// Increase the size.
+			_size++;
+		}
+
+
+		/// <summary>
+		/// Removes the specified dataItem from list.
+		/// </summary>
+		/// <returns>>True if removed successfully, false otherwise.</returns>
+		/// <param name="dataItem">Data item.</param>
+		public bool Remove(T dataItem)
+		{
+			int index = IndexOf (dataItem);
+
+			if (index >= 0)
+			{
+				RemoveAt (index);
+				return true;
+			}
+
+			return false;
+		}
+
+
+		/// <summary>
+		/// Removes the list element at the specified index.
+		/// </summary>
+		/// <param name="index">Index of element.</param>
+		public void RemoveAt(int index)
+		{
+			if (index < 0 || (uint)index >= (uint)_size)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Decrease the size by 1, to avoid doing Array.Copy if the element is to be removed from the tail of list. 
+			this._size--;
+
+			// If the index is still less than size, perform an Array.Copy to override the cell at index.
+			// This operation is O(N), where N = size - index.
+			if (index < _size)
+			{
+				Array.Copy (_collection, index + 1, _collection, index, (_size - index));
+			}
+
+			// Reset the writable cell to the default value of type T.
+			_collection [_size] = default(T);
+		}
+
+
+		/// <summary>
+		/// Clear this instance.
+		/// </summary>
+		public void Clear()
+		{
+			if (_size > 0)
+			{
+				Array.Clear (_collection, 0, _size);
+				_size = 0;
+			}
+		}
+
+
+		/// <summary>
+		/// Reverses this list.
+		/// </summary>
+		public void Reverse()
+		{
+			Reverse (0, _size);
+		}
+
+
+		/// <summary>
+		/// Reverses the order of a number of elements. Starting a specific index.
+		/// </summary>
+		/// <param name="startIndex">Start index.</param>
+		/// <param name="count">Count of elements to reverse.</param>
+		public void Reverse(int startIndex, int count)
+		{
+			// Handle the bounds of startIndex
+			if (startIndex < 0 || (uint)startIndex >= (uint)_size)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Handle the bounds of count and startIndex with respect to _size.
+			if (count < 0 || startIndex > (_size - count))
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Use Array.Reverse
+			// Running complexity is better than O(N). But unknown.
+			// Array.Reverse uses the closed-source function TrySZReverse.
+			Array.Reverse (_collection, startIndex, count);
+		}
+
+
+		/// <summary>
 		/// For each element in list, apply the specified action to it.
 		/// </summary>
 		/// <param name="action">Typed Action.</param>
@@ -185,19 +313,6 @@ namespace DataStructures
 			for (int i = 0; i < _size; ++i)
 			{
 				action (_collection [i]);
-			}
-		}
-
-
-		/// <summary>
-		/// Clear this instance.
-		/// </summary>
-		public void Clear()
-		{
-			if (_size > 0)
-			{
-				Array.Clear (_collection, 0, _size);
-				_size = 0;
 			}
 		}
 
@@ -312,7 +427,7 @@ namespace DataStructures
 		public int FindIndex(int startIndex, int count, Predicate<T> searchMatch)
 		{
 			// Check bound of startIndex
-			if ((uint)startIndex > (uint)_size)
+			if (startIndex < 0 || (uint)startIndex > (uint)_size)
 			{
 				throw new ArgumentOutOfRangeException ();
 			}
@@ -340,6 +455,113 @@ namespace DataStructures
 			return -1;
 		}
 
+
+		/// <summary>
+		/// Returns the index of a given dataItem.
+		/// </summary>
+		/// <returns>Index of element in list.</returns>
+		/// <param name="dataItem">Data item.</param>
+		public int IndexOf(T dataItem)
+		{
+			return IndexOf (dataItem, 0, _size);
+		}
+
+
+		/// <summary>
+		/// Returns the index of a given dataItem.
+		/// </summary>
+		/// <returns>Index of element in list.</returns>
+		/// <param name="dataItem">Data item.</param>
+		/// <param name="startIndex">The starting index to search from.</param>
+		public int IndexOf(T dataItem, int startIndex)
+		{
+			return IndexOf (dataItem, startIndex, _size);
+		}
+
+
+		/// <summary>
+		/// Returns the index of a given dataItem.
+		/// </summary>
+		/// <returns>Index of element in list.</returns>
+		/// <param name="dataItem">Data item.</param>
+		/// <param name="startIndex">The starting index to search from.</param>
+		/// <param name="count">Count of elements to search through.</param>
+		public int IndexOf(T dataItem, int startIndex, int count)
+		{
+			// Check the bound of the starting index.
+			if (startIndex < 0 || (uint)startIndex > (uint)_size)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Check the bounds of count and starting index with respect to _size.
+			if (count < 0 || startIndex > (_size - count)) 
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Everything is cool, start looking for the index
+			// Use the Array.IndexOf
+			// Array.IndexOf has a O(n) running time complexity, where: "n = count - size".
+			// Array.IndexOf uses EqualityComparer<T>.Default to return the index of element which loops
+			// ... over all the elements in the range [startIndex,count) in the array.
+			return Array.IndexOf(_collection, dataItem, startIndex, count);
+		}
+
+
+		/// <summary>
+		/// Find the specified element that matches the Search Predication.
+		/// </summary>
+		/// <param name="searchMatch">Match predicate.</param>
+		public T Find(Predicate<T> searchMatch)
+		{
+			// Null Predicate functions are not allowed. 
+			if (searchMatch == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			// Begin searching, and return the matched element
+			for (int i = 0; i < _size; ++i) 
+			{
+				if (searchMatch (_collection [i]))
+				{
+					return _collection [i];
+				}
+			}
+
+			// Not found, return the default value of the type T.
+			return default(T);
+		}
+
+
+		/// <summary>
+		/// Finds all the elements that match the typed Search Predicate.
+		/// </summary>
+		/// <returns>ArrayList<T> of matched elements. Empty list is returned if not element was found.</returns>
+		/// <param name="searchMatch">Match predicate.</param>
+		public ArrayList<T> FindAll(Predicate<T> searchMatch)
+		{
+			// Null Predicate functions are not allowed. 
+			if (searchMatch == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			ArrayList<T> matchedElements = new ArrayList<T> ();
+
+			// Begin searching, and add the matched elements to the new list.
+			for (int i = 0; i < _size; ++i) 
+			{
+				if (searchMatch (_collection [i]))
+				{
+					matchedElements.Add(_collection [i]);
+				}
+			}
+
+			// Return the new list of elements.
+			return matchedElements;
+		}
 	}
 
 }
