@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 using DataStructures;
 
@@ -13,6 +13,20 @@ namespace C_Sharp_Algorithms
     /// </summary>
     public static class DummyTests
     {
+		public static void Test_ArrayList()
+		{
+			int index = 0;
+			DataStructures.ArrayList<long> arrayList = new DataStructures.ArrayList<long> ();
+
+			for (long i = 1; i < 1000000000; ++i)
+			{
+				arrayList.Add (i);
+			}
+
+			arrayList.RemoveAt (1000);
+		}
+
+
         public static void Test_Queue()
         {
             string top;

@@ -14,7 +14,10 @@ namespace DataStructures
 
 		// The C# Maximum Array Length (before encountering overflow)
 		// Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-		private const int MAXIMUM_ARRAY_LENGTH = 0X7FEFFFFF;
+		private bool DefaultMaxCapacityIsX64 { get; set; }
+		private bool IsMaximumCapacityReached { get; set; }
+		private const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
+		private const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
 
 		// This is used as a default empty list initialization.
 		private readonly T[] _emptyArray = new T[0];
@@ -35,8 +38,16 @@ namespace DataStructures
 		/// </summary>
 		public ArrayList ()
 		{
+			// Zerofiy the _size;
 			_size = 0;
+
+			// Initialize _collection to an empty array.
 			_collection = _emptyArray;
+
+			// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
+			// Set the flag IsMaximumCapacityReached to false
+			DefaultMaxCapacityIsX64 = true;
+			IsMaximumCapacityReached = false;
 		}
 
 		public ArrayList(int capacity)
@@ -54,28 +65,39 @@ namespace DataStructures
 				_collection = new T[capacity];
 			}
 
+			// Zerofiy the _size;
 			_size = 0;
+
+			// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
+			// Set the flag IsMaximumCapacityReached to false
+			DefaultMaxCapacityIsX64 = true;
+			IsMaximumCapacityReached = false;
 		}
 
 
 		/// <summary>
-		/// Ensures that the capacity of the list is greator or equal to a minimum value.
+		/// Ensures the capacity.
 		/// </summary>
 		/// <param name="minCapacity">Minimum capacity.</param>
-		private void EnsureCapacity(int minCapacity)
+		/// <param name="useMaxCapacity1">If set to <c>true</c> the function will use MAXIMUM_ARRAY_LENGTH_1, otherwise it will use MAXIMUM_ARRAY_LENGTH_2.</param>
+		private void EnsureCapacity(int minCapacity, bool useMaxCapacity1 = true)
 		{
-			if (_collection.Length < minCapacity)
+			// If the length of the inner collection is less than the minCapacity
+			// ... and if the maximum capacity wasn't reached yet, 
+			// ... then maximize the inner collection.
+			if (_collection.Length < minCapacity && IsMaximumCapacityReached == false)
 			{
 				int newCapacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
 
 				// Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
 				// Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-				if ((uint)newCapacity > MAXIMUM_ARRAY_LENGTH)
+				int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
+				if ((uint)newCapacity >= maxCapacity)
 				{
-					newCapacity = MAXIMUM_ARRAY_LENGTH;
+					newCapacity = maxCapacity - 1;
+					IsMaximumCapacityReached = true;
 				}
-
-				if (newCapacity < minCapacity)
+				else if (newCapacity < minCapacity)
 				{
 					newCapacity = minCapacity;
 				}
@@ -95,14 +117,31 @@ namespace DataStructures
 			{
 				if (newCapacity > 0) 
 				{
-					T[] newCollection = new T[newCapacity];
-				
-					if (_size > 0) 
+					try
 					{
-						Array.Copy (_collection, 0, newCollection, 0, _size);
-					}
+						string ss;
 
-					_collection = newCollection;
+						if(newCapacity == MAXIMUM_ARRAY_LENGTH_x86) {
+							ss = string.Empty;
+						}
+
+						T[] newCollection = new T[newCapacity];
+
+						if (_size > 0) 
+						{
+							Array.Copy (_collection, 0, newCollection, 0, _size);
+						}
+
+						_collection = newCollection;
+					}
+					catch (OutOfMemoryException)
+					{
+						if (DefaultMaxCapacityIsX64 == true)
+						{
+							DefaultMaxCapacityIsX64 = false;
+							EnsureCapacity (newCapacity);
+						}
+					}
 				}
 				else
 				{
