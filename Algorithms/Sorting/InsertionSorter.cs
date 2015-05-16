@@ -10,10 +10,10 @@ namespace Algorithms
 	/// </summary>
 	public static class InsertionSorter
 	{
-		/// <summary>
-		/// Perform Insertion Sort over the generic System.List<T> collection.
-		/// </summary>
-		/// <param name="list">List of items of type T.</param>
+		/***
+		 * INSERTION SORT FOR SYSTEM ARRAYS and LISTS
+		 */
+
 		public static void InsertionSort<T>(this IList<T> list) where T : IComparable<T>
 		{	
 			var comparer = Comparer<T>.Default;
@@ -21,12 +21,6 @@ namespace Algorithms
 		}
 
 
-		/// <summary>
-		/// Perform Insertion Sort over the generic System.List<T> collection.
-		/// </summary>
-		/// <param name="list">List of items of type T.</param>
-		/// <param name="comparer">Value Comparer for the list items.</param>
-		/// <typeparam name="T">Type of list items.</typeparam>
 		public static void InsertionSort<T>(this IList<T> list, IComparer<T> comparer)
 		{
 			// Null comparers are not allowed.
@@ -53,10 +47,11 @@ namespace Algorithms
 		}
 
 
-		/// <summary>
-		/// Perform Insertion Sort over the generic DataStructures.ArrayList<T> collection.
-		/// </summary>
-		/// <param name="list">List of items of type T.</param>
+		/***
+		 * INSERTION SORT FOR ARRAY-LISTS
+		 * See DataStructures.ArrayList.cs
+		 */
+
 		public static void InsertionSort<T>(this ArrayList<T> list) where T : IComparable<T>
 		{
 			var comparer = Comparer<T>.Default;
@@ -64,12 +59,6 @@ namespace Algorithms
 		}
 
 
-		/// <summary>
-		/// Perform Insertion Sort over the generic DataStructures.ArrayList<T> collection.
-		/// </summary>
-		/// <param name="list">List of items of type T.</param>
-		/// <param name="comparer">Value Comparer for the list items.</param>
-		/// <typeparam name="T">Type of list items.</typeparam>
 		public static void InsertionSort<T>(this ArrayList<T> list, Comparer<T> comparer)
 		{
 			// Null comparers are not allowed.
