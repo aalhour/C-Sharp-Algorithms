@@ -32,8 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sorting\InsertionSort.cs" />
     <Compile Include="Comparers.cs" />
+    <Compile Include="Sorting\InsertionSorter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
