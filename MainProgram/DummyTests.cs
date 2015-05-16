@@ -137,6 +137,9 @@ namespace C_Sharp_Algorithms
 			arrayList2.Add (100);
 
 			Console.WriteLine(arrayList2.ToHumanReadable (addHeader: true));
+
+			var arrayList3 = arrayList.GetRange (0, 100);
+			Console.WriteLine(arrayList3.ToHumanReadable (addHeader: true));
 		}
 
 
