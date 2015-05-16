@@ -119,12 +119,6 @@ namespace DataStructures
 				{
 					try
 					{
-						string ss;
-
-						if(newCapacity == MAXIMUM_ARRAY_LENGTH_x86) {
-							ss = string.Empty;
-						}
-
 						T[] newCollection = new T[newCapacity];
 
 						if (_size > 0) 
@@ -160,6 +154,56 @@ namespace DataStructures
 			get
 			{
 				return _size;
+			}
+		}
+
+
+		/// <summary>
+		/// Determines whether this list is empty.
+		/// </summary>
+		/// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
+		public bool IsEmpty()
+		{
+			return (Count == 0);
+		}
+
+
+		/// <summary>
+		/// Gets the first element in the list.
+		/// </summary>
+		/// <value>The first.</value>
+		public T First
+		{
+			get
+			{
+				if (Count == 0)
+				{
+					throw new IndexOutOfRangeException ("List is empty.");
+				}
+				else
+				{
+					return _collection [0];
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// Gets the last element in the list.
+		/// </summary>
+		/// <value>The last.</value>
+		public T Last
+		{
+			get
+			{
+				if (Count == 0)
+				{
+					throw new IndexOutOfRangeException ("List is empty.");
+				}
+				else
+				{
+					return _collection [Count - 1];
+				}
 			}
 		}
 
@@ -218,7 +262,7 @@ namespace DataStructures
 		{
 			if (index < 0 || (uint)index > (uint)_size)
 			{
-				throw new ArgumentOutOfRangeException ();
+				throw new IndexOutOfRangeException ("Please provide a valid index.");
 			}
 
 			// If the inner array is full and there are no extra spaces, 
@@ -271,7 +315,7 @@ namespace DataStructures
 		{
 			if (index < 0 || (uint)index >= (uint)_size)
 			{
-				throw new ArgumentOutOfRangeException ();
+				throw new IndexOutOfRangeException ("Please pass a valid index.");
 			}
 
 			// Decrease the size by 1, to avoid doing Array.Copy if the element is to be removed from the tail of list. 
@@ -321,7 +365,7 @@ namespace DataStructures
 			// Handle the bounds of startIndex
 			if (startIndex < 0 || (uint)startIndex >= (uint)_size)
 			{
-				throw new ArgumentOutOfRangeException ();
+				throw new IndexOutOfRangeException ("Please pass a valid starting index.");
 			}
 
 			// Handle the bounds of count and startIndex with respect to _size.
@@ -468,7 +512,7 @@ namespace DataStructures
 			// Check bound of startIndex
 			if (startIndex < 0 || (uint)startIndex > (uint)_size)
 			{
-				throw new ArgumentOutOfRangeException ();
+				throw new IndexOutOfRangeException ("Please pass a valid starting index.");
 			}
 
 			// CHeck the bounds of count and startIndex with respect to _size
@@ -530,7 +574,7 @@ namespace DataStructures
 			// Check the bound of the starting index.
 			if (startIndex < 0 || (uint)startIndex > (uint)_size)
 			{
-				throw new ArgumentOutOfRangeException ();
+				throw new IndexOutOfRangeException ("Please pass a valid starting index.");
 			}
 
 			// Check the bounds of count and starting index with respect to _size.
@@ -601,6 +645,23 @@ namespace DataStructures
 			// Return the new list of elements.
 			return matchedElements;
 		}
+
+
+		/// <summary>
+		/// Return an array version of this list.
+		/// </summary>
+		/// <returns>Array.</returns>
+		public T[] ToArray()
+		{
+			T[] newArray = new T[Count];
+
+			if (Count > 0) {
+				Array.Copy (_collection, 0, newArray, 0, Count);
+			}
+
+			return newArray;
+		}
+
 	}
 
 }

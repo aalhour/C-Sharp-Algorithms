@@ -11,22 +11,35 @@ namespace DataStructures
     {
         /// <summary>
         /// Instance variables.
-        /// _collection: Doubly-Linked List.
+        /// _collection: Array-Based List.
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
-		private DLinkedList<T> _collection { get; set; }
+		private ArrayList<T> _collection { get; set; }
         public int Count { get { return _collection.Count; } }
 
 
         /// <summary>
-        /// CONSTRUCTOR
+        /// CONSTRUCTORS
         /// </summary>
         public Stack()
         {
-            // The internal collection is implemented as a doubly-linked list.
-            // See the DLList.cs for the list implementation.
-			_collection = new DLinkedList<T>();
+            // The internal collection is implemented as an array-based list.
+            // See the ArrayList.cs for the list implementation.
+			_collection = new ArrayList<T>();
         }
+
+
+		public Stack(int initialCapacity)
+		{
+			if (initialCapacity < 0)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// The internal collection is implemented as an array-based list.
+			// See the ArrayList.cs for the list implementation.
+			_collection = new ArrayList<T> (initialCapacity);
+		}
 
 
         /// <summary>
@@ -64,7 +77,7 @@ namespace DataStructures
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-            _collection.Prepend(dataItem);
+			_collection.InsertAt(dataItem, 0);
         }
 
 
@@ -113,22 +126,20 @@ namespace DataStructures
 
 
         /// <summary>
-        /// Returns a System.List version of this stack.
-        /// </summary>
-        /// <returns>System.List.</returns>
-        public List<T> ToList()
-        {
-            return _collection.ToList();
-        }
-
-
-        /// <summary>
         /// Returns a readable, multi-line print-out (string) of stack.
         /// </summary>
         /// <returns>String.</returns>
         public string ToReadable()
         {
-            return _collection.ToReadable();
+			int i = 0;
+			string stackAsString = string.Empty;
+
+			for(i = 0; i < Count; ++i)
+			{
+				stackAsString = String.Format("{0}[{1}] => {2}\r\n", stackAsString, i, _collection[i]);
+			}
+
+			return stackAsString;
         }
 
     }

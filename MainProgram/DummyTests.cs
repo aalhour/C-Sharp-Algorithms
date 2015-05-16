@@ -73,7 +73,6 @@ namespace C_Sharp_Algorithms
             Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
 
             var array = queue.ToArray();
-            var list = queue.ToList();
 
             queue.Pop();
             queue.Pop();
@@ -88,7 +87,6 @@ namespace C_Sharp_Algorithms
             Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
 
             var array2 = queue.ToArray();
-            var list2 = queue.ToList();
 
             Console.ReadLine();
         }
@@ -108,7 +106,6 @@ namespace C_Sharp_Algorithms
             Console.WriteLine("Stack:\r\n" + stack.ToReadable());
 
             var array = stack.ToArray();
-            var list = stack.ToList();
 
             stack.Pop();
             stack.Pop(out top);
@@ -122,7 +119,6 @@ namespace C_Sharp_Algorithms
             Console.WriteLine("Stack:\r\n" + stack.ToReadable());
 
             var array2 = stack.ToArray();
-            var list2 = stack.ToList();
 
             Console.ReadLine();
         }

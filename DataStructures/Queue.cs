@@ -10,10 +10,10 @@ namespace DataStructures
     {
         /// <summary>
         /// Instance varialbes.
-        /// _collection: Doubly-Linked List.
-        /// Count: Public Getter for returning the number of elements.
-        /// </summary>
-        private DLinkedList<T> _collection { get; set; }
+		/// _collection: Array-Based List.
+		/// Count: Public Getter for returning the number of elements.
+		/// </summary>
+		private ArrayList<T> _collection { get; set; }
         public int Count { get { return _collection.Count; } }
 
 
@@ -22,10 +22,23 @@ namespace DataStructures
         /// </summary>
         public Queue()
         {
-            // The internal collection is implemented as a doubly-linked list.
-            // See the DLList.cs for the list implementation.
-			_collection = new DLinkedList<T>();
+			// The internal collection is implemented as an array-based list.
+			// See the ArrayList.cs for the list implementation.
+			_collection = new ArrayList<T>();
         }
+
+
+		public Queue(int initialCapacity)
+		{
+			if (initialCapacity < 0)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// The internal collection is implemented as an array-based list.
+			// See the ArrayList.cs for the list implementation.
+			_collection = new ArrayList<T> (initialCapacity);
+		}
 
 
         /// <summary>
@@ -63,7 +76,7 @@ namespace DataStructures
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-            _collection.Append(dataItem);
+            _collection.Add(dataItem);
         }
 
 
@@ -86,7 +99,7 @@ namespace DataStructures
         /// <summary>
         /// Removes the Top Element from queue, and assigns it's value to the "top" parameter.
         /// </summary>
-        /// <param name="?"></param>
+        /// <param name="top">The top element container.</param>
         public void Pop(out T top)
         {
             if (Count > 0)
@@ -111,23 +124,21 @@ namespace DataStructures
         }
 
 
-        /// <summary>
-        /// Returns a System.List version of this queue.
-        /// </summary>
-        /// <returns>System.List.</returns>
-        public List<T> ToList()
-        {
-            return _collection.ToList();
-        }
-
-
-        /// <summary>
+		/// <summary>
         /// Returns a readable, multi-line print-out (string) of queue.
         /// </summary>
         /// <returns>String.</returns>
         public string ToReadable()
         {
-            return _collection.ToReadable();
+			int i = 0;
+			string queueAsString = string.Empty;
+
+			for(i = 0; i < Count; ++i)
+			{
+				queueAsString = String.Format("{0}[{1}] => {2}\r\n", queueAsString, i, _collection[i]);
+			}
+
+			return queueAsString;
         }
 
     }
