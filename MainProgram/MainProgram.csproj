@@ -41,9 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DummyTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AlgorithmsTests\InsertionSortTest.cs" />
+    <Compile Include="AlgorithmsTests\QuickSortTest.cs" />
+    <Compile Include="DataStructuresTests\QueueTest.cs" />
+    <Compile Include="DataStructuresTests\StackTest.cs" />
+    <Compile Include="DataStructuresTests\DLinkedListTest.cs" />
+    <Compile Include="DataStructuresTests\SLinkedListTest.cs" />
+    <Compile Include="DataStructuresTests\ArrayListTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -66,4 +72,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="AlgorithmsTests\" />
+    <Folder Include="DataStructuresTests\" />
+  </ItemGroup>
 </Project>
