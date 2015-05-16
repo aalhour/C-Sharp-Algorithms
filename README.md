@@ -7,5 +7,5 @@ I am writing this organized collection of classes as part of my preparation for 
 * SLinkedList.cs (Singly-Linked List).
 * DLinkedList.cs (Doubly-Linked List).
 * ArrayList.cs (Array-Based List. Implements auto-resizing).
-* Stack.cs (Stack - LIFO. Using the DLinkedList implementation).
-* Queue.cs (Queue - FIFO. Using the DLinkedList implementation).
+* Stack.cs (Stack - LIFO. Using the typed ArrayList implementation).
+* Queue.cs (Queue - FIFO. Using the typed ArrayList implementation).
