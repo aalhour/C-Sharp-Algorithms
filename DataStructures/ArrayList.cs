@@ -171,6 +171,25 @@ namespace DataStructures
 
 
 		/// <summary>
+		/// For each element in list, apply the specified action to it.
+		/// </summary>
+		/// <param name="action">Typed Action.</param>
+		public void ForEach(Action<T> action)
+		{
+			// Null actions are not allowed.
+			if (action == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			for (int i = 0; i < _size; ++i)
+			{
+				action (_collection [i]);
+			}
+		}
+
+
+		/// <summary>
 		/// Clear this instance.
 		/// </summary>
 		public void Clear()
@@ -186,6 +205,7 @@ namespace DataStructures
 		/// <summary>
 		/// Checks whether the list contains the specified dataItem.
 		/// </summary>
+		/// <returns>True if list contains the dataItem, false otherwise.</returns>
 		/// <param name="dataItem">Data item.</param>
 		public bool Contains(T dataItem)
 		{
@@ -216,6 +236,7 @@ namespace DataStructures
 		/// <summary>
 		/// Checks whether the list contains the specified dataItem.
 		/// </summary>
+		/// <returns>True if list contains the dataItem, false otherwise.</returns>
 		/// <param name="dataItem">Data item.</param>
 		/// <param name="comparer">The Equality Comparer object.</param>
 		public bool Contains(T dataItem, IEqualityComparer<T> comparer)
@@ -243,6 +264,80 @@ namespace DataStructures
 			}
 
 			return false;
+		}
+
+
+		/// <summary>
+		/// Checks whether an item specified via a Predicate<T> function exists exists in list.
+		/// </summary>
+		/// <param name="searchMatch">Match predicate.</param>
+		public bool Exists(Predicate<T> searchMatch)
+		{
+			// Use the FindIndex to look through the collection
+			// If the returned index != -1 then it does exist, otherwise it doesn't.
+			return (FindIndex (searchMatch) != -1);
+		}
+
+
+		/// <summary>
+		/// Finds the index of the element that matches the predicate.
+		/// </summary>
+		/// <returns>The index of element if found, -1 otherwise.</returns>
+		/// <param name="searchMatch">Match predicate.</param>
+		public int FindIndex(Predicate<T> searchMatch)
+		{
+			return FindIndex (0, _size, searchMatch);
+		}
+
+
+		/// <summary>
+		/// Finds the index of the element that matches the predicate.
+		/// </summary>
+		/// <returns>The index of the element if found, -1 otherwise.</returns>
+		/// <param name="startIndex">Starting index to search from.</param>
+		/// <param name="searchMatch">Match predicate.</param>
+		public int FindIndex(int startIndex, Predicate<T> searchMatch)
+		{
+			return FindIndex (startIndex, (_size - startIndex), searchMatch);
+		}
+
+
+		/// <summary>
+		/// Finds the index of the first element that matches the given predicate function.
+		/// </summary>
+		/// <returns>The index of element if found, -1 if not found.</returns>
+		/// <param name="startIndex">Starting index of search.</param>
+		/// <param name="count">Count of elements to search through.</param>
+		/// <param name="searchMatch">Match predicate function.</param>
+		public int FindIndex(int startIndex, int count, Predicate<T> searchMatch)
+		{
+			// Check bound of startIndex
+			if ((uint)startIndex > (uint)_size)
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// CHeck the bounds of count and startIndex with respect to _size
+			if (count < 0 || startIndex > (_size - count))
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			// Null match-predicates are not allowed
+			if (searchMatch == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			// Start the search
+			int endIndex = startIndex + count;
+			for (int index = startIndex; index < endIndex; ++index)
+			{
+				if (searchMatch (_collection [index]) == true) return index;
+			}
+
+			// Not found, return -1
+			return -1;
 		}
 
 	}
