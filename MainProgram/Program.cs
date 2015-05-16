@@ -14,7 +14,7 @@ namespace C_Sharp_Algorithms
 			//DummyTests.Test_Queue();
             //DummyTests.Test_Stack();
 
-			//DummyTests.Test_ArrayList ();
+			DummyTests.Test_ArrayList ();
 			//DummyTests.Test_DoublyLinkedList();
 			//DummyTests.Test_SinglyLinkedList ();
         }

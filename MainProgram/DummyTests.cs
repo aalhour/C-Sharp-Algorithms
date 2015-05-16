@@ -13,6 +13,75 @@ namespace C_Sharp_Algorithms
     /// </summary>
     public static class DummyTests
     {
+		public static void Test_Queue()
+        {
+            string top;
+            DataStructures.Queue<string> queue = new DataStructures.Queue<string>();
+
+            queue.Push("aaa");
+            queue.Push("bbb");
+            queue.Push("ccc");
+            queue.Push("ddd");
+            queue.Push("eee");
+            queue.Push("fff");
+            queue.Push("ggg");
+            queue.Push("hhh");
+
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
+
+            var array = queue.ToArray();
+
+            queue.Pop();
+            queue.Pop();
+            queue.Pop(out top);
+
+            Console.WriteLine("Old 3nd-last: " + top + "\r\n");
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
+
+            queue.Pop();
+            queue.Pop();
+
+            Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
+
+            var array2 = queue.ToArray();
+
+            Console.ReadLine();
+        }
+
+
+        public static void Test_Stack()
+        {
+            int top;
+            DataStructures.Stack<int> stack = new DataStructures.Stack<int>();
+
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+            stack.Push(6);
+
+            Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+
+            var array = stack.ToArray();
+
+            stack.Pop();
+            stack.Pop(out top);
+
+            Console.WriteLine("Old 2nd-last: " + top);
+			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+
+            stack.Pop();
+            stack.Pop();
+
+			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+
+            var array2 = stack.ToArray();
+
+            Console.ReadLine();
+        }
+
+
 		public static void Test_ArrayList()
 		{
 			int index = 0;
@@ -52,76 +121,24 @@ namespace C_Sharp_Algorithms
 
 			bool doesEightsExists = arrayList.Contains (88888);
 
-			arrayList.Reverse ();
+			//arrayList.Reverse ();
+
+			var arrayList2 = new ArrayList<int> ();
+			arrayList2.Add (0);
+			arrayList2.Add (10);
+			arrayList2.Add (20);
+			arrayList2.Add (30);
+			arrayList2.Add (40);
+			arrayList2.Add (50);
+			arrayList2.Add (60);
+			arrayList2.Add (70);
+			arrayList2.Add (80);
+			arrayList2.Add (90);
+			arrayList2.Add (100);
+
+			Console.WriteLine(arrayList2.ToHumanReadable (addHeader: true));
 		}
 
-
-        public static void Test_Queue()
-        {
-            string top;
-            DataStructures.Queue<string> queue = new DataStructures.Queue<string>();
-
-            queue.Push("aaa");
-            queue.Push("bbb");
-            queue.Push("ccc");
-            queue.Push("ddd");
-            queue.Push("eee");
-            queue.Push("fff");
-            queue.Push("ggg");
-            queue.Push("hhh");
-
-            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
-
-            var array = queue.ToArray();
-
-            queue.Pop();
-            queue.Pop();
-            queue.Pop(out top);
-
-            Console.WriteLine("Old 3nd-last: " + top + "\r\n");
-            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
-
-            queue.Pop();
-            queue.Pop();
-
-            Console.WriteLine("Queue Elements:\r\n" + queue.ToReadable());
-
-            var array2 = queue.ToArray();
-
-            Console.ReadLine();
-        }
-
-        public static void Test_Stack()
-        {
-            int top;
-            DataStructures.Stack<int> stack = new DataStructures.Stack<int>();
-
-            stack.Push(1);
-            stack.Push(2);
-            stack.Push(3);
-            stack.Push(4);
-            stack.Push(5);
-            stack.Push(6);
-
-            Console.WriteLine("Stack:\r\n" + stack.ToReadable());
-
-            var array = stack.ToArray();
-
-            stack.Pop();
-            stack.Pop(out top);
-
-            Console.WriteLine("Old 2nd-last: " + top);
-            Console.WriteLine("Stack:\r\n" + stack.ToReadable());
-
-            stack.Pop();
-            stack.Pop();
-
-            Console.WriteLine("Stack:\r\n" + stack.ToReadable());
-
-            var array2 = stack.ToArray();
-
-            Console.ReadLine();
-        }
 
         public static void Test_DoublyLinkedList()
         {
@@ -207,6 +224,7 @@ namespace C_Sharp_Algorithms
 
             Console.ReadLine();
         }
+
 
         public static void Test_SinglyLinkedList()
         {

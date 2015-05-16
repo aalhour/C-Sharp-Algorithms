@@ -648,6 +648,38 @@ namespace DataStructures
 
 
 		/// <summary>
+		/// Get a range of elements, starting from an index..
+		/// </summary>
+		/// <returns>The range as ArrayList<T>.</returns>
+		/// <param name="startIndex">Start index to get range from.</param>
+		/// <param name="count">Count of elements.</param>
+		public ArrayList<T> GetRange(int startIndex, int count)
+		{
+			// Handle the bound errors of startIndex
+			if (startIndex < 0 || (uint)startIndex > (uint)_size)
+			{
+				throw new IndexOutOfRangeException ("Please provide a valid starting index.");
+			}
+
+			// Handle the bound errors of count and startIndex with respect to _size
+			if (count < 0 || startIndex > (_size - count)) 
+			{
+				throw new ArgumentOutOfRangeException ();
+			}
+
+			var newArrayList = new ArrayList<T> (count);
+
+			// Use Array.Copy to quickly copy the contents from this array to the new list's inner array.
+			Array.Copy (_collection, startIndex, newArrayList._collection, 0, count);
+
+			// Assign count to the new list's inner _size counter.
+			newArrayList._size = count;
+
+			return newArrayList;
+		}
+
+
+		/// <summary>
 		/// Return an array version of this list.
 		/// </summary>
 		/// <returns>Array.</returns>
@@ -660,6 +692,32 @@ namespace DataStructures
 			}
 
 			return newArray;
+		}
+
+
+		/// <summary>
+		/// Return a human readable, multi-line, print-out (string) of this list.
+		/// </summary>
+		/// <returns>The human readable string.</returns>
+		/// <param name="addHeader">If set to <c>true</c> a header with count and Type is added; otherwise, only elements are printed.</param>
+		public string ToHumanReadable(bool addHeader = false)
+		{
+			int i = 0;
+			string listAsString = string.Empty;
+
+			string preLineIndent = (addHeader == false ? "" : "\t");
+
+			for(i = 0; i < Count; ++i)
+			{
+				listAsString = String.Format("{0}{1}[{2}] => {3}\r\n", listAsString, preLineIndent, i, _collection[i]);
+			}
+
+			if (addHeader == true) 
+			{
+				listAsString = String.Format ("ArrayList of count: {0}.\r\n(\r\n{1})", Count, listAsString);
+			}
+
+			return listAsString;
 		}
 
 	}

@@ -125,20 +125,12 @@ namespace DataStructures
 
 
 		/// <summary>
-        /// Returns a readable, multi-line print-out (string) of queue.
+        /// Returns a human-readable, multi-line, print-out (string) of this queue.
         /// </summary>
         /// <returns>String.</returns>
-        public string ToReadable()
+        public string ToHumanReadable()
         {
-			int i = 0;
-			string queueAsString = string.Empty;
-
-			for(i = 0; i < Count; ++i)
-			{
-				queueAsString = String.Format("{0}[{1}] => {2}\r\n", queueAsString, i, _collection[i]);
-			}
-
-			return queueAsString;
+			return _collection.ToHumanReadable ();
         }
 
     }

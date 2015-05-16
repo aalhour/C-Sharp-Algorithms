@@ -125,21 +125,13 @@ namespace DataStructures
         }
 
 
-        /// <summary>
-        /// Returns a readable, multi-line print-out (string) of stack.
-        /// </summary>
-        /// <returns>String.</returns>
-        public string ToReadable()
-        {
-			int i = 0;
-			string stackAsString = string.Empty;
-
-			for(i = 0; i < Count; ++i)
-			{
-				stackAsString = String.Format("{0}[{1}] => {2}\r\n", stackAsString, i, _collection[i]);
-			}
-
-			return stackAsString;
+		/// <summary>
+		/// Returns a human-readable, multi-line, print-out (string) of this stack.
+		/// </summary>
+		/// <returns>String.</returns>
+		public string ToHumanReadable()
+		{
+			return _collection.ToHumanReadable ();
         }
 
     }
