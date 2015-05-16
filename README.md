@@ -17,18 +17,12 @@ I am writing this organized collection of classes as part of my preparation for 
   * Implements insertion sort as an extention method for the following collections: System.List, System.Array, and my ArrayList data structure.
   * Supports value comparers.
     ```
-    List<int> list1 = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-    list1.InsertionSort();
-    
-    ArrayList<string> list2 = new ArrayList<string>();
-    list2.Add("one");
-    list2.Add("two");
-    list2.Add("three");
-    list2.InsertionSort();
+    List<int> list = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    list.InsertionSort();
     ```
 * Quick Sort (QuickSorter.cs)
   * Implements quick sort as an extension method for all classes that implement IList<T>. Which includes, but is not limited to, System.List and System.Array.
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
-			 list.QuickSort ();
+    list.QuickSort ();
     ```
