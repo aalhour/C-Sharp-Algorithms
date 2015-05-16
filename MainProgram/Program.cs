@@ -34,7 +34,6 @@ namespace C_Sharp_Algorithms
 
 			// ANOTHER LIST TO SORT
 
-
 			List<long> list2 = new List<long> ();
 			list2.Add (23);
 			list2.Add (42);
@@ -50,6 +49,7 @@ namespace C_Sharp_Algorithms
 			list2.Add (2);
 
 			list2.InsertionSort ();
+
 
 			//DummyTests.Test_Queue();
             //DummyTests.Test_Stack();
