@@ -13,14 +13,7 @@ namespace Algorithms
 		/// <typeparam name="T">The Type of values.</typeparam>
 		public static bool IsEqualTo<T>(this T firstValue, T secondValue) where T : IComparable
 		{
-			if ((Object)firstValue == null || (Object)secondValue == null) 
-			{
-				return false;
-			}
-			else
-			{
-				return firstValue.Equals (secondValue);
-			}
+			return firstValue.Equals (secondValue);
 		}
 
 
@@ -33,14 +26,7 @@ namespace Algorithms
 		/// <typeparam name="T">The Type of values.</typeparam>
 		public static bool IsGreaterThan<T>(this T firstValue, T secondValue) where T : IComparable
 		{
-			if ((Object)firstValue == null || (Object)secondValue == null) 
-			{
-				return false;
-			}
-			else
-			{
-				return firstValue.CompareTo (secondValue) > 0;
-			}
+			return firstValue.CompareTo (secondValue) > 0;
 		}
 
 
@@ -53,14 +39,7 @@ namespace Algorithms
 		/// <typeparam name="T">The Type of values.</typeparam>
 		public static bool IsLessThan<T>(this T firstValue, T secondValue) where T : IComparable
 		{
-			if ((Object)firstValue == null || (Object)secondValue == null) 
-			{
-				return false;
-			}
-			else
-			{
-				return firstValue.CompareTo (secondValue) < 0;
-			}
+			return firstValue.CompareTo (secondValue) < 0;
 		}
 
 
