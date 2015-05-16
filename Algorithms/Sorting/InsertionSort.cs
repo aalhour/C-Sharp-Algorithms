@@ -80,6 +80,13 @@ namespace Algorithms
 		/// <typeparam name="T">Type of list items.</typeparam>
 		public static void InsertionSort<T>(this List<T> list, Comparer<T> comparer)
 		{
+			// Null comparers are not allowed.
+			if(comparer == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			// Do sorting if list is not empty.
 			if (list.Count > 0)
 			{
 				for (int i = 1; i < list.Count; i++)
@@ -120,6 +127,13 @@ namespace Algorithms
 		/// <typeparam name="T">Type of list items.</typeparam>
 		public static void InsertionSort<T>(this ArrayList<T> list, Comparer<T> comparer)
 		{
+			// Null comparers are not allowed.
+			if(comparer == null)
+			{
+				throw new ArgumentNullException ();
+			}
+
+			// Do sorting if list is not empty.
 			if (list.Count > 0)
 			{
 				for (int i = 1; i < list.Count; i++)
