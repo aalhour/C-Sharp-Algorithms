@@ -11,8 +11,6 @@ namespace C_Sharp_Algorithms
     {
         static void Main(string[] args)
         {
-			//Object[] array = new object[134217728];
-
 			DummyTests.Test_ArrayList ();
 
             //DummyTests.Test_Queue();
