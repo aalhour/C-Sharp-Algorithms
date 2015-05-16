@@ -5,16 +5,16 @@ I am writing this organized collection of classes as part of my preparation for 
 
 
 ### Data Structures:
-* SLinkedList.cs (Singly-Linked List).
-* DLinkedList.cs (Doubly-Linked List).
-* ArrayList.cs (Array-Based List. Implements auto-resizing).
-* Stack.cs (Stack - LIFO. Using the typed ArrayList implementation).
-* Queue.cs (Queue - FIFO. Using the typed ArrayList implementation).
+* Singly-Linked List (SLinkedList.cs).
+* Doubly-Linked List (DLinkedList.cs).
+* ArrayList (ArrayList.cs). An arrays-based list. Implements auto-resizing.
+* Stack (Stack.cs). Using my ArrayList implementation.
+* Queue (Queue.cs). Using my ArrayList implementation.
 
 
 ### Algorithms
-* InsertionSort.cs
-  * Implements Insertion Sort for System.List and my ArrayList data structures. Supports comparers.
+* InsertionSort (InsertionSorter.cs)
+  * Implements insertion sort for System.List, and my ArrayList as extention methods. Supports comparers.
     ```
     List<int> list1 = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     list1.InsertionSort();
