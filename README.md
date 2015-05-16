@@ -14,7 +14,8 @@ I am writing this organized collection of classes as part of my preparation for 
 
 ### Algorithms
 * InsertionSort (InsertionSorter.cs)
-  * Implements insertion sort for System.List, and my ArrayList as extention methods. Supports comparers.
+  * Implements insertion sort as an extention method for the following collections: System.List, System.Array, and my ArrayList data structure.
+  * Supports value comparers.
     ```
     List<int> list1 = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     list1.InsertionSort();
