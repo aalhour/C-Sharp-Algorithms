@@ -14,7 +14,7 @@ I am writing this organized collection of classes as part of my preparation for 
 
 ### Algorithms
 * Insertion Sort (InsertionSorter.cs)
-  * Implements insertion sort as an extention method for the following collections: System.List, System.Array, and my ArrayList data structure.
+  * Implements insertion sort as an extention method for my ArrayList data structure along side all collections that implement the IList<T> interface. Which includes, but is not limited to, System.List, and System.Array.
   * Supports value comparers.
     
     ```
@@ -22,7 +22,7 @@ I am writing this organized collection of classes as part of my preparation for 
     list.InsertionSort();
     ```
 * Quick Sort (QuickSorter.cs)
-  * Implements quick sort as an extension method for all classes that implement IList<T>. Which includes, but is not limited to, System.List and System.Array.
+  * Implements quick sort as an extension method for all collections that implement the IList<T> interface. Which includes, but is not limited to, System.List and System.Array.
     
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
