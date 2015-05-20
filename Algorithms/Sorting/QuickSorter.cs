@@ -11,11 +11,16 @@ namespace Algorithms
 		 * The public APIs for the quick sort algorithm.
 		 */
 
-		public static void QuickSort<T>(this IList<T> collection) where T : IComparable<T>
+		public static void QuickSort<T>(this IList<T> collection, Comparer<T> comparer = null)
 		{
 			int startIndex = 0;
 			int endIndex = collection.Count - 1;
-			collection.InternalQuickSort(startIndex, endIndex);
+
+			//
+			// If the comparer is Null, then initialize it using a default typed comparer
+			comparer = comparer ?? Comparer<T>.Default;
+
+			collection.InternalQuickSort(startIndex, endIndex, comparer);
 		}
 
 
@@ -23,30 +28,30 @@ namespace Algorithms
 		 * The quick sort algorithm.
 		 */
 
+		// Private static method
 		// The recursive quick sort algorithm
-		private static void InternalQuickSort<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex) where T : IComparable<T>
+		private static void InternalQuickSort<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex, Comparer<T> comparer)
 		{
+			//
+			// Recursive call check
 			if (leftmostIndex < rightmostIndex)
 			{
-				int wallIndex = collection.InternalPartition (leftmostIndex, rightmostIndex);
-				collection.InternalQuickSort (leftmostIndex, wallIndex - 1);
-				collection.InternalQuickSort (wallIndex + 1, rightmostIndex);
+				int wallIndex = collection.InternalPartition (leftmostIndex, rightmostIndex, comparer);
+				collection.InternalQuickSort (leftmostIndex, wallIndex - 1, comparer);
+				collection.InternalQuickSort (wallIndex + 1, rightmostIndex, comparer);
 			}
 		}
 
 
-		// The partition function
-		private static int InternalPartition<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex) where T : IComparable<T>
+		// Private static method
+		// The partition function, used in the quick sort algorithm
+		private static int InternalPartition<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex, Comparer<T> comparer)
 		{
 			int wallIndex, pivotIndex;
 
 			// Choose the pivot
-			// pivotIndex = collection.SelectPivotIndex(leftmostIndex, rightmostIndex);
 			pivotIndex = rightmostIndex;
 			T pivotValue = collection [pivotIndex];
-
-			// put the chosen pivot at the end of collection
-			//collection.Swap(rightmostIndex, pivotIndex);
 
 			// Compare remaining array elements against pivotValue
 			wallIndex = leftmostIndex;
@@ -55,7 +60,7 @@ namespace Algorithms
 			for (int i = leftmostIndex; i <= (rightmostIndex - 1); i++)
 			{
 				// check if collection[i] <= pivotValue
-				if (collection[i].CompareTo(pivotValue) <= 0)
+				if (comparer.Compare(collection[i], pivotValue) <= 0)
 				{
 					collection.Swap(i, wallIndex);
 					wallIndex++;
@@ -65,21 +70,6 @@ namespace Algorithms
 			collection.Swap(wallIndex, pivotIndex);
 
 			return wallIndex;
-		}
-
-
-		// The pivot selection algorithm.
-		// Returns the index of the median between (firstElement, middleElement, and lastElement).
-		private static int SelectPivotIndex<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex) where T : IComparable<T>
-		{
-			int middleIndex = (rightmostIndex - leftmostIndex) / 2;
-
-			var arrayOfValues = new T[3] { collection[leftmostIndex], collection[middleIndex], collection[rightmostIndex] };
-			arrayOfValues.InsertionSort ();
-
-			if (arrayOfValues [1].Equals(collection [leftmostIndex])) return leftmostIndex;
-			else if (arrayOfValues [1].Equals(collection [middleIndex])) return middleIndex;
-			else return rightmostIndex;
 		}
 
 
