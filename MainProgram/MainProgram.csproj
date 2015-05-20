@@ -50,6 +50,7 @@
     <Compile Include="DataStructuresTests\DLinkedListTest.cs" />
     <Compile Include="DataStructuresTests\SLinkedListTest.cs" />
     <Compile Include="DataStructuresTests\ArrayListTest.cs" />
+    <Compile Include="AlgorithmsTests\MergeSorterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

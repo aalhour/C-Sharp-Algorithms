@@ -35,6 +35,8 @@
     <Compile Include="Comparers.cs" />
     <Compile Include="Sorting\InsertionSorter.cs" />
     <Compile Include="Sorting\QuickSorter.cs" />
+    <Compile Include="Sorting\MergeSorter.cs" />
+    <Compile Include="Sorting\Helpers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

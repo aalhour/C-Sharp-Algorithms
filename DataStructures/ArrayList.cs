@@ -12,10 +12,13 @@ namespace DataStructures
 		/// Instance variables.
 		/// </summary>
 
+		// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
+		// Set the flag IsMaximumCapacityReached to false
+		bool DefaultMaxCapacityIsX64 = true;
+		bool IsMaximumCapacityReached = false;
+
 		// The C# Maximum Array Length (before encountering overflow)
 		// Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-		private bool DefaultMaxCapacityIsX64 { get; set; }
-		private bool IsMaximumCapacityReached { get; set; }
 		private const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
 		private const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
 
@@ -36,18 +39,9 @@ namespace DataStructures
 		/// <summary>
 		/// CONSTRUCTORS
 		/// </summary>
-		public ArrayList ()
+		public ArrayList () : this(capacity: 0)
 		{
-			// Zerofiy the _size;
-			_size = 0;
-
-			// Initialize _collection to an empty array.
-			_collection = _emptyArray;
-
-			// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
-			// Set the flag IsMaximumCapacityReached to false
-			DefaultMaxCapacityIsX64 = true;
-			IsMaximumCapacityReached = false;
+			
 		}
 
 		public ArrayList(int capacity)
@@ -67,11 +61,6 @@ namespace DataStructures
 
 			// Zerofiy the _size;
 			_size = 0;
-
-			// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
-			// Set the flag IsMaximumCapacityReached to false
-			DefaultMaxCapacityIsX64 = true;
-			IsMaximumCapacityReached = false;
 		}
 
 
@@ -79,8 +68,7 @@ namespace DataStructures
 		/// Ensures the capacity.
 		/// </summary>
 		/// <param name="minCapacity">Minimum capacity.</param>
-		/// <param name="useMaxCapacity1">If set to <c>true</c> the function will use MAXIMUM_ARRAY_LENGTH_1, otherwise it will use MAXIMUM_ARRAY_LENGTH_2.</param>
-		private void EnsureCapacity(int minCapacity, bool useMaxCapacity1 = true)
+		private void EnsureCapacity(int minCapacity)
 		{
 			// If the length of the inner collection is less than the minCapacity
 			// ... and if the maximum capacity wasn't reached yet, 
@@ -92,7 +80,8 @@ namespace DataStructures
 				// Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
 				// Note that this check works even when _items.Length overflowed thanks to the (uint) cast
 				int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
-				if ((uint)newCapacity >= maxCapacity)
+
+				if (newCapacity >= maxCapacity)
 				{
 					newCapacity = maxCapacity - 1;
 					IsMaximumCapacityReached = true;
@@ -115,31 +104,26 @@ namespace DataStructures
 		{
 			if (newCapacity != _collection.Length && newCapacity > _size)
 			{
-				if (newCapacity > 0) 
+				try
 				{
-					try
-					{
-						T[] newCollection = new T[newCapacity];
+					T[] newCollection = new T[newCapacity];
 
-						if (_size > 0) 
-						{
-							Array.Copy (_collection, 0, newCollection, 0, _size);
-						}
-
-						_collection = newCollection;
-					}
-					catch (OutOfMemoryException)
+					if (_size > 0) 
 					{
-						if (DefaultMaxCapacityIsX64 == true)
-						{
-							DefaultMaxCapacityIsX64 = false;
-							EnsureCapacity (newCapacity);
-						}
+						Array.Copy (_collection, 0, newCollection, 0, _size);
 					}
+
+					_collection = newCollection;
 				}
-				else
+				catch (OutOfMemoryException)
 				{
-					_collection = _emptyArray;
+					if (DefaultMaxCapacityIsX64 == true)
+					{
+						DefaultMaxCapacityIsX64 = false;
+						EnsureCapacity (newCapacity);
+					}
+
+					throw;
 				}
 			}
 		}
@@ -196,7 +180,7 @@ namespace DataStructures
 		{
 			get
 			{
-				if (Count == 0)
+				if (IsEmpty())
 				{
 					throw new IndexOutOfRangeException ("List is empty.");
 				}
@@ -218,7 +202,7 @@ namespace DataStructures
 		{
 			get
 			{
-				if ((uint)index >= (uint)_size)
+				if (index < 0 || index >= _size)
 				{
 					throw new IndexOutOfRangeException ();
 				}
@@ -228,7 +212,7 @@ namespace DataStructures
 
 			set
 			{
-				if ((uint)index >= (uint)_size)
+				if (index < 0 || index >= _size)
 				{
 					throw new IndexOutOfRangeException ();
 				}
@@ -260,7 +244,7 @@ namespace DataStructures
 		/// <param name="index">Index of insertion.</param>
 		public void InsertAt(T dataItem, int index)
 		{
-			if (index < 0 || (uint)index > (uint)_size)
+			if (index < 0 || index > _size)
 			{
 				throw new IndexOutOfRangeException ("Please provide a valid index.");
 			}
@@ -313,13 +297,13 @@ namespace DataStructures
 		/// <param name="index">Index of element.</param>
 		public void RemoveAt(int index)
 		{
-			if (index < 0 || (uint)index >= (uint)_size)
+			if (index < 0 || index >= _size)
 			{
 				throw new IndexOutOfRangeException ("Please pass a valid index.");
 			}
 
 			// Decrease the size by 1, to avoid doing Array.Copy if the element is to be removed from the tail of list. 
-			this._size--;
+			_size--;
 
 			// If the index is still less than size, perform an Array.Copy to override the cell at index.
 			// This operation is O(N), where N = size - index.
@@ -363,7 +347,7 @@ namespace DataStructures
 		public void Reverse(int startIndex, int count)
 		{
 			// Handle the bounds of startIndex
-			if (startIndex < 0 || (uint)startIndex >= (uint)_size)
+			if (startIndex < 0 || startIndex >= _size)
 			{
 				throw new IndexOutOfRangeException ("Please pass a valid starting index.");
 			}
@@ -510,7 +494,7 @@ namespace DataStructures
 		public int FindIndex(int startIndex, int count, Predicate<T> searchMatch)
 		{
 			// Check bound of startIndex
-			if (startIndex < 0 || (uint)startIndex > (uint)_size)
+			if (startIndex < 0 || startIndex > _size)
 			{
 				throw new IndexOutOfRangeException ("Please pass a valid starting index.");
 			}
