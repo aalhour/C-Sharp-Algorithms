@@ -5,7 +5,7 @@ I am writing this organized collection of classes as part of my preparation for 
 
 ## Data Structures:
 * **Single-Linked List** (SLinkedList.cs).
-* **Double-Linked **List (DLinkedList.cs).
+* **Double-Linked List** (DLinkedList.cs).
 * **Array List** (ArrayList.cs). A generic arrays-based list. Implements auto-resizing.
 * **Stack** (Stack.cs). Based on my ArrayList<T>.
 * **Queue** (Queue.cs). Based on my ArrayList<T>.
@@ -16,10 +16,10 @@ I am writing this organized collection of classes as part of my preparation for 
 
 #### Sorting:
 Sorting algorithms are implemented as an extension method. They support the native Array<T>, and List<T> classes. They can takes value comparers. Insertion Sort supports my ArrayList<T> class.
-  * Insertion Sort (InsertionSorter.cs)
-  * Quick Sort (QuickSorter.cs)
-  * Merge Sort (MergeSorter.cs)
-  * Heap Sort (HeapSorter.cs)
+  * **Insertion Sort** (InsertionSorter.cs)
+  * **Quick Sort** (QuickSorter.cs)
+  * **Merge Sort** (MergeSorter.cs)
+  * **Heap Sort** (HeapSorter.cs)
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
     
