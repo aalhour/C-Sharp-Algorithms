@@ -19,15 +19,12 @@ I am writing this organized collection of classes as part of my preparation for 
 ## Algorithms:
 
 #### Sorting:
- * Insertion Sort (InsertionSorter.cs)
-   * Implements insertion sort as an extention method. Supports the system Array<T>, List<T>, and my ArrayList<T>. Supports value comparers.
- 
- * Quick Sort (QuickSorter.cs)
-   * Implements quick sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
-  
- * Merge Sort (MergeSorter.cs)
-   * Implements merge sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
-    
+Sorting algorithms are implemented as an extension method. They support the native Array<T>, and List<T> classes. They can takes value comparers. Insertion Sort supports my ArrayList<T> class.
+  * Insertion Sort (InsertionSorter.cs)
+  * Quick Sort (QuickSorter.cs)
+  * Merge Sort (MergeSorter.cs)
+  * Heap Sort (HeapSorter.cs)
+
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
     
@@ -37,4 +34,5 @@ I am writing this organized collection of classes as part of my preparation for 
     list.InsertionSort (valueComparer);
     list.QuickSort (valueComparer);
     list.MergeSort (valueComparer);
+    list.HeapSort (valueComparer);
     ```
