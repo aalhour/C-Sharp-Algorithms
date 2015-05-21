@@ -11,6 +11,7 @@ I am writing this organized collection of classes as part of my preparation for 
 * **Queue** (Queue.cs). Based on my ArrayList<T>.
 * **Min-Heap** (MinHeap.cs). Based on my ArrayList<T>.
 * **Max-Heap** (MaxHeap.cs). Based on my ArrayList<T>.
+* **Priority Queue** (PriorityQueue.cs). Based on my MaxHeap<T>.
 
 ## Algorithms:
 
