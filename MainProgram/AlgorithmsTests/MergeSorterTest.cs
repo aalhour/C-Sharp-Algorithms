@@ -10,22 +10,9 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 	{
 		public static void DoTest ()
 		{
-			List<int> list = new List<int> ();
+            List<int> numbersList = new List<int> { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
 
-			list.Add (23);
-			list.Add (42);
-			list.Add (4);
-			list.Add (16);
-			list.Add (8);
-			list.Add (15);
-			list.Add (9);
-			list.Add (55);
-			list.Add (0);
-			list.Add (34);
-			list.Add (12);
-			list.Add (2);
-
-			//var newList = list.MergeSort ();
+            var sortedList = numbersList.MergeSort();
 		}
 	}
 }
