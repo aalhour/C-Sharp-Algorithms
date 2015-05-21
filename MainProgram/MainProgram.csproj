@@ -52,13 +52,14 @@
     <Compile Include="DataStructuresTests\SLinkedListTest.cs" />
     <Compile Include="DataStructuresTests\ArrayListTest.cs" />
     <Compile Include="AlgorithmsTests\MergeSorterTest.cs" />
+    <Compile Include="DataStructuresTests\MinHeapTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Algorithms\Algorithms.csproj">
-      <Project>{8f59d573-a1b8-438f-a67a-a7f11facf201}</Project>
+      <Project>{8F59D573-A1B8-438F-A67A-A7F11FACF201}</Project>
       <Name>Algorithms</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj">

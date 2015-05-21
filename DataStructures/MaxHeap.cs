@@ -112,7 +112,7 @@ namespace DataStructures
 
 
 		/// <summary>
-		/// Heapifies the specified newCollection.
+		/// Heapifies the specified newCollection. Overrides the current heap.
 		/// </summary>
 		/// <param name="newCollection">New collection.</param>
 		public void Heapify(IList<T> newCollection)
