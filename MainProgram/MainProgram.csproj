@@ -52,7 +52,8 @@
     <Compile Include="DataStructuresTests\SLinkedListTest.cs" />
     <Compile Include="DataStructuresTests\ArrayListTest.cs" />
     <Compile Include="AlgorithmsTests\MergeSorterTest.cs" />
-    <Compile Include="DataStructuresTests\MinHeapTest.cs" />
+    <Compile Include="DataStructuresTests\HeapsTest.cs" />
+    <Compile Include="DataStructuresTests\PriorityQueuesTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
