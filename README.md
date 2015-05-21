@@ -14,7 +14,7 @@ I am writing this organized collection of classes as part of my preparation for 
 
 ### Algorithms
 
-##### Sorting:
+#### Sorting:
  * Insertion Sort (InsertionSorter.cs)
    * Implements insertion sort as an extention method. Supports the system Array<T>, List<T>, and my ArrayList<T>. Supports value comparers.
  
