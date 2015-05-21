@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using DataStructures;
+using Algorithms.Helpers;
 
 namespace Algorithms.Sorting
 {

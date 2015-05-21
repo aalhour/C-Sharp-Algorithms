@@ -674,11 +674,32 @@ namespace DataStructures
 		{
 			T[] newArray = new T[Count];
 
-			if (Count > 0) {
+			if (Count > 0)
+			{
 				Array.Copy (_collection, 0, newArray, 0, Count);
 			}
 
 			return newArray;
+		}
+
+
+		/// <summary>
+		/// Return an array version of this list.
+		/// </summary>
+		/// <returns>Array.</returns>
+		public List<T> ToList()
+		{
+			var newList = new List<T>(this.Count);
+
+			if (this.Count > 0)
+			{
+				for (int i = 0; i < this.Count; ++i)
+				{
+					newList.Add (_collection [i]);
+				}
+			}
+
+			return newList;
 		}
 
 

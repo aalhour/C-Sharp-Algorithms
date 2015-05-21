@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Algorithms
+namespace Algorithms.Helpers
 {
 	public static class Comparers
 	{
