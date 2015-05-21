@@ -12,7 +12,7 @@ I am writing this organized collection of classes as part of my preparation for 
 * Stack (Stack.cs). Using my ArrayList implementation.
 * Queue (Queue.cs). Using my ArrayList implementation.
 
-===============================================================
+-----------------------------------------------------------------
 
 ## Algorithms
 
