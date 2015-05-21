@@ -3,20 +3,18 @@ using System.Collections.Generic;
 
 namespace DataStructures
 {
-    /// <summary>
-    /// 
-    /// WORK IN PROGRESS.
-    /// 
-    /// Implements the Priority Queue Data Structure.
-    /// </summary>
-    public class PriorityQueue<K, V, P>
-    {
-        /// <summary>
-        /// Instance variables
-        /// </summary>
-		private MaxHeap<PriorityQueueNode<K, V, P>> _heap { get; set; }
-		private Comparer<PriorityQueueNode<K, V, P>> _priorityComparer { get; set; }
-		private ArrayList<K> _keysList { get; set; }
+	/// <summary>
+	/// Implements the Priority Queue Data Structure.
+	/// <typeparam name="V">Node's Value type</typeparam>
+	/// <typeparam name="P">Node's Priority type</typeparam>
+	/// </summary>
+	public class PriorityQueue<V, P>
+	{
+		/// <summary>
+		/// Instance variables
+		/// </summary>
+		private MaxHeap<PriorityQueueNode<V, P>> _heap { get; set; }
+		private Comparer<PriorityQueueNode<V, P>> _priorityComparer { get; set; }
 
 
 		/// <summary>
@@ -35,16 +33,14 @@ namespace DataStructures
 		/// </summary>
 		/// <param name="capacity">Capacity of priority queue.</param>
 		/// <param name="priorityComparer">The node's priority comparer.</param>
-		public PriorityQueue(int capacity, Comparer<PriorityQueueNode<K, V, P>> priorityComparer)
+		public PriorityQueue(int capacity, Comparer<PriorityQueueNode<V, P>> priorityComparer)
 		{
 			if (capacity >= 0)
 			{
-				_keysList = new ArrayList<K> ();
-
 				this._priorityComparer = 
-					priorityComparer ?? (new PriorityQueueNodeComparer<K, V, P>());
+					priorityComparer ?? (new PriorityQueueNodeComparer<V, P>());
 
-				_heap = new MaxHeap<PriorityQueueNode<K, V, P>> (capacity, this._priorityComparer);
+				_heap = new MaxHeap<PriorityQueueNode<V, P>> (capacity, this._priorityComparer);
 			}
 			else
 			{
@@ -53,62 +49,54 @@ namespace DataStructures
 		}
 
 
-        /// <summary>
+		/// <summary>
 		/// Remove the highest priority element and return it.
-        /// </summary>
-        /// <returns>The highest priority.</returns>
-        public V PullHighestPriority()
-        {
+		/// </summary>
+		/// <returns>The highest priority.</returns>
+		public V PullHighestPriority()
+		{
 			if (_heap.IsEmpty)
 			{
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
 
 			return _heap.ExtractMax ().Value;
-        }
+		}
 
 
-        /// <summary>
+		/// <summary>
 		/// Returns the highest priority element.
-        /// </summary>
-        /// <returns>The at highest priority.</returns>
-        public V PeekAtHighestPriority()
-        {
+		/// </summary>
+		/// <returns>The at highest priority.</returns>
+		public V PeekAtHighestPriority()
+		{
 			if (_heap.IsEmpty)
 			{
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
 
 			return _heap.Peek ().Value;
-        }
+		}
 
 
 		/// <summary>
-		/// Enqueue the specified key and value without priority.
+		/// Enqueue the specified value without priority.
 		/// </summary>
-		/// <param name="key">Key.</param>
 		/// <param name="value">Value.</param>
-		public void Enqueue(K key, V value)
+		public void Enqueue(V value)
 		{
-			Enqueue (key, value, default(P));
+			Enqueue (value, default(P));
 		}
 
 
 		/// <summary>
 		/// Enqueue the specified key, value and priority.
 		/// </summary>
-		/// <param name="key">Key.</param>
 		/// <param name="value">Value.</param>
 		/// <param name="priority">Priority.</param>
-		public void Enqueue(K key, V value, P priority)
+		public void Enqueue(V value, P priority)
 		{
-			if (_keysList.Contains (key))
-			{
-				throw new ArgumentException ("Key is already used.");
-			}
-
-			_keysList.Add (key);
-			var newNode = new PriorityQueueNode<K, V, P> (key, value, priority);
+			var newNode = new PriorityQueueNode<V, P> (value, priority);
 			_heap.Insert (newNode);
 		}
 
@@ -123,11 +111,7 @@ namespace DataStructures
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
 
-			var highest = _heap.Peek ();
-			int keyIndex = _keysList.IndexOf (highest.Key);
-
-			_heap.RemoveMax();
-			return highest.Value;
+			return _heap.ExtractMax ().Value;
 		}
 
 
@@ -136,75 +120,41 @@ namespace DataStructures
 		/// </summary>
 		/// <param name="key">Key.</param>
 		/// <param name="newPriority">New priority.</param>
-		public void SetPriority(K key, P newPriority)
+		public void SetPriority(int index, P newPriority)
 		{
 			// Handle boundaries errors
 			if (_heap.IsEmpty)
 			{
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
-			else if (!_keysList.Contains (key))
+			else if (index < 0 || index >= _heap.Count)
 			{
-				throw new KeyNotFoundException ();
+				throw new ArgumentOutOfRangeException ("Please provide a valid index.");
 			}
 
-			var keyComparer = Comparer<K>.Default;
-
-			for (int i = 0; i < _heap.Count; ++i)
-			{
-				if (keyComparer.Compare (_heap [i].Key, key) == 0)
-				{
-					_heap [i].Priority = newPriority;
-					break;
-				}
-			}
+			_heap [index].Priority = newPriority;
 		}
 
 
 		/// <summary>
-		/// Removes the node that has the specified key.
+		/// Removes the node that has the specified value.
 		/// </summary>
-		/// <param name="key">Key.</param>
-		public void Remove(K key)
+		/// <param name="value">Value.</param>
+		public void Remove(V value)
 		{
 			if (_heap.IsEmpty)
 			{
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
 
-			var keyComparer = Comparer<K>.Default;
+			var valueComparer = Comparer<V>.Default;
 
-			Predicate<PriorityQueueNode<K, V, P>> match = 
-				new Predicate<PriorityQueueNode<K, V, P>> (
-					item => keyComparer.Compare(item.Key, key) == 0);
+			Predicate<PriorityQueueNode<V, P>> match = 
+				new Predicate<PriorityQueueNode<V, P>> (
+					item => valueComparer.Compare(item.Value, value) == 0);
 
 			_heap.RemoveAll (match);
 		}
-
-
-		/// <summary>
-		/// Removes the node that has the specified key and value.
-        /// </summary>
-        /// <param name="key">Key.</param>
-        /// <param name="value">Value.</param>
-        public void Remove(K key, V value)
-        {
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			var keyComparer = Comparer<K>.Default;
-			var valueComparer = Comparer<V>.Default;
-
-			Predicate<PriorityQueueNode<K, V, P>> match = 
-				new Predicate<PriorityQueueNode<K, V, P>> (
-					item => 
-					keyComparer.Compare(item.Key, key) == 0 && 
-					valueComparer.Compare(item.Value, value) == 0);
-
-			_heap.RemoveAll (match);
-        }
 
 
 		/// <summary>
@@ -214,43 +164,42 @@ namespace DataStructures
 		{
 			_heap.Clear ();
 		}
-    }
+	}
 
 
 	/// <summary>
-	/// The Keyed Heap Node object.
+	/// The Priority-queue node.
 	/// </summary>
 	/// <typeparam name="K">Node's Key type</typeparam>
 	/// <typeparam name="V">Node's Value type</typeparam>
-	/// <typeparam name="P">Node's Priority type</typeparam>
-	public class PriorityQueueNode<K, V, P>
+	public class PriorityQueueNode<V, P>
 	{
-		public K Key { get; set; }
 		public V Value { get; set; }
 		public P Priority { get; set; }
 
-		public PriorityQueueNode() : this(default(K), default(V), default(P)) { }
+		public PriorityQueueNode() : this(default(V), default(P)) { }
 
-		public PriorityQueueNode (K key, V value, P priority)
+		public PriorityQueueNode (V value, P priority)
 		{
-			this.Key = key;
 			this.Value = value;
 			this.Priority = priority;
 		}
 	}//end-of-node-class
 
 
-	public class PriorityQueueNodeComparer<K, V, P> : Comparer<PriorityQueueNode<K, V, P>>
+	/// <summary>
+	/// Priority-queue node comparer.
+	/// </summary>
+	public class PriorityQueueNodeComparer<V, P> : Comparer<PriorityQueueNode<V, P>>
 	{
 		private readonly Comparer<P> _priorityComparer = Comparer<P>.Default;
 
 		#region implemented abstract members of Comparer
-		public override int Compare (PriorityQueueNode<K, V, P> first, PriorityQueueNode<K, V, P> second)
+		public override int Compare (PriorityQueueNode<V, P> first, PriorityQueueNode<V, P> second)
 		{
 			return _priorityComparer.Compare (first.Priority, second.Priority);
 		}
 		#endregion
 
 	}//end-of-comparer-class
-
 }
