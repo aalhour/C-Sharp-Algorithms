@@ -28,7 +28,10 @@ I am writing this organized collection of classes as part of my preparation for 
   
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
-    var valueComparer = Comparer<long>.Default; //Can be any value comparer that implmenets IComparer
+    
+    // The value comparer object. Can be any value comparer that implmenets IComparer.
+    var valueComparer = Comparer<long>.Default;
+    
     list.InsertionSort (valueComparer);
     list.QuickSort (valueComparer);
     list.MergeSort (valueComparer);
