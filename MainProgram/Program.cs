@@ -15,6 +15,7 @@ namespace C_Sharp_Algorithms
         static void Main(string[] args)
         {
 			PriorityQueue<int, int, int> priorityQueue = new PriorityQueue<int, int, int> (10);
+			priorityQueue.Enqueue ();
         }
 
     }

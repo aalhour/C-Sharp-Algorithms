@@ -82,8 +82,49 @@ namespace DataStructures
         }
 
 
-        //
-        // Removes the first-matched element that has the value = dataItem
+		/// <summary>
+		/// Enqueue the specified key, value and priority.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		/// <param name="value">Value.</param>
+		/// <param name="priority">Priority.</param>
+		public void Enqueue(K key, V value, P priority)
+		{
+			var newNode = new PriorityQueueNode<K, V, P> (key, value, priority);
+			_heap.Insert (newNode);
+		}
+
+
+		/// <summary>
+		/// Dequeue this instance.
+		/// </summary>
+		public V Dequeue()
+		{
+			return _heap.ExtractMax ().Value;
+		}
+
+
+		/// <summary>
+		/// Removes the node that has the specified key.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		public void Remove(K key)
+		{
+			var keyComparer = Comparer<K>.Default;
+
+			Predicate<PriorityQueueNode<K, V, P>> match = 
+				new Predicate<PriorityQueueNode<K, V, P>> (
+					item => keyComparer.Compare(item.Key, key) == 0);
+
+			_heap.RemoveAll (match);
+		}
+
+
+		/// <summary>
+		/// Removes the node that has the specified key and value.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        /// <param name="value">Value.</param>
         public void Remove(K key, V value)
         {
 			var keyComparer = Comparer<K>.Default;
@@ -97,6 +138,15 @@ namespace DataStructures
 
 			_heap.RemoveAll (match);
         }
+
+
+		/// <summary>
+		/// Clear this priority queue.
+		/// </summary>
+		public void Clear()
+		{
+			_heap.Clear ();
+		}
     }
 
 
@@ -133,5 +183,7 @@ namespace DataStructures
 			return _priorityComparer.Compare (first.Priority, second.Priority);
 		}
 		#endregion
+
 	}//end-of-comparer-class
+
 }
