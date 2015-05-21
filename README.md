@@ -3,7 +3,7 @@ Implementations of Data Structures and Algorithms in C#
 
 I am writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. This solution-library doesn't aim to replace any well-written data structure and algorithms library out there.
 
-===============================================================
+-----------------------------------------------------------------
 
 ## Data Structures:
 * Single-Linked List (SLinkedList.cs).
@@ -25,7 +25,8 @@ I am writing this organized collection of classes as part of my preparation for 
   
  * Merge Sort (MergeSorter.cs)
    * Implements merge sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
-  
+    
+    
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
     
