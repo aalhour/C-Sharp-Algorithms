@@ -146,9 +146,12 @@ namespace DataStructures
 		/// Determines whether this list is empty.
 		/// </summary>
 		/// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
-		public bool IsEmpty()
+		public bool IsEmpty
 		{
-			return (Count == 0);
+            get
+            {
+                return (Count == 0);
+            }
 		}
 
 
@@ -180,7 +183,7 @@ namespace DataStructures
 		{
 			get
 			{
-				if (IsEmpty())
+				if (IsEmpty)
 				{
 					throw new IndexOutOfRangeException ("List is empty.");
 				}

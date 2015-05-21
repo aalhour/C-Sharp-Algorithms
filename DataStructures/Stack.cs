@@ -46,9 +46,12 @@ namespace DataStructures
         /// Checks whether the stack is empty.
         /// </summary>
         /// <returns>True if stack is empty, false otherwise.</returns>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return _collection.IsEmpty();
+            get
+            {
+                return _collection.IsEmpty;
+            }
         }
 
 

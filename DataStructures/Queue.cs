@@ -45,9 +45,12 @@ namespace DataStructures
         /// Checks whether the queue is empty.
         /// </summary>
         /// <returns>True if queue is empty, false otherwise.</returns>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return _collection.IsEmpty();
+            get
+            {
+                return _collection.IsEmpty;
+            }
         }
 
 
