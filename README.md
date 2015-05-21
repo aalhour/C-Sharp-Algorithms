@@ -3,18 +3,14 @@ Implementations of Data Structures and Algorithms in C#
 
 I am writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. This solution-library doesn't aim to replace any well-written data structure and algorithms library out there.
 
-
-
-
 ## Data Structures:
-* Single-Linked List (SLinkedList.cs).
-* Double-Linked List (DLinkedList.cs).
-* Array List (ArrayList.cs). An arrays-based list. Implements auto-resizing.
-* Stack (Stack.cs). Using my ArrayList implementation.
-* Queue (Queue.cs). Using my ArrayList implementation.
-
-
-
+* **Single-Linked List** (SLinkedList.cs).
+* **Double-Linked **List (DLinkedList.cs).
+* **Array List** (ArrayList.cs). A generic arrays-based list. Implements auto-resizing.
+* **Stack** (Stack.cs). Based on my ArrayList<T>.
+* **Queue** (Queue.cs). Based on my ArrayList<T>.
+* **Min-Heap** (MinHeap.cs). Based on my ArrayList<T>.
+* **Max-Heap** (MaxHeap.cs). Based on my ArrayList<T>.
 
 ## Algorithms:
 
