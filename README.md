@@ -7,17 +7,17 @@ I am writing this organized collection of classes as part of my preparation for 
 * **Single-Linked List** (SLinkedList.cs).
 * **Double-Linked List** (DLinkedList.cs).
 * **Array List** (ArrayList.cs). A generic arrays-based list. Implements auto-resizing.
-* **Stack** (Stack.cs). Based on my ArrayList<T>.
-* **Queue** (Queue.cs). Based on my ArrayList<T>.
-* **Min-Heap** (MinHeap.cs). Based on my ArrayList<T>.
-* **Max-Heap** (MaxHeap.cs). Based on my ArrayList<T>.
-* **Priority Queue** (PriorityQueue.cs). Based on my MaxHeap<T>.
+* **Stack** (Stack.cs). Based on my ArrayList\<T\>.
+* **Queue** (Queue.cs). Based on my ArrayList\<T\>.
+* **Min-Heap** (MinHeap.cs). Based on my ArrayList\<T\>.
+* **Max-Heap** (MaxHeap.cs). Based on my ArrayList\<T\>.
+* **Priority Queue** (PriorityQueue.cs). Based on my MaxHeap\<T\>.
 * **Keyed Priority Queue** (KeyedPriorityQueue.cs). Based on my MaxHeap\<T\>.
 
 ## Algorithms:
 
 #### Sorting:
-Sorting algorithms are implemented as an extension method. They support the native Array<T>, and List<T> classes. They can takes value comparers. Insertion Sort supports my ArrayList<T> class.
+Sorting algorithms are implemented as an extension method. They support the native Array\<T\>, and List\<T\> classes. They can takes value comparers. Insertion Sort supports my ArrayList\<T\> class.
   * **Insertion Sort** (InsertionSorter.cs)
   * **Quick Sort** (QuickSorter.cs)
   * **Merge Sort** (MergeSorter.cs)
