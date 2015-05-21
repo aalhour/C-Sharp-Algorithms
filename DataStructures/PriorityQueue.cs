@@ -16,6 +16,7 @@ namespace DataStructures
         /// </summary>
 		private MaxHeap<PriorityQueueNode<K, V, P>> _heap { get; set; }
 		private Comparer<PriorityQueueNode<K, V, P>> _priorityComparer { get; set; }
+		private ArrayList<K> _keysList { get; set; }
 
 
 		/// <summary>
@@ -38,7 +39,10 @@ namespace DataStructures
 		{
 			if (capacity >= 0)
 			{
-				this._priorityComparer = priorityComparer ?? (new PriorityQueueNodeComparer<K, V, P>());
+				_keysList = new ArrayList<K> ();
+
+				this._priorityComparer = 
+					priorityComparer ?? (new PriorityQueueNodeComparer<K, V, P>());
 
 				_heap = new MaxHeap<PriorityQueueNode<K, V, P>> (capacity, this._priorityComparer);
 			}
@@ -50,24 +54,16 @@ namespace DataStructures
 
 
         /// <summary>
-		/// Inserts a new item with a priority
-        /// </summary>
-        /// <param name="key">Node key.</param>
-        /// <param name="value">Node value.</param>
-        /// <param name="priority">Node priority.</param>
-        public void InsertWithPriority(K key, V value, P priority)
-        {
-			var newHeapNode = new PriorityQueueNode<K, V, P> (key, value, priority);
-			_heap.Insert (newHeapNode);
-        }
-
-
-        /// <summary>
 		/// Remove the highest priority element and return it.
         /// </summary>
         /// <returns>The highest priority.</returns>
         public V PullHighestPriority()
         {
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+
 			return _heap.ExtractMax ().Value;
         }
 
@@ -78,8 +74,24 @@ namespace DataStructures
         /// <returns>The at highest priority.</returns>
         public V PeekAtHighestPriority()
         {
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+
 			return _heap.Peek ().Value;
         }
+
+
+		/// <summary>
+		/// Enqueue the specified key and value without priority.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		/// <param name="value">Value.</param>
+		public void Enqueue(K key, V value)
+		{
+			Enqueue (key, value, default(P));
+		}
 
 
 		/// <summary>
@@ -90,6 +102,12 @@ namespace DataStructures
 		/// <param name="priority">Priority.</param>
 		public void Enqueue(K key, V value, P priority)
 		{
+			if (_keysList.Contains (key))
+			{
+				throw new ArgumentException ("Key is already used.");
+			}
+
+			_keysList.Add (key);
 			var newNode = new PriorityQueueNode<K, V, P> (key, value, priority);
 			_heap.Insert (newNode);
 		}
@@ -100,7 +118,46 @@ namespace DataStructures
 		/// </summary>
 		public V Dequeue()
 		{
-			return _heap.ExtractMax ().Value;
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+
+			var highest = _heap.Peek ();
+			int keyIndex = _keysList.IndexOf (highest.Key);
+
+			_heap.RemoveMax();
+			return highest.Value;
+		}
+
+
+		/// <summary>
+		/// Sets the priority.
+		/// </summary>
+		/// <param name="key">Key.</param>
+		/// <param name="newPriority">New priority.</param>
+		public void SetPriority(K key, P newPriority)
+		{
+			// Handle boundaries errors
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+			else if (!_keysList.Contains (key))
+			{
+				throw new KeyNotFoundException ();
+			}
+
+			var keyComparer = Comparer<K>.Default;
+
+			for (int i = 0; i < _heap.Count; ++i)
+			{
+				if (keyComparer.Compare (_heap [i].Key, key) == 0)
+				{
+					_heap [i].Priority = newPriority;
+					break;
+				}
+			}
 		}
 
 
@@ -110,6 +167,11 @@ namespace DataStructures
 		/// <param name="key">Key.</param>
 		public void Remove(K key)
 		{
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+
 			var keyComparer = Comparer<K>.Default;
 
 			Predicate<PriorityQueueNode<K, V, P>> match = 
@@ -127,6 +189,11 @@ namespace DataStructures
         /// <param name="value">Value.</param>
         public void Remove(K key, V value)
         {
+			if (_heap.IsEmpty)
+			{
+				throw new ArgumentOutOfRangeException ("Queue is empty.");
+			}
+
 			var keyComparer = Comparer<K>.Default;
 			var valueComparer = Comparer<V>.Default;
 
