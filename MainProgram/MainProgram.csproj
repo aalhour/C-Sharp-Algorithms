@@ -56,13 +56,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Algorithms\Algorithms.csproj">
+      <Project>{8f59d573-a1b8-438f-a67a-a7f11facf201}</Project>
+      <Name>Algorithms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataStructures\DataStructures.csproj">
       <Project>{464251A0-3667-42BA-A3D5-0581D65C442B}</Project>
       <Name>DataStructures</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithms\Algorithms.csproj">
-      <Project>{8F59D573-A1B8-438F-A67A-A7F11FACF201}</Project>
-      <Name>Algorithms</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -73,8 +73,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="AlgorithmsTests\" />
-    <Folder Include="DataStructuresTests\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

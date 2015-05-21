@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,7 +36,7 @@
     <Compile Include="Sorting\InsertionSorter.cs" />
     <Compile Include="Sorting\QuickSorter.cs" />
     <Compile Include="Sorting\MergeSorter.cs" />
-    <Compile Include="Sorting\Helpers.cs" />
+    <Compile Include="Helpers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -45,7 +45,5 @@
       <Name>DataStructures</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sorting\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
