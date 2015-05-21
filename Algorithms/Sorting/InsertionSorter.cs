@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using DataStructures;
 
-namespace Algorithms
+namespace Algorithms.Sorting
 {
 	/// <summary>
 	/// Implements this Insertion Sort algorithm over ArrayLists.

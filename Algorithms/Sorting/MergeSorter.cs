@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using DataStructures;
 
-namespace Algorithms
+namespace Algorithms.Sorting
 {
 	public static class MergeSorter
 	{

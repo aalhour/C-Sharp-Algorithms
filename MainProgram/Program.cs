@@ -14,7 +14,7 @@ namespace C_Sharp_Algorithms
     {
         static void Main(string[] args)
         {
-            MergeSorterTest.DoTest();
+            HeapSorterTest.DoTest();
         }
 
     }
