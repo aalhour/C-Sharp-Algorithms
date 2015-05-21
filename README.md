@@ -13,14 +13,16 @@ I am writing this organized collection of classes as part of my preparation for 
 
 
 ### Algorithms
-* Insertion Sort (InsertionSorter.cs)
-  * Implements insertion sort as an extention method. Supports the system Array<T>, List<T>, and my ArrayList<T>. Supports value comparers.
+
+##### Sorting:
+ * Insertion Sort (InsertionSorter.cs)
+   * Implements insertion sort as an extention method. Supports the system Array<T>, List<T>, and my ArrayList<T>. Supports value comparers.
  
-* Quick Sort (QuickSorter.cs)
-  * Implements quick sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
+ * Quick Sort (QuickSorter.cs)
+   * Implements quick sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
   
-* Merge Sort (MergeSorter.cs)
-  * Implements merge sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
+ * Merge Sort (MergeSorter.cs)
+   * Implements merge sort as an extension method. Supports the system Array<T>, and List<T>. Supports value comparers.
   
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
