@@ -112,6 +112,39 @@ namespace DataStructures
 
 
 		/// <summary>
+		/// Gets or sets the at the specified index.
+		/// </summary>
+		/// <param name="index">Index.</param>
+		public T this[int index]
+		{
+			get
+			{
+				if (index < 0 || index > this.Count || this.Count == 0)
+				{
+					throw new IndexOutOfRangeException ();
+				}
+
+				return _collection [index];
+			}
+			set
+			{
+				if (index < 0 || index >= this.Count)
+				{
+					throw new IndexOutOfRangeException ();
+				}
+
+				_collection [index] = value;
+
+				if(_heapComparer.Compare(_collection[index], _collection[0]) >= 0) // greater than or equal to max
+				{
+					_collection.Swap (0, index);
+					BuildMaxHeap ();
+				}
+			}
+		}
+
+
+		/// <summary>
 		/// Heapifies the specified newCollection. Overrides the current heap.
 		/// </summary>
 		/// <param name="newCollection">New collection.</param>
@@ -188,6 +221,41 @@ namespace DataStructures
 
 
 		/// <summary>
+		/// Removes the key at index.
+		/// </summary>
+		/// <param name="index">Index.</param>
+		public void RemoveAt(int index)
+		{
+			if (!IsEmpty)
+			{
+				int last = _collection.Count - 1;
+				_collection.Swap (index, last);
+
+				_collection.RemoveAt (last);
+				last--;
+
+				MaxHeapify<T>(0, last);
+			}
+		}
+
+
+		/// <summary>
+		/// Removes all keys that match the predicate.
+		/// </summary>
+		/// <param name="searchMatch">Search match.</param>
+		public void RemoveAll(Predicate<T> searchMatch)
+		{
+			for (int i = 0; i < _collection.Count; ++i)
+			{
+				if (searchMatch (_collection [i]))
+				{
+					RemoveAt (i);
+				}
+			}
+		}
+
+
+		/// <summary>
 		/// Removes the node of minimum value from a min heap.
 		/// </summary>
 		public void RemoveMax()
@@ -212,9 +280,21 @@ namespace DataStructures
 		/// <returns>The max.</returns>
 		public T ExtractMax()
 		{
-			var max = FindMax();
+			var max = Peek ();
 			RemoveMax();
 			return max;
+		}
+
+
+		/// <summary>
+		/// Clear this heap.
+		/// </summary>
+		public void Clear()
+		{
+			if (!IsEmpty)
+			{
+				_collection.Clear ();
+			}
 		}
 
 

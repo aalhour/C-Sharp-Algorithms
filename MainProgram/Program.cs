@@ -14,9 +14,7 @@ namespace C_Sharp_Algorithms
     {
         static void Main(string[] args)
         {
-			MinHeapTest.DoTest ();
-
-            //HeapSorterTest.DoTest();
+			PriorityQueue<int, int, int> priorityQueue = new PriorityQueue<int, int, int> (10);
         }
 
     }
