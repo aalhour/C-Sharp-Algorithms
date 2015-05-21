@@ -156,7 +156,7 @@ namespace DataStructures
 		/// Find the maximum node of a max heap.
 		/// </summary>
 		/// <returns>The maximum.</returns>
-		public T FindMax()
+		public T Peek()
 		{
 			if (IsEmpty)
 			{
@@ -164,6 +164,26 @@ namespace DataStructures
 			}
 			
 			return _collection.First;
+		}
+
+
+		/// <summary>
+		/// Remove a key from the heap.
+		/// </summary>
+		/// <param name="heapKey">Heap key.</param>
+		public void Remove(T heapKey)
+		{
+			if (!IsEmpty)
+			{
+				int last = _collection.Count - 1;
+				int index = _collection.IndexOf(heapKey);
+				_collection.Swap (index, last);
+
+				_collection.RemoveAt (last);
+				last--;
+
+				MaxHeapify<T>(0, last);
+			}
 		}
 
 
