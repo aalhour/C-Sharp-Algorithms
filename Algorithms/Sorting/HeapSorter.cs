@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using DataStructures;
@@ -7,57 +8,53 @@ namespace Algorithms.Sorting
 {
     public static class HeapSorter
     {
-        public static void HeapSort<T>(this IList<T> collection)
+        public static void HeapSort<T>(this IList<T> collection, Comparer<T> comparer = null)
         {
-        }
+            // Handle the comparer's default null value
+            comparer = comparer ?? Comparer<T>.Default;
 
+            int lastIndex = collection.Count - 1;
+            collection.BuildMaxHeap(0, lastIndex, comparer);
 
-        public static void HeapSort(int[] array)
-        {
-            array.BuildMaxHeap();
-        }
-
-        private static void BuildMaxHeap(this int[] array)
-        {
-            int leavesStartAt = array.Length / 2;
-
-            for(int i = leavesStartAt - 1; i >= 0; --i)
+            while (lastIndex >= 0)
             {
-                array.MaxHeapify(i);
+                collection.Swap(0, lastIndex);
+                lastIndex--;
+                collection.MaxHeapify(0, lastIndex, comparer);
             }
         }
 
-        private static void MaxHeapify(this int[] array, int node)
+        private static void BuildMaxHeap<T>(this IList<T> collection, int firstIndex, int lastIndex, Comparer<T> comparer)
         {
-            // assume left(i) and right(i) are mx-heaps
-            int left = (node * 2) + 1;
+            int lastNodeWithChildren = lastIndex / 2;
+
+            for (int node = lastNodeWithChildren; node >= 0; --node)
+            {
+                collection.MaxHeapify(node, lastIndex, comparer);
+            }
+        }
+
+        private static void MaxHeapify<T>(this IList<T> collection, int nodeIndex, int lastIndex, Comparer<T> comparer)
+        {
+            // assume left(i) and right(i) are max-heaps
+            int left = (nodeIndex * 2) + 1;
             int right = left + 1;
+            int largest = nodeIndex;
 
-            if (left < array.Length && array[node] < array[left])
+            // If collection[left] > collection[nodeIndex]
+            if (left <= lastIndex && comparer.Compare(collection[left], collection[nodeIndex]) > 0)
+                largest = left;
+
+            // If collection[right] > collection[largest]
+            if (right <= lastIndex && comparer.Compare(collection[right], collection[largest]) > 0)
+                largest = right;
+
+            // Swap and heapify
+            if (largest != nodeIndex)
             {
-                array.Swap(node, left);
+                collection.Swap(nodeIndex, largest);
+                collection.MaxHeapify(largest, lastIndex, comparer);
             }
-
-            if (right < array.Length && array[node] < array[right])
-            {
-                array.Swap(node, right);
-            }
-        }
-
-        public static string VisualizeHeap(int[] array)
-        {
-            string visual = string.Empty;
-
-            int root = 0;
-            int left = 2 * root;
-            int right = left + 1;
-
-            for (int i = array.Length / 2; i < array.Length; ++i)
-            {
-                visual = visual + String.Format("");
-            }
-
-            return visual;
         }
     }
 }
