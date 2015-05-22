@@ -12,9 +12,9 @@ namespace C_Sharp_Algorithms
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-			PriorityQueuesTest.DoTest ();
+            PriorityQueuesTest.DoTest();
         }
 
     }
