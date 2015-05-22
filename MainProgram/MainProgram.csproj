@@ -54,6 +54,7 @@
     <Compile Include="AlgorithmsTests\MergeSorterTest.cs" />
     <Compile Include="DataStructuresTests\HeapsTest.cs" />
     <Compile Include="DataStructuresTests\PriorityQueuesTest.cs" />
+    <Compile Include="DataStructuresTests\BinarySearchTreeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

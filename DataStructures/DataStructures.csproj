@@ -57,6 +57,7 @@
     <Compile Include="KeyedPriorityQueue.cs" />
     <Compile Include="PriorityQueue.cs" />
     <Compile Include="Tree.cs" />
+    <Compile Include="Helpers\Comparers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

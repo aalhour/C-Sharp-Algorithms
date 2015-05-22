@@ -10,10 +10,16 @@ namespace DataStructures
         bool IsEmpty();
 
         // Inserts an element to the tree
-        void Insert(T key);
+        void Insert(T item);
 
-        // Deletes an element from tree
-        void Delete(T key);
+        // Remove an element from tree
+        void Remove(T item);
+
+		// Removes the min value from tree
+		void RemoveMin();
+
+		// Removes the max value from tree
+		void RemoveMax();
 
         // Finds the minimum element.
         T FindMin();
@@ -22,10 +28,10 @@ namespace DataStructures
         T FindMax();
 
         // Find the element in the tree, returns null if not found.
-        T Find(T key);
+        T Find(T item);
 
         // Finds all the elements in the tree that match the predicate.
-        ArrayList<T>[] FindAll(System.Predicate<T> searchPredicate);
+        ArrayList<T> FindAll(System.Predicate<T> searchPredicate);
 
         // Traverses the tree and applies the action to every node.
         void Traverse(System.Action<T> action);
@@ -40,17 +46,19 @@ namespace DataStructures
     }
 
     /// <summary>
-    /// The keyed version of the Binary Search Tree.
+    /// The itemed version of the Binary Search Tree.
     /// </summary>
-    /// <typeparam name="K">Type of keys.</typeparam>
+    /// <typeparam name="K">Type of items.</typeparam>
     /// <typeparam name="V">Type of records per node.</typeparam>
     public interface IBinarySearchTree<K, V> where K : System.IComparable<K>
     {
         int Count();
         bool IsEmpty();
-        void Insert(K key, V value);
-        void Delete(K key);
-        K Find(K key);
+        void Insert(K item, V value);
+		void Remove(K item);
+		void RemoveMin();
+		void RemoveMax();
+        K Find(K item);
         K FindMin();
         K FindMax();
         ArrayList<V> FindAll(System.Predicate<K> searchPredicate);

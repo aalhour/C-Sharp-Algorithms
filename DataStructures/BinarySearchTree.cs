@@ -12,41 +12,7 @@ namespace DataStructures
     /// <typeparam name="T">Type of elements.</typeparam>
     public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
     {
-        //
-        // The Tree Node
-        public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
-        {
-            public T Value { get; set; }
-            public BSTNode<T> Parent { get; set; }
-            public BSTNode<T> Left { get; set; }
-            public BSTNode<T> Right { get; set; }
-
-            /// <summary>
-            /// CONSTRUCTORS
-            /// </summary>
-            public BSTNode() : this(default(T), null, null, null) { }
-            public BSTNode(T value) : this(value, null, null, null) { }
-            public BSTNode(T value, BSTNode<T> parent, BSTNode<T> left, BSTNode<T> right)
-            {
-                this.Value = value;
-                this.Parent = parent;
-                this.Left = left;
-                this.Right = right;
-            }
-
-            // 
-            // IComparable CompareTo implementation
-            public int CompareTo(BSTNode<T> other)
-            {
-                if (other == null)
-                    return -1;
-
-                return this.Value.CompareTo(other.Value);
-            }
-        }//end-of-bstnode
-
-
-        /// <summary>
+		/// <summary>
         /// TREE INSTANCE VARIABLES
         /// </summary>
         /// <returns></returns>
@@ -62,6 +28,22 @@ namespace DataStructures
             _root = null;
             _count = 0;
         }
+
+
+		private int SubtreeSize(BSTNode<T> node)
+		{
+			if (node == null)
+				return 0;
+			else
+				return node.SubtreeSize;
+		}
+
+
+		private void UpdateSubtreeSize(BSTNode<T> node)
+		{
+			node.SubtreeSize = SubtreeSize (node.Left) + SubtreeSize (node.Right) + 1;
+		}
+
 
         /// <summary>
         /// Return the number of elements in this tree
@@ -86,37 +68,109 @@ namespace DataStructures
         /// <summary>
         /// Inserts an element to the tree
         /// </summary>
-        /// <param name="key">Key to insert</param>
-        public void Insert(T key)
+		/// <param name="item">Item to insert</param>
+        public void Insert(T item)
         {
 
             if (IsEmpty())
             {
-                _root = new BSTNode<T>(key);
+				_root = new BSTNode<T>()
+				{
+					Value = item,
+					SubtreeSize = 1
+				};
+
                 _count++;
             }
             else
             {
-                // Go left if less than or equal; go right otherwise
-                if (key.CompareTo(_root.Value) < 1) // key <= root.Value
-                {
-                    // insert left
-                }
-                else
-                {
-                    // insert right
-                }
-            }
+				var currentNode = _root;
+				var newNode = new BSTNode<T>(item);
+
+				// 
+				// Get the currentNode to refer to the appropriate node.
+				while(true)
+				{
+					if(item.IsLessThanOrEqualTo(currentNode.Value))
+					{
+						if (currentNode.Left == null)
+						{
+							newNode.Parent = currentNode;
+							currentNode.Left = newNode;
+							_count++;
+							break;
+						}
+
+						currentNode = currentNode.Left;
+					}
+					else
+					{
+						if (currentNode.Right == null)
+						{
+							newNode.Parent = currentNode;
+							currentNode.Right = newNode;
+							_count++;
+							break;
+						}
+
+						currentNode = currentNode.Right;
+					}
+				}//end-while
+
+
+				//
+				// Update the subtrees-sizes
+				var node = newNode;
+
+				while (node != null)
+				{
+					UpdateSubtreeSize (node);
+					node = node.Parent;
+				}//end-while
+
+            }//end-else
         }
 
 
         /// <summary>
         /// Deletes an element from the tree
         /// </summary>
-        /// <param name="key">Key to remove.</param>
-        public void Delete(T key)
+        /// <param name="item">item to remove.</param>
+        public void Remove(T item)
         {
-            throw new NotImplementedException();
+			if (IsEmpty ())
+			{
+				throw new Exception ("Tree is empty.");
+			}
+
+			var currentNode = _root;
+
+			while (currentNode != null)
+			{
+				if(item.IsEqualTo(currentNode.Value))
+				{
+					break;
+				}
+				else if (item.IsLessThan(currentNode.Value))
+				{
+					currentNode = currentNode.Left;
+				}
+				else if(item.IsGreaterThan(currentNode.Value))
+				{
+					currentNode = currentNode.Right;
+				}
+			}
+
+			//
+			// If the element was found, remove it.
+			if (currentNode != null)
+			{
+				
+			}
+			else
+			{
+				throw new Exception ("Item was not found.");
+			}
         }
 
 
@@ -126,7 +180,14 @@ namespace DataStructures
         /// <returns>Min</returns>
         public T FindMin()
         {
-            throw new NotImplementedException();
+			var currentNode = _root;
+
+			while (currentNode.Left != null)
+			{
+				currentNode = currentNode.Left;
+			}
+
+			return currentNode.Value;
         }
 
 
@@ -136,17 +197,133 @@ namespace DataStructures
         /// <returns>Max</returns>
         public T FindMax()
         {
-            throw new NotImplementedException();
+			var currentNode = _root;
+
+			while (currentNode.Right != null)
+			{
+				currentNode = currentNode.Right;
+			}
+
+			return currentNode.Value;
         }
 
 
-        public T Find(T key)
+		public void RemoveMin()
+		{
+			BSTNode<T> parent = null;
+			var currentNode = _root;
+
+			//
+			// Keep going left
+			while (currentNode.Left != null)
+			{
+				currentNode = currentNode.Left;
+			}
+
+			//
+			// Remove the node
+			if (currentNode.Right != null)
+			{
+				parent = currentNode.Parent;
+				var right = currentNode.Right;
+
+				right.Parent = parent;
+				parent.Left = right;
+				_count--;
+			}
+			else
+			{
+				parent = currentNode.Parent;
+				parent.Left = null;
+				_count--;
+			}
+
+			//
+			// Update the subtrees-sizes
+			while (parent != null)
+			{
+				UpdateSubtreeSize (parent);
+				parent = parent.Parent;
+			}
+		}
+
+
+		public void RemoveMax()
+		{
+			BSTNode<T> parent = null;
+			var currentNode = _root;
+
+			//
+			// Keep going right
+			while (currentNode.Right != null)
+			{
+				currentNode = currentNode.Right;
+			}
+
+			//
+			// Remove the node
+			if (currentNode.Left != null)
+			{
+				parent = currentNode.Parent;
+				var left = currentNode.Left;
+
+				left.Parent = parent;
+				parent.Right = left;
+				_count--;
+			}
+			else
+			{
+				parent = currentNode.Parent;
+				parent.Right = null;
+				_count--;
+			}
+
+			//
+			// Update the subtrees-sizes
+			while (parent != null)
+			{
+				UpdateSubtreeSize (parent);
+				parent = parent.Parent;
+			}
+		}
+
+
+		public T Find(T item)
         {
-            throw new NotImplementedException();
+			var currentNode = _root;
+
+			//
+			// Attempt to find the item
+			while (currentNode.Left != null || currentNode.Right != null)
+			{
+				if (item.IsEqualTo(currentNode.Value))
+				{
+					break;
+				}
+				else if(currentNode.Left != null && item.IsLessThan(currentNode.Value))
+				{
+					currentNode = currentNode.Left;
+				}
+				else if(currentNode.Right != null && item.IsGreaterThan(currentNode.Value))
+				{
+					currentNode = currentNode.Right;
+				}
+			}
+
+			//
+			// Return the item if found; otherwise, throw an exception.
+			if (item.IsEqualTo (currentNode.Value))
+			{
+				return currentNode.Value;
+			}
+			else
+			{
+				throw new Exception ("Item was not found.");
+			}
         }
 
 
-        public ArrayList<T>[] FindAll(Predicate<T> searchPredicate)
+        public ArrayList<T> FindAll(Predicate<T> searchPredicate)
         {
             throw new NotImplementedException();
         }
@@ -172,9 +349,45 @@ namespace DataStructures
 
         public void Clear()
         {
-            throw new NotImplementedException();
+			_root = null;
+			_count = 0;
         }
 
-    }
+    }//end-of-binary-search-tree
 
+
+	/// <summary>
+	/// The binary search tree node.
+	/// </summary>
+	public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
+	{
+		public T Value { get; set; }
+		public int SubtreeSize { get; set; }
+		public BSTNode<T> Parent { get; set; }
+		public BSTNode<T> Left { get; set; }
+		public BSTNode<T> Right { get; set; }
+
+		/// <summary>
+		/// CONSTRUCTORS
+		/// </summary>
+		public BSTNode() : this(default(T), 0, null, null, null) { }
+		public BSTNode(T value) : this(value, 0, null, null, null) { }
+		public BSTNode(T value, int subTreeSize, BSTNode<T> parent, BSTNode<T> left, BSTNode<T> right)
+		{
+			this.Value = value;
+			this.SubtreeSize = 0;
+			this.Parent = parent;
+			this.Left = left;
+			this.Right = right;
+		}
+
+		// 
+		// IComparable CompareTo implementation
+		public int CompareTo(BSTNode<T> other)
+		{
+			if (other == null) return -1;
+
+			return this.Value.CompareTo(other.Value);
+		}
+	}//end-of-bstnode
 }

@@ -1,21 +1,17 @@
 ﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataStructures/ArrayList.cs">
-    <Files>
-      <File FileName="MainProgram/Program.cs" Line="14" Column="6" />
-      <File FileName="MainProgram/DummyTests.cs" Line="87" Column="68" />
-      <File FileName="DataStructures/ArrayList.cs" Line="684" Column="5" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="C-Sharp-Algorithms" expanded="True">
-            <Node name="DataStructures" expanded="True">
-              <Node name="ArrayList.cs" selected="True" />
-            </Node>
+            <Node name="DataStructures" expanded="True" />
             <Node name="MainProgram" expanded="True" />
           </Node>
         </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
