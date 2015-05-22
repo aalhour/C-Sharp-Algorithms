@@ -104,21 +104,6 @@ namespace DataStructures
 
             return _heap.Peek().Value;
         }
-        
-        
-        /// <summary>
-		/// Remove the highest priority element and return it.
-        /// </summary>
-        /// <returns>The highest priority.</returns>
-        public V PullHighestPriority()
-        {
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			return _heap.ExtractMax ().Value;
-        }
 
 
 		/// <summary>
@@ -212,21 +197,21 @@ namespace DataStructures
 		/// Removes the node that has the specified key.
 		/// </summary>
 		/// <param name="key">Key.</param>
-		public void Remove(K key)
-		{
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			var keyComparer = Comparer<K>.Default;
-
-			Predicate<PriorityQueueNode<K, V, P>> match = 
-				new Predicate<PriorityQueueNode<K, V, P>> (
-					item => keyComparer.Compare(item.Key, key) == 0);
-
-			_heap.RemoveAll (match);
-		}
+        //public void Remove(K key)
+        //{
+        //    if (_heap.IsEmpty)
+        //    {
+        //        throw new ArgumentOutOfRangeException ("Queue is empty.");
+        //    }
+        //
+        //    var keyComparer = Comparer<K>.Default;
+        //
+        //    Predicate<PriorityQueueNode<K, V, P>> match = 
+        //        new Predicate<PriorityQueueNode<K, V, P>> (
+        //            item => keyComparer.Compare(item.Key, key) == 0);
+        //
+        //    _heap.RemoveAll (match);
+        //}
 
 
 		/// <summary>
@@ -234,24 +219,24 @@ namespace DataStructures
         /// </summary>
         /// <param name="key">Key.</param>
         /// <param name="value">Value.</param>
-        public void Remove(K key, V value)
-        {
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			var keyComparer = Comparer<K>.Default;
-			var valueComparer = Comparer<V>.Default;
-
-			Predicate<PriorityQueueNode<K, V, P>> match = 
-				new Predicate<PriorityQueueNode<K, V, P>> (
-					item => 
-					keyComparer.Compare(item.Key, key) == 0 && 
-					valueComparer.Compare(item.Value, value) == 0);
-
-			_heap.RemoveAll (match);
-        }
+        //public void Remove(K key, V value)
+        //{
+        //    if (_heap.IsEmpty)
+        //    {
+        //        throw new ArgumentOutOfRangeException ("Queue is empty.");
+        //    }
+        //
+        //    var keyComparer = Comparer<K>.Default;
+        //    var valueComparer = Comparer<V>.Default;
+        //
+        //    Predicate<PriorityQueueNode<K, V, P>> match = 
+        //        new Predicate<PriorityQueueNode<K, V, P>> (
+        //            item => 
+        //            keyComparer.Compare(item.Key, key) == 0 && 
+        //            valueComparer.Compare(item.Value, value) == 0);
+        //
+        //    _heap.RemoveAll (match);
+        //}
 
 
 		/// <summary>
