@@ -54,33 +54,33 @@ namespace C_Sharp_Algorithms
 
             var process1 = new Process(
                 id: 432654, 
-                action: new Action(() => System.Console.Write(1 + 1)), 
-                desc: "Prints 1 + 1");
+                action: new Action(() => System.Console.Write("I am Process #1.\r\n1 + 1 = " + (1 + 1))), 
+                desc: "Process 1");
 
             var process2 = new Process(
                 id: 123456,
-                action: new Action(() => System.Console.Write("Hello, " + "World!")),
-                desc: "Hello World");
+                action: new Action(() => System.Console.Write("Hello, World! I am Process #2")),
+                desc: "Process 2");
 
             var process3 = new Process(
                 id: 345098,
-                action: new Action(() => System.Console.Write("Zombie Process")),
-                desc: "Ama' zombie!");
+                action: new Action(() => System.Console.Write("I am Process #3")),
+                desc: "Process 3");
 
             var process4 = new Process(
                 id: 109875,
-                action: new Action(() => System.Console.Write("Process 4")),
-                desc: "Ama' Process 4");
+                action: new Action(() => System.Console.Write("I am Process #4")),
+                desc: "Process 4");
 
             var process5 = new Process(
                 id: 13579,
-                action: new Action(() => System.Console.Write("Process 5")),
-                desc: "Ama' Process 5");
+                action: new Action(() => System.Console.Write("I am Process #5")),
+                desc: "Process 5");
 
             var process6 = new Process(
                 id: 24680,
-                action: new Action(() => System.Console.Write("Process 6")),
-                desc: "Ama' Process 6");
+                action: new Action(() => System.Console.Write("I am Process #6")),
+                desc: "Process 6");
 
             sysProcesses.Enqueue(process1, 1);
             sysProcesses.Enqueue(process2, 10);
@@ -100,12 +100,14 @@ namespace C_Sharp_Algorithms
             sysProcesses.PullHighestPriority();
             
             highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
-            Debug.Assert(highestPriorityProcess.Id == process5.Id, "Wrong process!");
+            Debug.Assert(highestPriorityProcess.Id == process6.Id, "Wrong process!");
             
             sysProcesses.PullHighestPriority();
 
             highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
             Debug.Assert(highestPriorityProcess.Id == process3.Id, "Wrong process!");
+
+            highestPriorityProcess.Action();
 		}
 	}
 }
