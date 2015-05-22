@@ -39,8 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinarySearchTree.cs" />
+    <Compile Include="Interfaces\IAVLTree.cs" />
+    <Compile Include="Interfaces\IBinarySearchTree.cs" />
     <Compile Include="Interfaces\IMaxHeap.cs" />
     <Compile Include="Interfaces\IMinHeap.cs" />
+    <Compile Include="Interfaces\ITree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stack.cs" />
     <Compile Include="ArrayList.cs" />
@@ -52,6 +56,7 @@
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="KeyedPriorityQueue.cs" />
     <Compile Include="PriorityQueue.cs" />
+    <Compile Include="Tree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
