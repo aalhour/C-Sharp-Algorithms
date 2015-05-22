@@ -6,23 +6,23 @@ using Algorithms.Helpers;
 
 namespace Algorithms.Sorting
 {
-	public static class MergeSorter
-	{
-		//
-		// Public merge-sort API
-		public static List<T> MergeSort<T>(this List<T> collection, Comparer<T> comparer = null)
-		{
-			comparer = comparer ?? Comparer<T>.Default;
+    public static class MergeSorter
+    {
+        //
+        // Public merge-sort API
+        public static List<T> MergeSort<T>(this List<T> collection, Comparer<T> comparer = null)
+        {
+            comparer = comparer ?? Comparer<T>.Default;
 
             return InternalMergeSort(collection, 0, collection.Count - 1, comparer);
-		}
+        }
 
 
-		//
-		// Private static method
-		// Implements the recursive merge-sort algorithm
-		private static List<T> InternalMergeSort<T>(List<T> collection, int startIndex, int endIndex, Comparer<T> comparer)
-		{
+        //
+        // Private static method
+        // Implements the recursive merge-sort algorithm
+        private static List<T> InternalMergeSort<T>(List<T> collection, int startIndex, int endIndex, Comparer<T> comparer)
+        {
             if (collection.Count < 2)
             {
                 return collection;
@@ -48,14 +48,14 @@ namespace Algorithms.Sorting
 
                 return InternalMerge<T>(leftCollection, rightCollection, comparer);
             }
-		}
+        }
 
 
-		//
-		// Private static method
-		// Implements the merge function inside the merge-sort
-		private static List<T> InternalMerge<T>(List<T> leftCollection, List<T> rightCollection, Comparer<T> comparer)
-		{
+        //
+        // Private static method
+        // Implements the merge function inside the merge-sort
+        private static List<T> InternalMerge<T>(List<T> leftCollection, List<T> rightCollection, Comparer<T> comparer)
+        {
             int left = 0;
             int right = 0;
             int index;
@@ -102,7 +102,7 @@ namespace Algorithms.Sorting
             }
 
             return result;
-		}
-	}
+        }
+    }
 }
 
