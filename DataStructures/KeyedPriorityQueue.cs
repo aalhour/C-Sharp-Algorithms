@@ -17,7 +17,7 @@ namespace DataStructures
         /// </summary>
 		private MaxHeap<PriorityQueueNode<K, V, P>> _heap { get; set; }
 		private Comparer<PriorityQueueNode<K, V, P>> _priorityComparer { get; set; }
-		private HashSet<K> _keysList { get; set; }
+		private Dictionary<K, int> _keysMap { get; set; }
 
 
 		/// <summary>
@@ -40,8 +40,6 @@ namespace DataStructures
 		{
 			if (capacity >= 0)
 			{
-				_keysList = new HashSet<K> ();
-
 				this._priorityComparer = 
 					priorityComparer ?? (new PriorityQueueNodeComparer<K, V, P>());
 
@@ -55,6 +53,60 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Returns the count of elements in the queue.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return _heap.Count;
+            }
+        }
+
+
+        /// <summary>
+        /// Checks if the queue is empty
+        /// <returns>True if queue is empty; false otherwise.</returns>
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return (Count == 0);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns an array of keys
+        /// </summary>
+        public K[] Keys
+        {
+            get
+            {
+                var keysArray = new K[_keysMap.Count];
+                _keysMap.Keys.CopyTo(keysArray, 0);
+                return keysArray;
+            }
+        }
+
+        
+        /// <summary>
+        /// Returns the highest priority element.
+        /// </summary>
+        /// <returns>The at highest priority.</returns>
+        public V PeekAtHighestPriority()
+        {
+            if (_heap.IsEmpty)
+            {
+                throw new ArgumentOutOfRangeException("Queue is empty.");
+            }
+
+            return _heap.Peek().Value;
+        }
+        
+        
+        /// <summary>
 		/// Remove the highest priority element and return it.
         /// </summary>
         /// <returns>The highest priority.</returns>
@@ -66,21 +118,6 @@ namespace DataStructures
 			}
 
 			return _heap.ExtractMax ().Value;
-        }
-
-
-        /// <summary>
-		/// Returns the highest priority element.
-        /// </summary>
-        /// <returns>The at highest priority.</returns>
-        public V PeekAtHighestPriority()
-        {
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			return _heap.Peek ().Value;
         }
 
 
@@ -103,12 +140,15 @@ namespace DataStructures
 		/// <param name="priority">Priority.</param>
 		public void Enqueue(K key, V value, P priority)
 		{
-			if (_keysList.Contains (key))
-			{
-				throw new ArgumentException ("Key is already used.");
-			}
+            if (!_keysMap.ContainsKey(key))
+            {
+                _keysMap.Add(key, 1);
+            }
+            else
+            {
+                _keysMap[key] += 1;
+            }
 
-			_keysList.Add (key);
 			var newNode = new PriorityQueueNode<K, V, P> (key, value, priority);
 			_heap.Insert (newNode);
 		}
@@ -125,7 +165,13 @@ namespace DataStructures
 			}
 
 			var highest = _heap.Peek ();
-			_keysList.Remove (highest.Key);
+
+            // Decrement the key's counter
+			_keysMap[highest.Key] = _keysMap[highest.Key] - 1;
+            if (_keysMap[highest.Key] == 0)
+            {
+                _keysMap.Remove(highest.Key);
+            }
 
 			_heap.RemoveMax();
 			return highest.Value;
@@ -144,7 +190,7 @@ namespace DataStructures
 			{
 				throw new ArgumentOutOfRangeException ("Queue is empty.");
 			}
-			else if (!_keysList.Contains (key))
+			else if (!_keysMap.ContainsKey (key))
 			{
 				throw new KeyNotFoundException ();
 			}

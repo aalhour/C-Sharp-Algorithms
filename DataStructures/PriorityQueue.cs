@@ -49,7 +49,47 @@ namespace DataStructures
 		}
 
 
-		/// <summary>
+        /// <summary>
+        /// Returns the count of elements in the queue.
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return _heap.Count;
+            }
+        }
+
+
+        /// <summary>
+        /// Checks if the queue is empty
+        /// <returns>True if queue is empty; false otherwise.</returns>
+        /// </summary>
+        public bool IsEmpty
+        {
+            get
+            {
+                return (Count == 0);
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the highest priority element.
+        /// </summary>
+        /// <returns>The at highest priority.</returns>
+        public V PeekAtHighestPriority()
+        {
+            if (_heap.IsEmpty)
+            {
+                throw new ArgumentOutOfRangeException("Queue is empty.");
+            }
+
+            return _heap.Peek().Value;
+        }
+        
+        
+        /// <summary>
 		/// Remove the highest priority element and return it.
 		/// </summary>
 		/// <returns>The highest priority.</returns>
@@ -61,21 +101,6 @@ namespace DataStructures
 			}
 
 			return _heap.ExtractMax ().Value;
-		}
-
-
-		/// <summary>
-		/// Returns the highest priority element.
-		/// </summary>
-		/// <returns>The at highest priority.</returns>
-		public V PeekAtHighestPriority()
-		{
-			if (_heap.IsEmpty)
-			{
-				throw new ArgumentOutOfRangeException ("Queue is empty.");
-			}
-
-			return _heap.Peek ().Value;
 		}
 
 
