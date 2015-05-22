@@ -32,6 +32,22 @@ namespace C_Sharp_Algorithms
 			binarySearchTree.Insert (28);
 			binarySearchTree.Insert (39);
 
+
+			//
+			// Test removing an element with subtrees
+			try
+			{
+				// doesn't exist!
+				binarySearchTree.Remove (1000);
+			}
+			catch(Exception)
+			{
+				// does exist!
+				binarySearchTree.Remove (25);
+			}
+
+			//
+			// Test min & max
 			var min = binarySearchTree.FindMin ();
 			Debug.Assert(min == -1, "Min is wrong.");
 
@@ -62,8 +78,6 @@ namespace C_Sharp_Algorithms
 
 			max = binarySearchTree.FindMax ();
 			Debug.Assert(max == 20, "Max is wrong.");
-
-			binarySearchTree.Remove (1000);
 		}
 	}
 }

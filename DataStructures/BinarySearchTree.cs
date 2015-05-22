@@ -30,6 +30,12 @@ namespace DataStructures
         }
 
 
+		/// <summary>
+		/// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
+		/// This is used in the recursive function UpdateSubtreeSize.
+		/// </summary>
+		/// <returns>The size.</returns>
+		/// <param name="node">BST Node.</param>
 		private int SubtreeSize(BSTNode<T> node)
 		{
 			if (node == null)
@@ -39,9 +45,123 @@ namespace DataStructures
 		}
 
 
+		/// <summary>
+		/// Updates the Subtree Size of a tree node.
+		/// Used in recusively calculating the Subtrees Sizes of nodes.
+		/// </summary>
+		/// <param name="node">BST Node.</param>
 		private void UpdateSubtreeSize(BSTNode<T> node)
 		{
+			if (node == null)
+				return;
+			
 			node.SubtreeSize = SubtreeSize (node.Left) + SubtreeSize (node.Right) + 1;
+			node = node.Parent;
+			UpdateSubtreeSize (node);
+		}
+
+
+		/// <summary>
+		/// Returns the min-node in a subtree.
+		/// Used in the recusive InternalRemove function.
+		/// </summary>
+		/// <returns>The minimum-valued tree node.</returns>
+		/// <param name="node">The tree node with subtree(s).</param>
+		private BSTNode<T> FindMinNode(BSTNode<T> node)
+		{
+			var currentNode = node;
+
+			while (currentNode.Left != null)
+			{
+				currentNode = currentNode.Left;
+			}
+
+			return currentNode;
+		}
+
+
+		/// <summary>
+		/// Returns the max-node in a subtree.
+		/// Used in the recusive InternalRemove function.
+		/// </summary>
+		/// <returns>The maximum-valued tree node.</returns>
+		/// <param name="node">The tree node with subtree(s).</param>
+		private BSTNode<T> FindMaxNode(BSTNode<T> node)
+		{
+			var currentNode = node;
+
+			while (currentNode.Right != null)
+			{
+				currentNode = currentNode.Right;
+			}
+
+			return currentNode;
+		}
+
+
+		/// <summary>
+		/// Replaces the node's value from it's parent node object with the newValue.
+		/// Used in the recusive InternalRemove function.
+		/// </summary>
+		/// <param name="BSTNode">BST node.</param>
+		/// <param name="newValue">New value.</param>
+		private void ReplaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+		{
+			if (node.Parent != null)
+			{
+				if (node == node.Parent.Left)
+				{
+					node.Parent.Left = newNode;
+				}
+				else
+				{
+					node.Parent.Right = newNode;
+				}
+			}
+
+			if (newNode != null)
+			{
+				newNode.Parent = node.Parent;
+			}
+		}
+
+
+		/// <summary>
+		/// /// A private method used in the public Remove function.
+		/// Removes a given tree node from the tree.
+		/// Handles nodes with sub-trees.
+		/// </summary>
+		/// <param name="node">Tree node to delete.</param>
+		/// <param name="node">Tree node to delete.</param>
+		private void InternalRemove(BSTNode<T> node, T item)
+		{
+			var parent = node.Parent;
+
+			if(node.Left != null && node.Right != null) //if both children are present
+			{
+				var successor = node.Right;
+				node.Value = successor.Value;
+				InternalRemove (successor, successor.Value);
+			}
+			else if(node.Left != null) //if the node has only a *left* child
+			{
+				ReplaceNodeInParent (node, node.Left);
+				UpdateSubtreeSize (parent);
+				_count--;
+
+			}
+			else if(node.Right != null) //if the node has only a *right* child
+			{
+				ReplaceNodeInParent (node, node.Right);
+				UpdateSubtreeSize (parent);
+				_count--;
+			}
+			else //this node has no children
+			{
+				ReplaceNodeInParent (node, null);
+				UpdateSubtreeSize (parent);
+				_count--;
+			}
 		}
 
 
@@ -120,13 +240,8 @@ namespace DataStructures
 
 				//
 				// Update the subtrees-sizes
-				var node = newNode;
-
-				while (node != null)
-				{
-					UpdateSubtreeSize (node);
-					node = node.Parent;
-				}//end-while
+				var node = newNode.Parent;
+				UpdateSubtreeSize (node);
 
             }//end-else
         }
@@ -165,7 +280,7 @@ namespace DataStructures
 			// If the element was found, remove it.
 			if (currentNode != null)
 			{
-				
+				InternalRemove (currentNode, item);
 			}
 			else
 			{
@@ -240,11 +355,7 @@ namespace DataStructures
 
 			//
 			// Update the subtrees-sizes
-			while (parent != null)
-			{
-				UpdateSubtreeSize (parent);
-				parent = parent.Parent;
-			}
+			UpdateSubtreeSize (parent);
 		}
 
 
@@ -280,11 +391,7 @@ namespace DataStructures
 
 			//
 			// Update the subtrees-sizes
-			while (parent != null)
-			{
-				UpdateSubtreeSize (parent);
-				parent = parent.Parent;
-			}
+			UpdateSubtreeSize (parent);
 		}
 
 
