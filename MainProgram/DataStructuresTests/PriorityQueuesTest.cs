@@ -91,18 +91,18 @@ namespace C_Sharp_Algorithms
 
             var highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
             Debug.Assert(highestPriorityProcess.Id == process2.Id, "Wrong process!");
-            
-            sysProcesses.PullHighestPriority();
+
+            sysProcesses.Dequeue();
 
             highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
             Debug.Assert(highestPriorityProcess.Id == process4.Id, "Wrong process!");
-            
-            sysProcesses.PullHighestPriority();
-            
+
+            sysProcesses.Dequeue();
+
             highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
             Debug.Assert(highestPriorityProcess.Id == process6.Id, "Wrong process!");
-            
-            sysProcesses.PullHighestPriority();
+
+            sysProcesses.Dequeue();
 
             highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
             Debug.Assert(highestPriorityProcess.Id == process3.Id, "Wrong process!");

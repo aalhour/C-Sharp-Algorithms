@@ -110,40 +110,7 @@ namespace DataStructures
         }
 
 
-		/// <summary>
-		/// Gets or sets the at the specified index.
-		/// </summary>
-		/// <param name="index">Index.</param>
-		public T this[int index]
-		{
-			get
-			{
-				if (index < 0 || index > this.Count || this.Count == 0)
-				{
-					throw new IndexOutOfRangeException ();
-				}
-
-				return _collection [index];
-			}
-			set
-			{
-				if (index < 0 || index >= this.Count)
-				{
-					throw new IndexOutOfRangeException ();
-				}
-
-				_collection [index] = value;
-
-				if(_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
-				{
-					_collection.Swap (0, index);
-					BuildMinHeap ();
-				}
-			}
-		}
-
-
-		/// <summary>
+        /// <summary>
 		/// Heapifies the specified newCollection. Overrides the current heap.
 		/// </summary>
 		/// <param name="newCollection">New collection.</param>
@@ -196,61 +163,6 @@ namespace DataStructures
 			}
 			
 			return _collection.First;
-		}
-
-
-		/// <summary>
-		/// Remove a key from the heap.
-		/// </summary>
-		/// <param name="heapKey">Heap key.</param>
-		public void Remove(T heapKey)
-		{
-			if (!IsEmpty)
-			{
-				int last = _collection.Count - 1;
-				int index = _collection.IndexOf(heapKey);
-				_collection.Swap (index, last);
-
-				_collection.RemoveAt (last);
-				last--;
-
-				MinHeapify<T>(0, last);
-			}
-		}
-
-
-		/// <summary>
-		/// Removes the key at index.
-		/// </summary>
-		/// <param name="index">Index.</param>
-		public void RemoveAt(int index)
-		{
-			if (!IsEmpty)
-			{
-				int last = _collection.Count - 1;
-				_collection.Swap (index, last);
-
-				_collection.RemoveAt (last);
-				last--;
-
-				MinHeapify<T>(0, last);
-			}
-		}
-
-
-		/// <summary>
-		/// Removes all keys that match the predicate.
-		/// </summary>
-		/// <param name="searchMatch">Search match.</param>
-		public void RemoveAll(Predicate<T> searchMatch)
-		{
-			for (int i = 0; i < _collection.Count; ++i)
-			{
-				if (searchMatch (_collection [i]))
-				{
-					RemoveAt (i);
-				}
-			}
 		}
 
 
@@ -328,6 +240,89 @@ namespace DataStructures
 			return newMaxHeap;
 		}
 
+
+        ///// <summary>
+        ///// Gets or sets the at the specified index.
+        ///// </summary>
+        ///// <param name="index">Index.</param>
+        //public T this[int index]
+        //{
+        //    get
+        //    {
+        //        if (index < 0 || index > this.Count || this.Count == 0)
+        //        {
+        //            throw new IndexOutOfRangeException ();
+        //        }
+        //
+        //        return _collection [index];
+        //    }
+        //    set
+        //    {
+        //        if (index < 0 || index >= this.Count)
+        //        {
+        //            throw new IndexOutOfRangeException ();
+        //        }
+        //
+        //        _collection [index] = value;
+        //
+        //        if(_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
+        //        {
+        //            _collection.Swap (0, index);
+        //            BuildMinHeap ();
+        //        }
+        //    }
+        //}
+        
+        
+        ///// <summary>
+        ///// Remove a key from the heap.
+        ///// </summary>
+        ///// <param name="heapKey">Heap key.</param>
+        //public void Remove(T heapKey)
+        //{
+        //    if (!IsEmpty)
+        //    {
+        //        int last = _collection.Count - 1;
+        //        int index = _collection.IndexOf(heapKey);
+        //        _collection.Swap (index, last);
+        //        _collection.RemoveAt (last);
+        //        last--;
+        //        MinHeapify<T>(0, last);
+        //    }
+        //}
+
+
+        ///// <summary>
+        ///// Removes the key at index.
+        ///// </summary>
+        ///// <param name="index">Index.</param>
+        //public void RemoveAt(int index)
+        //{
+        //    if (!IsEmpty)
+        //    {
+        //        int last = _collection.Count - 1;
+        //        _collection.Swap (index, last);
+        //        _collection.RemoveAt (last);
+        //        last--;
+        //        MinHeapify<T>(0, last);
+        //    }
+        //}
+
+
+        ///// <summary>
+        ///// Removes all keys that match the predicate.
+        ///// </summary>
+        ///// <param name="searchMatch">Search match.</param>
+        //public void RemoveAll(Predicate<T> searchMatch)
+        //{
+        //    for (int i = 0; i < _collection.Count; ++i)
+        //    {
+        //        if (searchMatch (_collection [i]))
+        //        {
+        //            RemoveAt (i);
+        //        }
+        //    }
+        //}
     }
 
 }
