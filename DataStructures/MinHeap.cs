@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using DataStructures.Interfaces;
 using DataStructures.Helpers;
 
 namespace DataStructures
 {
-	/// <summary>
-	/// Minimum Heap Data Structure.
-	/// </summary>
-    public class MinHeap<T>
+    /// <summary>
+    /// Minimum Heap Data Structure.
+    /// </summary>
+    public class MinHeap<T> : IMinHeap<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance Variables.
@@ -22,38 +23,38 @@ namespace DataStructures
         /// CONSTRUCTOR
         /// </summary>
         /// <param name="heapType">Heap type, max or min.</param>
-		public MinHeap() : this(0, null) { }
+        public MinHeap() : this(0, null) { }
 
-		/// <summary>
-		/// CONSTRUCTOR
-		/// </summary>
-		/// <param name="comparer">Heap keys comparer.</param>
-		public MinHeap(Comparer<T> comparer) : this(0, comparer) { }
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
+        /// <param name="comparer">Heap keys comparer.</param>
+        public MinHeap(Comparer<T> comparer) : this(0, comparer) { }
 
-		/// <summary>
-		/// CONSTRUCTOR
-		/// </summary>
-		/// <param name="capacity">Heap capacity.</param>
-		public MinHeap(int capacity, Comparer<T> comparer)
+        /// <summary>
+        /// CONSTRUCTOR
+        /// </summary>
+        /// <param name="capacity">Heap capacity.</param>
+        public MinHeap(int capacity, Comparer<T> comparer)
         {
             _collection = new ArrayList<T>(capacity);
-			_heapComparer = comparer ?? Comparer<T>.Default;
+            _heapComparer = comparer ?? Comparer<T>.Default;
         }
 
 
-		/// <summary>
-		/// Builds a min heap from the inner array-list _collection.
-		/// </summary>
-		private void BuildMinHeap()
-		{
-			int lastIndex = _collection.Count - 1;
-			int lastNodeWithChildren = (lastIndex / 2);
+        /// <summary>
+        /// Builds a min heap from the inner array-list _collection.
+        /// </summary>
+        private void BuildMinHeap()
+        {
+            int lastIndex = _collection.Count - 1;
+            int lastNodeWithChildren = (lastIndex / 2);
 
-			for (int node = lastNodeWithChildren; node >= 0; node--)
-			{
-				MinHeapify<T>(node, lastIndex);
-			}
-		}
+            for (int node = lastNodeWithChildren; node >= 0; node--)
+            {
+                MinHeapify<T>(node, lastIndex);
+            }
+        }
 
 
         /// <summary>
@@ -89,191 +90,189 @@ namespace DataStructures
         /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
-        public int Count
+        public int Count()
         {
-            get
-            {
-                return _collection.Count;
-            }
+            return _collection.Count;
         }
 
 
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        public bool IsEmpty
+        public bool IsEmpty()
+        {
+            return (_collection.Count == 0);
+        }
+
+
+        /// <summary>
+        /// Gets or sets the at the specified index.
+        /// </summary>
+        /// <param name="index">Index.</param>
+        public T this[int index]
         {
             get
             {
-                return (_collection.Count == 0);
+                if (index < 0 || index > this.Count() || this.Count() == 0)
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                return _collection[index];
+            }
+            set
+            {
+                if (index < 0 || index >= this.Count())
+                {
+                    throw new IndexOutOfRangeException();
+                }
+
+                _collection[index] = value;
+
+                if (_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
+                {
+                    _collection.Swap(0, index);
+                    BuildMinHeap();
+                }
             }
         }
 
 
         /// <summary>
-		/// Heapifies the specified newCollection. Overrides the current heap.
-		/// </summary>
-		/// <param name="newCollection">New collection.</param>
-		public void Heapify(IList<T> newCollection)
-		{
-			if (newCollection.Count > 0)
-			{
-				// Reset and reserve the size of the newCollection
-				_collection = new ArrayList<T> (newCollection.Count);
+        /// Heapifies the specified newCollection. Overrides the current heap.
+        /// </summary>
+        /// <param name="newCollection">New collection.</param>
+        public void Heapify(IList<T> newCollection)
+        {
+            if (newCollection.Count > 0)
+            {
+                // Reset and reserve the size of the newCollection
+                _collection = new ArrayList<T>(newCollection.Count);
 
-				// Copy the elements from the newCollection to the inner collection
-				for (int i = 0; i < newCollection.Count; ++i)
-				{
-					_collection.InsertAt (newCollection [i], i);
-				}
+                // Copy the elements from the newCollection to the inner collection
+                for (int i = 0; i < newCollection.Count; ++i)
+                {
+                    _collection.InsertAt(newCollection[i], i);
+                }
 
-				// Build the heap
-				BuildMinHeap();
-			}
-		}
+                // Build the heap
+                BuildMinHeap();
+            }
+        }
 
 
-		/// <summary>
-		/// Adding a new key to the heap.
-		/// </summary>
-		/// <param name="heapKey">Heap key.</param>
+        /// <summary>
+        /// Adding a new key to the heap.
+        /// </summary>
+        /// <param name="heapKey">Heap key.</param>
         public void Insert(T heapKey)
         {
-            if(IsEmpty)
+            if (IsEmpty())
             {
                 _collection.Add(heapKey);
             }
-			else
+            else
             {
                 _collection.Add(heapKey);
-				BuildMinHeap ();
+                BuildMinHeap();
             }
         }
 
 
-		/// <summary>
-		/// Find the minimum node of a min heap.
-		/// </summary>
-		/// <returns>The minimum.</returns>
-		public T Peek()
-		{
-			if (IsEmpty)
-			{
-				throw new Exception ("Heap is empty.");
-			}
-			
-			return _collection.First;
-		}
+        /// <summary>
+        /// Find the minimum node of a min heap.
+        /// </summary>
+        /// <returns>The minimum.</returns>
+        public T Peek()
+        {
+            if (IsEmpty())
+            {
+                throw new Exception("Heap is empty.");
+            }
+
+            return _collection.First;
+        }
 
 
         /// <summary>
-		/// Removes the node of minimum value from a min heap.
+        /// Removes the node of minimum value from a min heap.
         /// </summary>
         public void RemoveMin()
         {
-			if (!IsEmpty)
-			{
-				int min = 0;
-				int last = _collection.Count - 1;
-				_collection.Swap (min, last);
+            if (IsEmpty())
+            {
+                throw new Exception("Heap is empty.");
+            }
 
-				_collection.RemoveAt (last);
-				last--;
+            int min = 0;
+            int last = _collection.Count - 1;
+            _collection.Swap(min, last);
 
-				MinHeapify<T>(0, last);
-			}
+            _collection.RemoveAt(last);
+            last--;
+
+            MinHeapify<T>(0, last);
         }
 
 
-		/// <summary>
-		/// Returns the node of minimum value from a min heap after removing it from the heap.
-		/// </summary>
-		/// <returns>The min.</returns>
-		public T ExtractMin()
-		{
-			var min = Peek ();
-			RemoveMin ();
-			return min;
-		}
+        /// <summary>
+        /// Returns the node of minimum value from a min heap after removing it from the heap.
+        /// </summary>
+        /// <returns>The min.</returns>
+        public T ExtractMin()
+        {
+            var min = Peek();
+            RemoveMin();
+            return min;
+        }
 
 
-		/// <summary>
-		/// Clear this heap.
-		/// </summary>
-		public void Clear()
-		{
-			if (!IsEmpty)
-			{
-				_collection.Clear ();
-			}
-		}
+        /// <summary>
+        /// Clear this heap.
+        /// </summary>
+        public void Clear()
+        {
+            if (IsEmpty())
+            {
+                throw new Exception("Heap is empty.");
+            }
+
+            _collection.Clear();
+        }
 
 
-		/// <summary>
-		/// Returns an array version of this heap.
-		/// </summary>
-		/// <returns>The array.</returns>
-		public T[] ToArray()
-		{
-			return _collection.ToArray ();
-		}
+        /// <summary>
+        /// Returns an array version of this heap.
+        /// </summary>
+        /// <returns>The array.</returns>
+        public T[] ToArray()
+        {
+            return _collection.ToArray();
+        }
 
 
-		/// <summary>
-		/// Returns a list version of this heap.
-		/// </summary>
-		/// <returns>The list.</returns>
-		public List<T> ToList()
-		{
-			return _collection.ToList ();
-		}
+        /// <summary>
+        /// Returns a list version of this heap.
+        /// </summary>
+        /// <returns>The list.</returns>
+        public List<T> ToList()
+        {
+            return _collection.ToList();
+        }
 
 
-		/// <summary>
-		/// Returns a new max heap that contains all elements of this heap.
-		/// </summary>
-		/// <returns>The max heap.</returns>
-		public MaxHeap<T> ToMaxHeap()
-		{
-			MaxHeap<T> newMaxHeap = new MaxHeap<T> (this.Count, this._heapComparer);
-			newMaxHeap.Heapify(this._collection.ToArray());
-			return newMaxHeap;
-		}
+        /// <summary>
+        /// Returns a new max heap that contains all elements of this heap.
+        /// </summary>
+        /// <returns>The max heap.</returns>
+        public MaxHeap<T> ToMaxHeap()
+        {
+            MaxHeap<T> newMaxHeap = new MaxHeap<T>(this.Count(), this._heapComparer);
+            newMaxHeap.Heapify(this._collection.ToArray());
+            return newMaxHeap;
+        }
 
 
-        ///// <summary>
-        ///// Gets or sets the at the specified index.
-        ///// </summary>
-        ///// <param name="index">Index.</param>
-        //public T this[int index]
-        //{
-        //    get
-        //    {
-        //        if (index < 0 || index > this.Count || this.Count == 0)
-        //        {
-        //            throw new IndexOutOfRangeException ();
-        //        }
-        //
-        //        return _collection [index];
-        //    }
-        //    set
-        //    {
-        //        if (index < 0 || index >= this.Count)
-        //        {
-        //            throw new IndexOutOfRangeException ();
-        //        }
-        //
-        //        _collection [index] = value;
-        //
-        //        if(_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
-        //        {
-        //            _collection.Swap (0, index);
-        //            BuildMinHeap ();
-        //        }
-        //    }
-        //}
-        
-        
         ///// <summary>
         ///// Remove a key from the heap.
         ///// </summary>
@@ -323,6 +322,7 @@ namespace DataStructures
         //        }
         //    }
         //}
+
     }
 
 }

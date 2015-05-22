@@ -14,16 +14,16 @@ namespace DataStructures
         /// <typeparam name="T"></typeparam>
         public class SLinkedListNode<T>
         {
-			public SLinkedListNode<T> Next { get; set; }
+            public SLinkedListNode<T> Next { get; set; }
             public T Data { get; set; }
 
-			public SLinkedListNode()
+            public SLinkedListNode()
             {
                 Next = null;
                 Data = default(T);
             }
 
-			public SLinkedListNode(T dataItem)
+            public SLinkedListNode(T dataItem)
             {
                 Next = null;
                 Data = dataItem;

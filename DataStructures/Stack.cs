@@ -14,7 +14,7 @@ namespace DataStructures
         /// _collection: Array-Based List.
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
-		private ArrayList<T> _collection { get; set; }
+        private ArrayList<T> _collection { get; set; }
         public int Count { get { return _collection.Count; } }
 
 
@@ -25,21 +25,21 @@ namespace DataStructures
         {
             // The internal collection is implemented as an array-based list.
             // See the ArrayList.cs for the list implementation.
-			_collection = new ArrayList<T>();
+            _collection = new ArrayList<T>();
         }
 
 
-		public Stack(int initialCapacity)
-		{
-			if (initialCapacity < 0)
-			{
-				throw new ArgumentOutOfRangeException ();
-			}
+        public Stack(int initialCapacity)
+        {
+            if (initialCapacity < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
 
-			// The internal collection is implemented as an array-based list.
-			// See the ArrayList.cs for the list implementation.
-			_collection = new ArrayList<T> (initialCapacity);
-		}
+            // The internal collection is implemented as an array-based list.
+            // See the ArrayList.cs for the list implementation.
+            _collection = new ArrayList<T>(initialCapacity);
+        }
 
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace DataStructures
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-			_collection.InsertAt(dataItem, 0);
+            _collection.InsertAt(dataItem, 0);
         }
 
 
@@ -128,13 +128,13 @@ namespace DataStructures
         }
 
 
-		/// <summary>
-		/// Returns a human-readable, multi-line, print-out (string) of this stack.
-		/// </summary>
-		/// <returns>String.</returns>
-		public string ToHumanReadable()
-		{
-			return _collection.ToHumanReadable ();
+        /// <summary>
+        /// Returns a human-readable, multi-line, print-out (string) of this stack.
+        /// </summary>
+        /// <returns>String.</returns>
+        public string ToHumanReadable()
+        {
+            return _collection.ToHumanReadable();
         }
 
     }
