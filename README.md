@@ -13,6 +13,7 @@ I am writing this organized collection of classes as part of my preparation for 
 * **Max-Heap** (MaxHeap.cs). Based on my ArrayList\<T\>.
 * **Priority Queue** (PriorityQueue.cs). Based on my MaxHeap\<T\>.
 * **Keyed Priority Queue** (KeyedPriorityQueue.cs). Based on my MaxHeap\<T\>.
+* **Binary Search Tree** (BinarySearchTree.cs).
 
 ## Algorithms:
 
