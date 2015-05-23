@@ -31,15 +31,13 @@ namespace DataStructures
         T Find(T item);
 
         // Finds all the elements in the tree that match the predicate.
-        ArrayList<T> FindAll(System.Predicate<T> searchPredicate);
+        System.Collections.Generic.List<T> FindAll(System.Predicate<T> searchPredicate);
 
         // Traverses the tree and applies the action to every node.
         void Traverse(System.Action<T> action);
 
-        // Sort the elements in this tree, using BinarySearchTree Sorting
-        // ... and add them to the passed outputCollection
-        void BSTSort(out ArrayList<T> outputCollection);
-        void BSTSort(out System.Collections.Generic.IList<T> outputCollection);
+        // Sort the elements in this tree, using in-order traversal, and returns them.
+        System.Collections.Generic.List<T> BSTSort();
 
         // Clear this tree.
         void Clear();
@@ -61,10 +59,9 @@ namespace DataStructures
         K Find(K item);
         K FindMin();
         K FindMax();
-        ArrayList<V> FindAll(System.Predicate<K> searchPredicate);
+        System.Collections.Generic.List<V> FindAll(System.Predicate<K> searchPredicate);
         void Traverse(System.Action<K> action);
-        void BSTSort(out ArrayList<V> outputCollection);
-        void BSTSort(out System.Collections.Generic.IList<V> outputCollection);
+        System.Collections.Generic.List<V> BSTSort();
         void Clear();
     }
 }

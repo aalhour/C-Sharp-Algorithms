@@ -166,11 +166,10 @@ namespace DataStructures
 
 
         /// <summary>
-        /// In-order traversal of the subtrees of a node, and applies an action to the value of every visited node.
+        /// In-order traversal of the subtrees of a node. Returns every node it vists.
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
-        /// <param name="action">Action to apply to every node's value.</param>
-        private void InOrderTraverse(BSTNode<T> currentNode, Action<T> action)
+        private void InternalInOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
         {
             if (currentNode == null)
             {
@@ -178,13 +177,36 @@ namespace DataStructures
             }
 
             // call the left child
-            InOrderTraverse(currentNode.Left, action);
+            InternalInOrderTraverse(currentNode.Left, ref list);
+
+            // visit node
+            list.Add(currentNode.Value);
+
+            // call the right child
+            InternalInOrderTraverse(currentNode.Right, ref list);
+        }
+
+
+        /// <summary>
+        /// In-order traversal of the subtrees of a node, and applies an action to the value of every visited node.
+        /// </summary>
+        /// <param name="currentNode">Node to traverse the tree from.</param>
+        /// <param name="action">Action to apply to every node's value.</param>
+        private void InternalInOrderTraverse(BSTNode<T> currentNode, Action<T> action)
+        {
+            if (currentNode == null)
+            {
+                return;
+            }
+
+            // call the left child
+            InternalInOrderTraverse(currentNode.Left, action);
 
             // visit node
             action(currentNode.Value);
 
             // call the right child
-            InOrderTraverse(currentNode.Right, action);
+            InternalInOrderTraverse(currentNode.Right, action);
         }
 
 
@@ -193,7 +215,7 @@ namespace DataStructures
         /// Implements in-order traversal to find all the matching elements in a subtree.
         /// </summary>
         /// <param name="searchPredicate"></param>
-        private void InternalFindAll(BSTNode<T> currentNode, Predicate<T> match, ref ArrayList<T> list)
+        private void InternalFindAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
             {
@@ -338,27 +360,8 @@ namespace DataStructures
 
 
         /// <summary>
-        /// Finds the minimum in tree 
+        // Removes the min value from tree.
         /// </summary>
-        /// <returns>Min</returns>
-        public T FindMin()
-        {
-            var currentNode = _root;
-            return FindMinNode(currentNode).Value;
-        }
-
-
-        /// <summary>
-        /// Finds the maximum in tree 
-        /// </summary>
-        /// <returns>Max</returns>
-        public T FindMax()
-        {
-            var currentNode = _root;
-            return FindMaxNode(currentNode).Value;
-        }
-
-
         public void RemoveMin()
         {
             BSTNode<T> parent = null;
@@ -392,6 +395,9 @@ namespace DataStructures
         }
 
 
+        /// <summary>
+        /// Removes the max value from tree.
+        /// </summary>
         public void RemoveMax()
         {
             BSTNode<T> parent = null;
@@ -425,6 +431,33 @@ namespace DataStructures
         }
 
 
+        /// <summary>
+        /// Finds the minimum in tree 
+        /// </summary>
+        /// <returns>Min</returns>
+        public T FindMin()
+        {
+            var currentNode = _root;
+            return FindMinNode(currentNode).Value;
+        }
+
+
+        /// <summary>
+        /// Finds the maximum in tree 
+        /// </summary>
+        /// <returns>Max</returns>
+        public T FindMax()
+        {
+            var currentNode = _root;
+            return FindMaxNode(currentNode).Value;
+        }
+
+
+        /// <summary>
+        /// Find the item in the tree. Throws an exception if not found.
+        /// </summary>
+        /// <param name="item">Item to find.</param>
+        /// <returns>Item.</returns>
         public T Find(T item)
         {
             var currentNode = _root;
@@ -465,16 +498,20 @@ namespace DataStructures
         /// </summary>
         /// <param name="searchPredicate">The search predicate</param>
         /// <returns>ArrayList<T> of elements.</returns>
-        public ArrayList<T> FindAll(Predicate<T> searchPredicate)
+        public List<T> FindAll(Predicate<T> searchPredicate)
         {
             var currentNode = _root;
-            var list = new ArrayList<T>();
+            var list = new List<T>();
             InternalFindAll(currentNode, searchPredicate, ref list);
 
             return list;
         }
 
 
+        /// <summary>
+        /// Traverses the tree and applies the action to every node.
+        /// </summary>
+        /// <param name="action">Action to apply to every node's value.</param>
         public void Traverse(Action<T> action)
         {
             if (action == null)
@@ -483,19 +520,21 @@ namespace DataStructures
             }
 
             var currentNode = _root;
-            InOrderTraverse(currentNode, action);
+            InternalInOrderTraverse(currentNode, action);
         }
 
 
-        public void BSTSort(out ArrayList<T> outputCollection)
+        /// <summary>
+        /// Sort the elements in this tree, using in-order traversal, and returns them.
+        /// </summary>
+        public List<T> BSTSort()
         {
-            throw new NotImplementedException();
-        }
+            var currentNode = _root;
+            var list = new List<T>();
 
+            InternalInOrderTraverse(currentNode, ref list);
 
-        public void BSTSort(out IList<T> outputCollection)
-        {
-            throw new NotImplementedException();
+            return list;
         }
 
 

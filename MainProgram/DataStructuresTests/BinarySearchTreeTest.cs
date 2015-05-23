@@ -36,6 +36,8 @@ namespace C_Sharp_Algorithms
             var list = binarySearchTree.FindAll(element => element > 15);
             Debug.Assert(list.Count == 7, "Wrong FindAll result!");
 
+            var sortedList = binarySearchTree.BSTSort();
+
             // Test min & max
             var min = binarySearchTree.FindMin();
             Debug.Assert(min == -1, "Min is wrong.");
