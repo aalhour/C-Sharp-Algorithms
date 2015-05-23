@@ -1,12 +1,23 @@
 ﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainProgram/DataStructuresTests/BinarySearchTreeTest.cs">
+    <Files>
+      <File FileName="MainProgram/Program.cs" Line="17" Column="35" />
+      <File FileName="DataStructures/BinarySearchTree.cs" Line="149" Column="32" />
+      <File FileName="MainProgram/DataStructuresTests/BinarySearchTreeTest.cs" Line="38" Column="7" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="C-Sharp-Algorithms" expanded="True">
-            <Node name="DataStructures" expanded="True" />
-            <Node name="MainProgram" expanded="True" />
+            <Node name="DataStructures" expanded="True">
+              <Node name="Interfaces" expanded="True" />
+            </Node>
+            <Node name="MainProgram" expanded="True">
+              <Node name="DataStructuresTests" expanded="True">
+                <Node name="BinarySearchTreeTest.cs" selected="True" />
+              </Node>
+            </Node>
           </Node>
         </State>
       </Pad>
@@ -16,7 +27,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/ahmadalhour/Projects/C-Sharp-Algorithms/MainProgram/DataStructuresTests/BinarySearchTreeTest.cs" line="46" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

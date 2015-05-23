@@ -39,21 +39,21 @@ namespace DataStructures
         {
             if (node == null)
                 return 0;
-            else if (node.Left == null && node.Right == null)
-                return 1;
+			else if (node.HasChildren == false)
+                return 0 ;
 
-            if (node.Left != null && node.Right != null)
+			if (node.ChildCount == 2) // it has both a right child and a left child
             {
                 if (node.Left.SubtreeSize > node.Right.SubtreeSize)
                     node = node.Left;
                 else
                     node = node.Right;
             }
-            else if (node.Left != null)
+			else if (node.HasLeftChild)
             {
                 node = node.Left;
             }
-            else if (node.Right != null)
+			else if (node.HasRightChild)
             {
                 node = node.Right;
             }
@@ -108,12 +108,12 @@ namespace DataStructures
             {
                 return currentNode;
             }
-            else if (currentNode.Left != null && item.IsLessThan(currentNode.Value))
+			else if (currentNode.HasLeftChild && item.IsLessThan(currentNode.Value))
             {
                 currentNode = currentNode.Left;
                 return _findNode(currentNode, item);
             }
-            else if (currentNode.Right != null && item.IsGreaterThan(currentNode.Value))
+			else if (currentNode.HasRightChild && item.IsGreaterThan(currentNode.Value))
             {
                 currentNode = currentNode.Right;
                 return _findNode(currentNode, item);
@@ -134,7 +134,7 @@ namespace DataStructures
         {
             var currentNode = node;
 
-            while (currentNode.Left != null)
+			while (currentNode.HasLeftChild)
                 currentNode = currentNode.Left;
 
             return currentNode;
@@ -151,7 +151,7 @@ namespace DataStructures
         {
             var currentNode = node;
 
-            while (currentNode.Right != null)
+			while (currentNode.HasRightChild)
                 currentNode = currentNode.Right;
 
             return currentNode;
@@ -191,14 +191,10 @@ namespace DataStructures
         {
             if (node.Parent != null)
             {
-                if (node == node.Parent.Left)
-                {
+				if (node.IsLeftChild)
                     node.Parent.Left = newNode;
-                }
                 else
-                {
                     node.Parent.Right = newNode;
-                }
             }
 
             if (newNode != null)
@@ -217,20 +213,20 @@ namespace DataStructures
         {
             var parent = node.Parent;
 
-            if (node.Left != null && node.Right != null) //if both children are present
+			if (node.ChildCount == 2) // if both children are present
             {
                 var successor = node.Right;
                 node.Value = successor.Value;
                 _remove(successor, successor.Value);
             }
-            else if (node.Left != null) //if the node has only a *left* child
+            else if (node.HasLeftChild) //if the node has only a *left* child
             {
                 _replaceNodeInParent(node, node.Left);
                 _updateSubtreeSize(parent);
                 _count--;
 
             }
-            else if (node.Right != null) //if the node has only a *right* child
+            else if (node.HasRightChild) //if the node has only a *right* child
             {
                 _replaceNodeInParent(node, node.Right);
                 _updateSubtreeSize(parent);
@@ -328,86 +324,6 @@ namespace DataStructures
         }
 
 
-        private string _getEdgesForNode(BSTNode<T> node)
-        {
-            return null;
-        }
-
-
-        /// <summary>
-        /// Prints the subtrees from a given node.
-        /// </summary>
-        /// <param name="currentNode">Node</param>
-        private void _printTree(BSTNode<T> currentNode, Queue<BSTNode<T>> queue = null)
-        {
-            if (currentNode == null)
-                return;
-
-            if (queue == null)
-                queue = new Queue<BSTNode<T>>();
-
-            int leftPad = _getTreeHeight(currentNode);
-
-            // handle root
-            if (currentNode.Parent == null)
-            {
-                Console.WriteLine(new String(' ', leftPad) + currentNode.Value);
-
-                queue.Push(currentNode.Left);
-                queue.Push(currentNode.Right);
-
-                _printTree(currentNode.Left, queue);
-            }
-            else if (!queue.IsEmpty)
-            {
-                Queue<BSTNode<T>> subQueue = new Queue<BSTNode<T>>();
-
-                string spaceBetweenNodes = new String(' ', 2);
-                string treeLevel = String.Format("{0}", new String(' ', leftPad + 3));
-
-                //
-                // Print the tree edges
-                for (int i = 1; i <= queue.Count; ++i)
-                {
-                    if (i % 2 == 0)
-                        treeLevel = String.Format("{0}\\{1}", treeLevel, spaceBetweenNodes);
-                    else
-                        treeLevel = String.Format("{0}/{1}", treeLevel, spaceBetweenNodes);
-                }
-
-                Console.WriteLine(treeLevel);
-
-                //
-                // Print the tree nodes
-                spaceBetweenNodes = new String(' ', 4);
-                treeLevel = String.Format("{0}", new String(' ', leftPad - 1));
-
-                while (!queue.IsEmpty)
-                {
-                    var top = queue.Top;
-                    queue.Pop();
-
-                    if (top == null)
-                    {
-                        treeLevel = String.Format("{0}{1}{2}", treeLevel, spaceBetweenNodes, "");
-                        subQueue.Push(null);
-                        subQueue.Push(null);
-                    }
-                    else
-                    {
-                        treeLevel = String.Format("{0}{1}{2}", treeLevel, spaceBetweenNodes, top.Value);
-                        subQueue.Push(top.Left);
-                        subQueue.Push(top.Right);
-                    }
-                }
-
-                Console.WriteLine(treeLevel);
-
-                _printTree(subQueue.Top, subQueue);
-            }
-        }
-
-
         /// <summary>
         /// Return the number of elements in this tree
         /// </summary>
@@ -464,7 +380,7 @@ namespace DataStructures
                 {
                     if (item.IsLessThan(currentNode.Value))
                     {
-                        if (currentNode.Left == null)
+						if (currentNode.HasLeftChild == false)
                         {
                             newNode.Parent = currentNode;
                             currentNode.Left = newNode;
@@ -476,7 +392,7 @@ namespace DataStructures
                     }
                     else
                     {
-                        if (currentNode.Right == null)
+						if (currentNode.HasRightChild == false)
                         {
                             newNode.Parent = currentNode;
                             currentNode.Right = newNode;
@@ -495,26 +411,6 @@ namespace DataStructures
                 _updateSubtreeSize(node);
 
             }//end-else
-        }
-
-
-        public void Insert(T[] items)
-        {
-            if (items == null)
-                throw new ArgumentNullException("Null arrays are not allowed.");
-
-            for (int i = 0; i < items.Length; ++i)
-                this.Insert(items[i]);
-        }
-
-
-        public void Insert(List<T> items)
-        {
-            if (items == null)
-                throw new ArgumentNullException("Null arrays are not allowed.");
-
-            for (int i = 0; i < items.Count; ++i)
-                this.Insert(items[i]);
         }
 
 
@@ -575,7 +471,7 @@ namespace DataStructures
 
             //
             // Remove the node
-            if (currentNode.Right != null)
+            if (currentNode.HasRightChild)
             {
                 parent = currentNode.Parent;
                 var right = currentNode.Right;
@@ -614,7 +510,7 @@ namespace DataStructures
 
             //
             // Remove the node
-            if (currentNode.Left != null)
+            if (currentNode.HasLeftChild)
             {
                 parent = currentNode.Parent;
                 var left = currentNode.Left;
@@ -744,21 +640,16 @@ namespace DataStructures
         }
 
 
-        public void VisualizeTree()
-        {
-            //
-            // NOT FULLY IMPLEMENTED YET!
-            throw new NotImplementedException();
+		public T[] ToArray()
+		{
+			throw new NotImplementedException ();
+		}
 
-            if (IsEmpty())
-            {
-                Console.WriteLine("<Empty Tree>");
-                return;
-            }
 
-            var currentNode = _root;
-            _printTree(currentNode);
-        }
+		public List<T> ToList()
+		{
+			throw new NotImplementedException ();
+		}
 
 
         /// <summary>
@@ -798,8 +689,55 @@ namespace DataStructures
             this.Right = right;
         }
 
-        // 
-        // IComparable CompareTo implementation
+		/// <summary>
+		/// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).
+		/// </summary>
+		/// <returns>Number (0,1,2)</returns>
+		public int ChildCount 
+		{
+			get
+			{
+				int count = 0;
+
+				if (this.HasLeftChild)
+					count++;
+				if (this.HasRightChild)
+					count++;
+
+				return count;
+			} 
+		}
+
+		/// <summary>
+		/// Checks whether this node has any children.
+		/// </summary>
+		/// <value><c>true</c> if this instance has children; otherwise, <c>false</c>.</value>
+		public bool HasChildren { get { return (this.ChildCount > 0); } }
+
+		/// <summary>
+		/// Checks whether this node has left child.
+		/// </summary>
+		/// <value><c>true</c> if this instance has left child; otherwise, <c>false</c>.</value>
+		public bool HasLeftChild { get { return (this.HasLeftChild); } }
+
+		/// <summary>
+		/// Checks whether this node has right child.
+		/// </summary>
+		/// <value><c>true</c> if this instance has right child; otherwise, <c>false</c>.</value>
+		public bool HasRightChild { get { return (this.HasRightChild ); } }
+
+		/// <summary>
+		/// Checks whether this node is the left child of it's parent.
+		/// </summary>
+		/// <value><c>true</c> if this instance is left child; otherwise, <c>false</c>.</value>
+		public bool IsLeftChild { get { return (this.Parent != null && this.Parent.Left == this); } }
+
+		/// <summary>
+		/// Checks whether this node is the left child of it's parent.
+		/// </summary>
+		/// <value><c>true</c> if this instance is right child; otherwise, <c>false</c>.</value>
+		public bool IsRightChild { get { return { this.Parent != null && this.Parent.Right == this; } } }
+
         public int CompareTo(BSTNode<T> other)
         {
             if (other == null)
