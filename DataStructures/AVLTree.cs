@@ -83,10 +83,25 @@ namespace DataStructures
 
     public class AVLTreeNode<T> : IComparable<AVLTreeNode<T>> where T : IComparable<T>
     {
-        T Value { get; set; }
-        AVLTreeNode<T> Parent { get; set; }
-        AVLTreeNode<T> Left { get; set; }
-        AVLTreeNode<T> Right { get; set; }
+        public T Value { get; set; }
+        public int Height { get; set; }
+        public AVLTreeNode<T> Parent { get; set; }
+        public AVLTreeNode<T> Left { get; set; }
+        public AVLTreeNode<T> Right { get; set; }
+
+        /// <summary>
+        /// CONSTRUCTORS
+        /// </summary>
+        public AVLTreeNode() : this(default(T), 0, null, null, null) { }
+        public AVLTreeNode(T value) : this(value, 0, null, null, null) { }
+        public AVLTreeNode(T value, int height, AVLTreeNode<T> parent, AVLTreeNode<T> left, AVLTreeNode<T> right)
+        {
+            this.Value = value;
+            this.Height = height;
+            this.Parent = parent;
+            this.Left = left;
+            this.Right = right;
+        }
 
         public int CompareTo(AVLTreeNode<T> other)
         {
