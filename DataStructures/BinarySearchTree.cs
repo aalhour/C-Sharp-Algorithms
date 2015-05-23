@@ -504,6 +504,26 @@ namespace DataStructures
         }
 
 
+        public void Insert(T[] items)
+        {
+            if (items == null)
+                throw new ArgumentNullException("Null arrays are not allowed.");
+
+            for (int i = 0; i < items.Length; ++i)
+                this.Insert(items[i]);
+        }
+
+
+        public void Insert(List<T> items)
+        {
+            if (items == null)
+                throw new ArgumentNullException("Null arrays are not allowed.");
+
+            for (int i = 0; i < items.Count; ++i)
+                this.Insert(items[i]);
+        }
+
+
         /// <summary>
         /// Deletes an element from the tree
         /// </summary>
@@ -685,6 +705,7 @@ namespace DataStructures
             else
                 return node.SubtreeSize;
         }
+
 
         /// <summary>
         /// Given a predicate function, find all the elements that match it.

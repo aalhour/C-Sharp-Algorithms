@@ -97,6 +97,15 @@ namespace C_Sharp_Algorithms
                 // does exist!
                 binarySearchTree.Remove(16);
             }
+
+
+            // Clear
+            binarySearchTree.Clear();
+
+            // Test adding lists
+            List<int> numbersList = new List<int> { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+            binarySearchTree.Insert(numbersList);
+            Debug.Assert(binarySearchTree.Count() == numbersList.Count, "Insertion Failed!");
         }
 
     }
