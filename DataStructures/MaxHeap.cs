@@ -20,20 +20,10 @@ namespace DataStructures
 
 
         /// <summary>
-        /// CONSTRUCTOR
+        /// CONSTRUCTORS
         /// </summary>
         public MaxHeap() : this(0, null) { }
-
-        /// <summary>
-        /// CONSTRUCTOR
-        /// </summary>
-        /// <param name="comparer">Heap keys comparer.</param>
         public MaxHeap(Comparer<T> comparer) : this(0, comparer) { }
-
-        /// <summary>
-        /// CONSTRUCTOR
-        /// </summary>
-        /// <param name="capacity">Heap capacity.</param>
         public MaxHeap(int capacity, Comparer<T> comparer)
         {
             _collection = new ArrayList<T>(capacity);
@@ -272,6 +262,13 @@ namespace DataStructures
             newMinHeap.Heapify(this._collection.ToArray());
             return newMinHeap;
         }
+
+
+        /***
+         * COMMENTED FUNCTIONS.
+         * Not necessary for the purposes of MaxHeaps.
+         * Might be useful in some cases.
+         */
 
 
         ///// <summary>
