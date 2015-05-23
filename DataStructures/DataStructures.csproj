@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AVLTree.cs" />
     <Compile Include="BinarySearchTree.cs" />
     <Compile Include="Interfaces\IAVLTree.cs" />
     <Compile Include="Interfaces\IBinarySearchTree.cs" />

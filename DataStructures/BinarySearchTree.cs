@@ -747,7 +747,8 @@ namespace DataStructures
         // IComparable CompareTo implementation
         public int CompareTo(BSTNode<T> other)
         {
-            if (other == null) return -1;
+            if (other == null)
+                return -1;
 
             return this.Value.CompareTo(other.Value);
         }
