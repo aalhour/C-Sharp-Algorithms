@@ -448,15 +448,9 @@ namespace DataStructures
         /// <param name="item">Item to insert</param>
         public void Insert(T item)
         {
-
             if (IsEmpty())
             {
-                _root = new BSTNode<T>()
-                {
-                    Value = item,
-                    SubtreeSize = 1
-                };
-
+                _root = new BSTNode<T>() { Value = item, SubtreeSize = 1 };
                 _count++;
             }
             else
