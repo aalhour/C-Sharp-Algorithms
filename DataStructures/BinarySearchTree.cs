@@ -31,6 +31,38 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Calculates the tree height from a specific node, recursively.
+        /// </summary>
+        /// <param name="node">Node</param>
+        /// <returns>Height of node's longest subtree</returns>
+        private int _getTreeHeight(BSTNode<T> node)
+        {
+            if (node == null)
+                return 0;
+            else if (node.Left == null && node.Right == null)
+                return 1;
+
+            if (node.Left != null && node.Right != null)
+            {
+                if (node.Left.SubtreeSize > node.Right.SubtreeSize)
+                    node = node.Left;
+                else
+                    node = node.Right;
+            }
+            else if (node.Left != null)
+            {
+                node = node.Left;
+            }
+            else if (node.Right != null)
+            {
+                node = node.Right;
+            }
+
+            return (1 + _getTreeHeight(node));
+        }
+
+
+        /// <summary>
         /// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
         /// This is used in the recursive function UpdateSubtreeSize.
         /// </summary>
@@ -72,9 +104,7 @@ namespace DataStructures
             var currentNode = node;
 
             while (currentNode.Left != null)
-            {
                 currentNode = currentNode.Left;
-            }
 
             return currentNode;
         }
@@ -91,9 +121,7 @@ namespace DataStructures
             var currentNode = node;
 
             while (currentNode.Right != null)
-            {
                 currentNode = currentNode.Right;
-            }
 
             return currentNode;
         }
@@ -120,9 +148,7 @@ namespace DataStructures
             }
 
             if (newNode != null)
-            {
                 newNode.Parent = node.Parent;
-            }
         }
 
 
@@ -172,9 +198,7 @@ namespace DataStructures
         private void _inOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
         {
             if (currentNode == null)
-            {
                 return;
-            }
 
             // call the left child
             _inOrderTraverse(currentNode.Left, ref list);
@@ -195,9 +219,7 @@ namespace DataStructures
         private void _inOrderTraverse(BSTNode<T> currentNode, Action<T> action)
         {
             if (currentNode == null)
-            {
                 return;
-            }
 
             // call the left child
             _inOrderTraverse(currentNode.Left, action);
@@ -218,18 +240,16 @@ namespace DataStructures
         private void _preOrderTraverse(BSTNode<T> currentNode, Action<T> action)
         {
             if (currentNode == null)
-            {
                 return;
-            }
 
             // visit node
             action(currentNode.Value);
 
             // call the left child
-            _inOrderTraverse(currentNode.Left, action);
+            _preOrderTraverse(currentNode.Left, action);
 
             // call the right child
-            _inOrderTraverse(currentNode.Right, action);
+            _preOrderTraverse(currentNode.Right, action);
         }
 
 
@@ -241,20 +261,97 @@ namespace DataStructures
         private void _postOrderTraverse(BSTNode<T> currentNode, Action<T> action)
         {
             if (currentNode == null)
-            {
                 return;
-            }
 
             // call the left child
-            _inOrderTraverse(currentNode.Left, action);
+            _postOrderTraverse(currentNode.Left, action);
 
             // call the right child
-            _inOrderTraverse(currentNode.Right, action);
+            _postOrderTraverse(currentNode.Right, action);
 
             // visit node
             action(currentNode.Value);
         }
 
+
+        private string _getEdgesForNode(BSTNode<T> node)
+        {
+            return null;
+        }
+
+
+        /// <summary>
+        /// Prints the subtrees from a given node.
+        /// </summary>
+        /// <param name="currentNode">Node</param>
+        private void _printTree(BSTNode<T> currentNode, Queue<BSTNode<T>> queue = null)
+        {
+            if (currentNode == null)
+                return;
+
+            if (queue == null)
+                queue = new Queue<BSTNode<T>>();
+
+            int leftPad = _getTreeHeight(currentNode);
+
+            // handle root
+            if (currentNode.Parent == null)
+            {
+                Console.WriteLine(new String(' ', leftPad) + currentNode.Value);
+
+                queue.Push(currentNode.Left);
+                queue.Push(currentNode.Right);
+
+                _printTree(currentNode.Left, queue);
+            }
+            else if (!queue.IsEmpty)
+            {
+                Queue<BSTNode<T>> subQueue = new Queue<BSTNode<T>>();
+
+                string spaceBetweenNodes = new String(' ', 2);
+                string treeLevel = String.Format("{0}", new String(' ', leftPad + 3));
+
+                //
+                // Print the tree edges
+                for (int i = 1; i <= queue.Count; ++i)
+                {
+                    if (i % 2 == 0)
+                        treeLevel = String.Format("{0}\\{1}", treeLevel, spaceBetweenNodes);
+                    else
+                        treeLevel = String.Format("{0}/{1}", treeLevel, spaceBetweenNodes);
+                }
+
+                Console.WriteLine(treeLevel);
+
+                //
+                // Print the tree nodes
+                spaceBetweenNodes = new String(' ', 4);
+                treeLevel = String.Format("{0}", new String(' ', leftPad - 1));
+
+                while (!queue.IsEmpty)
+                {
+                    var top = queue.Top;
+                    queue.Pop();
+
+                    if (top == null)
+                    {
+                        treeLevel = String.Format("{0}{1}{2}", treeLevel, spaceBetweenNodes, "");
+                        subQueue.Push(null);
+                        subQueue.Push(null);
+                    }
+                    else
+                    {
+                        treeLevel = String.Format("{0}{1}{2}", treeLevel, spaceBetweenNodes, top.Value);
+                        subQueue.Push(top.Left);
+                        subQueue.Push(top.Right);
+                    }
+                }
+
+                Console.WriteLine(treeLevel);
+
+                _printTree(subQueue.Top, subQueue);
+            }
+        }
 
 
         /// <summary>
@@ -265,9 +362,7 @@ namespace DataStructures
         private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
-            {
                 return;
-            }
 
             // call the left child
             _findAll(currentNode.Left, match, ref list);
@@ -303,6 +398,17 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Returns the height of the tree.
+        /// </summary>
+        /// <returns>Hight</returns>
+        public int Height()
+        {
+            var currentNode = _root;
+            return _getTreeHeight(currentNode);
+        }
+
+
+        /// <summary>
         /// Inserts an element to the tree
         /// </summary>
         /// <param name="item">Item to insert</param>
@@ -328,7 +434,7 @@ namespace DataStructures
                 // Get the currentNode to refer to the appropriate node.
                 while (true)
                 {
-                    if (item.IsLessThanOrEqualTo(currentNode.Value))
+                    if (item.IsLessThan(currentNode.Value))
                     {
                         if (currentNode.Left == null)
                         {
@@ -562,9 +668,7 @@ namespace DataStructures
         public void Traverse(Action<T> action)
         {
             if (action == null)
-            {
                 throw new ArgumentNullException("Null actions are not allowed.");
-            }
 
             var currentNode = _root;
             _inOrderTraverse(currentNode, action);
@@ -582,6 +686,23 @@ namespace DataStructures
             _inOrderTraverse(currentNode, ref list);
 
             return list;
+        }
+
+
+        public void VisualizeTree()
+        {
+            //
+            // NOT FULLY IMPLEMENTED YET!
+            throw new NotImplementedException();
+
+            if (IsEmpty())
+            {
+                Console.WriteLine("<Empty Tree>");
+                return;
+            }
+
+            var currentNode = _root;
+            _printTree(currentNode);
         }
 
 

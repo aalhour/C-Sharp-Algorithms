@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 using DataStructures;
 
@@ -32,55 +33,63 @@ namespace C_Sharp_Algorithms
             binarySearchTree.Insert(28);
             binarySearchTree.Insert(39);
 
-            // Test find all
-            var list = binarySearchTree.FindAll(element => element > 15);
-            Debug.Assert(list.Count == 7, "Wrong FindAll result!");
+            //// Test find all
+            //var list = binarySearchTree.FindAll(element => element > 15);
+            //Debug.Assert(list.Count == 7, "Wrong FindAll result!");
 
-            var sortedList = binarySearchTree.BSTSort();
+            //// test sort
+            //List<int> sortedList = binarySearchTree.BSTSort();
+            //int first = 0, mid = sortedList.Count / 2, last = sortedList.Count - 1;
+            //bool sortCheck = (sortedList[first] <= sortedList[mid]) && (sortedList[mid] <= sortedList[last]);
+            //Debug.Assert(sortCheck == true, "BST sort is wrong!");
 
-            // Test min & max
-            var min = binarySearchTree.FindMin();
-            Debug.Assert(min == -1, "Min is wrong.");
+            // test tree visualization
+            binarySearchTree.VisualizeTree();
+            Console.ReadLine();
 
-            var max = binarySearchTree.FindMax();
-            Debug.Assert(max == 39, "Max is wrong.");
+            //// Test min & max
+            //var min = binarySearchTree.FindMin();
+            //Debug.Assert(min == -1, "Min is wrong.");
 
-            // Remove min & max
-            binarySearchTree.RemoveMin();
-            binarySearchTree.RemoveMax();
+            //var max = binarySearchTree.FindMax();
+            //Debug.Assert(max == 39, "Max is wrong.");
 
-            min = binarySearchTree.FindMin();
-            Debug.Assert(min == 1, "Min is wrong.");
+            //// Remove min & max
+            //binarySearchTree.RemoveMin();
+            //binarySearchTree.RemoveMax();
 
-            max = binarySearchTree.FindMax();
-            Debug.Assert(max == 30, "Max is wrong.");
+            //min = binarySearchTree.FindMin();
+            //Debug.Assert(min == 1, "Min is wrong.");
 
-            // Remove min twice
-            binarySearchTree.RemoveMin();
-            binarySearchTree.RemoveMin();
+            //max = binarySearchTree.FindMax();
+            //Debug.Assert(max == 30, "Max is wrong.");
 
-            min = binarySearchTree.FindMin();
-            Debug.Assert(min == 7, "Min is wrong.");
+            //// Remove min twice
+            //binarySearchTree.RemoveMin();
+            //binarySearchTree.RemoveMin();
 
-            // Remove max thrice
-            binarySearchTree.RemoveMax();
-            binarySearchTree.RemoveMax();
-            binarySearchTree.RemoveMax();
+            //min = binarySearchTree.FindMin();
+            //Debug.Assert(min == 7, "Min is wrong.");
 
-            max = binarySearchTree.FindMax();
-            Debug.Assert(max == 20, "Max is wrong.");
+            //// Remove max thrice
+            //binarySearchTree.RemoveMax();
+            //binarySearchTree.RemoveMax();
+            //binarySearchTree.RemoveMax();
 
-            // Test removing an element with subtrees
-            try
-            {
-                // doesn't exist!
-                binarySearchTree.Remove(1000);
-            }
-            catch (Exception)
-            {
-                // does exist!
-                binarySearchTree.Remove(16);
-            }
+            //max = binarySearchTree.FindMax();
+            //Debug.Assert(max == 20, "Max is wrong.");
+
+            //// Test removing an element with subtrees
+            //try
+            //{
+            //    // doesn't exist!
+            //    binarySearchTree.Remove(1000);
+            //}
+            //catch (Exception)
+            //{
+            //    // does exist!
+            //    binarySearchTree.Remove(16);
+            //}
         }
 
     }

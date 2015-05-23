@@ -9,6 +9,9 @@ namespace DataStructures
         // Checks if the tree is empty.
         bool IsEmpty();
 
+        // Returns the height of the tree.
+        int Height();
+
         // Inserts an element to the tree
         void Insert(T item);
 
