@@ -36,7 +36,7 @@ namespace DataStructures
         /// </summary>
         /// <returns>The size.</returns>
         /// <param name="node">BST Node.</param>
-        private int SubtreeSize(BSTNode<T> node)
+        private int _subtreeSize(BSTNode<T> node)
         {
             if (node == null)
                 return 0;
@@ -50,24 +50,24 @@ namespace DataStructures
         /// Used in recusively calculating the Subtrees Sizes of nodes.
         /// </summary>
         /// <param name="node">BST Node.</param>
-        private void UpdateSubtreeSize(BSTNode<T> node)
+        private void _updateSubtreeSize(BSTNode<T> node)
         {
             if (node == null)
                 return;
 
-            node.SubtreeSize = SubtreeSize(node.Left) + SubtreeSize(node.Right) + 1;
+            node.SubtreeSize = _subtreeSize(node.Left) + _subtreeSize(node.Right) + 1;
             node = node.Parent;
-            UpdateSubtreeSize(node);
+            _updateSubtreeSize(node);
         }
 
 
         /// <summary>
         /// Returns the min-node in a subtree.
-        /// Used in the recusive InternalRemove function.
+        /// Used in the recusive _remove function.
         /// </summary>
         /// <returns>The minimum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        private BSTNode<T> FindMinNode(BSTNode<T> node)
+        private BSTNode<T> _findMinNode(BSTNode<T> node)
         {
             var currentNode = node;
 
@@ -82,11 +82,11 @@ namespace DataStructures
 
         /// <summary>
         /// Returns the max-node in a subtree.
-        /// Used in the recusive InternalRemove function.
+        /// Used in the recusive _remove function.
         /// </summary>
         /// <returns>The maximum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        private BSTNode<T> FindMaxNode(BSTNode<T> node)
+        private BSTNode<T> _findMaxNode(BSTNode<T> node)
         {
             var currentNode = node;
 
@@ -101,11 +101,11 @@ namespace DataStructures
 
         /// <summary>
         /// Replaces the node's value from it's parent node object with the newValue.
-        /// Used in the recusive InternalRemove function.
+        /// Used in the recusive _remove function.
         /// </summary>
         /// <param name="BSTNode">BST node.</param>
         /// <param name="newValue">New value.</param>
-        private void ReplaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+        private void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
         {
             if (node.Parent != null)
             {
@@ -133,7 +133,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="node">Tree node to delete.</param>
         /// <param name="node">Tree node to delete.</param>
-        private void InternalRemove(BSTNode<T> node, T item)
+        private void _remove(BSTNode<T> node, T item)
         {
             var parent = node.Parent;
 
@@ -141,25 +141,25 @@ namespace DataStructures
             {
                 var successor = node.Right;
                 node.Value = successor.Value;
-                InternalRemove(successor, successor.Value);
+                _remove(successor, successor.Value);
             }
             else if (node.Left != null) //if the node has only a *left* child
             {
-                ReplaceNodeInParent(node, node.Left);
-                UpdateSubtreeSize(parent);
+                _replaceNodeInParent(node, node.Left);
+                _updateSubtreeSize(parent);
                 _count--;
 
             }
             else if (node.Right != null) //if the node has only a *right* child
             {
-                ReplaceNodeInParent(node, node.Right);
-                UpdateSubtreeSize(parent);
+                _replaceNodeInParent(node, node.Right);
+                _updateSubtreeSize(parent);
                 _count--;
             }
             else //this node has no children
             {
-                ReplaceNodeInParent(node, null);
-                UpdateSubtreeSize(parent);
+                _replaceNodeInParent(node, null);
+                _updateSubtreeSize(parent);
                 _count--;
             }
         }
@@ -169,7 +169,7 @@ namespace DataStructures
         /// In-order traversal of the subtrees of a node. Returns every node it vists.
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
-        private void InternalInOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
+        private void _inOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
         {
             if (currentNode == null)
             {
@@ -177,13 +177,13 @@ namespace DataStructures
             }
 
             // call the left child
-            InternalInOrderTraverse(currentNode.Left, ref list);
+            _inOrderTraverse(currentNode.Left, ref list);
 
             // visit node
             list.Add(currentNode.Value);
 
             // call the right child
-            InternalInOrderTraverse(currentNode.Right, ref list);
+            _inOrderTraverse(currentNode.Right, ref list);
         }
 
 
@@ -192,7 +192,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
         /// <param name="action">Action to apply to every node's value.</param>
-        private void InternalInOrderTraverse(BSTNode<T> currentNode, Action<T> action)
+        private void _inOrderTraverse(BSTNode<T> currentNode, Action<T> action)
         {
             if (currentNode == null)
             {
@@ -200,14 +200,61 @@ namespace DataStructures
             }
 
             // call the left child
-            InternalInOrderTraverse(currentNode.Left, action);
+            _inOrderTraverse(currentNode.Left, action);
 
             // visit node
             action(currentNode.Value);
 
             // call the right child
-            InternalInOrderTraverse(currentNode.Right, action);
+            _inOrderTraverse(currentNode.Right, action);
         }
+
+
+        /// <summary>
+        /// Implements pre-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
+        /// </summary>
+        /// <param name="currentNode">Node to traverse from.</param>
+        /// <param name="action">Action.</param>
+        private void _preOrderTraverse(BSTNode<T> currentNode, Action<T> action)
+        {
+            if (currentNode == null)
+            {
+                return;
+            }
+
+            // visit node
+            action(currentNode.Value);
+
+            // call the left child
+            _inOrderTraverse(currentNode.Left, action);
+
+            // call the right child
+            _inOrderTraverse(currentNode.Right, action);
+        }
+
+
+        /// <summary>
+        /// Implements post-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
+        /// </summary>
+        /// <param name="currentNode">Node to traverse from.</param>
+        /// <param name="action">Action.</param>
+        private void _postOrderTraverse(BSTNode<T> currentNode, Action<T> action)
+        {
+            if (currentNode == null)
+            {
+                return;
+            }
+
+            // call the left child
+            _inOrderTraverse(currentNode.Left, action);
+
+            // call the right child
+            _inOrderTraverse(currentNode.Right, action);
+
+            // visit node
+            action(currentNode.Value);
+        }
+
 
 
         /// <summary>
@@ -215,7 +262,7 @@ namespace DataStructures
         /// Implements in-order traversal to find all the matching elements in a subtree.
         /// </summary>
         /// <param name="searchPredicate"></param>
-        private void InternalFindAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
+        private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
             {
@@ -223,15 +270,15 @@ namespace DataStructures
             }
 
             // call the left child
-            InternalFindAll(currentNode.Left, match, ref list);
+            _findAll(currentNode.Left, match, ref list);
 
-            if(match(currentNode.Value)) // match
+            if (match(currentNode.Value)) // match
             {
                 list.Add(currentNode.Value);
             }
 
             // call the right child
-            InternalFindAll(currentNode.Right, match, ref list);
+            _findAll(currentNode.Right, match, ref list);
         }
 
 
@@ -311,7 +358,7 @@ namespace DataStructures
                 //
                 // Update the subtrees-sizes
                 var node = newNode.Parent;
-                UpdateSubtreeSize(node);
+                _updateSubtreeSize(node);
 
             }//end-else
         }
@@ -350,7 +397,7 @@ namespace DataStructures
             // If the element was found, remove it.
             if (currentNode != null)
             {
-                InternalRemove(currentNode, item);
+                _remove(currentNode, item);
             }
             else
             {
@@ -369,7 +416,7 @@ namespace DataStructures
 
             //
             // Keep going left
-            currentNode = FindMinNode(currentNode);
+            currentNode = _findMinNode(currentNode);
 
             //
             // Remove the node
@@ -391,7 +438,7 @@ namespace DataStructures
 
             //
             // Update the subtrees-sizes
-            UpdateSubtreeSize(parent);
+            _updateSubtreeSize(parent);
         }
 
 
@@ -405,7 +452,7 @@ namespace DataStructures
 
             //
             // Keep going right
-            currentNode = FindMaxNode(currentNode);
+            currentNode = _findMaxNode(currentNode);
 
             //
             // Remove the node
@@ -427,7 +474,7 @@ namespace DataStructures
 
             //
             // Update the subtrees-sizes
-            UpdateSubtreeSize(parent);
+            _updateSubtreeSize(parent);
         }
 
 
@@ -438,7 +485,7 @@ namespace DataStructures
         public T FindMin()
         {
             var currentNode = _root;
-            return FindMinNode(currentNode).Value;
+            return _findMinNode(currentNode).Value;
         }
 
 
@@ -449,7 +496,7 @@ namespace DataStructures
         public T FindMax()
         {
             var currentNode = _root;
-            return FindMaxNode(currentNode).Value;
+            return _findMaxNode(currentNode).Value;
         }
 
 
@@ -502,7 +549,7 @@ namespace DataStructures
         {
             var currentNode = _root;
             var list = new List<T>();
-            InternalFindAll(currentNode, searchPredicate, ref list);
+            _findAll(currentNode, searchPredicate, ref list);
 
             return list;
         }
@@ -520,7 +567,7 @@ namespace DataStructures
             }
 
             var currentNode = _root;
-            InternalInOrderTraverse(currentNode, action);
+            _inOrderTraverse(currentNode, action);
         }
 
 
@@ -532,7 +579,7 @@ namespace DataStructures
             var currentNode = _root;
             var list = new List<T>();
 
-            InternalInOrderTraverse(currentNode, ref list);
+            _inOrderTraverse(currentNode, ref list);
 
             return list;
         }
