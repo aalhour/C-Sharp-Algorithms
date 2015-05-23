@@ -23,6 +23,7 @@ Sorting algorithms are implemented as an extension method. They support the nati
   * **Quick Sort** (QuickSorter.cs)
   * **Merge Sort** (MergeSorter.cs)
   * **Heap Sort** (HeapSorter.cs)
+  * **Unbalanced Binary Search Tree Sort** (BinarySearchTreeSorter.cs)
     ```
     List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
     
@@ -33,4 +34,5 @@ Sorting algorithms are implemented as an extension method. They support the nati
     list.QuickSort (valueComparer);
     list.MergeSort (valueComparer);
     list.HeapSort (valueComparer);
+    list.UnbalancedBSTSort();
     ```
