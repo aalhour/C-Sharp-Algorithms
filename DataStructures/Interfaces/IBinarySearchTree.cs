@@ -15,11 +15,11 @@ namespace DataStructures
         // Remove an element from tree
         void Remove(T item);
 
-		// Removes the min value from tree
-		void RemoveMin();
+        // Removes the min value from tree
+        void RemoveMin();
 
-		// Removes the max value from tree
-		void RemoveMax();
+        // Removes the max value from tree
+        void RemoveMax();
 
         // Finds the minimum element.
         T FindMin();
@@ -55,9 +55,9 @@ namespace DataStructures
         int Count();
         bool IsEmpty();
         void Insert(K item, V value);
-		void Remove(K item);
-		void RemoveMin();
-		void RemoveMax();
+        void Remove(K item);
+        void RemoveMin();
+        void RemoveMax();
         K Find(K item);
         K FindMin();
         K FindMax();
