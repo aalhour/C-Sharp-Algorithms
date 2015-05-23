@@ -94,6 +94,37 @@ namespace DataStructures
 
 
         /// <summary>
+        /// Finds a node inside another node's subtrees, given it's value.
+        /// </summary>
+        /// <param name="currentNode">Node to start search from.</param>
+        /// <param name="item">Search value</param>
+        /// <returns>Node if found; otherwise null</returns>
+        private BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
+        {
+            if (currentNode == null)
+                return null;
+
+            if (item.IsEqualTo(currentNode.Value))
+            {
+                return currentNode;
+            }
+            else if (currentNode.Left != null && item.IsLessThan(currentNode.Value))
+            {
+                currentNode = currentNode.Left;
+                return _findNode(currentNode, item);
+            }
+            else if (currentNode.Right != null && item.IsGreaterThan(currentNode.Value))
+            {
+                currentNode = currentNode.Right;
+                return _findNode(currentNode, item);
+            }
+
+            // Return-functions-fix
+            return null;
+        }
+
+
+        /// <summary>
         /// Returns the min-node in a subtree.
         /// Used in the recusive _remove function.
         /// </summary>
@@ -124,6 +155,29 @@ namespace DataStructures
                 currentNode = currentNode.Right;
 
             return currentNode;
+        }
+
+
+        /// <summary>
+        /// A recursive private method. Used in the public FindAll(predicate) functions.
+        /// Implements in-order traversal to find all the matching elements in a subtree.
+        /// </summary>
+        /// <param name="searchPredicate"></param>
+        private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
+        {
+            if (currentNode == null)
+                return;
+
+            // call the left child
+            _findAll(currentNode.Left, match, ref list);
+
+            if (match(currentNode.Value)) // match
+            {
+                list.Add(currentNode.Value);
+            }
+
+            // call the right child
+            _findAll(currentNode.Right, match, ref list);
         }
 
 
@@ -355,29 +409,6 @@ namespace DataStructures
 
 
         /// <summary>
-        /// A recursive private method. Used in the public FindAll(predicate) functions.
-        /// Implements in-order traversal to find all the matching elements in a subtree.
-        /// </summary>
-        /// <param name="searchPredicate"></param>
-        private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
-        {
-            if (currentNode == null)
-                return;
-
-            // call the left child
-            _findAll(currentNode.Left, match, ref list);
-
-            if (match(currentNode.Value)) // match
-            {
-                list.Add(currentNode.Value);
-            }
-
-            // call the right child
-            _findAll(currentNode.Right, match, ref list);
-        }
-
-
-        /// <summary>
         /// Return the number of elements in this tree
         /// </summary>
         /// <returns></returns>
@@ -403,6 +434,9 @@ namespace DataStructures
         /// <returns>Hight</returns>
         public int Height()
         {
+            if (IsEmpty())
+                return 0;
+
             var currentNode = _root;
             return _getTreeHeight(currentNode);
         }
@@ -477,9 +511,7 @@ namespace DataStructures
         public void Remove(T item)
         {
             if (IsEmpty())
-            {
                 throw new Exception("Tree is empty.");
-            }
 
             var currentNode = _root;
 
@@ -513,10 +545,13 @@ namespace DataStructures
 
 
         /// <summary>
-        // Removes the min value from tree.
+        /// Removes the min value from tree.
         /// </summary>
         public void RemoveMin()
         {
+            if (IsEmpty())
+                throw new Exception("Tree is empty.");
+
             BSTNode<T> parent = null;
             var currentNode = _root;
 
@@ -553,6 +588,9 @@ namespace DataStructures
         /// </summary>
         public void RemoveMax()
         {
+            if (IsEmpty())
+                throw new Exception("Tree is empty.");
+
             BSTNode<T> parent = null;
             var currentNode = _root;
 
@@ -590,6 +628,9 @@ namespace DataStructures
         /// <returns>Min</returns>
         public T FindMin()
         {
+            if (IsEmpty())
+                throw new Exception("Tree is empty.");
+
             var currentNode = _root;
             return _findMinNode(currentNode).Value;
         }
@@ -601,6 +642,9 @@ namespace DataStructures
         /// <returns>Max</returns>
         public T FindMax()
         {
+            if (IsEmpty())
+                throw new Exception("Tree is empty.");
+
             var currentNode = _root;
             return _findMaxNode(currentNode).Value;
         }
@@ -613,38 +657,34 @@ namespace DataStructures
         /// <returns>Item.</returns>
         public T Find(T item)
         {
+            if (IsEmpty())
+                throw new Exception("Tree is empty.");
+
             var currentNode = _root;
+            var node = _findNode(currentNode, item);
 
-            //
-            // Attempt to find the item
-            while (currentNode.Left != null || currentNode.Right != null)
-            {
-                if (item.IsEqualTo(currentNode.Value))
-                {
-                    break;
-                }
-                else if (currentNode.Left != null && item.IsLessThan(currentNode.Value))
-                {
-                    currentNode = currentNode.Left;
-                }
-                else if (currentNode.Right != null && item.IsGreaterThan(currentNode.Value))
-                {
-                    currentNode = currentNode.Right;
-                }
-            }
-
-            //
-            // Return the item if found; otherwise, throw an exception.
-            if (item.IsEqualTo(currentNode.Value))
-            {
-                return currentNode.Value;
-            }
+            if (node != null)
+                return node.Value;
             else
-            {
                 throw new Exception("Item was not found.");
-            }
         }
 
+
+        /// <summary>
+        /// Returns the rank of the specified element
+        /// </summary>
+        /// <param name="item">Tree element</param>
+        /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
+        public int Rank(T item)
+        {
+            var currentNode = _root;
+            var node = _findNode(currentNode, item);
+
+            if (node == null)
+                throw new Exception("Item was not found.");
+            else
+                return node.SubtreeSize;
+        }
 
         /// <summary>
         /// Given a predicate function, find all the elements that match it.

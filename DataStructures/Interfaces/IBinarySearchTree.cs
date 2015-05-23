@@ -33,6 +33,9 @@ namespace DataStructures
         // Find the element in the tree, returns null if not found.
         T Find(T item);
 
+        // Returns the rank of the specified element
+        int Rank(T item);
+
         // Finds all the elements in the tree that match the predicate.
         System.Collections.Generic.List<T> FindAll(System.Predicate<T> searchPredicate);
 
@@ -62,6 +65,7 @@ namespace DataStructures
         K Find(K item);
         K FindMin();
         K FindMax();
+        int Rank(K item);
         System.Collections.Generic.List<V> FindAll(System.Predicate<K> searchPredicate);
         void Traverse(System.Action<K> action);
         System.Collections.Generic.List<V> BSTSort();
