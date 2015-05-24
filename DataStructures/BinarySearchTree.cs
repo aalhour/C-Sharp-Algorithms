@@ -202,20 +202,22 @@ namespace DataStructures
 		}
 
 		/// <summary>
-		/// /// A private method used in the public Remove function.
-		/// Removes a given tree node from the tree.
-		/// Handles nodes with sub-trees.
+		/// Remove the specified node.
 		/// </summary>
-		/// <param name="node">Tree node to delete.</param>
-		protected virtual void _remove(BSTNode<T> node)
+		/// <param name="node">Node.</param>
+		/// <returns>>True if removed successfully; false if node wasn't found.</returns>
+		protected virtual bool _remove(BSTNode<T> node)
 		{
+			if (node == null)
+				return false;
+			
 			var parent = node.Parent;
 
 			if (node.ChildrenCount == 2) // if both children are present
 			{
 				var successor = node.RightChild;
 				node.Value = successor.Value;
-				_remove(successor);
+				return (true && _remove(successor));
 			}
 			else if (node.HasLeftChild) // if the node has only a LEFT child
 			{
@@ -236,6 +238,8 @@ namespace DataStructures
 				_updateSubtreeSize(parent);
 				_count--;
 			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -245,6 +249,9 @@ namespace DataStructures
 		/// <param name="newNode">New node to be inserted.</param>
 		protected virtual void _insertNode(BSTNode<T> currentNode, BSTNode<T> newNode)
 		{
+			if (currentNode == null)
+				return;
+			
 			if (newNode.Value.IsLessThan(currentNode.Value))
 			{
 				if (currentNode.HasLeftChild == false)
@@ -296,9 +303,8 @@ namespace DataStructures
                 return;
 
 			node.SubtreeSize = _subtreeSize(node.LeftChild) + _subtreeSize(node.RightChild) + 1;
-			
-            node = node.Parent;
-            _updateSubtreeSize(node);
+
+			_updateSubtreeSize(node.Parent);
         }
 
 		/// <summary>
@@ -314,20 +320,21 @@ namespace DataStructures
 			if (node.ChildrenCount == 2) // it has both a right child and a left child
 			{
 				if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
-					node = node.LeftChild;
+					return (1 + _getTreeHeight(node.LeftChild));
 				else
-					node = node.RightChild;
+					return (1 + _getTreeHeight(node.RightChild));
 			}
 			else if (node.HasLeftChild)
 			{
-				node = node.LeftChild;
+				return (1 + _getTreeHeight(node.LeftChild));
 			}
 			else if (node.HasRightChild)
 			{
-				node = node.RightChild;
+				return (1 + _getTreeHeight(node.RightChild));
 			}
 
-			return (1 + _getTreeHeight(node));
+			// return-functions-fix
+			return 0;
 		}
 
 		/// <summary>
@@ -347,13 +354,11 @@ namespace DataStructures
             }
 			else if (currentNode.HasLeftChild && item.IsLessThan(currentNode.Value))
             {
-                currentNode = currentNode.LeftChild;
-                return _findNode(currentNode, item);
+				return _findNode(currentNode.LeftChild, item);
             }
 			else if (currentNode.HasRightChild && item.IsGreaterThan(currentNode.Value))
             {
-                currentNode = currentNode.RightChild;
-                return _findNode(currentNode, item);
+				return _findNode(currentNode.RightChild, item);
             }
 
             // Return-functions-fix
@@ -493,7 +498,7 @@ namespace DataStructures
         /// <param name="item">Item to insert</param>
         public virtual void Insert(T item)
         {
-            if (IsEmpty())
+			if (IsEmpty())
             {
                 _root = new BSTNode<T>() { Value = item };
 				_updateSubtreeSize (_root);
@@ -504,14 +509,11 @@ namespace DataStructures
                 var currentNode = _root;
                 var newNode = new BSTNode<T>(item);
 
-				//
 				// Insert node recursively starting from the root.
 				_insertNode (currentNode, newNode);
 
-                //
                 // Update the subtree-size for the newNode's parent.
-                var node = newNode.Parent;
-                _updateSubtreeSize(node);
+				_updateSubtreeSize(newNode.Parent);
 
             }//end-else
         }
@@ -524,35 +526,13 @@ namespace DataStructures
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
+			
+			var node = _findNode (_root, item);
+			bool status = _remove (node);
 
-            var currentNode = _root;
-
-            while (currentNode != null)
-            {
-                if (item.IsEqualTo(currentNode.Value))
-                {
-                    break;
-                }
-                else if (item.IsLessThan(currentNode.Value))
-                {
-                    currentNode = currentNode.LeftChild;
-                }
-                else if (item.IsGreaterThan(currentNode.Value))
-                {
-                    currentNode = currentNode.RightChild;
-                }
-            }
-
-            //
             // If the element was found, remove it.
-            if (currentNode != null)
-            {
-                _remove(currentNode);
-            }
-            else
-            {
-                throw new Exception("Item was not found.");
-            }
+			if (status == false)
+				throw new Exception("Item was not found.");
         }
 
         /// <summary>
@@ -564,34 +544,12 @@ namespace DataStructures
                 throw new Exception("Tree is empty.");
 
             //BSTNode<T> parent = null;
-            var currentNode = _root;
+			var node = _findMinNode(_root);
+			var parent = node.Parent;
+			_remove (node);
 
-            currentNode = _findMinNode(currentNode);
-			var parent = currentNode.Parent;
-
-			_remove (currentNode);
-
-            //
-            // Remove the node
-            /*if (currentNode.HasRightChild)
-            {
-                parent = currentNode.Parent;
-                var right = currentNode.RightChild;
-
-                right.Parent = parent;
-                parent.LeftChild = right;
-                _count--;
-            }
-            else
-            {
-                parent = currentNode.Parent;
-                parent.LeftChild = null;
-                _count--;
-            }*/
-
-            //
             // Update the subtrees-sizes
-			_updateSubtreeSize(currentNode);
+			_updateSubtreeSize(parent);
         }
 
         /// <summary>
@@ -602,31 +560,10 @@ namespace DataStructures
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            //BSTNode<T> parent = null;
-            var currentNode = _root;
-            currentNode = _findMaxNode(currentNode);
-			var parent = currentNode.Parent;
-			_remove (currentNode);
+			var node = _findMaxNode(_root);
+			var parent = node.Parent;
+			_remove (node);
 
-            //
-            // Remove the node
-            /*if (currentNode.HasLeftChild)
-            {
-                parent = currentNode.Parent;
-                var left = currentNode.LeftChild;
-
-                left.Parent = parent;
-                parent.RightChild = left;
-                _count--;
-            }
-            else
-            {
-                parent = currentNode.Parent;
-                parent.RightChild = null;
-                _count--;
-            }*/
-
-            //
             // Update the subtrees-sizes
             _updateSubtreeSize(parent);
         }
@@ -648,9 +585,8 @@ namespace DataStructures
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
-
-            var currentNode = _root;
-            return _findMinNode(currentNode).Value;
+			
+			return _findMinNode(_root).Value;
         }
 
         /// <summary>
@@ -661,9 +597,8 @@ namespace DataStructures
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
-
-            var currentNode = _root;
-            return _findMaxNode(currentNode).Value;
+			
+			return _findMaxNode(_root).Value;
         }
 
         /// <summary>
@@ -675,9 +610,8 @@ namespace DataStructures
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
-
-            var currentNode = _root;
-            var node = _findNode(currentNode, item);
+			
+			var node = _findNode(_root, item);
 
             if (node != null)
                 return node.Value;
@@ -692,8 +626,7 @@ namespace DataStructures
         /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
 		public virtual int Rank(T item)
         {
-            var currentNode = _root;
-            var node = _findNode(currentNode, item);
+			var node = _findNode(_root, item);
 
             if (node == null)
                 throw new Exception("Item was not found.");
@@ -708,9 +641,8 @@ namespace DataStructures
         /// <returns>ArrayList<T> of elements.</returns>
 		public virtual List<T> FindAll(Predicate<T> searchPredicate)
         {
-            var currentNode = _root;
             var list = new List<T>();
-            _findAll(currentNode, searchPredicate, ref list);
+			_findAll(_root, searchPredicate, ref list);
 
             return list;
         }
@@ -723,9 +655,8 @@ namespace DataStructures
         {
             if (action == null)
                 throw new ArgumentNullException("Null actions are not allowed.");
-
-            var currentNode = _root;
-            _inOrderTraverse(currentNode, action);
+			
+			_inOrderTraverse(_root, action);
         }
 
         /// <summary>
@@ -733,10 +664,8 @@ namespace DataStructures
         /// </summary>
 		public virtual List<T> Sort()
         {
-            var currentNode = _root;
             var list = new List<T>();
-
-            _inOrderTraverse(currentNode, ref list);
+			_inOrderTraverse(_root, ref list);
 
             return list;
         }
@@ -747,7 +676,8 @@ namespace DataStructures
 		/// <returns>The array.</returns>
 		public virtual T[] ToArray()
 		{
-			throw new NotImplementedException ();
+			// the array version of binary search tree is the sorted arrangement of nodes.
+			return Sort ().ToArray ();
 		}
 
 		/// <summary>
@@ -755,7 +685,8 @@ namespace DataStructures
 		/// </summary>
 		public virtual List<T> ToList()
 		{
-			throw new NotImplementedException ();
+			// the list version of binary search tree is the sorted arrangement of nodes.
+			return Sort ();
 		}
 
 
