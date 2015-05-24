@@ -12,11 +12,11 @@ namespace DataStructures
 	/// </summary>
 	public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
 	{
-		private T _value { get; set; }
-		private int _subtreeSize { get; set; } // a.k.a Rank of node.
-		private BSTNode<T> _parent { get; set; }
-		private BSTNode<T> _left { get; set; }
-		private BSTNode<T> _right { get; set; }
+		private T _value;
+		private int _subtreeSize = 0; // a.k.a Rank of node.
+		private BSTNode<T> _parent;
+		private BSTNode<T> _left;
+		private BSTNode<T> _right;
 
 
 		public BSTNode() : this(default(T), 0, null, null, null) { }
@@ -24,10 +24,10 @@ namespace DataStructures
 		public BSTNode(T value, int subTreeSize, BSTNode<T> parent, BSTNode<T> left, BSTNode<T> right)
 		{
 			Value = value;
-			SubtreeSize = 0;
+			SubtreeSize = subTreeSize;
 			Parent = parent;
-			Left = left;
-			Right = right;
+			LeftChild = left;
+			RightChild = right;
 		}
 
 		public virtual T Value
@@ -49,35 +49,16 @@ namespace DataStructures
 			set { this._parent = value; }
 		}
 
-		public virtual BSTNode<T> Left
+		public virtual BSTNode<T> LeftChild
 		{
 			get { return this._left; }
 			set { this._left = value; }
 		}
 
-		public virtual BSTNode<T> Right
+		public virtual BSTNode<T> RightChild
 		{
 			get { return this._right; }
 			set { this._right = value; }
-		}
-
-		/// <summary>
-		/// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).
-		/// </summary>
-		/// <returns>Number (0,1,2)</returns>
-		public virtual int ChildrenCount 
-		{
-			get
-			{
-				int count = 0;
-
-				if (this.HasLeftChild)
-					count++;
-				if (this.HasRightChild)
-					count++;
-
-				return count;
-			} 
 		}
 
 		/// <summary>
@@ -109,7 +90,7 @@ namespace DataStructures
 		/// </summary>
 		public virtual bool IsLeftChild 
 		{ 
-			get { return (this.Parent != null && this.Parent.Left == this); } 
+			get { return (this.Parent != null && this.Parent.LeftChild == this); } 
 		}
 
 		/// <summary>
@@ -117,7 +98,7 @@ namespace DataStructures
 		/// </summary>
 		public virtual bool IsRightChild 
 		{ 
-			get { return (this.Parent != null && this.Parent.Right == this); } 
+			get { return (this.Parent != null && this.Parent.RightChild == this); } 
 		}
 
 		/// <summary>
@@ -129,6 +110,25 @@ namespace DataStructures
 		}
 
 		/// <summary>
+		/// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).
+		/// </summary>
+		/// <returns>Number (0,1,2)</returns>
+		public virtual int ChildrenCount 
+		{
+			get
+			{
+				int count = 0;
+
+				if (this.HasLeftChild)
+					count++;
+				if (this.HasRightChild)
+					count++;
+
+				return count;
+			} 
+		}
+
+		/// <summary>
 		/// Compares to.
 		/// </summary>
 		public virtual int CompareTo(BSTNode<T> other)
@@ -137,6 +137,14 @@ namespace DataStructures
 				return -1;
 
 			return this.Value.CompareTo(other.Value);
+		}
+
+		/// <summary>
+		/// Determines whether this node is equal to another one.
+		/// </summary>
+		public override new bool Equals (BSTNode<T> node)
+		{
+			return this.CompareTo (node) == 0;
 		}
 	}//end-of-bstnode
 
@@ -185,7 +193,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>Height of node's longest subtree</returns>
-        private int _getTreeHeight(BSTNode<T> node)
+		protected int _getTreeHeight(BSTNode<T> node)
         {
             if (node == null)
                 return 0;
@@ -194,18 +202,18 @@ namespace DataStructures
 
 			if (node.ChildrenCount == 2) // it has both a right child and a left child
             {
-                if (node.Left.SubtreeSize > node.Right.SubtreeSize)
-                    node = node.Left;
+                if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
+                    node = node.LeftChild;
                 else
-                    node = node.Right;
+                    node = node.RightChild;
             }
 			else if (node.HasLeftChild)
             {
-                node = node.Left;
+                node = node.LeftChild;
             }
 			else if (node.HasRightChild)
             {
-                node = node.Right;
+                node = node.RightChild;
             }
 
             return (1 + _getTreeHeight(node));
@@ -217,7 +225,7 @@ namespace DataStructures
         /// </summary>
         /// <returns>The size.</returns>
         /// <param name="node">BST Node.</param>
-        private int _subtreeSize(BSTNode<T> node)
+		protected int _subtreeSize(BSTNode<T> node)
         {
             if (node == null)
                 return 0;
@@ -230,12 +238,12 @@ namespace DataStructures
         /// Used in recusively calculating the Subtrees Sizes of nodes.
         /// </summary>
         /// <param name="node">BST Node.</param>
-        private void _updateSubtreeSize(BSTNode<T> node)
+		protected void _updateSubtreeSize(BSTNode<T> node)
         {
             if (node == null)
                 return;
 
-            node.SubtreeSize = _subtreeSize(node.Left) + _subtreeSize(node.Right) + 1;
+            node.SubtreeSize = _subtreeSize(node.LeftChild) + _subtreeSize(node.RightChild) + 1;
             node = node.Parent;
             _updateSubtreeSize(node);
         }
@@ -246,7 +254,7 @@ namespace DataStructures
         /// <param name="currentNode">Node to start search from.</param>
         /// <param name="item">Search value</param>
         /// <returns>Node if found; otherwise null</returns>
-        private BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
+		protected BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
         {
             if (currentNode == null)
                 return null;
@@ -257,12 +265,12 @@ namespace DataStructures
             }
 			else if (currentNode.HasLeftChild && item.IsLessThan(currentNode.Value))
             {
-                currentNode = currentNode.Left;
+                currentNode = currentNode.LeftChild;
                 return _findNode(currentNode, item);
             }
 			else if (currentNode.HasRightChild && item.IsGreaterThan(currentNode.Value))
             {
-                currentNode = currentNode.Right;
+                currentNode = currentNode.RightChild;
                 return _findNode(currentNode, item);
             }
 
@@ -276,12 +284,12 @@ namespace DataStructures
         /// </summary>
         /// <returns>The minimum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        private BSTNode<T> _findMinNode(BSTNode<T> node)
+		protected BSTNode<T> _findMinNode(BSTNode<T> node)
         {
             var currentNode = node;
 
 			while (currentNode.HasLeftChild)
-                currentNode = currentNode.Left;
+                currentNode = currentNode.LeftChild;
 
             return currentNode;
         }
@@ -292,12 +300,12 @@ namespace DataStructures
         /// </summary>
         /// <returns>The maximum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        private BSTNode<T> _findMaxNode(BSTNode<T> node)
+		protected BSTNode<T> _findMaxNode(BSTNode<T> node)
         {
             var currentNode = node;
 
 			while (currentNode.HasRightChild)
-                currentNode = currentNode.Right;
+                currentNode = currentNode.RightChild;
 
             return currentNode;
         }
@@ -306,14 +314,15 @@ namespace DataStructures
         /// A recursive private method. Used in the public FindAll(predicate) functions.
         /// Implements in-order traversal to find all the matching elements in a subtree.
         /// </summary>
+		/// <param name="currentNode">Node to start searching from.</param>
         /// <param name="match"></param>
-        private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
+		protected void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
                 return;
 
             // call the left child
-            _findAll(currentNode.Left, match, ref list);
+            _findAll(currentNode.LeftChild, match, ref list);
 
             if (match(currentNode.Value)) // match
             {
@@ -321,7 +330,7 @@ namespace DataStructures
             }
 
             // call the right child
-            _findAll(currentNode.Right, match, ref list);
+            _findAll(currentNode.RightChild, match, ref list);
         }
 
 		/// <summary>
@@ -330,14 +339,14 @@ namespace DataStructures
         /// </summary>
         /// <param name="node">BST node.</param>
         /// <param name="newNode">New value.</param>
-        private void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+		protected void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
         {
             if (node.Parent != null)
             {
 				if (node.IsLeftChild)
-                    node.Parent.Left = newNode;
+                    node.Parent.LeftChild = newNode;
                 else
-                    node.Parent.Right = newNode;
+                    node.Parent.RightChild = newNode;
             }
 
             if (newNode != null)
@@ -350,27 +359,27 @@ namespace DataStructures
         /// Handles nodes with sub-trees.
         /// </summary>
         /// <param name="node">Tree node to delete.</param>
-        /// <param name="node">Tree node to delete.</param>
-        private void _remove(BSTNode<T> node, T item)
+        /// <param name="item">Value of node..</param>
+		protected void _remove(BSTNode<T> node, T item)
         {
             var parent = node.Parent;
 
 			if (node.ChildrenCount == 2) // if both children are present
             {
-                var successor = node.Right;
+                var successor = node.RightChild;
                 node.Value = successor.Value;
                 _remove(successor, successor.Value);
             }
             else if (node.HasLeftChild) //if the node has only a *left* child
             {
-                _replaceNodeInParent(node, node.Left);
+                _replaceNodeInParent(node, node.LeftChild);
                 _updateSubtreeSize(parent);
                 _count--;
 
             }
             else if (node.HasRightChild) //if the node has only a *right* child
             {
-                _replaceNodeInParent(node, node.Right);
+                _replaceNodeInParent(node, node.RightChild);
                 _updateSubtreeSize(parent);
                 _count--;
             }
@@ -392,13 +401,13 @@ namespace DataStructures
                 return;
 
             // call the left child
-            _inOrderTraverse(currentNode.Left, ref list);
+            _inOrderTraverse(currentNode.LeftChild, ref list);
 
             // visit node
             list.Add(currentNode.Value);
 
             // call the right child
-            _inOrderTraverse(currentNode.Right, ref list);
+            _inOrderTraverse(currentNode.RightChild, ref list);
         }
 
 		/// <summary>
@@ -412,54 +421,15 @@ namespace DataStructures
                 return;
 
             // call the left child
-            _inOrderTraverse(currentNode.Left, action);
+            _inOrderTraverse(currentNode.LeftChild, action);
 
             // visit node
             action(currentNode.Value);
 
             // call the right child
-            _inOrderTraverse(currentNode.Right, action);
+            _inOrderTraverse(currentNode.RightChild, action);
         }
 
-		/// <summary>
-        /// Implements pre-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
-        /// </summary>
-        /// <param name="currentNode">Node to traverse from.</param>
-        /// <param name="action">Action.</param>
-        private void _preOrderTraverse(BSTNode<T> currentNode, Action<T> action)
-        {
-            if (currentNode == null)
-                return;
-
-            // visit node
-            action(currentNode.Value);
-
-            // call the left child
-            _preOrderTraverse(currentNode.Left, action);
-
-            // call the right child
-            _preOrderTraverse(currentNode.Right, action);
-        }
-
-		/// <summary>
-        /// Implements post-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
-        /// </summary>
-        /// <param name="currentNode">Node to traverse from.</param>
-        /// <param name="action">Action.</param>
-        private void _postOrderTraverse(BSTNode<T> currentNode, Action<T> action)
-        {
-            if (currentNode == null)
-                return;
-
-            // call the left child
-            _postOrderTraverse(currentNode.Left, action);
-
-            // call the right child
-            _postOrderTraverse(currentNode.Right, action);
-
-            // visit node
-            action(currentNode.Value);
-        }
 
 		/// <summary>
         /// Return the number of elements in this tree
@@ -496,7 +466,7 @@ namespace DataStructures
         /// Inserts an element to the tree
         /// </summary>
         /// <param name="item">Item to insert</param>
-        public void Insert(T item)
+        public virtual void Insert(T item)
         {
             if (IsEmpty())
             {
@@ -517,24 +487,24 @@ namespace DataStructures
 						if (currentNode.HasLeftChild == false)
                         {
                             newNode.Parent = currentNode;
-                            currentNode.Left = newNode;
+                            currentNode.LeftChild = newNode;
                             _count++;
                             break;
                         }
 
-                        currentNode = currentNode.Left;
+                        currentNode = currentNode.LeftChild;
                     }
                     else
                     {
 						if (currentNode.HasRightChild == false)
                         {
                             newNode.Parent = currentNode;
-                            currentNode.Right = newNode;
+                            currentNode.RightChild = newNode;
                             _count++;
                             break;
                         }
 
-                        currentNode = currentNode.Right;
+                        currentNode = currentNode.RightChild;
                     }
                 }//end-while
 
@@ -551,7 +521,7 @@ namespace DataStructures
         /// Deletes an element from the tree
         /// </summary>
         /// <param name="item">item to remove.</param>
-        public void Remove(T item)
+		public virtual void Remove(T item)
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -566,11 +536,11 @@ namespace DataStructures
                 }
                 else if (item.IsLessThan(currentNode.Value))
                 {
-                    currentNode = currentNode.Left;
+                    currentNode = currentNode.LeftChild;
                 }
                 else if (item.IsGreaterThan(currentNode.Value))
                 {
-                    currentNode = currentNode.Right;
+                    currentNode = currentNode.RightChild;
                 }
             }
 
@@ -589,7 +559,7 @@ namespace DataStructures
         /// <summary>
         /// Removes the min value from tree.
         /// </summary>
-        public void RemoveMin()
+		public virtual void RemoveMin()
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -606,16 +576,16 @@ namespace DataStructures
             if (currentNode.HasRightChild)
             {
                 parent = currentNode.Parent;
-                var right = currentNode.Right;
+                var right = currentNode.RightChild;
 
                 right.Parent = parent;
-                parent.Left = right;
+                parent.LeftChild = right;
                 _count--;
             }
             else
             {
                 parent = currentNode.Parent;
-                parent.Left = null;
+                parent.LeftChild = null;
                 _count--;
             }
 
@@ -627,7 +597,7 @@ namespace DataStructures
         /// <summary>
         /// Removes the max value from tree.
         /// </summary>
-        public void RemoveMax()
+		public virtual void RemoveMax()
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -644,16 +614,16 @@ namespace DataStructures
             if (currentNode.HasLeftChild)
             {
                 parent = currentNode.Parent;
-                var left = currentNode.Left;
+                var left = currentNode.LeftChild;
 
                 left.Parent = parent;
-                parent.Right = left;
+                parent.RightChild = left;
                 _count--;
             }
             else
             {
                 parent = currentNode.Parent;
-                parent.Right = null;
+                parent.RightChild = null;
                 _count--;
             }
 
@@ -665,7 +635,7 @@ namespace DataStructures
 		/// <summary>
 		/// Clears all elements from tree.
 		/// </summary>
-		public void Clear()
+		public virtual void Clear()
 		{
 			_root = null;
 			_count = 0;
@@ -675,7 +645,7 @@ namespace DataStructures
         /// Finds the minimum in tree 
         /// </summary>
         /// <returns>Min</returns>
-        public T FindMin()
+		public virtual T FindMin()
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -688,7 +658,7 @@ namespace DataStructures
         /// Finds the maximum in tree 
         /// </summary>
         /// <returns>Max</returns>
-        public T FindMax()
+		public virtual T FindMax()
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -702,7 +672,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="item">Item to find.</param>
         /// <returns>Item.</returns>
-        public T Find(T item)
+		public virtual T Find(T item)
         {
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
@@ -721,7 +691,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="item">Tree element</param>
         /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
-        public int Rank(T item)
+		public virtual int Rank(T item)
         {
             var currentNode = _root;
             var node = _findNode(currentNode, item);
@@ -737,7 +707,7 @@ namespace DataStructures
         /// </summary>
         /// <param name="searchPredicate">The search predicate</param>
         /// <returns>ArrayList<T> of elements.</returns>
-        public List<T> FindAll(Predicate<T> searchPredicate)
+		public virtual List<T> FindAll(Predicate<T> searchPredicate)
         {
             var currentNode = _root;
             var list = new List<T>();
@@ -750,7 +720,7 @@ namespace DataStructures
         /// Traverses the tree and applies the action to every node.
         /// </summary>
         /// <param name="action">Action to apply to every node's value.</param>
-        public void Traverse(Action<T> action)
+		public virtual void ForEach(Action<T> action)
         {
             if (action == null)
                 throw new ArgumentNullException("Null actions are not allowed.");
@@ -762,7 +732,7 @@ namespace DataStructures
         /// <summary>
         /// Sort the elements in this tree, using in-order traversal, and returns them.
         /// </summary>
-        public List<T> BSTSort()
+		public virtual List<T> Sort()
         {
             var currentNode = _root;
             var list = new List<T>();
@@ -776,7 +746,7 @@ namespace DataStructures
 		/// Returns an array of nodes' values.
 		/// </summary>
 		/// <returns>The array.</returns>
-		public T[] ToArray()
+		public virtual T[] ToArray()
 		{
 			throw new NotImplementedException ();
 		}
@@ -784,7 +754,7 @@ namespace DataStructures
 		/// <summary>
 		/// Returns a list of the nodes' value.
 		/// </summary>
-		public List<T> ToList()
+		public virtual List<T> ToList()
 		{
 			throw new NotImplementedException ();
 		}
@@ -843,8 +813,8 @@ namespace DataStructures
 				else
 				{
 					traverseQueue.Enqueue(node);
-					visitNode(node.Left);
-					visitNode(node.Right);
+					visitNode(node.LeftChild);
+					visitNode(node.RightChild);
 				}
 			}
 
@@ -905,9 +875,9 @@ namespace DataStructures
 					return;
 				else
 				{
-					visitNode(node.Left);
+					visitNode(node.LeftChild);
 					traverseQueue.Enqueue(node);
-					visitNode(node.Right);
+					visitNode(node.RightChild);
 				}
 			}
 
@@ -967,8 +937,8 @@ namespace DataStructures
 					return;
 				else
 				{
-					visitNode(node.Left);
-					visitNode(node.Right);
+					visitNode(node.LeftChild);
+					visitNode(node.RightChild);
 					traverseQueue.Enqueue(node);
 				}
 			}

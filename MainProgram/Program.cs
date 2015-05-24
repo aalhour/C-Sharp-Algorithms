@@ -14,7 +14,9 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-			BinarySearchTreeTest.DoTest ();
+			AVLTreeNode<int> avlNode = new AVLTreeNode<int> ();
+
+			//BinarySearchTreeTest.DoTest ();
 			//BinarySearchTreeSorterTest.DoTest ();
         }
     }

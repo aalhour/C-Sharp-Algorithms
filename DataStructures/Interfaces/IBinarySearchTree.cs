@@ -41,10 +41,10 @@ namespace DataStructures
         List<T> FindAll(System.Predicate<T> searchPredicate);
 
         // Traverses the tree and applies the action to every node.
-        void Traverse(System.Action<T> action);
+        void ForEach(System.Action<T> action);
 
         // Sort the elements in this tree, using in-order traversal, and returns them.
-        List<T> BSTSort();
+        List<T> Sort();
 
 		T[] ToArray();
 
@@ -81,8 +81,8 @@ namespace DataStructures
         K FindMax();
         int Rank(K item);
         List<V> FindAll(System.Predicate<K> searchPredicate);
-        void Traverse(System.Action<K> action);
-        List<V> BSTSort();
+        void ForEach(System.Action<K> action);
+        List<V> Sort();
         void Clear();
     }
 }
