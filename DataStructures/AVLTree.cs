@@ -74,65 +74,74 @@ namespace DataStructures
         }
 
 
-        public int Count()
+		protected override void _insertNode (BSTNode<T> currentNode, BSTNode<T> newNode)
+		{
+			base._insertNode (currentNode, newNode);
+		}
+
+		protected override bool _remove (BSTNode<T> node)
+		{
+			return base._remove (node);
+		}
+
+		private void RotateSingleLeft (AVLTree<T> node)
+		{
+		}
+
+		private void RotateSingleRight (AVLTree<T> node)
+		{
+		}
+
+		private void RotateDoubleLeft (AVLTree<T> node)
+		{
+		}
+
+		private void RotateDoubleRight (AVLTree<T> node)
+		{
+		}
+
+		public override void Insert(T value)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsEmpty()
-        {
-            throw new NotImplementedException();
-        }
+		public override void Remove (T item)
+		{
+			throw new NotImplementedException();
+		}
 
-        public void Insert(T value)
-        {
-            throw new NotImplementedException();
-        }
+		public T FindSuccessor(T value)
+		{
+			if (IsEmpty ())
+				throw new Exception ("Tree is empty.");
+			
+			var node = (AVLTreeNode<T>)_findNode (_root, value);
 
-        public void Delete(T value)
-        {
-            throw new NotImplementedException();
-        }
+			if (node.HasRightChild)
+				return ((AVLTreeNode<T>)_findMinNode (node.RightChild)).Value;
 
-        public T Find(T value)
-        {
-            throw new NotImplementedException();
-        }
+			var current = node;
+			while(current.Parent != null && current.IsRightChild)
+				current = current.Parent;
+			
+			return current.Value;
 
-        public T FindMin()
-        {
-            throw new NotImplementedException();
-        }
+			throw new Exception ("No successor was found.");
+		}
 
-        public T FindMax()
-        {
-            throw new NotImplementedException();
-        }
+		public T FindPredecessor(T value)
+		{
+			if (IsEmpty ())
+				throw new Exception ("Tree is empty.");
 
-        public T FindSuccessor(T value)
-        {
-            throw new NotImplementedException();
-        }
+			return default(T);
+		}
 
-        public T FindPredecessor(T value)
-        {
-            throw new NotImplementedException();
-        }
+		public override List<T> Sort ()
+		{
+			return base.Sort ();
+		}
 
-        public T[] FindAll(Predicate<T> searchPredicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Traverse(Action<T> action)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

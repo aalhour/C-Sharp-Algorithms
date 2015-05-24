@@ -13,11 +13,7 @@ namespace DataStructures.Interfaces
         T FindSuccessor(T value);
         T FindPredecessor(T value);
         T[] FindAll(System.Predicate<T> searchPredicate);
-        void Traverse(System.Action<T> action);
-
-        /// <summary>
-        /// Clear this tree.
-        /// </summary>
+        void ForEach(System.Action<T> action);
         void Clear();
     }
 
@@ -34,11 +30,7 @@ namespace DataStructures.Interfaces
         K FindSuccessor(K key);
         K FindPredecessor(K key);
         K[] FindAll(System.Predicate<K> searchPredicate);
-        void Traverse(System.Action<K> action);
-
-        /// <summary>
-        /// Clear this tree.
-        /// </summary>
+		void ForEach(System.Action<K> action);
         void Clear();
     }
 }
