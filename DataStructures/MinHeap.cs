@@ -41,7 +41,7 @@ namespace DataStructures
 
             for (int node = lastNodeWithChildren; node >= 0; node--)
             {
-                MinHeapify<T>(node, lastIndex);
+                MinHeapify(node, lastIndex);
             }
         }
 
@@ -52,7 +52,7 @@ namespace DataStructures
         /// <typeparam name="T">Type of Heap elements</typeparam>
         /// <param name="nodeIndex">The node index to heapify at.</param>
         /// <param name="lastIndex">The last index of collection to stop at.</param>
-        private void MinHeapify<T>(int nodeIndex, int lastIndex)
+        private void MinHeapify(int nodeIndex, int lastIndex)
         {
             // assume that the subtrees left(node) and right(node) are max-heaps
             int left = (nodeIndex * 2) + 1;
@@ -71,7 +71,7 @@ namespace DataStructures
             if (smallest != nodeIndex)
             {
                 _collection.Swap(nodeIndex, smallest);
-                MinHeapify<T>(smallest, lastIndex);
+                MinHeapify(smallest, lastIndex);
             }
         }
 
@@ -200,7 +200,7 @@ namespace DataStructures
             _collection.RemoveAt(last);
             last--;
 
-            MinHeapify<T>(0, last);
+            MinHeapify(0, last);
         }
 
 

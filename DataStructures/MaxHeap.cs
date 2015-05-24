@@ -42,7 +42,7 @@ namespace DataStructures
 
             for (int node = lastNodeWithChildren; node >= 0; node--)
             {
-                MaxHeapify<T>(node, lastIndex);
+                MaxHeapify(node, lastIndex);
             }
         }
 
@@ -54,7 +54,7 @@ namespace DataStructures
         /// <typeparam name="T">Type of Heap elements</typeparam>
         /// <param name="nodeIndex">The node index to heapify at.</param>
         /// <param name="lastIndex">The last index of collection to stop at.</param>
-        private void MaxHeapify<T>(int nodeIndex, int lastIndex)
+        private void MaxHeapify(int nodeIndex, int lastIndex)
         {
             // assume that the subtrees left(node) and right(node) are max-heaps
             int left = (nodeIndex * 2) + 1;
@@ -73,7 +73,7 @@ namespace DataStructures
             if (largest != nodeIndex)
             {
                 _collection.Swap(nodeIndex, largest);
-                MaxHeapify<T>(largest, lastIndex);
+                MaxHeapify(largest, lastIndex);
             }
         }
 
@@ -202,7 +202,7 @@ namespace DataStructures
             _collection.RemoveAt(last);
             last--;
 
-            MaxHeapify<T>(0, last);
+            MaxHeapify(0, last);
         }
 
 
@@ -284,7 +284,7 @@ namespace DataStructures
         //        _collection.Swap (index, last);
         //        _collection.RemoveAt (last);
         //        last--;
-        //        MaxHeapify<T>(0, last);
+        //        MaxHeapify(0, last);
         //    }
         //}
 
@@ -301,7 +301,7 @@ namespace DataStructures
         //        _collection.Swap (index, last);
         //        _collection.RemoveAt (last);
         //        last--;
-        //        MaxHeapify<T>(0, last);
+        //        MaxHeapify(0, last);
         //    }
         //}
 

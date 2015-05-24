@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 using DataStructures;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
@@ -20,6 +22,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
 
 			var array = stack.ToArray();
+			Debug.Assert (array.Length == stack.Count, "Wrong size!");
 
 			stack.Pop();
 			stack.Pop(out top);
@@ -33,6 +36,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
 
 			var array2 = stack.ToArray();
+			Debug.Assert (array2.Length == stack.Count, "Wrong size!");
 		}
 	}
 }

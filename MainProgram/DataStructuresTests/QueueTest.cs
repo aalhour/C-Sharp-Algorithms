@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 using DataStructures;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
@@ -22,6 +24,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
 			var array = queue.ToArray();
+			Debug.Assert (array.Length == 8, "Wrong size.");
 
 			queue.Pop();
 			queue.Pop();
@@ -36,6 +39,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
 			var array2 = queue.ToArray();
+			Debug.Assert (array2.Length == 3, "Wrong size.");
 		}
 	}
 }

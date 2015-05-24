@@ -13,11 +13,11 @@ namespace DataStructures
         /// The Doubly-Linked List Node class.
         /// </summary>
         /// <typeparam name="T">Type</typeparam>
-        public class DLinkedListNode<T>
+		internal class DLinkedListNode
         {
             public T Data { get; set; }
-            public DLinkedListNode<T> Next { get; set; }
-            public DLinkedListNode<T> Previous { get; set; }
+            public DLinkedListNode Next { get; set; }
+            public DLinkedListNode Previous { get; set; }
 
             public DLinkedListNode()
             {
@@ -36,8 +36,8 @@ namespace DataStructures
         /// <summary>
         /// Instance variables.
         /// </summary>
-        private DLinkedListNode<T> _firstNode { get; set; }
-        private DLinkedListNode<T> _lastNode { get; set; }
+        private DLinkedListNode _firstNode { get; set; }
+        private DLinkedListNode _lastNode { get; set; }
         public int Count { private set; get; }
 
 
@@ -132,7 +132,7 @@ namespace DataStructures
         /// <param name="dataItem">Data item.</param>
         public void Prepend(T dataItem)
         {
-            DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
+            DLinkedListNode newNode = new DLinkedListNode(dataItem);
 
             if (_firstNode == null)
             {
@@ -157,7 +157,7 @@ namespace DataStructures
         /// <param name="dataItem">Data item.</param>
         public void Append(T dataItem)
         {
-            DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
+            DLinkedListNode newNode = new DLinkedListNode(dataItem);
 
             if (_firstNode == null)
             {
@@ -198,8 +198,8 @@ namespace DataStructures
             }
             else if (index > 0 && index < Count)
             {
-                DLinkedListNode<T> currentNode = null;
-                DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
+                DLinkedListNode currentNode = null;
+                DLinkedListNode newNode = new DLinkedListNode(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (_lastNode reference)
@@ -248,8 +248,8 @@ namespace DataStructures
             }
             else if (index >= 0 && index < Count)
             {
-                DLinkedListNode<T> currentNode = null;
-                DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
+                DLinkedListNode currentNode = null;
+                DLinkedListNode newNode = new DLinkedListNode(dataItem);
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (_lastNode reference)
@@ -370,7 +370,7 @@ namespace DataStructures
             }
             else if (index > 0 && index < (Count - 1))
             {
-                DLinkedListNode<T> currentNode = null;
+                DLinkedListNode currentNode = null;
 
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (_lastNode reference)
@@ -409,7 +409,7 @@ namespace DataStructures
         /// <returns>Doubly-Linked List of elements</returns>
         public DLinkedList<T> GetRange(int index, int countOfElements)
         {
-            DLinkedListNode<T> currentNode = null;
+            DLinkedListNode currentNode = null;
             DLinkedList<T> newList = new DLinkedList<T>();
 
             // Handle Index out of Bound errors

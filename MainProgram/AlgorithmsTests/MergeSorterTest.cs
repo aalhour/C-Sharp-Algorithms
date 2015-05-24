@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 using DataStructures;
@@ -13,6 +14,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             List<int> numbersList = new List<int> { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
 
             var sortedList = numbersList.MergeSort();
+			Debug.Assert (sortedList[0] == 0, "Wrong min value!");
 		}
 	}
 }

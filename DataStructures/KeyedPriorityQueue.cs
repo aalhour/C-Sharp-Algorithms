@@ -50,6 +50,7 @@ namespace DataStructures
                 }
 
                 _heap = new MaxHeap<PriorityQueueNode<K, V, P>>(capacity, this._priorityComparer);
+				_keysMap = new Dictionary<K, int> ();
             }
             else
             {

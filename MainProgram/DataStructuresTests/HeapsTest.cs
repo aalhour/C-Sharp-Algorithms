@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 using DataStructures;
+using Algorithms.Sorting;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
@@ -28,8 +30,14 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			minHeap.Insert (27);
 
 			var array = minHeap.ToArray ();
+			Debug.Assert (array.Length == minHeap.Count(), "Wrong size.");
+
 			var list = minHeap.ToList ();
+			Debug.Assert (list.Count == minHeap.Count(), "Wrong size.");
+
+			array.HeapSortDescending();
 			var maxHeap = minHeap.ToMaxHeap ();
+			Debug.Assert (maxHeap.Peek() == array[0], "Wrong maximum.");
 		}
 	}
 }

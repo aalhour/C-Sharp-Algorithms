@@ -12,9 +12,9 @@ namespace DataStructures
         /// The Singly-Linked List Node class
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public class SLinkedListNode<T>
+		internal class SLinkedListNode
         {
-            public SLinkedListNode<T> Next { get; set; }
+            public SLinkedListNode Next { get; set; }
             public T Data { get; set; }
 
             public SLinkedListNode()
@@ -34,8 +34,8 @@ namespace DataStructures
         /// <summary>
         /// Instance variables
         /// </summary>
-        private SLinkedListNode<T> _firstNode { get; set; }
-        private SLinkedListNode<T> _lastNode { get; set; }
+        private SLinkedListNode _firstNode { get; set; }
+        private SLinkedListNode _lastNode { get; set; }
         public int Count { private set; get; }
 
 
@@ -123,7 +123,7 @@ namespace DataStructures
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Prepend(T dataItem)
         {
-            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
+            SLinkedListNode newNode = new SLinkedListNode(dataItem);
 
             if (_firstNode == null)
             {
@@ -147,7 +147,7 @@ namespace DataStructures
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Append(T dataItem)
         {
-            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
+            SLinkedListNode newNode = new SLinkedListNode(dataItem);
 
             if (_firstNode == null)
             {
@@ -190,7 +190,7 @@ namespace DataStructures
             else if (index > 0 && index < Count)
             {
                 var currentNode = _firstNode;
-                SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
+                SLinkedListNode newNode = new SLinkedListNode(dataItem);
 
                 for (int i = 1; i < index; ++i)
                 {

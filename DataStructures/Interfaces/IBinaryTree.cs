@@ -1,7 +1,7 @@
 ﻿
 namespace DataStructures.Interfaces
 {
-    public interface ITree<T> where T : System.IComparable<T>
+    public interface IBinaryTree<T> where T : System.IComparable<T>
     {
         // Returns the number of elements in the Tree
         int Count();
@@ -34,7 +34,7 @@ namespace DataStructures.Interfaces
     /// </summary>
     /// <typeparam name="K">Type of keys.</typeparam>
     /// <typeparam name="V">Type of records per node.</typeparam>
-    public interface ITree<K, V> where K : System.IComparable<K>
+	public interface IBinaryTree<K, V> where K : System.IComparable<K>
     {
         int Count();
         bool IsEmpty();

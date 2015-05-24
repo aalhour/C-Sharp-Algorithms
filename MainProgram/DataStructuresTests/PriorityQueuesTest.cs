@@ -33,7 +33,7 @@ namespace C_Sharp_Algorithms
 			}
 
 			var keyedPQHighest = keyedPriorityQueue.Dequeue ();
-
+			Debug.Assert (keyedPQHighest == 18, "Wrong node!");
 
 			//
 			// Integer-index priority-queue
@@ -46,7 +46,7 @@ namespace C_Sharp_Algorithms
 			}
 
 			var PQHighest = priorityQueue.Dequeue ();
-
+			Debug.Assert (PQHighest == "y", "Wrong node!");
 
             //
             // Processes with priorities

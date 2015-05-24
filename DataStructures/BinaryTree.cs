@@ -6,58 +6,62 @@ using DataStructures.Helpers;
 
 namespace DataStructures
 {
+	/// <summary>
+	/// A minimal binary tree node.
+	/// </summary>
+	/// <typeparam name="T">Type of node value.</typeparam>
+	public class BinaryTreeNode<T> where T : IComparable<T>
+	{
+		public T Value { get; set; }
+		public BinaryTreeNode<T> Parent { get; set; }
+		public BinaryTreeNode<T> Left { get; set; }
+		public BinaryTreeNode<T> Right { get; set; }
+
+		/// <summary>
+		/// CONSTRUCTORS
+		/// </summary>
+		public BinaryTreeNode() : this(default(T), null, null, null) { }
+		public BinaryTreeNode(T value) : this(value, null, null, null) { }
+		public BinaryTreeNode(T value, BinaryTreeNode<T> parent, BinaryTreeNode<T> left, BinaryTreeNode<T> right)
+		{
+			this.Value = value;
+			this.Parent = parent;
+			this.Left = left;
+			this.Right = right;
+		}
+
+		// 
+		// IComparable CompareTo implementation
+		public int CompareTo(BinaryTreeNode<T> other)
+		{
+			if (other == null)
+				return -1;
+
+			return this.Value.CompareTo(other.Value);
+		}
+	}//end-of-tree-node-class
+
+
+
     /// <summary>
-    /// Implements a generic rooted-tree data structure.
+	/// The rooted binary tree data structure.
+	/// This is not a search binary tree. For the search version check: BinarySearchTree.cs
+	/// <warning>Not Implemented yet.</warning>
+	/// <todo>Implement binary tree data structure.</todo>
     /// </summary>
     /// <typeparam name="T">Type of elements.</typeparam>
-    public class Tree<T> : ITree<T> where T : IComparable<T>
+    public class BinaryTree<T> : IBinaryTree<T> where T : IComparable<T>
     {
-        /// <summary>
-        /// The tree node.
-        /// </summary>
-        /// <typeparam name="T">Type of node value.</typeparam>
-        public class TreeNode<T> where T : IComparable<T>
-        {
-            public T Value { get; set; }
-            public TreeNode<T> Parent { get; set; }
-            public TreeNode<T> Left { get; set; }
-            public TreeNode<T> Right { get; set; }
-
-            /// <summary>
-            /// CONSTRUCTORS
-            /// </summary>
-            public TreeNode() : this(default(T), null, null, null) { }
-            public TreeNode(T value) : this(value, null, null, null) { }
-            public TreeNode(T value, TreeNode<T> parent, TreeNode<T> left, TreeNode<T> right)
-            {
-                this.Value = value;
-                this.Parent = parent;
-                this.Left = left;
-                this.Right = right;
-            }
-
-            // 
-            // IComparable CompareTo implementation
-            public int CompareTo(TreeNode<T> other)
-            {
-                if (other == null)
-                    return -1;
-
-                return this.Value.CompareTo(other.Value);
-            }
-        }//end-of-tree-node-class
-
-
         /// <summary>
         /// TREE INSTANCE VARIABLES
         /// </summary>
-        private TreeNode<T> _root { get; set; }
+        private BinaryTreeNode<T> _root { get; set; }
         private int _count { get; set; }
 
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public Tree()
+        public BinaryTree()
         {
             _root = null;
             _count = 0;

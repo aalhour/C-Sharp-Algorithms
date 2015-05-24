@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+
 using DataStructures;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
@@ -67,6 +69,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine("GetRange(0, 3):\r\n" + listOfNumbers.GetRange(0, 3).ToReadable());
 
 			var arrayVersion = listOfNumbers.ToArray();
+			Debug.Assert (arrayVersion.Length == listOfNumbers.Count);
 		}
 	}
 }
