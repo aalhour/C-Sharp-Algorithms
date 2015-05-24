@@ -47,10 +47,7 @@ namespace DataStructures
         /// <returns>True if queue is empty, false otherwise.</returns>
         public bool IsEmpty
         {
-            get
-            {
-                return _collection.IsEmpty;
-            }
+            get { return _collection.IsEmpty; }
         }
 
 
@@ -77,7 +74,7 @@ namespace DataStructures
         /// Inserts an element at the end of the queue
         /// </summary>
         /// <param name="dataItem">Element to be inserted.</param>
-        public void Push(T dataItem)
+        public void Enqueue(T dataItem)
         {
             _collection.Add(dataItem);
         }
@@ -102,13 +99,14 @@ namespace DataStructures
         /// <summary>
         /// Removes the Top Element from queue, and assigns it's value to the "top" parameter.
         /// </summary>
-        /// <param name="top">The top element container.</param>
-        public void Pop(out T top)
+        /// <return>The top element container.</return>
+        public T Dequeue()
         {
             if (Count > 0)
             {
-                top = Top;
+                var top = Top;
                 _collection.RemoveAt(0);
+				return Top;
             }
             else
             {

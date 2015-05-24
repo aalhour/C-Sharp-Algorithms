@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using DataStructures.Interfaces;
@@ -6,12 +7,160 @@ using DataStructures.Helpers;
 
 namespace DataStructures
 {
+	/// <summary>
+	/// The binary search tree node.
+	/// </summary>
+	public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
+	{
+		private T _value { get; set; }
+		private int _subtreeSize { get; set; } // a.k.a Rank of node.
+		private BSTNode<T> _parent { get; set; }
+		private BSTNode<T> _left { get; set; }
+		private BSTNode<T> _right { get; set; }
+
+
+		public BSTNode() : this(default(T), 0, null, null, null) { }
+		public BSTNode(T value) : this(value, 0, null, null, null) { }
+		public BSTNode(T value, int subTreeSize, BSTNode<T> parent, BSTNode<T> left, BSTNode<T> right)
+		{
+			Value = value;
+			SubtreeSize = 0;
+			Parent = parent;
+			Left = left;
+			Right = right;
+		}
+
+		public virtual T Value
+		{
+			get { return this._value; }
+			set { this._value = value; }
+		}
+
+		// Rank of node
+		public virtual int SubtreeSize
+		{
+			get { return this._subtreeSize; }
+			set { this._subtreeSize = value; }
+		}
+
+		public virtual BSTNode<T> Parent
+		{
+			get { return this._parent; }
+			set { this._parent = value; }
+		}
+
+		public virtual BSTNode<T> Left
+		{
+			get { return this._left; }
+			set { this._left = value; }
+		}
+
+		public virtual BSTNode<T> Right
+		{
+			get { return this._right; }
+			set { this._right = value; }
+		}
+
+		/// <summary>
+		/// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).
+		/// </summary>
+		/// <returns>Number (0,1,2)</returns>
+		public virtual int ChildrenCount 
+		{
+			get
+			{
+				int count = 0;
+
+				if (this.HasLeftChild)
+					count++;
+				if (this.HasRightChild)
+					count++;
+
+				return count;
+			} 
+		}
+
+		/// <summary>
+		/// Checks whether this node has any children.
+		/// </summary>
+		public virtual bool HasChildren 
+		{
+			get { return (this.ChildrenCount > 0); } 
+		}
+
+		/// <summary>
+		/// Checks whether this node has left child.
+		/// </summary>
+		public virtual bool HasLeftChild 
+		{ 
+			get { return (this.HasLeftChild); } 
+		}
+
+		/// <summary>
+		/// Checks whether this node has right child.
+		/// </summary>
+		public virtual bool HasRightChild 
+		{ 
+			get { return (this.HasRightChild ); } 
+		}
+
+		/// <summary>
+		/// Checks whether this node is the left child of it's parent.
+		/// </summary>
+		public virtual bool IsLeftChild 
+		{ 
+			get { return (this.Parent != null && this.Parent.Left == this); } 
+		}
+
+		/// <summary>
+		/// Checks whether this node is the left child of it's parent.
+		/// </summary>
+		public virtual bool IsRightChild 
+		{ 
+			get { return (this.Parent != null && this.Parent.Right == this); } 
+		}
+
+		/// <summary>
+		/// Checks whether this node is a leaf node.
+		/// </summary>
+		public virtual bool IsLeafNode
+		{
+			get { return (this.ChildrenCount == 0); }
+		}
+
+		/// <summary>
+		/// Compares to.
+		/// </summary>
+		public virtual int CompareTo(BSTNode<T> other)
+		{
+			if (other == null)
+				return -1;
+
+			return this.Value.CompareTo(other.Value);
+		}
+	}//end-of-bstnode
+
+
+	/******************************************************************************/
+
+
     /// <summary>
     /// Implements a generic Binary Search Tree data structure.
     /// </summary>
     /// <typeparam name="T">Type of elements.</typeparam>
     public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
     {
+		/// <summary>
+		/// Specifies the mode of travelling through the tree.
+		/// </summary>
+		public enum TraversalMode
+		{
+			InOrder = 0,
+			PreOrder = 1,
+			PostOrder = 2
+		}
+
+
         /// <summary>
         /// TREE INSTANCE VARIABLES
         /// </summary>
@@ -19,18 +168,19 @@ namespace DataStructures
         private BSTNode<T> _root { get; set; }
         private int _count { get; set; }
 
+		public virtual BSTNode<T> Root
+		{
+			get { return this._root; }
+			set { this._root = value; }
+		}
 
-        /// <summary>
-        /// CONSTRUCTOR
-        /// </summary>
-        public BinarySearchTree()
+		public BinarySearchTree()
         {
             _root = null;
             _count = 0;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Calculates the tree height from a specific node, recursively.
         /// </summary>
         /// <param name="node">Node</param>
@@ -42,7 +192,7 @@ namespace DataStructures
 			else if (node.HasChildren == false)
                 return 0 ;
 
-			if (node.ChildCount == 2) // it has both a right child and a left child
+			if (node.ChildrenCount == 2) // it has both a right child and a left child
             {
                 if (node.Left.SubtreeSize > node.Right.SubtreeSize)
                     node = node.Left;
@@ -61,8 +211,7 @@ namespace DataStructures
             return (1 + _getTreeHeight(node));
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
         /// This is used in the recursive function UpdateSubtreeSize.
         /// </summary>
@@ -76,8 +225,7 @@ namespace DataStructures
                 return node.SubtreeSize;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Updates the Subtree Size of a tree node.
         /// Used in recusively calculating the Subtrees Sizes of nodes.
         /// </summary>
@@ -92,8 +240,7 @@ namespace DataStructures
             _updateSubtreeSize(node);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Finds a node inside another node's subtrees, given it's value.
         /// </summary>
         /// <param name="currentNode">Node to start search from.</param>
@@ -123,8 +270,7 @@ namespace DataStructures
             return null;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Returns the min-node in a subtree.
         /// Used in the recusive _remove function.
         /// </summary>
@@ -140,8 +286,7 @@ namespace DataStructures
             return currentNode;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Returns the max-node in a subtree.
         /// Used in the recusive _remove function.
         /// </summary>
@@ -157,12 +302,11 @@ namespace DataStructures
             return currentNode;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// A recursive private method. Used in the public FindAll(predicate) functions.
         /// Implements in-order traversal to find all the matching elements in a subtree.
         /// </summary>
-        /// <param name="searchPredicate"></param>
+        /// <param name="match"></param>
         private void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
@@ -180,13 +324,12 @@ namespace DataStructures
             _findAll(currentNode.Right, match, ref list);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Replaces the node's value from it's parent node object with the newValue.
         /// Used in the recusive _remove function.
         /// </summary>
-        /// <param name="BSTNode">BST node.</param>
-        /// <param name="newValue">New value.</param>
+        /// <param name="node">BST node.</param>
+        /// <param name="newNode">New value.</param>
         private void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
         {
             if (node.Parent != null)
@@ -201,8 +344,7 @@ namespace DataStructures
                 newNode.Parent = node.Parent;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// /// A private method used in the public Remove function.
         /// Removes a given tree node from the tree.
         /// Handles nodes with sub-trees.
@@ -213,7 +355,7 @@ namespace DataStructures
         {
             var parent = node.Parent;
 
-			if (node.ChildCount == 2) // if both children are present
+			if (node.ChildrenCount == 2) // if both children are present
             {
                 var successor = node.Right;
                 node.Value = successor.Value;
@@ -240,8 +382,7 @@ namespace DataStructures
             }
         }
 
-
-        /// <summary>
+		/// <summary>
         /// In-order traversal of the subtrees of a node. Returns every node it vists.
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
@@ -260,8 +401,7 @@ namespace DataStructures
             _inOrderTraverse(currentNode.Right, ref list);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// In-order traversal of the subtrees of a node, and applies an action to the value of every visited node.
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
@@ -281,8 +421,7 @@ namespace DataStructures
             _inOrderTraverse(currentNode.Right, action);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Implements pre-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
         /// </summary>
         /// <param name="currentNode">Node to traverse from.</param>
@@ -302,8 +441,7 @@ namespace DataStructures
             _preOrderTraverse(currentNode.Right, action);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Implements post-order traversal of the subtrees of a given node. Applies an action to every visited node (value).
         /// </summary>
         /// <param name="currentNode">Node to traverse from.</param>
@@ -323,8 +461,7 @@ namespace DataStructures
             action(currentNode.Value);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Return the number of elements in this tree
         /// </summary>
         /// <returns></returns>
@@ -333,8 +470,7 @@ namespace DataStructures
             return _count;
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Checks if tree is empty.
         /// </summary>
         /// <returns></returns>
@@ -343,8 +479,7 @@ namespace DataStructures
             return (_count == 0);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Returns the height of the tree.
         /// </summary>
         /// <returns>Hight</returns>
@@ -357,8 +492,7 @@ namespace DataStructures
             return _getTreeHeight(currentNode);
         }
 
-
-        /// <summary>
+		/// <summary>
         /// Inserts an element to the tree
         /// </summary>
         /// <param name="item">Item to insert</param>
@@ -413,7 +547,6 @@ namespace DataStructures
             }//end-else
         }
 
-
         /// <summary>
         /// Deletes an element from the tree
         /// </summary>
@@ -453,7 +586,6 @@ namespace DataStructures
             }
         }
 
-
         /// <summary>
         /// Removes the min value from tree.
         /// </summary>
@@ -491,7 +623,6 @@ namespace DataStructures
             // Update the subtrees-sizes
             _updateSubtreeSize(parent);
         }
-
 
         /// <summary>
         /// Removes the max value from tree.
@@ -531,6 +662,14 @@ namespace DataStructures
             _updateSubtreeSize(parent);
         }
 
+		/// <summary>
+		/// Clears all elements from tree.
+		/// </summary>
+		public void Clear()
+		{
+			_root = null;
+			_count = 0;
+		}
 
         /// <summary>
         /// Finds the minimum in tree 
@@ -545,7 +684,6 @@ namespace DataStructures
             return _findMinNode(currentNode).Value;
         }
 
-
         /// <summary>
         /// Finds the maximum in tree 
         /// </summary>
@@ -558,7 +696,6 @@ namespace DataStructures
             var currentNode = _root;
             return _findMaxNode(currentNode).Value;
         }
-
 
         /// <summary>
         /// Find the item in the tree. Throws an exception if not found.
@@ -579,7 +716,6 @@ namespace DataStructures
                 throw new Exception("Item was not found.");
         }
 
-
         /// <summary>
         /// Returns the rank of the specified element
         /// </summary>
@@ -596,7 +732,6 @@ namespace DataStructures
                 return node.SubtreeSize;
         }
 
-
         /// <summary>
         /// Given a predicate function, find all the elements that match it.
         /// </summary>
@@ -611,7 +746,6 @@ namespace DataStructures
             return list;
         }
 
-
         /// <summary>
         /// Traverses the tree and applies the action to every node.
         /// </summary>
@@ -624,7 +758,6 @@ namespace DataStructures
             var currentNode = _root;
             _inOrderTraverse(currentNode, action);
         }
-
 
         /// <summary>
         /// Sort the elements in this tree, using in-order traversal, and returns them.
@@ -639,111 +772,239 @@ namespace DataStructures
             return list;
         }
 
-
+		/// <summary>
+		/// Returns an array of nodes' values.
+		/// </summary>
+		/// <returns>The array.</returns>
 		public T[] ToArray()
 		{
 			throw new NotImplementedException ();
 		}
 
-
+		/// <summary>
+		/// Returns a list of the nodes' value.
+		/// </summary>
 		public List<T> ToList()
 		{
 			throw new NotImplementedException ();
 		}
 
 
-        /// <summary>
-        /// Clears all elements from tree.
-        /// </summary>
-        public void Clear()
-        {
-            _root = null;
-            _count = 0;
-        }
-
-    }//end-of-binary-search-tree
-
-
-    /// <summary>
-    /// The binary search tree node.
-    /// </summary>
-    public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
-    {
-        public T Value { get; set; }
-        public int SubtreeSize { get; set; }
-        public BSTNode<T> Parent { get; set; }
-        public BSTNode<T> Left { get; set; }
-        public BSTNode<T> Right { get; set; }
-
-        /// <summary>
-        /// CONSTRUCTORS
-        /// </summary>
-        public BSTNode() : this(default(T), 0, null, null, null) { }
-        public BSTNode(T value) : this(value, 0, null, null, null) { }
-        public BSTNode(T value, int subTreeSize, BSTNode<T> parent, BSTNode<T> left, BSTNode<T> right)
-        {
-            this.Value = value;
-            this.SubtreeSize = 0;
-            this.Parent = parent;
-            this.Left = left;
-            this.Right = right;
-        }
-
 		/// <summary>
-		/// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).
+		/// Returns an enumerator that visits node in the order: parent, left child, right child
 		/// </summary>
-		/// <returns>Number (0,1,2)</returns>
-		public int ChildCount 
+		public virtual IEnumerator<T> GetPreOrderEnumerator()
 		{
-			get
-			{
-				int count = 0;
-
-				if (this.HasLeftChild)
-					count++;
-				if (this.HasRightChild)
-					count++;
-
-				return count;
-			} 
+			return new BinarySearchTreePreOrderEnumerator(this);
 		}
 
 		/// <summary>
-		/// Checks whether this node has any children.
+		/// Returns an enumerator that visits node in the order: left child, parent, right child
 		/// </summary>
-		/// <value><c>true</c> if this instance has children; otherwise, <c>false</c>.</value>
-		public bool HasChildren { get { return (this.ChildCount > 0); } }
+		public virtual IEnumerator<T> GetInOrderEnumerator()
+		{
+			return new BinarySearchTreeInOrderEnumerator(this);
+		}
 
 		/// <summary>
-		/// Checks whether this node has left child.
+		/// Returns an enumerator that visits node in the order: left child, right child, parent
 		/// </summary>
-		/// <value><c>true</c> if this instance has left child; otherwise, <c>false</c>.</value>
-		public bool HasLeftChild { get { return (this.HasLeftChild); } }
+		public virtual IEnumerator<T> GetPostOrderEnumerator()
+		{
+			return new BinarySearchTreePostOrderEnumerator(this);
+		}
+
+
+		/*********************************************************************/
+
 
 		/// <summary>
-		/// Checks whether this node has right child.
+		/// Returns an preorder-traversal enumerator for the tree values
 		/// </summary>
-		/// <value><c>true</c> if this instance has right child; otherwise, <c>false</c>.</value>
-		public bool HasRightChild { get { return (this.HasRightChild ); } }
+		internal class BinarySearchTreePreOrderEnumerator : IEnumerator<T>
+		{
+			private BSTNode<T> current;
+			private BinarySearchTree<T> tree;
+			internal Queue<BSTNode<T>> traverseQueue;
+
+			public BinarySearchTreePreOrderEnumerator(BinarySearchTree<T> tree)
+			{
+				this.tree = tree;
+
+				//Build queue
+				traverseQueue = new Queue<BSTNode<T>>();
+				visitNode(this.tree.Root);
+			}
+
+			private void visitNode(BSTNode<T> node)
+			{
+				if (node == null)
+					return;
+				else
+				{
+					traverseQueue.Enqueue(node);
+					visitNode(node.Left);
+					visitNode(node.Right);
+				}
+			}
+
+			public T Current
+			{
+				get { return current.Value; }
+			}
+
+			object IEnumerator.Current
+			{
+				get { return Current; }
+			}
+
+			public void Dispose()
+			{
+				current = null;
+				tree = null;
+			}
+
+			public void Reset()
+			{
+				current = null;
+			}
+
+			public bool MoveNext()
+			{
+				if (traverseQueue.Count > 0)
+					current = traverseQueue.Dequeue();
+				else
+					current = null;
+
+				return (current != null);
+			}
+		}
+
 
 		/// <summary>
-		/// Checks whether this node is the left child of it's parent.
+		/// Returns an inorder-traversal enumerator for the tree values
 		/// </summary>
-		/// <value><c>true</c> if this instance is left child; otherwise, <c>false</c>.</value>
-		public bool IsLeftChild { get { return (this.Parent != null && this.Parent.Left == this); } }
+		internal class BinarySearchTreeInOrderEnumerator : IEnumerator<T>
+		{
+			private BSTNode<T> current;
+			private BinarySearchTree<T> tree;
+			internal Queue<BSTNode<T>> traverseQueue;
+
+			public BinarySearchTreeInOrderEnumerator(BinarySearchTree<T> tree)
+			{
+				this.tree = tree;
+
+				//Build queue
+				traverseQueue = new Queue<BSTNode<T>>();
+				visitNode(this.tree.Root);
+			}
+
+			private void visitNode(BSTNode<T> node)
+			{
+				if (node == null)
+					return;
+				else
+				{
+					visitNode(node.Left);
+					traverseQueue.Enqueue(node);
+					visitNode(node.Right);
+				}
+			}
+
+			public T Current
+			{
+				get { return current.Value; }
+			}
+
+			object IEnumerator.Current
+			{
+				get { return Current; }
+			}
+
+			public void Dispose()
+			{
+				current = null;
+				tree = null;
+			}
+
+			public void Reset()
+			{
+				current = null;
+			}
+
+			public bool MoveNext()
+			{
+				if (traverseQueue.Count > 0)
+					current = traverseQueue.Dequeue();
+				else
+					current = null;
+
+				return (current != null);
+			}
+		}
 
 		/// <summary>
-		/// Checks whether this node is the left child of it's parent.
+		/// Returns a postorder-traversal enumerator for the tree values
 		/// </summary>
-		/// <value><c>true</c> if this instance is right child; otherwise, <c>false</c>.</value>
-		public bool IsRightChild { get { return { this.Parent != null && this.Parent.Right == this; } } }
+		internal class BinarySearchTreePostOrderEnumerator : IEnumerator<T>
+		{
+			private BSTNode<T> current;
+			private BinarySearchTree<T> tree;
+			internal Queue<BSTNode<T>> traverseQueue;
 
-        public int CompareTo(BSTNode<T> other)
-        {
-            if (other == null)
-                return -1;
+			public BinarySearchTreePostOrderEnumerator(BinarySearchTree<T> tree)
+			{
+				this.tree = tree;
 
-            return this.Value.CompareTo(other.Value);
-        }
-    }//end-of-bstnode
+				//Build queue
+				traverseQueue = new Queue<BSTNode<T>>();
+				visitNode(this.tree.Root);
+			}
+
+			private void visitNode(BSTNode<T> node)
+			{
+				if (node == null)
+					return;
+				else
+				{
+					visitNode(node.Left);
+					visitNode(node.Right);
+					traverseQueue.Enqueue(node);
+				}
+			}
+
+			public T Current
+			{
+				get { return current.Value; }
+			}
+
+			object IEnumerator.Current
+			{
+				get { return Current; }
+			}
+
+			public void Dispose()
+			{
+				current = null;
+				tree = null;
+			}
+
+			public void Reset()
+			{
+				current = null;
+			}
+
+			public bool MoveNext()
+			{
+				if (traverseQueue.Count > 0)
+					current = traverseQueue.Dequeue();
+				else
+					current = null;
+
+				return (current != null);
+			}
+		}
+
+    }//end-of-binary-search-tree
+
 }

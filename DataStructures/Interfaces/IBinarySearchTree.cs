@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace DataStructures
 {
     public interface IBinarySearchTree<T> where T : System.IComparable<T>
@@ -37,13 +38,26 @@ namespace DataStructures
         int Rank(T item);
 
         // Finds all the elements in the tree that match the predicate.
-        System.Collections.Generic.List<T> FindAll(System.Predicate<T> searchPredicate);
+        List<T> FindAll(System.Predicate<T> searchPredicate);
 
         // Traverses the tree and applies the action to every node.
         void Traverse(System.Action<T> action);
 
         // Sort the elements in this tree, using in-order traversal, and returns them.
-        System.Collections.Generic.List<T> BSTSort();
+        List<T> BSTSort();
+
+		T[] ToArray();
+
+		List<T> ToList();
+
+		// Returns an enumerator that visits node in the order: parent, left child, right child
+		IEnumerator<T> GetPreOrderEnumerator ();
+
+		// Returns an enumerator that visits node in the order: left child, parent, right child
+		IEnumerator<T> GetInOrderEnumerator ();
+
+		// Returns an enumerator that visits node in the order: left child, right child, parent
+		IEnumerator<T> GetPostOrderEnumerator();
 
         // Clear this tree.
         void Clear();
@@ -66,9 +80,9 @@ namespace DataStructures
         K FindMin();
         K FindMax();
         int Rank(K item);
-        System.Collections.Generic.List<V> FindAll(System.Predicate<K> searchPredicate);
+        List<V> FindAll(System.Predicate<K> searchPredicate);
         void Traverse(System.Action<K> action);
-        System.Collections.Generic.List<V> BSTSort();
+        List<V> BSTSort();
         void Clear();
     }
 }

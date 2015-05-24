@@ -10,14 +10,14 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			string top;
 			DataStructures.Queue<string> queue = new DataStructures.Queue<string>();
 
-			queue.Push("aaa");
-			queue.Push("bbb");
-			queue.Push("ccc");
-			queue.Push("ddd");
-			queue.Push("eee");
-			queue.Push("fff");
-			queue.Push("ggg");
-			queue.Push("hhh");
+			queue.Enqueue("aaa");
+			queue.Enqueue("bbb");
+			queue.Enqueue("ccc");
+			queue.Enqueue("ddd");
+			queue.Enqueue("eee");
+			queue.Enqueue("fff");
+			queue.Enqueue("ggg");
+			queue.Enqueue("hhh");
 
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
@@ -25,7 +25,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			queue.Pop();
 			queue.Pop();
-			queue.Pop(out top);
+			top = queue.Dequeue();
 
 			Console.WriteLine("Old 3nd-last: " + top + "\r\n");
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
