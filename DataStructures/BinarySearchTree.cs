@@ -13,7 +13,7 @@ namespace DataStructures
 	public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
 	{
 		private T _value;
-		private int _subtreeSize = 0; // a.k.a Rank of node.
+		private int _subtreeSize = 0;
 		private BSTNode<T> _parent;
 		private BSTNode<T> _left;
 		private BSTNode<T> _right;
@@ -74,7 +74,7 @@ namespace DataStructures
 		/// </summary>
 		public virtual bool HasLeftChild 
 		{ 
-			get { return (this.HasLeftChild); } 
+			get { return (this.LeftChild != null); } 
 		}
 
 		/// <summary>
@@ -82,7 +82,7 @@ namespace DataStructures
 		/// </summary>
 		public virtual bool HasRightChild 
 		{ 
-			get { return (this.HasRightChild ); } 
+			get { return (this.RightChild != null); } 
 		}
 
 		/// <summary>
@@ -138,14 +138,6 @@ namespace DataStructures
 
 			return this.Value.CompareTo(other.Value);
 		}
-
-		/// <summary>
-		/// Determines whether this node is equal to another one.
-		/// </summary>
-		public override new bool Equals (BSTNode<T> node)
-		{
-			return this.CompareTo (node) == 0;
-		}
 	}//end-of-bstnode
 
 
@@ -188,36 +180,96 @@ namespace DataStructures
             _count = 0;
         }
 
+
 		/// <summary>
-        /// Calculates the tree height from a specific node, recursively.
-        /// </summary>
-        /// <param name="node">Node</param>
-        /// <returns>Height of node's longest subtree</returns>
-		protected int _getTreeHeight(BSTNode<T> node)
-        {
-            if (node == null)
-                return 0;
-			else if (node.HasChildren == false)
-                return 0 ;
+		/// Replaces the node's value from it's parent node object with the newValue.
+		/// Used in the recusive _remove function.
+		/// </summary>
+		/// <param name="node">BST node.</param>
+		/// <param name="newNode">New value.</param>
+		protected void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+		{
+			if (node.Parent != null)
+			{
+				if (node.IsLeftChild)
+					node.Parent.LeftChild = newNode;
+				else
+					node.Parent.RightChild = newNode;
+			}
 
-			if (node.ChildrenCount == 2) // it has both a right child and a left child
-            {
-                if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
-                    node = node.LeftChild;
-                else
-                    node = node.RightChild;
-            }
-			else if (node.HasLeftChild)
-            {
-                node = node.LeftChild;
-            }
-			else if (node.HasRightChild)
-            {
-                node = node.RightChild;
-            }
+			if (newNode != null)
+				newNode.Parent = node.Parent;
+		}
 
-            return (1 + _getTreeHeight(node));
-        }
+		/// <summary>
+		/// /// A private method used in the public Remove function.
+		/// Removes a given tree node from the tree.
+		/// Handles nodes with sub-trees.
+		/// </summary>
+		/// <param name="node">Tree node to delete.</param>
+		protected virtual void _remove(BSTNode<T> node)
+		{
+			var parent = node.Parent;
+
+			if (node.ChildrenCount == 2) // if both children are present
+			{
+				var successor = node.RightChild;
+				node.Value = successor.Value;
+				_remove(successor);
+			}
+			else if (node.HasLeftChild) // if the node has only a LEFT child
+			{
+				_replaceNodeInParent(node, node.LeftChild);
+				_updateSubtreeSize(parent);
+				_count--;
+
+			}
+			else if (node.HasRightChild) // if the node has only a RIGHT child
+			{
+				_replaceNodeInParent(node, node.RightChild);
+				_updateSubtreeSize(parent);
+				_count--;
+			}
+			else //this node has no children
+			{
+				_replaceNodeInParent(node, null);
+				_updateSubtreeSize(parent);
+				_count--;
+			}
+		}
+
+		/// <summary>
+		/// Inserts a node inside the subtree of another.
+		/// </summary>
+		/// <param name="currentNode">Current node to insert afters.</param>
+		/// <param name="newNode">New node to be inserted.</param>
+		protected virtual void _insertNode(BSTNode<T> currentNode, BSTNode<T> newNode)
+		{
+			if (newNode.Value.IsLessThan(currentNode.Value))
+			{
+				if (currentNode.HasLeftChild == false)
+				{
+					newNode.Parent = currentNode;
+					currentNode.LeftChild = newNode;
+					_count++;
+					return;
+				}
+
+				_insertNode(currentNode.LeftChild, newNode);
+			}
+			else
+			{
+				if (currentNode.HasRightChild == false)
+				{
+					newNode.Parent = currentNode;
+					currentNode.RightChild = newNode;
+					_count++;
+					return;
+				}
+
+				_insertNode(currentNode.RightChild, newNode);
+			}
+		}
 
 		/// <summary>
         /// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
@@ -227,7 +279,7 @@ namespace DataStructures
         /// <param name="node">BST Node.</param>
 		protected int _subtreeSize(BSTNode<T> node)
         {
-            if (node == null)
+			if (node == null)
                 return 0;
             else
                 return node.SubtreeSize;
@@ -243,10 +295,40 @@ namespace DataStructures
             if (node == null)
                 return;
 
-            node.SubtreeSize = _subtreeSize(node.LeftChild) + _subtreeSize(node.RightChild) + 1;
+			node.SubtreeSize = _subtreeSize(node.LeftChild) + _subtreeSize(node.RightChild) + 1;
+			
             node = node.Parent;
             _updateSubtreeSize(node);
         }
+
+		/// <summary>
+		/// Calculates the tree height from a specific node, recursively.
+		/// </summary>
+		/// <param name="node">Node</param>
+		/// <returns>Height of node's longest subtree</returns>
+		protected int _getTreeHeight(BSTNode<T> node)
+		{
+			if (node == null || node.HasChildren == false)
+				return 0;
+
+			if (node.ChildrenCount == 2) // it has both a right child and a left child
+			{
+				if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
+					node = node.LeftChild;
+				else
+					node = node.RightChild;
+			}
+			else if (node.HasLeftChild)
+			{
+				node = node.LeftChild;
+			}
+			else if (node.HasRightChild)
+			{
+				node = node.RightChild;
+			}
+
+			return (1 + _getTreeHeight(node));
+		}
 
 		/// <summary>
         /// Finds a node inside another node's subtrees, given it's value.
@@ -334,67 +416,10 @@ namespace DataStructures
         }
 
 		/// <summary>
-        /// Replaces the node's value from it's parent node object with the newValue.
-        /// Used in the recusive _remove function.
-        /// </summary>
-        /// <param name="node">BST node.</param>
-        /// <param name="newNode">New value.</param>
-		protected void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
-        {
-            if (node.Parent != null)
-            {
-				if (node.IsLeftChild)
-                    node.Parent.LeftChild = newNode;
-                else
-                    node.Parent.RightChild = newNode;
-            }
-
-            if (newNode != null)
-                newNode.Parent = node.Parent;
-        }
-
-		/// <summary>
-        /// /// A private method used in the public Remove function.
-        /// Removes a given tree node from the tree.
-        /// Handles nodes with sub-trees.
-        /// </summary>
-        /// <param name="node">Tree node to delete.</param>
-        /// <param name="item">Value of node..</param>
-		protected void _remove(BSTNode<T> node, T item)
-        {
-            var parent = node.Parent;
-
-			if (node.ChildrenCount == 2) // if both children are present
-            {
-                var successor = node.RightChild;
-                node.Value = successor.Value;
-                _remove(successor, successor.Value);
-            }
-            else if (node.HasLeftChild) //if the node has only a *left* child
-            {
-                _replaceNodeInParent(node, node.LeftChild);
-                _updateSubtreeSize(parent);
-                _count--;
-
-            }
-            else if (node.HasRightChild) //if the node has only a *right* child
-            {
-                _replaceNodeInParent(node, node.RightChild);
-                _updateSubtreeSize(parent);
-                _count--;
-            }
-            else //this node has no children
-            {
-                _replaceNodeInParent(node, null);
-                _updateSubtreeSize(parent);
-                _count--;
-            }
-        }
-
-		/// <summary>
-        /// In-order traversal of the subtrees of a node. Returns every node it vists.
-        /// </summary>
-        /// <param name="currentNode">Node to traverse the tree from.</param>
+		/// In-order traversal of the subtrees of a node. Returns every node it vists.
+		/// </summary>
+		/// <param name="currentNode">Node to traverse the tree from.</param>
+		/// <param name="list">List to add elements to.</param>
         private void _inOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
         {
             if (currentNode == null)
@@ -470,7 +495,8 @@ namespace DataStructures
         {
             if (IsEmpty())
             {
-                _root = new BSTNode<T>() { Value = item, SubtreeSize = 1 };
+                _root = new BSTNode<T>() { Value = item };
+				_updateSubtreeSize (_root);
                 _count++;
             }
             else
@@ -478,39 +504,12 @@ namespace DataStructures
                 var currentNode = _root;
                 var newNode = new BSTNode<T>(item);
 
-                // 
-                // Get the currentNode to refer to the appropriate node.
-                while (true)
-                {
-                    if (item.IsLessThan(currentNode.Value))
-                    {
-						if (currentNode.HasLeftChild == false)
-                        {
-                            newNode.Parent = currentNode;
-                            currentNode.LeftChild = newNode;
-                            _count++;
-                            break;
-                        }
-
-                        currentNode = currentNode.LeftChild;
-                    }
-                    else
-                    {
-						if (currentNode.HasRightChild == false)
-                        {
-                            newNode.Parent = currentNode;
-                            currentNode.RightChild = newNode;
-                            _count++;
-                            break;
-                        }
-
-                        currentNode = currentNode.RightChild;
-                    }
-                }//end-while
-
+				//
+				// Insert node recursively starting from the root.
+				_insertNode (currentNode, newNode);
 
                 //
-                // Update the subtrees-sizes
+                // Update the subtree-size for the newNode's parent.
                 var node = newNode.Parent;
                 _updateSubtreeSize(node);
 
@@ -548,7 +547,7 @@ namespace DataStructures
             // If the element was found, remove it.
             if (currentNode != null)
             {
-                _remove(currentNode, item);
+                _remove(currentNode);
             }
             else
             {
@@ -564,16 +563,17 @@ namespace DataStructures
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            BSTNode<T> parent = null;
+            //BSTNode<T> parent = null;
             var currentNode = _root;
 
-            //
-            // Keep going left
             currentNode = _findMinNode(currentNode);
+			var parent = currentNode.Parent;
+
+			_remove (currentNode);
 
             //
             // Remove the node
-            if (currentNode.HasRightChild)
+            /*if (currentNode.HasRightChild)
             {
                 parent = currentNode.Parent;
                 var right = currentNode.RightChild;
@@ -587,11 +587,11 @@ namespace DataStructures
                 parent = currentNode.Parent;
                 parent.LeftChild = null;
                 _count--;
-            }
+            }*/
 
             //
             // Update the subtrees-sizes
-            _updateSubtreeSize(parent);
+			_updateSubtreeSize(currentNode);
         }
 
         /// <summary>
@@ -602,16 +602,15 @@ namespace DataStructures
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            BSTNode<T> parent = null;
+            //BSTNode<T> parent = null;
             var currentNode = _root;
-
-            //
-            // Keep going right
             currentNode = _findMaxNode(currentNode);
+			var parent = currentNode.Parent;
+			_remove (currentNode);
 
             //
             // Remove the node
-            if (currentNode.HasLeftChild)
+            /*if (currentNode.HasLeftChild)
             {
                 parent = currentNode.Parent;
                 var left = currentNode.LeftChild;
@@ -625,7 +624,7 @@ namespace DataStructures
                 parent = currentNode.Parent;
                 parent.RightChild = null;
                 _count--;
-            }
+            }*/
 
             //
             // Update the subtrees-sizes
@@ -699,7 +698,7 @@ namespace DataStructures
             if (node == null)
                 throw new Exception("Item was not found.");
             else
-                return node.SubtreeSize;
+				return _subtreeSize(node.LeftChild);
         }
 
         /// <summary>
