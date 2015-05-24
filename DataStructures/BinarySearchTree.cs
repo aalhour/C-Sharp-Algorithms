@@ -441,27 +441,6 @@ namespace DataStructures
         }
 
 		/// <summary>
-        /// In-order traversal of the subtrees of a node, and applies an action to the value of every visited node.
-        /// </summary>
-        /// <param name="currentNode">Node to traverse the tree from.</param>
-        /// <param name="action">Action to apply to every node's value.</param>
-        private void _inOrderTraverse(BSTNode<T> currentNode, Action<T> action)
-        {
-            if (currentNode == null)
-                return;
-
-            // call the left child
-            _inOrderTraverse(currentNode.LeftChild, action);
-
-            // visit node
-            action(currentNode.Value);
-
-            // call the right child
-            _inOrderTraverse(currentNode.RightChild, action);
-        }
-
-
-		/// <summary>
         /// Return the number of elements in this tree
         /// </summary>
         /// <returns></returns>
@@ -639,24 +618,12 @@ namespace DataStructures
         /// </summary>
         /// <param name="searchPredicate">The search predicate</param>
         /// <returns>ArrayList<T> of elements.</returns>
-		public virtual List<T> FindAll(Predicate<T> searchPredicate)
+		public virtual List<T> Select(Predicate<T> searchPredicate)
         {
             var list = new List<T>();
 			_findAll(_root, searchPredicate, ref list);
 
             return list;
-        }
-
-        /// <summary>
-        /// Traverses the tree and applies the action to every node.
-        /// </summary>
-        /// <param name="action">Action to apply to every node's value.</param>
-		public virtual void ForEach(Action<T> action)
-        {
-            if (action == null)
-                throw new ArgumentNullException("Null actions are not allowed.");
-			
-			_inOrderTraverse(_root, action);
         }
 
         /// <summary>

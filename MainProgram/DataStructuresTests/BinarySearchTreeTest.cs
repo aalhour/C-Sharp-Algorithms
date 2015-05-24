@@ -45,7 +45,7 @@ namespace C_Sharp_Algorithms
             Debug.Assert(rankOf9 == 5, "Wrong rank value!");
 
             // Test find all
-            var list = binarySearchTree.FindAll(element => element > 15);
+			var list = binarySearchTree.Select(element => element > 15);
             Debug.Assert(list.Count == 7, "Wrong FindAll result!");
 
             // test sort
