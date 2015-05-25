@@ -34,7 +34,7 @@ namespace DataStructures.Interfaces
     /// </summary>
     /// <typeparam name="K">Type of keys.</typeparam>
     /// <typeparam name="V">Type of records per node.</typeparam>
-	public interface IBinaryTree<K, V> where K : System.IComparable<K>
+    public interface IBinaryTree<K, V> where K : System.IComparable<K>
     {
         int Count();
         bool IsEmpty();

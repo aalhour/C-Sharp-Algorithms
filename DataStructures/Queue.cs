@@ -106,7 +106,7 @@ namespace DataStructures
             {
                 var top = Top;
                 _collection.RemoveAt(0);
-				return Top;
+                return Top;
             }
             else
             {

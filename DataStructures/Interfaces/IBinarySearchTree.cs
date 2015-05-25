@@ -46,18 +46,18 @@ namespace DataStructures
         // Sort the elements in this tree, using in-order traversal, and returns them.
         List<T> Sort();
 
-		T[] ToArray();
+        T[] ToArray();
 
-		List<T> ToList();
+        List<T> ToList();
 
-		// Returns an enumerator that visits node in the order: parent, left child, right child
-		IEnumerator<T> GetPreOrderEnumerator ();
+        // Returns an enumerator that visits node in the order: parent, left child, right child
+        IEnumerator<T> GetPreOrderEnumerator();
 
-		// Returns an enumerator that visits node in the order: left child, parent, right child
-		IEnumerator<T> GetInOrderEnumerator ();
+        // Returns an enumerator that visits node in the order: left child, parent, right child
+        IEnumerator<T> GetInOrderEnumerator();
 
-		// Returns an enumerator that visits node in the order: left child, right child, parent
-		IEnumerator<T> GetPostOrderEnumerator();
+        // Returns an enumerator that visits node in the order: left child, right child, parent
+        IEnumerator<T> GetPostOrderEnumerator();
 
         // Clear this tree.
         void Clear();
