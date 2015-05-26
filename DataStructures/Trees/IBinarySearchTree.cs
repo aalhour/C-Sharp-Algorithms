@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Trees
 {
     public interface IBinarySearchTree<T> where T : System.IComparable<T>
     {
@@ -16,14 +16,14 @@ namespace DataStructures
         // Inserts an element to the tree
         void Insert(T item);
 
-        // Remove an element from tree
-        void Remove(T item);
-
         // Removes the min value from tree
         void RemoveMin();
 
         // Removes the max value from tree
         void RemoveMax();
+
+        // Remove an element from tree
+        void Remove(T item);
 
         // Finds the minimum element.
         T FindMin();
@@ -34,27 +34,28 @@ namespace DataStructures
         // Find the element in the tree, returns null if not found.
         T Find(T item);
 
-        // Returns the rank of the specified element
-        int Rank(T item);
-
         // Finds all the elements in the tree that match the predicate.
+<<<<<<< HEAD:DataStructures/Interfaces/IBinarySearchTree.cs
         List<T> Select(System.Predicate<T> searchPredicate);
+=======
+        List<T> FindAll(System.Predicate<T> searchPredicate);
+>>>>>>> cbdc49b56864f95ab1a525af249e169b23d70105:DataStructures/Trees/IBinarySearchTree.cs
 
         // Sort the elements in this tree, using in-order traversal, and returns them.
         List<T> Sort();
 
-		T[] ToArray();
+        T[] ToArray();
 
-		List<T> ToList();
+        List<T> ToList();
 
-		// Returns an enumerator that visits node in the order: parent, left child, right child
-		IEnumerator<T> GetPreOrderEnumerator ();
+        // Returns an enumerator that visits node in the order: parent, left child, right child
+        IEnumerator<T> GetPreOrderEnumerator();
 
-		// Returns an enumerator that visits node in the order: left child, parent, right child
-		IEnumerator<T> GetInOrderEnumerator ();
+        // Returns an enumerator that visits node in the order: left child, parent, right child
+        IEnumerator<T> GetInOrderEnumerator();
 
-		// Returns an enumerator that visits node in the order: left child, right child, parent
-		IEnumerator<T> GetPostOrderEnumerator();
+        // Returns an enumerator that visits node in the order: left child, right child, parent
+        IEnumerator<T> GetPostOrderEnumerator();
 
         // Clear this tree.
         void Clear();
@@ -70,14 +71,18 @@ namespace DataStructures
         int Count();
         bool IsEmpty();
         void Insert(K item, V value);
-        void Remove(K item);
         void RemoveMin();
         void RemoveMax();
-        K Find(K item);
+        void Remove(K item);
         K FindMin();
         K FindMax();
+<<<<<<< HEAD:DataStructures/Interfaces/IBinarySearchTree.cs
         int Rank(K item);
         List<V> Select(System.Predicate<K> searchPredicate);
+=======
+        K Find(K item);
+        List<V> FindAll(System.Predicate<K> searchPredicate);
+>>>>>>> cbdc49b56864f95ab1a525af249e169b23d70105:DataStructures/Trees/IBinarySearchTree.cs
         List<V> Sort();
         void Clear();
     }

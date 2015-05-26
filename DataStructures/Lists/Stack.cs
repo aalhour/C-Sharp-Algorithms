@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// The Stack (LIFO) Data Structure.

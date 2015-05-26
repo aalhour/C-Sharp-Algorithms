@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures;
+using DataStructures.Lists;
 
-namespace Algorithms.Helpers
+namespace DataStructures.Common
 {
 	public static class Helpers
 	{

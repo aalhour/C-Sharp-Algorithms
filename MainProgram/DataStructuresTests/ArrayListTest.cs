@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 
-using DataStructures;
+using DataStructures.Lists;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
@@ -11,7 +11,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 		public static void DoTest()
 		{
 			int index = 0;
-			DataStructures.ArrayList<long> arrayList = new DataStructures.ArrayList<long> ();
+			DataStructures.Lists.ArrayList<long> arrayList = new DataStructures.Lists.ArrayList<long> ();
 
 			for (long i = 1; i < 1000000; ++i)
 			{

@@ -14,6 +14,10 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
+<<<<<<< HEAD
+=======
+            BinarySearchTreeTest.DoTest();
+>>>>>>> cbdc49b56864f95ab1a525af249e169b23d70105
         }
     }
 }

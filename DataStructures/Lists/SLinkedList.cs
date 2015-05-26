@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// Singly Linked List Data Structure
@@ -12,7 +12,7 @@ namespace DataStructures
         /// The Singly-Linked List Node class
         /// </summary>
         /// <typeparam name="T"></typeparam>
-		internal class SLinkedListNode
+        internal class SLinkedListNode
         {
             public SLinkedListNode Next { get; set; }
             public T Data { get; set; }

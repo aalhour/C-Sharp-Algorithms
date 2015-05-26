@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures;
-using Algorithms.Helpers;
+using Algorithms.Common;
 
 namespace Algorithms.Sorting
 {
     public static class HeapSorter
     {
-        //
-        // Public API: Default functionality
+        /// <summary>
+        /// Public API: Default functionality.
+        /// Sorts in ascending order. Uses Max-Heaps.
+        /// </summary>
         public static void HeapSort<T>(this IList<T> collection, Comparer<T> comparer = null)
         {
             collection.HeapSortAscending(comparer);
         }
 
-        //
-        // Public API: Sorts ascending
+        /// <summary>
+        /// Public API: Sorts ascending
+        /// Uses Max-Heaps
+        /// </summary>
         public static void HeapSortAscending<T>(this IList<T> collection, Comparer<T> comparer = null)
         {
             // Handle the comparer's default null value
@@ -33,9 +36,10 @@ namespace Algorithms.Sorting
             }
         }
 
-
-        //
-        // Public API: Sorts descending
+        /// <summary>
+        /// Public API: Sorts ascending
+        /// Uses Min-Heaps
+        /// </summary>
         public static void HeapSortDescending<T>(this IList<T> collection, Comparer<T> comparer = null)
         {
             // Handle the comparer's default null value
@@ -52,9 +56,14 @@ namespace Algorithms.Sorting
             }
         }
 
+        
+        /****************************************************************************/
 
-        //
-        // MAX HEAP
+
+        /// <summary>
+        /// Private Max-Heap Builder.
+        /// Builds a max heap from an IList<T> collection.
+        /// </summary>
         private static void BuildMaxHeap<T>(this IList<T> collection, int firstIndex, int lastIndex, Comparer<T> comparer)
         {
             int lastNodeWithChildren = lastIndex / 2;
@@ -65,6 +74,10 @@ namespace Algorithms.Sorting
             }
         }
 
+        /// <summary>
+        /// Private Max-Heapifier. Used in BuildMaxHeap.
+        /// Heapfies the elements between two indexes (inclusive), maintaining the maximum at the top.
+        /// </summary>
         private static void MaxHeapify<T>(this IList<T> collection, int nodeIndex, int lastIndex, Comparer<T> comparer)
         {
             // assume left(i) and right(i) are max-heaps
@@ -88,9 +101,10 @@ namespace Algorithms.Sorting
             }
         }
 
-
-        //
-        // MIN HEAP
+        /// <summary>
+        /// Private Min-Heap Builder.
+        /// Builds a min heap from an IList<T> collection.
+        /// </summary>
         private static void BuildMinHeap<T>(this IList<T> collection, int firstIndex, int lastIndex, Comparer<T> comparer)
         {
             int lastNodeWithChildren = lastIndex / 2;
@@ -101,6 +115,10 @@ namespace Algorithms.Sorting
             }
         }
 
+        /// <summary>
+        /// Private Min-Heapifier. Used in BuildMinHeap.
+        /// Heapfies the elements between two indexes (inclusive), maintaining the minimum at the top.
+        /// </summary>
         private static void MinHeapify<T>(this IList<T> collection, int nodeIndex, int lastIndex, Comparer<T> comparer)
         {
             // assume left(i) and right(i) are max-heaps

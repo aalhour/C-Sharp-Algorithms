@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-using DataStructures;
+using DataStructures.Lists;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
@@ -10,7 +10,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 		public static void DoTest ()
 		{
 			int top;
-			DataStructures.Stack<int> stack = new DataStructures.Stack<int>();
+			Stack<int> stack = new Stack<int>();
 
 			stack.Push(1);
 			stack.Push(2);

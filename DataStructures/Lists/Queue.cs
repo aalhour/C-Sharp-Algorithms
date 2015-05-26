@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// The Queue (FIFO) Data Structure.
@@ -106,7 +106,7 @@ namespace DataStructures
             {
                 var top = Top;
                 _collection.RemoveAt(0);
-				return Top;
+                return Top;
             }
             else
             {

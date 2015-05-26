@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 
-using DataStructures;
+using DataStructures.Trees;
 
 namespace C_Sharp_Algorithms
 {
@@ -10,7 +10,7 @@ namespace C_Sharp_Algorithms
     {
         public static void DoTest()
         {
-            BinarySearchTree<int> binarySearchTree = new BinarySearchTree<int>();
+            AugmentedBinarySearchTree<int> binarySearchTree = new AugmentedBinarySearchTree<int>();
 
             binarySearchTree.Insert(15);
             binarySearchTree.Insert(25);
@@ -37,12 +37,13 @@ namespace C_Sharp_Algorithms
             //binarySearchTree.VisualizeTree();
             //Console.ReadLine();
 
+            var count = binarySearchTree.Count();
+
             // Test find
             var found = binarySearchTree.Find(10);
             Debug.Assert(found == 10, "Wrong element.");
 
-            var rankOf9 = binarySearchTree.Rank(9);
-            Debug.Assert(rankOf9 == 5, "Wrong rank value!");
+            int height = binarySearchTree.Height();
 
             // Test find all
 			var list = binarySearchTree.Select(element => element > 15);
@@ -97,7 +98,6 @@ namespace C_Sharp_Algorithms
                 // does exist!
                 binarySearchTree.Remove(16);
             }
-
 
             // Clear
             binarySearchTree.Clear();

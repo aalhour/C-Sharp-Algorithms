@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures;
-using Algorithms.Helpers;
+using Algorithms.Common;
 
 namespace Algorithms.Sorting
 {
