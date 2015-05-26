@@ -39,26 +39,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AVLTree.cs" />
-    <Compile Include="BinarySearchTree.cs" />
-    <Compile Include="Interfaces\IAVLTree.cs" />
-    <Compile Include="Interfaces\IBinarySearchTree.cs" />
-    <Compile Include="Interfaces\IMaxHeap.cs" />
-    <Compile Include="Interfaces\IMinHeap.cs" />
+    <Compile Include="Trees\AVLTree.cs" />
+    <Compile Include="Trees\BinarySearchTree.cs" />
+    <Compile Include="Trees\IAVLTree.cs" />
+    <Compile Include="Trees\IBinarySearchTree.cs" />
+    <Compile Include="Heaps\IMaxHeap.cs" />
+    <Compile Include="Heaps\IMinHeap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stack.cs" />
-    <Compile Include="ArrayList.cs" />
-    <Compile Include="DLinkedList.cs" />
-    <Compile Include="SLinkedList.cs" />
-    <Compile Include="Queue.cs" />
-    <Compile Include="MinHeap.cs" />
-    <Compile Include="MaxHeap.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
-    <Compile Include="KeyedPriorityQueue.cs" />
-    <Compile Include="PriorityQueue.cs" />
-    <Compile Include="Helpers\Comparers.cs" />
-    <Compile Include="BinaryTree.cs" />
-    <Compile Include="Interfaces\IBinaryTree.cs" />
+    <Compile Include="Lists\Stack.cs" />
+    <Compile Include="Lists\ArrayList.cs" />
+    <Compile Include="Lists\DLinkedList.cs" />
+    <Compile Include="Lists\SLinkedList.cs" />
+    <Compile Include="Lists\Queue.cs" />
+    <Compile Include="Heaps\MinHeap.cs" />
+    <Compile Include="Heaps\MaxHeap.cs" />
+    <Compile Include="Common\Helpers.cs" />
+    <Compile Include="Heaps\KeyedPriorityQueue.cs" />
+    <Compile Include="Heaps\PriorityQueue.cs" />
+    <Compile Include="Common\Comparers.cs" />
+    <Compile Include="Trees\BinaryTree.cs" />
+    <Compile Include="Trees\IBinaryTree.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

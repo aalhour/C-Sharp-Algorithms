@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 
-using DataStructures;
+using DataStructures.Trees;
 
 namespace C_Sharp_Algorithms
 {
@@ -36,6 +36,13 @@ namespace C_Sharp_Algorithms
             // test tree visualization
             //binarySearchTree.VisualizeTree();
             //Console.ReadLine();
+
+            var _12 = binarySearchTree.Find(12);
+            var _20 = binarySearchTree.Find(20);
+
+            binarySearchTree.Remove(_12);
+            binarySearchTree.Remove(_20);
+
 
             // Test find
             var found = binarySearchTree.Find(10);

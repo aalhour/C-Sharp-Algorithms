@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Heaps
 {
     /// <summary>
     /// Implements the Keyed Priority Queue Data Structure.

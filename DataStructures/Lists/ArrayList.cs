@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// The Array-Based List Data Structure.

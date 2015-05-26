@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures.Interfaces;
-using DataStructures.Helpers;
+using DataStructures;
 
-namespace DataStructures
+namespace DataStructures.Trees
 {
     /// <summary>
     /// AVL Tree Node.
@@ -74,37 +73,54 @@ namespace DataStructures
         }
 
 
-        public int Count()
+        private void _leftRotate(AVLTreeNode<T> currentNode)
+        {
+
+        }
+
+        private void _rightRotate(AVLTreeNode<T> currentNode)
+        {
+
+        }
+
+        private void _rebalance(AVLTreeNode<T> currentNode)
+        {
+
+        }
+
+        public new int Count()
+        {
+            return _count;
+        }
+
+        public new bool IsEmpty()
+        {
+            return (_count == 0);
+        }
+
+        public override void Insert(T value)
+        {
+            var newNode = new AVLTreeNode<T>() { Value = value };
+            base._insertNode(Root, newNode);
+        }
+
+        public override void Remove(T value)
+        {
+            var node = (AVLTreeNode<T>) base._findNode(Root, value);
+            base._remove(node);
+        }
+
+        public override T Find(T value)
         {
             throw new NotImplementedException();
         }
 
-        public bool IsEmpty()
+        public override T FindMin()
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T Find(T value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T FindMin()
-        {
-            throw new NotImplementedException();
-        }
-
-        public T FindMax()
+        public override T FindMax()
         {
             throw new NotImplementedException();
         }
@@ -119,14 +135,15 @@ namespace DataStructures
             throw new NotImplementedException();
         }
 
-        public T[] FindAll(Predicate<T> searchPredicate)
+        public override List<T> FindAll(Predicate<T> searchPredicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Clear()
+        public override void Clear()
         {
-            throw new NotImplementedException();
+            this._count = 0;
+            this._root = null;
         }
     }
 

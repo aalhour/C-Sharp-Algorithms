@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Trees
 {
     public interface IBinarySearchTree<T> where T : System.IComparable<T>
     {

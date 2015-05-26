@@ -1,5 +1,5 @@
 ﻿
-namespace DataStructures.Interfaces
+namespace DataStructures.Trees
 {
     public interface IBinaryTree<T> where T : System.IComparable<T>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// Singly Linked List Data Structure

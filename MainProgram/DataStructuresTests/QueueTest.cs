@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-using DataStructures;
+using DataStructures.Lists;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
@@ -10,7 +10,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 		public static void DoTest ()
 		{
 			string top;
-			DataStructures.Queue<string> queue = new DataStructures.Queue<string>();
+			Queue<string> queue = new Queue<string>();
 
 			queue.Enqueue("aaa");
 			queue.Enqueue("bbb");

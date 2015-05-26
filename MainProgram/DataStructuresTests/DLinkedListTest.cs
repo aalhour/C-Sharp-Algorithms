@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-using DataStructures;
+using DataStructures.Lists;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {

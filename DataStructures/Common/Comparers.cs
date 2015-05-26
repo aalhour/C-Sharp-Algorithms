@@ -1,8 +1,9 @@
 ﻿using System;
 
-using DataStructures;
+using DataStructures.Lists;
+using DataStructures.Trees;
 
-namespace DataStructures.Helpers
+namespace DataStructures.Common
 {
 	public static class Comparers
 	{

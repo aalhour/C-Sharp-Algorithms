@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures.Helpers;
+using DataStructures.Common;
 
-namespace DataStructures
+namespace DataStructures.Lists
 {
     /// <summary>
     /// The Doubly-Linked List Node class.

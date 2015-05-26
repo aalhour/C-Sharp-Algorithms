@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures.Interfaces;
-using DataStructures.Helpers;
+using DataStructures;
 
-namespace DataStructures
+namespace DataStructures.Trees
 {
     /// <summary>
     /// A minimal binary tree node.

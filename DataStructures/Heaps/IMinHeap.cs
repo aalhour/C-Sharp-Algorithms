@@ -1,7 +1,7 @@
 ﻿
-namespace DataStructures.Interfaces
+namespace DataStructures.Heaps
 {
-    public interface IMaxHeap<T> where T : System.IComparable<T>
+    public interface IMinHeap<T> where T : System.IComparable<T>
     {
         /// <summary>
         /// Returns the number of elements in heap
@@ -26,21 +26,21 @@ namespace DataStructures.Interfaces
         void Insert(T heapKey);
 
         /// <summary>
-        /// Find the maximum node of a max heap.
+        /// Find the minimum node of a min heap.
         /// </summary>
-        /// <returns>The maximum.</returns>
+        /// <returns>The minimum.</returns>
         T Peek();
 
         /// <summary>
-        /// Removes the node of maximum value from a max heap.
+        /// Removes the node of minimum value from a min heap.
         /// </summary>
-        void RemoveMax();
+        void RemoveMin();
 
         /// <summary>
-        /// Returns the node of maximum value from a max heap after removing it from the heap.
+        /// Returns the node of minimum value from a min heap after removing it from the heap.
         /// </summary>
-        /// <returns>The max.</returns>
-        T ExtractMax();
+        /// <returns>The min.</returns>
+        T ExtractMin();
 
         /// <summary>
         /// Clear this heap.
@@ -60,9 +60,9 @@ namespace DataStructures.Interfaces
         System.Collections.Generic.List<T> ToList();
 
         /// <summary>
-        /// Returns a new max heap that contains all elements of this heap.
+        /// Returns a new min heap that contains all elements of this heap.
         /// </summary>
-        /// <returns>The max heap.</returns>
-        MinHeap<T> ToMinHeap();
+        /// <returns>The min heap.</returns>
+        MaxHeap<T> ToMaxHeap();
     }
 }

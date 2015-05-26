@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using DataStructures.Interfaces;
-using DataStructures.Helpers;
+using DataStructures.Common;
 
-namespace DataStructures
+namespace DataStructures.Trees
 {
     /// <summary>
     /// The binary search tree node.
@@ -221,20 +220,20 @@ namespace DataStructures
             else if (node.HasLeftChild) // if the node has only a LEFT child
             {
                 _replaceNodeInParent(node, node.LeftChild);
-                _updateSubtreeSize(parent);
+                //_updateSubtreeSize(parent);
                 _count--;
 
             }
             else if (node.HasRightChild) // if the node has only a RIGHT child
             {
                 _replaceNodeInParent(node, node.RightChild);
-                _updateSubtreeSize(parent);
+                //_updateSubtreeSize(parent);
                 _count--;
             }
             else //this node has no children
             {
                 _replaceNodeInParent(node, null);
-                _updateSubtreeSize(parent);
+                //_updateSubtreeSize(parent);
                 _count--;
             }
 
@@ -528,6 +527,7 @@ namespace DataStructures
 
             var node = _findNode(_root, item);
             bool status = _remove(node);
+            _updateSubtreeSize(node.Parent);
 
             // If the element was found, remove it.
             if (status == false)

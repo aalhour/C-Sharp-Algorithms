@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures;
+using DataStructures.Lists;
 using Algorithms.Sorting;
 
 namespace C_Sharp_Algorithms.AlgorithmsTests

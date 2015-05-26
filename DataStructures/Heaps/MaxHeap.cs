@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures.Interfaces;
-using DataStructures.Helpers;
+using DataStructures.Common;
+using DataStructures.Lists;
 
-namespace DataStructures
+namespace DataStructures.Heaps
 {
     /// <summary>
     /// Maximum Heap Data Structure.
