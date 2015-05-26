@@ -337,34 +337,6 @@ namespace DataStructures.Trees
                 return (this._subtreeSize(node.LeftChild) + 1);
         }
 
-
-        /*********************************************************************/
-
-
-        /// <summary>
-        /// Returns an enumerator that visits node in the order: parent, left child, right child
-        /// </summary>
-        public override IEnumerator<T> GetPreOrderEnumerator()
-        {
-            return new BinarySearchTreePreOrderEnumerator(this);
-        }
-
-        /// <summary>
-        /// Returns an enumerator that visits node in the order: left child, parent, right child
-        /// </summary>
-        public override IEnumerator<T> GetInOrderEnumerator()
-        {
-            return new BinarySearchTreeInOrderEnumerator(this);
-        }
-
-        /// <summary>
-        /// Returns an enumerator that visits node in the order: left child, right child, parent
-        /// </summary>
-        public override IEnumerator<T> GetPostOrderEnumerator()
-        {
-            return new BinarySearchTreePostOrderEnumerator(this);
-        }
-
     }
 
 }

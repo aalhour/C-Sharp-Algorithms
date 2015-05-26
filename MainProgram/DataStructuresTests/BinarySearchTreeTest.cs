@@ -99,6 +99,14 @@ namespace C_Sharp_Algorithms
                 binarySearchTree.Remove(16);
             }
 
+            var enumerator = binarySearchTree.GetInOrderEnumerator();
+            enumerator.MoveNext();
+            var current = enumerator.Current;
+            enumerator.MoveNext();
+            enumerator.MoveNext();
+            current = enumerator.Current;
+            Debug.Assert(current == 8, "Wrong in-order enumeration.");
+
             // Clear
             binarySearchTree.Clear();
         }

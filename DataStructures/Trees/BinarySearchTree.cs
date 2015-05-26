@@ -178,7 +178,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="node">BST node.</param>
         /// <param name="newNode">New value.</param>
-        protected void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+        protected virtual void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
         {
             if (node.Parent != null)
             {
@@ -288,7 +288,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>Height of node's longest subtree</returns>
-        protected int _getTreeHeight(BSTNode<T> node)
+        protected virtual int _getTreeHeight(BSTNode<T> node)
         {
             if (node == null || node.IsLeafNode == true)
                 return 0;
@@ -316,7 +316,7 @@ namespace DataStructures.Trees
         /// <param name="currentNode">Node to start search from.</param>
         /// <param name="item">Search value</param>
         /// <returns>Node if found; otherwise null</returns>
-        protected BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
+        protected virtual BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
         {
             if (currentNode == null)
                 return null;
@@ -344,7 +344,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <returns>The minimum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        protected BSTNode<T> _findMinNode(BSTNode<T> node)
+        protected virtual BSTNode<T> _findMinNode(BSTNode<T> node)
         {
             var currentNode = node;
 
@@ -360,7 +360,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <returns>The maximum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
-        protected BSTNode<T> _findMaxNode(BSTNode<T> node)
+        protected virtual BSTNode<T> _findMaxNode(BSTNode<T> node)
         {
             var currentNode = node;
 
@@ -376,7 +376,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="currentNode">Node to start searching from.</param>
         /// <param name="match"></param>
-        protected void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
+        protected virtual void _findAll(BSTNode<T> currentNode, Predicate<T> match, ref List<T> list)
         {
             if (currentNode == null)
                 return;
@@ -398,7 +398,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="currentNode">Node to traverse the tree from.</param>
         /// <param name="list">List to add elements to.</param>
-        protected void _inOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
+        protected virtual void _inOrderTraverse(BSTNode<T> currentNode, ref List<T> list)
         {
             if (currentNode == null)
                 return;
