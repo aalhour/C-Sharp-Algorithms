@@ -124,11 +124,6 @@ namespace DataStructures
             throw new NotImplementedException();
         }
 
-        public void Traverse(Action<T> action)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Clear()
         {
             throw new NotImplementedException();
