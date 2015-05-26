@@ -37,9 +37,6 @@ namespace DataStructures.Trees
         // Finds all the elements in the tree that match the predicate.
         List<T> FindAll(System.Predicate<T> searchPredicate);
 
-        // Returns the rank of the specified element
-        int Rank(T item);
-
         // Sort the elements in this tree, using in-order traversal, and returns them.
         List<T> Sort();
 
@@ -77,7 +74,6 @@ namespace DataStructures.Trees
         K FindMax();
         K Find(K item);
         List<V> FindAll(System.Predicate<K> searchPredicate);
-        int Rank(K item);
         List<V> Sort();
         void Clear();
     }

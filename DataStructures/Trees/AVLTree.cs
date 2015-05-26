@@ -8,6 +8,7 @@ namespace DataStructures.Trees
     /// <summary>
     /// AVL Tree Node.
     /// </summary>
+    
     public class AVLTreeNode<T> : BSTNode<T> where T : IComparable<T>
     {
         private int _height = 0;
@@ -55,6 +56,7 @@ namespace DataStructures.Trees
     /// <summary>
     /// AVL Tree Data Structure.
     /// </summary>
+    
     public class AVLTree<T> : BinarySearchTree<T> where T : IComparable<T>
     {
         private int _count { get; set; }
