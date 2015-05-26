@@ -1,6 +1,5 @@
 # C-SHARP-ALGORITHMS
 
-## DESCRIPTION:
 Implementations of Data Structures and Algorithms in C#
 
 I started writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. However, the source code is stable.
