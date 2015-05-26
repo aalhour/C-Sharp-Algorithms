@@ -3,7 +3,7 @@
 ## DESCRIPTION:
 Implementations of Data Structures and Algorithms in C#
 
-I started writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. This solution-library doesn't aim to replace any well-written data structure and algorithms library out there. However, the source code is stable.
+I started writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. However, the source code is stable.
 
 ## DATA STRUCTURES:
 
