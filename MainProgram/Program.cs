@@ -14,12 +14,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-			PriorityQueuesTest.DoTest ();
-
-			//AVLTreeNode<int> avlNode = new AVLTreeNode<int> ();
-
-			//BinarySearchTreeTest.DoTest ();
-			//BinarySearchTreeSorterTest.DoTest ();
+            DLinkedListTest.DoTest();
         }
     }
 }

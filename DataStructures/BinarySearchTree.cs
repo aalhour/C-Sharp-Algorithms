@@ -147,7 +147,7 @@ namespace DataStructures
     /// Implements a generic Binary Search Tree data structure.
     /// </summary>
     /// <typeparam name="T">Type of elements.</typeparam>
-    public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
+    public class BinarySearchTree<T> : IBinarySearchTree<T>, IEnumerable<T> where T : IComparable<T>
     {
         /// <summary>
         /// Specifies the mode of travelling through the tree.
@@ -688,6 +688,19 @@ namespace DataStructures
             return Sort();
         }
 
+
+        /*********************************************************************/
+
+
+        public virtual IEnumerator<T> GetEnumerator()
+        {
+            return GetInOrderEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetInOrderEnumerator();
+        }
 
         /// <summary>
         /// Returns an enumerator that visits node in the order: parent, left child, right child

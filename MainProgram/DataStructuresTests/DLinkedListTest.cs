@@ -12,6 +12,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			int index = 0;
 			DLinkedList<string> listOfStrings = new DLinkedList<string>();
 
+            listOfStrings.Append("zero");
 			listOfStrings.Append("fst");
 			listOfStrings.Append("sec");
 			listOfStrings.Append("trd");
@@ -26,24 +27,31 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			// Remove 1st
 			listOfStrings.RemoveAt(0);
-			Console.WriteLine("Removed 1st:\r\n" + listOfStrings.ToReadable());
+			Console.WriteLine("Remove At 0:\r\n" + listOfStrings.ToReadable());
+            Debug.Assert(listOfStrings[0] == "fst", "Wrong first element.");
+
+            // Remove 4th
+            listOfStrings.RemoveAt(4);
+            Console.WriteLine("Remove At 4:\r\n" + listOfStrings.ToReadable());
+            Debug.Assert(listOfStrings[4] == "sxt", "Wrong 4th element.");
 
 			// Remove 5th and 6th
-			listOfStrings.RemoveAt(4);
+            // Note that after removing 5th, the old element at index 6 becomes at index 5.
 			listOfStrings.RemoveAt(5);
-			Console.WriteLine("Removed 5th & 6th:\r\n" + listOfStrings.ToReadable());
-
-			// Remove 4th
-			listOfStrings.RemoveAt(3);
-			Console.WriteLine("Removed last:\r\n" + listOfStrings.ToReadable());
+			listOfStrings.RemoveAt(5);
+			Console.WriteLine("Remove At 5 & 6:\r\n" + listOfStrings.ToReadable());
+            Debug.Assert(listOfStrings[4] == "sxt", "Wrong element at index 5.");
+            Debug.Assert(listOfStrings.Count < 6, "Wrong element at index 6. There must be no element at index 5.");
 
 			// Remove 3rd
-			listOfStrings.RemoveAt(2);
+            listOfStrings.RemoveAt(listOfStrings.Count - 1);
 			Console.WriteLine("Removed last:\r\n" + listOfStrings.ToReadable());
+            Debug.Assert(listOfStrings[3] == "for", "Wrong element at index 3.");
 
 			// Remove 1st
 			listOfStrings.RemoveAt(0);
-			Console.WriteLine("Remove 1st:\r\n" + listOfStrings.ToReadable());
+			Console.WriteLine("Remove 0th:\r\n" + listOfStrings.ToReadable());
+            Debug.Assert(listOfStrings[0] == "sec", "Wrong element at index 0.");
 
 			listOfStrings.Prepend("semsem3");
 			listOfStrings.Prepend("semsem2");
@@ -65,16 +73,16 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine();
 
 			index = 0;
-			Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+			Console.WriteLine("Get At " + index + ": " + listOfStrings[index]);
 
 			index = (listOfStrings.Count / 2) + 1;
-			Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+			Console.WriteLine("Get At " + index + ": " + listOfStrings[index]);
 
 			index = (listOfStrings.Count / 2) + 2;
-			Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+			Console.WriteLine("Get At " + index + ": " + listOfStrings[index]);
 
 			index = (listOfStrings.Count - 1);
-			Console.WriteLine("Get At " + index + ": " + listOfStrings.GetAt(index));
+			Console.WriteLine("Get At " + index + ": " + listOfStrings[index]);
 
 			Console.WriteLine();
 
@@ -89,6 +97,21 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			var arrayVersion = listOfStrings.ToArray();
 			Debug.Assert (arrayVersion.Length == listOfStrings.Count);
+
+            /****************************************************************************************/
+
+            var enumerator = listOfStrings.GetEnumerator();
+
+            Debug.Assert(enumerator.Current == listOfStrings[0], "Wrong enumeration.");
+            
+            if (enumerator.MoveNext() == true)
+            {
+                Debug.Assert(enumerator.Current == listOfStrings[1], "Wrong enumeration.");
+            }
+
+            enumerator.Dispose();
+
+            Debug.Assert(listOfStrings != null && listOfStrings.Count > 0, "Enumartor has side effects!");
 		}
 	}
 }
