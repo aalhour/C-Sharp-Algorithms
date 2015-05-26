@@ -16,14 +16,14 @@ namespace DataStructures
         // Inserts an element to the tree
         void Insert(T item);
 
-        // Remove an element from tree
-        void Remove(T item);
-
         // Removes the min value from tree
         void RemoveMin();
 
         // Removes the max value from tree
         void RemoveMax();
+
+        // Remove an element from tree
+        void Remove(T item);
 
         // Finds the minimum element.
         T FindMin();
@@ -34,14 +34,11 @@ namespace DataStructures
         // Find the element in the tree, returns null if not found.
         T Find(T item);
 
-        // Returns the rank of the specified element
-        int Rank(T item);
-
         // Finds all the elements in the tree that match the predicate.
         List<T> FindAll(System.Predicate<T> searchPredicate);
 
-        // Traverses the tree and applies the action to every node.
-        void ForEach(System.Action<T> action);
+        // Returns the rank of the specified element
+        int Rank(T item);
 
         // Sort the elements in this tree, using in-order traversal, and returns them.
         List<T> Sort();
@@ -73,15 +70,14 @@ namespace DataStructures
         int Count();
         bool IsEmpty();
         void Insert(K item, V value);
-        void Remove(K item);
         void RemoveMin();
         void RemoveMax();
-        K Find(K item);
+        void Remove(K item);
         K FindMin();
         K FindMax();
-        int Rank(K item);
+        K Find(K item);
         List<V> FindAll(System.Predicate<K> searchPredicate);
-        void ForEach(System.Action<K> action);
+        int Rank(K item);
         List<V> Sort();
         void Clear();
     }

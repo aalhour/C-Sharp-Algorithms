@@ -619,21 +619,6 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Returns the rank of the specified element
-        /// </summary>
-        /// <param name="item">Tree element</param>
-        /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
-        public virtual int Rank(T item)
-        {
-            var node = _findNode(_root, item);
-
-            if (node == null)
-                throw new Exception("Item was not found.");
-            else
-                return _subtreeSize(node.LeftChild);
-        }
-
-        /// <summary>
         /// Given a predicate function, find all the elements that match it.
         /// </summary>
         /// <param name="searchPredicate">The search predicate</param>
@@ -647,15 +632,18 @@ namespace DataStructures
         }
 
         /// <summary>
-        /// Traverses the tree and applies the action to every node.
+        /// Returns the rank of the specified element
         /// </summary>
-        /// <param name="action">Action to apply to every node's value.</param>
-        public virtual void ForEach(Action<T> action)
+        /// <param name="item">Tree element</param>
+        /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
+        public virtual int Rank(T item)
         {
-            if (action == null)
-                throw new ArgumentNullException("Null actions are not allowed.");
+            var node = _findNode(_root, item);
 
-            _inOrderTraverse(_root, action);
+            if (node == null)
+                throw new Exception("Item was not found.");
+            else
+                return _subtreeSize(node.LeftChild);
         }
 
         /// <summary>
