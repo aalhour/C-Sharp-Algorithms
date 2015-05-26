@@ -67,21 +67,15 @@ namespace DataStructures.Trees
         /// <summary>
         /// TREE INSTANCE VARIABLES
         /// </summary>
-        /// <returns></returns>
-        private BSTRankedNode<T> _root { get; set; }
-        private int _count { get; set; }
-
+        
+        // Casted-root getter and setter
         public new BSTRankedNode<T> Root
         {
-            get { return this._root; }
-            set { this._root = value; }
+            get { return (BSTRankedNode<T>)base.Root; }
+            set { base.Root = value; }
         }
 
-        public AugmentedBinarySearchTree()
-        {
-            _root = null;
-            _count = 0;
-        }
+        public AugmentedBinarySearchTree() : base() { }
 
         /// <summary>
         /// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
@@ -184,24 +178,6 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// Return the number of elements in this tree
-        /// </summary>
-        /// <returns></returns>
-        public override int Count()
-        {
-            return this._count;
-        }
-
-        /// <summary>
-        /// Checks if tree is empty.
-        /// </summary>
-        /// <returns></returns>
-        public override bool IsEmpty()
-        {
-            return (this._count == 0);
-        }
-
-        /// <summary>
         /// Returns the height of the tree.
         /// </summary>
         /// <returns>Hight</returns>
@@ -210,7 +186,7 @@ namespace DataStructures.Trees
             if (IsEmpty())
                 return 0;
 
-            var currentNode = _root;
+            var currentNode = this.Root;
             return this._getTreeHeight(currentNode);
         }
 
@@ -220,27 +196,14 @@ namespace DataStructures.Trees
         /// <param name="item">Item to insert</param>
         public override void Insert(T item)
         {
-            if (IsEmpty())
-            {
-                _root = new BSTRankedNode<T>() { Value = item };
-                _updateSubtreeSize(_root);
-                _count++;
-            }
-            else
-            {
-                var currentNode = _root;
-                var newNode = new BSTRankedNode<T>(item);
+            var newNode = new BSTRankedNode<T>(item);
 
-                // Insert node recursively starting from the root.
-                base._insertNode(currentNode, newNode);
-                
-                // Increase the count.
-                _count++;
+            // Insert node recursively starting from the root.
+            // Handles increasing the Count of elements
+            base._insertNode(newNode);
 
-                // Update the subtree-size for the newNode's parent.
-                _updateSubtreeSize(newNode.Parent);
-
-            }//end-else
+            // Update the subtree-size for the newNode's parent.
+            _updateSubtreeSize(newNode.Parent);
         }
 
         /// <summary>
@@ -252,7 +215,7 @@ namespace DataStructures.Trees
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)base._findNode(_root, item);
+            var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
             bool status = _remove(node);
             _updateSubtreeSize(node.Parent);
 
@@ -269,7 +232,7 @@ namespace DataStructures.Trees
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)_findMinNode(_root);
+            var node = (BSTRankedNode<T>)_findMinNode(this.Root);
             var parent = node.Parent;
             this._remove(node);
 
@@ -285,7 +248,7 @@ namespace DataStructures.Trees
             if (IsEmpty())
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)_findMaxNode(_root);
+            var node = (BSTRankedNode<T>)_findMaxNode(this.Root);
             var parent = node.Parent;
             _remove(node);
 
@@ -366,7 +329,7 @@ namespace DataStructures.Trees
         /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
         public virtual int Rank(T item)
         {
-            var node = (BSTRankedNode<T>)base._findNode(_root, item);
+            var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
 
             if (node == null)
                 throw new Exception("Item was not found.");

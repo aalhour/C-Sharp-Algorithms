@@ -103,7 +103,7 @@ namespace DataStructures.Trees
         public override void Insert(T value)
         {
             var newNode = new AVLTreeNode<T>() { Value = value };
-            base._insertNode(Root, newNode);
+            base._insertNode(newNode);
         }
 
         public override void Remove(T value)

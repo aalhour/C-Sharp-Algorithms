@@ -156,8 +156,8 @@ namespace DataStructures.Trees
         /// TREE INSTANCE VARIABLES
         /// </summary>
         /// <returns></returns>
+        protected int _count { get; set; }
         private BSTNode<T> _root { get; set; }
-        private int _count { get; set; }
 
         public virtual BSTNode<T> Root
         {
@@ -231,38 +231,54 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// Inserts a node inside the subtree of another.
+        /// Inserts a new node to the tree.
         /// </summary>
         /// <param name="currentNode">Current node to insert afters.</param>
         /// <param name="newNode">New node to be inserted.</param>
-        protected virtual void _insertNode(BSTNode<T> currentNode, BSTNode<T> newNode)
+        protected virtual void _insertNode(BSTNode<T> newNode)
         {
-            if (currentNode == null)
-                return;
-
-            if (newNode.Value.IsLessThan(currentNode.Value))
+            // Handle empty trees
+            if (this.Root == null)
             {
-                if (currentNode.HasLeftChild == false)
-                {
-                    newNode.Parent = currentNode;
-                    currentNode.LeftChild = newNode;
-                    _count++;
-                    return;
-                }
-
-                _insertNode(currentNode.LeftChild, newNode);
+                Root = newNode;
+                _count++;
+                return;
             }
             else
             {
-                if (currentNode.HasRightChild == false)
-                {
-                    newNode.Parent = currentNode;
-                    currentNode.RightChild = newNode;
-                    _count++;
-                    return;
-                }
+                if(newNode.Parent == null)
+                    newNode.Parent = this.Root;
 
-                _insertNode(currentNode.RightChild, newNode);
+                // Go Left
+                if (newNode.Parent.Value.IsGreaterThan(newNode.Value)) // newNode < parent
+                {
+                    if (newNode.Parent.HasLeftChild == false)
+                    {
+                        newNode.Parent.LeftChild = newNode;
+                        _count++;
+                        return;
+                    }
+                    else
+                    {
+                        newNode.Parent = newNode.Parent.LeftChild;
+                        _insertNode(newNode);
+                    }
+                }
+                // Go Right
+                else // new node > parent
+                {
+                    if (newNode.Parent.HasRightChild == false)
+                    {
+                        newNode.Parent.RightChild = newNode;
+                        _count++;
+                        return;
+                    }
+                    else
+                    {
+                        newNode.Parent = newNode.Parent.RightChild;
+                        _insertNode(newNode);
+                    }
+                }
             }
         }
 
@@ -436,20 +452,10 @@ namespace DataStructures.Trees
         /// <param name="item">Item to insert</param>
         public virtual void Insert(T item)
         {
-            if (IsEmpty())
-            {
-                Root = new BSTNode<T>() { Value = item };
-                _count++;
-            }
-            else
-            {
-                var currentNode = Root;
-                var newNode = new BSTNode<T>(item);
+            var newNode = new BSTNode<T>(item);
 
-                // Insert node recursively starting from the root.
-                _insertNode(currentNode, newNode);
-
-            }//end-else
+            // Insert node recursively starting from the root.
+            _insertNode(newNode);
         }
 
         /// <summary>
