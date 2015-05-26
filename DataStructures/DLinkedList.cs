@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using DataStructures.Helpers;
+
 namespace DataStructures
 {
     /// <summary>
@@ -66,9 +68,9 @@ namespace DataStructures
         {
             get { return this._firstNode; }
         }
-        
+
         public virtual int Count
-        { 
+        {
             get { return this._count; }
         }
 
@@ -369,7 +371,7 @@ namespace DataStructures
         public virtual void InsertAfter(T dataItem, int index)
         {
             // Insert at previous index.
-            InsertAt(dataItem, index  - 1);
+            InsertAt(dataItem, index - 1);
         }
 
 
@@ -397,7 +399,7 @@ namespace DataStructures
                 // Decrement count.
                 _count--;
             }
-            else if(index == Count - 1)
+            else if (index == Count - 1)
             {
                 _lastNode = _lastNode.Previous;
 
@@ -411,7 +413,7 @@ namespace DataStructures
             {
                 int i = 0;
                 var currentNode = _firstNode;
-                
+
                 // Get currentNode to reference the element at the index.
                 while (i < index)
                 {
@@ -419,13 +421,13 @@ namespace DataStructures
                     i++;
                 }//end-while
 
-                
+
                 // Remove element
                 var newPrevious = currentNode.Previous;
                 var newNext = currentNode.Next;
                 newPrevious.Next = newNext;
 
-                if(newNext != null)
+                if (newNext != null)
                     newNext.Previous = newPrevious;
 
                 currentNode = newPrevious;
@@ -443,6 +445,75 @@ namespace DataStructures
         {
             _count = 0;
             _firstNode = _lastNode = null;
+        }
+
+
+        /// <summary>
+        /// Chesk whether the specified element exists in the list.
+        /// </summary>
+        /// <param name="dataItem">Value to check for.</param>
+        /// <returns>True if found; false otherwise.</returns>
+        public virtual bool Contains(T dataItem)
+        {
+            if (IsEmpty())
+                throw new Exception("List is empty.");
+
+            try
+            {
+                return Find(dataItem).IsEqualTo(dataItem);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Find the specified item in the list.
+        /// </summary>
+        /// <param name="dataItem">Value to find.</param>
+        /// <returns>value.</returns>
+        public virtual T Find(T dataItem)
+        {
+            if (IsEmpty())
+                throw new Exception("List is empty.");
+
+            var currentNode = _firstNode;
+            while (currentNode.Next != null)
+            {
+                if (currentNode.Data.IsEqualTo(dataItem))
+                    return dataItem;
+
+                currentNode = currentNode.Next;
+            }
+
+            throw new Exception("Item was not found.");
+        }
+
+
+        /// <summary>
+        /// Find all elements in list that match the predicate.
+        /// </summary>
+        /// <param name="match">Predicate function.</param>
+        /// <returns>List of elements.</returns>
+        public virtual List<T> FindAll(Predicate<T> match)
+        {
+            if (IsEmpty())
+                throw new Exception("List is empty.");
+
+            var currentNode = _firstNode;
+            var list = new List<T>();
+
+            while (currentNode.Next != null)
+            {
+                if (match(currentNode.Data))
+                    list.Add(currentNode.Data);
+
+                currentNode = currentNode.Next;
+            }
+
+            return list;
         }
 
 
