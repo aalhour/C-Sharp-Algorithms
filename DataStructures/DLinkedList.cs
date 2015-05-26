@@ -480,7 +480,7 @@ namespace DataStructures
                 throw new Exception("List is empty.");
 
             var currentNode = _firstNode;
-            while (currentNode.Next != null)
+            while (currentNode != null)
             {
                 if (currentNode.Data.IsEqualTo(dataItem))
                     return dataItem;
@@ -505,7 +505,7 @@ namespace DataStructures
             var currentNode = _firstNode;
             var list = new List<T>();
 
-            while (currentNode.Next != null)
+            while (currentNode != null)
             {
                 if (match(currentNode.Data))
                     list.Add(currentNode.Data);
