@@ -9,22 +9,25 @@ I started writing this organized collection of classes as part of my preparation
 
 #### LISTS:
 
- * **Single-Linked List** (SLinkedList.cs).
- * **Double-Linked List** (DLinkedList.cs).
- * **Array List** (ArrayList.cs). A generic arrays-based list. Implements auto-resizing.
- * **Stack** (Stack.cs). Based on my ArrayList\<T\>.
- * **Queue** (Queue.cs). Based on my ArrayList\<T\>.
- * **Priority Queue** (PriorityQueue.cs). Based on my MaxHeap\<T\>.
- * **Keyed Priority Queue** (KeyedPriorityQueue.cs). Based on my MaxHeap\<T\>.
+ * Single-Linked List (SLinkedList.cs).
+ * Double-Linked List (DLinkedList.cs).
+ * Array List (ArrayList.cs). A generic arrays-based list. Implements auto-resizing.
+ * Stack (Stack.cs). Based on my ArrayList\<T\>.
+ * Queue (Queue.cs). Based on my ArrayList\<T\>.
+
+#### PRIORITY QUEUES:
+
+ * Priority Queue (PriorityQueue.cs). Based on my MaxHeap\<T\>.
+ * Keyed Priority Queue (KeyedPriorityQueue.cs). Based on my MaxHeap\<T\>.
 
 #### HEAPS:
 
- * **Min-Heap** (MinHeap.cs). Based on my ArrayList\<T\>.
- * **Max-Heap** (MaxHeap.cs). Based on my ArrayList\<T\>.
+ * Min-Heap (MinHeap.cs). Based on my ArrayList\<T\>.
+ * Max-Heap (MaxHeap.cs). Based on my ArrayList\<T\>.
  
 #### TREES:
 
- * **Binary Search Tree** (BinarySearchTree.cs).
+ * Binary Search Tree (BinarySearchTree.cs).
 
 ## ALGORITHMS:
 
