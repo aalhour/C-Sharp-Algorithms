@@ -46,7 +46,7 @@ namespace C_Sharp_Algorithms
             int height = binarySearchTree.Height();
 
             // Test find all
-			var list = binarySearchTree.Select(element => element > 15);
+			var list = binarySearchTree.FindAll(element => element > 15);
             Debug.Assert(list.Count == 7, "Wrong FindAll result!");
 
             // test sort

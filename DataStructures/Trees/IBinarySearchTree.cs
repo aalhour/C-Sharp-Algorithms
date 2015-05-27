@@ -35,11 +35,7 @@ namespace DataStructures.Trees
         T Find(T item);
 
         // Finds all the elements in the tree that match the predicate.
-<<<<<<< HEAD:DataStructures/Interfaces/IBinarySearchTree.cs
-        List<T> Select(System.Predicate<T> searchPredicate);
-=======
         List<T> FindAll(System.Predicate<T> searchPredicate);
->>>>>>> cbdc49b56864f95ab1a525af249e169b23d70105:DataStructures/Trees/IBinarySearchTree.cs
 
         // Sort the elements in this tree, using in-order traversal, and returns them.
         List<T> Sort();
@@ -76,13 +72,8 @@ namespace DataStructures.Trees
         void Remove(K item);
         K FindMin();
         K FindMax();
-<<<<<<< HEAD:DataStructures/Interfaces/IBinarySearchTree.cs
-        int Rank(K item);
-        List<V> Select(System.Predicate<K> searchPredicate);
-=======
         K Find(K item);
         List<V> FindAll(System.Predicate<K> searchPredicate);
->>>>>>> cbdc49b56864f95ab1a525af249e169b23d70105:DataStructures/Trees/IBinarySearchTree.cs
         List<V> Sort();
         void Clear();
     }
