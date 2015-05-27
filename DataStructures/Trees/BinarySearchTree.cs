@@ -526,7 +526,6 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findMinNode(Root);
-            var parent = node.Parent;
             _remove(node);
         }
 
@@ -539,7 +538,6 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findMaxNode(Root);
-            var parent = node.Parent;
             _remove(node);
         }
 

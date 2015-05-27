@@ -11,7 +11,7 @@ namespace DataStructures.Trees
     /// This node extends the vanilla BSTNode class and adds an extra field to it for augmentation.
     /// The BST now augments the subtree-sizes on insert, delete and get-height.
     /// </summary>
-    
+
     public class BSTRankedNode<T> : BSTNode<T> where T : IComparable<T>
     {
         private int _subtreeSize = 0;
@@ -61,13 +61,13 @@ namespace DataStructures.Trees
     /// Binary Search Tree Data Structure.
     /// This is teh augmented version of BST. It is augmented to keep track of the nodes subtrees-sizes.
     /// </summary>
-    
+
     public class AugmentedBinarySearchTree<T> : BinarySearchTree<T> where T : IComparable<T>
     {
         /// <summary>
         /// TREE INSTANCE VARIABLES
         /// </summary>
-        
+
         // Casted-root getter and setter
         public new BSTRankedNode<T> Root
         {
@@ -217,7 +217,7 @@ namespace DataStructures.Trees
 
             var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
             bool status = _remove(node);
-            _updateSubtreeSize(node.Parent);
+            this._updateSubtreeSize(node.Parent);
 
             // If the element was found, remove it.
             if (status == false)
@@ -250,76 +250,10 @@ namespace DataStructures.Trees
 
             var node = (BSTRankedNode<T>)_findMaxNode(this.Root);
             var parent = node.Parent;
-            _remove(node);
+            this._remove(node);
 
             // Update the subtrees-sizes
             this._updateSubtreeSize(parent);
-        }
-
-        /// <summary>
-        /// Finds the minimum in tree 
-        /// </summary>
-        /// <returns>Min</returns>
-        public override T FindMin()
-        {
-            if (IsEmpty())
-                throw new Exception("Tree is empty.");
-
-            return base._findMinNode(Root).Value;
-        }
-
-        /// <summary>
-        /// Finds the maximum in tree 
-        /// </summary>
-        /// <returns>Max</returns>
-        public override T FindMax()
-        {
-            if (IsEmpty())
-                throw new Exception("Tree is empty.");
-
-            return base._findMaxNode(Root).Value;
-        }
-
-        /// <summary>
-        /// Find the item in the tree. Throws an exception if not found.
-        /// </summary>
-        /// <param name="item">Item to find.</param>
-        /// <returns>Item.</returns>
-        public override T Find(T item)
-        {
-            if (IsEmpty())
-                throw new Exception("Tree is empty.");
-
-            var node = base._findNode(Root, item);
-
-            if (node != null)
-                return node.Value;
-            else
-                throw new Exception("Item was not found.");
-        }
-
-        /// <summary>
-        /// Given a predicate function, find all the elements that match it.
-        /// </summary>
-        /// <param name="searchPredicate">The search predicate</param>
-        /// <returns>ArrayList<T> of elements.</returns>
-        public override List<T> FindAll(Predicate<T> searchPredicate)
-        {
-            var list = new List<T>();
-            base._findAll(Root, searchPredicate, ref list);
-
-            return list;
-        }
-
-        /// <summary>
-        /// Sort the elements in this tree, using in-order traversal, and returns them.
-        /// </summary>
-        public override List<T> Sort()
-        {
-            var list = new List<T>();
-            base._inOrderTraverse(Root, ref list);
-
-            return list;
         }
 
         /// <summary>
