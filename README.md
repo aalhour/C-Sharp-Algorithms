@@ -13,18 +13,18 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
  * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
  * [Array List](DataStructures/Lists/ArrayList.cs). A generic arrays-based list. Implements auto-resizing and handles overflow.
- * [Stack](DataStructures/Lists/Stack.cs). Based on my ArrayList\<T\>.
- * [Queue](DataStructures/Lists/Queue.cs). Based on my ArrayList\<T\>.
+ * [Stack](DataStructures/Lists/Stack.cs). Based on *my ArrayList\<T\>*.
+ * [Queue](DataStructures/Lists/Queue.cs). Based on *my ArrayList\<T\>*.
 
 #### Priority Queues:
 
- * [Priority Queue](DataStructures/Heaps/PriorityQueue.cs). Based on my MaxHeap\<T\>.
- * [Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs). Based on my MaxHeap\<T\>.
+ * [Priority Queue](DataStructures/Heaps/PriorityQueue.cs). Based on my *MaxHeap\<T\>*.
+ * [Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs). Based on my *MaxHeap\<T\>*.
 
 #### Heaps:
 
- * [Min-Heap](DataStructures/Heaps/MinHeap.cs). Based on my ArrayList\<T\>.
- * [Max-Heap](DataStructures/Heaps/MaxHeap.cs). Based on my ArrayList\<T\>.
+ * [Min-Heap](DataStructures/Heaps/MinHeap.cs). Based on my *ArrayList\<T\>*.
+ * [Max-Heap](DataStructures/Heaps/MaxHeap.cs). Based on my *ArrayList\<T\>*.
  
 #### Trees:
 
@@ -44,7 +44,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
   * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs). Implements an unbalanced binary search tree sort.
 
     ```
-    List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+    List<long> list = new List<long> () {
+       23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 
+    };
     
     // The value comparer object. Can be any value comparer that implmenets IComparer.
     var valueComparer = Comparer<long>.Default;
@@ -54,4 +56,31 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     list.MergeSort (valueComparer);
     list.HeapSort (valueComparer);
     list.UnbalancedBSTSort();
+    ```
+
+#### Visualization:
+ * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs). Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
+    ```
+    var avlTree = new AVLTree<int>();
+    var numbers = new List<int>() { 
+       15, 25, 5, 12, 1, 16,20, 9,9, 7,7, -1, 11, 19, 30, 8, 10, 13, 28, 39
+    };
+    
+    avlTree.Insert(numbers);
+    
+    Console.WriteLine( avlTree.DrawTree() );
+    
+    /***
+     * Drawer output:
+     *                    ....15...
+     *                   /         \
+     *             ...9..      ..20.
+     *            /      \    /     \
+     *       ..5.      11   16    28
+     *      /    \    /  \ / \   /  \
+     *    1     7   9   12  19 25  30
+     *    /\   / \ / \ / \  /\ /\ / \
+     *  -1   7   8  10  13         39
+     *  /\   /\ /\  /\  /\         /\
+     */
     ```
