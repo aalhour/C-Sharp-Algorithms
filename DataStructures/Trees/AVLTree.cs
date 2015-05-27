@@ -161,7 +161,7 @@ namespace DataStructures.Trees
                 parent.RightChild = pivotNode;
 
             // Update the AVL Heights of each node.
-            _updateHeightRecursive(pivotNode);
+            // _updateHeightRecursive(pivotNode);
             _updateHeightRecursive(currentNode);
         }
 
@@ -208,7 +208,7 @@ namespace DataStructures.Trees
                 parent.RightChild = pivotNode;
 
             // Update the AVL Heights of each node.
-            _updateHeightRecursive(pivotNode);
+            // _updateHeightRecursive(pivotNode);
             _updateHeightRecursive(currentNode);
         }
 
@@ -269,10 +269,11 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// Rebalances the tree around a node. Shorter implementation.
+        /// Rebalances the whole tree around a node.
         /// </summary>
-        private void _rebalanceTreeAt(AVLTreeNode<T> currentNode)
+        private void _rebalanceTreeAt(AVLTreeNode<T> node)
         {
+            var currentNode = node;
             while (currentNode != null)
             {
                 // Update this node's height value.
@@ -306,6 +307,8 @@ namespace DataStructures.Trees
                         _rotateLeftAt(currentNode);
                     }
                 }
+
+                currentNode = currentNode.Parent;
             }
         }
 
