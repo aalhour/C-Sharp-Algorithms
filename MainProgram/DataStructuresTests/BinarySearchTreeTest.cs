@@ -50,7 +50,7 @@ namespace C_Sharp_Algorithms
             Debug.Assert(list.Count == 7, "Wrong FindAll result!");
 
             // test sort
-            List<int> sortedList = binarySearchTree.Sort();
+            List<int> sortedList = binarySearchTree.ToList();
             int first = 0, mid = sortedList.Count / 2, last = sortedList.Count - 1;
             bool sortCheck = (sortedList[first] <= sortedList[mid]) && (sortedList[mid] <= sortedList[last]);
             Debug.Assert(sortCheck == true, "BST sort is wrong!");

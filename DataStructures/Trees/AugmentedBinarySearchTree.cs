@@ -207,6 +207,40 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
+        /// Inserts an array of elements to the tree.
+        /// </summary>
+        public override void Insert(T[] collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+
+            if (collection.Length > 0)
+            {
+                for (int i = 0; i < collection.Length; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts a list of elements to the tree.
+        /// </summary>
+        public override void Insert(List<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+
+            if (collection.Count > 0)
+            {
+                for (int i = 0; i < collection.Count; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Deletes an element from the tree
         /// </summary>
         /// <param name="item">item to remove.</param>

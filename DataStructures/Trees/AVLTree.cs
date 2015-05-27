@@ -328,6 +328,40 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
+        /// Inserts an array of elements to the tree.
+        /// </summary>
+        public override void Insert(T[] collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+
+            if (collection.Length > 0)
+            {
+                for (int i = 0; i < collection.Length; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts a list of elements to the tree.
+        /// </summary>
+        public override void Insert(List<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+
+            if (collection.Count > 0)
+            {
+                for (int i = 0; i < collection.Count; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Removes an item fromt he tree
         /// </summary>
         public override void Remove(T item)
@@ -402,19 +436,6 @@ namespace DataStructures.Trees
             // node.parent is actually the old parent of the node,
             // which is the first potentially out-of-balance node.
             _rebalanceTreeAt(node);
-        }
-
-        /// <summary>
-        /// Overrides the BST sort function. Sorts the tree using AVL Sort.
-        /// </summary>
-        public override List<T> Sort()
-        {
-            return this.AVLSort();
-        }
-
-        public List<T> AVLSort()
-        {
-            throw new NotImplementedException();
         }
 
     }

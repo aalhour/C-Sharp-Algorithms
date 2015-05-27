@@ -501,6 +501,40 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
+        /// Inserts an array of elements to the tree.
+        /// </summary>
+        public virtual void Insert(T[] collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+                
+            if(collection.Length > 0)
+            {
+                for(int i = 0; i < collection.Length; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts a list of elements to the tree.
+        /// </summary>
+        public virtual void Insert(List<T> collection)
+        {
+            if (collection == null)
+                throw new ArgumentNullException();
+
+            if (collection.Count > 0)
+            {
+                for (int i = 0; i < collection.Count; ++i)
+                {
+                    this.Insert(collection[i]);
+                }
+            }
+        }
+
+        /// <summary>
         /// Deletes an element from the tree
         /// </summary>
         /// <param name="item">item to remove.</param>
@@ -634,24 +668,12 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// Sort the elements in this tree, using in-order traversal, and returns them.
-        /// </summary>
-        public virtual List<T> Sort()
-        {
-            var list = new List<T>();
-            _inOrderTraverse(Root, ref list);
-
-            return list;
-        }
-
-        /// <summary>
         /// Returns an array of nodes' values.
         /// </summary>
         /// <returns>The array.</returns>
         public virtual T[] ToArray()
         {
-            // the array version of binary search tree is the sorted arrangement of nodes.
-            return Sort().ToArray();
+            return this.ToList().ToArray();
         }
 
         /// <summary>
@@ -659,8 +681,10 @@ namespace DataStructures.Trees
         /// </summary>
         public virtual List<T> ToList()
         {
-            // the list version of binary search tree is the sorted arrangement of nodes.
-            return Sort();
+            var list = new List<T>();
+            _inOrderTraverse(Root, ref list);
+
+            return list;
         }
 
 

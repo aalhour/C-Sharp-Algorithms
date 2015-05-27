@@ -16,6 +16,12 @@ namespace DataStructures.Trees
         // Inserts an element to the tree
         void Insert(T item);
 
+        // Inserts an array of elements to the tree.
+        void Insert(T[] collection);
+
+        // Inserts a list of items to the tree.
+        void Insert(List<T> collection);
+
         // Removes the min value from tree
         void RemoveMin();
 
@@ -37,11 +43,10 @@ namespace DataStructures.Trees
         // Finds all the elements in the tree that match the predicate.
         List<T> FindAll(System.Predicate<T> searchPredicate);
 
-        // Sort the elements in this tree, using in-order traversal, and returns them.
-        List<T> Sort();
-
+        // Return an array of the tree elements
         T[] ToArray();
 
+        // Return an array of the tree elements
         List<T> ToList();
 
         // Returns an enumerator that visits node in the order: parent, left child, right child

@@ -114,7 +114,10 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             AssertCase4(avlTree);
 
 
-            string x = string.Empty;
+            //
+            // CLEAR THE TREE AND START OVER
+            avlTree.Clear();
+
 
             //avlTree.Insert(15);
             //avlTree.Insert(25);
