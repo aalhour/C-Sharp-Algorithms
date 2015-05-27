@@ -149,7 +149,21 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             int bsTreeHeight = bsTree.Height();
 
             Debug.Assert(avlTreeHeight < bsTreeHeight, "Wrong heights. AVL Tree must be shorted than BS Tree.");
-        }
+
+
+            //
+            // Draw the tree to the console.
+            Console.WriteLine(String.Format("************\r\n** BST TREE:\r\n************\r\n"));
+            Console.WriteLine(bsTree.DrawTree());
+
+            Console.WriteLine("\r\n\r\n");
+
+            Console.WriteLine(String.Format("************\r\n** AVL TREE:\r\n************\r\n"));
+            Console.WriteLine(avlTree.DrawTree());
+
+            Console.ReadLine();
+
+        }//end-do-test
 
 
         //
