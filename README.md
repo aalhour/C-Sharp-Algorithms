@@ -29,6 +29,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 #### Trees:
 
  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).
+ * [Augmented BST](DataStructures/Trees/AugmentedBinarySearchTree.cs). Extends the Binary Search Tree class; it keeps track of the Subtrees Size for each node.
 
 ## ALGORITHMS:
 
