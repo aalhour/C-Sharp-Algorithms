@@ -44,7 +44,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
   * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs). Implements an unbalanced binary search tree sort.
 
     ```
-    List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+    List<long> list = new List<long> () {
+       23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 
+    };
     
     // The value comparer object. Can be any value comparer that implmenets IComparer.
     var valueComparer = Comparer<long>.Default;
@@ -60,7 +62,10 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs). Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
     ```
     var avlTree = new AVLTree<int>();
-    var numbers = new List<int>() { 15, 25, 5, 12, 1, 16,20, 9,9, 7,7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
+    var numbers = new List<int>() { 
+       15, 25, 5, 12, 1, 16,20, 9,9, 7,7, -1, 11, 19, 30, 8, 10, 13, 28, 39
+    };
+    
     avlTree.Insert(numbers);
     
     Console.WriteLine( avlTree.DrawTree() );
