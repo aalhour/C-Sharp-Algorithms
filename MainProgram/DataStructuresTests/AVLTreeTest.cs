@@ -116,30 +116,19 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             //
             // CLEAR THE TREE AND START OVER
-            avlTree.Clear();
+            avlTree = new AVLTree<int>();
+            var bsTree = new BinarySearchTree<int>();
 
+            List<int> list = new List<int>() { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
+            avlTree.Insert(list);
+            bsTree.Insert(list);
 
-            //avlTree.Insert(15);
-            //avlTree.Insert(25);
-            //avlTree.Insert(5);
-            //avlTree.Insert(12);
-            //avlTree.Insert(1);
-            //avlTree.Insert(16);
-            //avlTree.Insert(20);
-            //avlTree.Insert(9);
-            //avlTree.Insert(9);
-            //avlTree.Insert(7);
-            //avlTree.Insert(7);
-            //avlTree.Insert(-1);
-            //avlTree.Insert(11);
-            //avlTree.Insert(19);
-            //avlTree.Insert(30);
-            //avlTree.Insert(8);
-            //avlTree.Insert(10);
-            //avlTree.Insert(13);
-            //avlTree.Insert(28);
-            //avlTree.Insert(39);
+            int avlTreeHeight = avlTree.Height();
+            int bsTreeHeight = bsTree.Height();
+
+            Debug.Assert(avlTreeHeight < bsTreeHeight, "Wrong heights. AVL Tree must be shorted than BS Tree.");
         }
+
 
         //
         // DEBUG.ASSERT <- CASE 1
