@@ -9,7 +9,7 @@ namespace DataStructures.Trees
     /// <summary>
     /// The binary search tree node.
     /// </summary>
-    
+
     public class BSTNode<T> : IComparable<BSTNode<T>> where T : IComparable<T>
     {
         private T _value;
@@ -138,7 +138,7 @@ namespace DataStructures.Trees
     /// Implements a generic Binary Search Tree data structure.
     /// </summary>
     /// <typeparam name="T">Type of elements.</typeparam>
-    
+
     public class BinarySearchTree<T> : IBinarySearchTree<T> where T : IComparable<T>
     {
         /// <summary>
@@ -246,7 +246,7 @@ namespace DataStructures.Trees
             }
             else
             {
-                if(newNode.Parent == null)
+                if (newNode.Parent == null)
                     newNode.Parent = this.Root;
 
                 // Go Left
@@ -319,7 +319,7 @@ namespace DataStructures.Trees
         protected virtual BSTNode<T> _findNode(BSTNode<T> currentNode, T item)
         {
             if (currentNode == null)
-                return null;
+                return currentNode;
 
             if (item.IsEqualTo(currentNode.Value))
             {
@@ -346,6 +346,9 @@ namespace DataStructures.Trees
         /// <param name="node">The tree node with subtree(s).</param>
         protected virtual BSTNode<T> _findMinNode(BSTNode<T> node)
         {
+            if (node == null)
+                return node;
+
             var currentNode = node;
 
             while (currentNode.HasLeftChild)
@@ -362,12 +365,51 @@ namespace DataStructures.Trees
         /// <param name="node">The tree node with subtree(s).</param>
         protected virtual BSTNode<T> _findMaxNode(BSTNode<T> node)
         {
+            if (node == null)
+                return node;
+
             var currentNode = node;
 
             while (currentNode.HasRightChild)
                 currentNode = currentNode.RightChild;
 
             return currentNode;
+        }
+
+        /// <summary>
+        /// Finds the next smaller node in value compared to the specified node.
+        /// </summary>
+        protected virtual BSTNode<T> _findNextSmaller(BSTNode<T> node)
+        {
+            if (node == null)
+                return node;
+
+            if (node.HasLeftChild)
+                return _findMaxNode(node.LeftChild);
+
+            var currentNode = node;
+            while (currentNode.Parent != null && currentNode.IsLeftChild)
+                currentNode = currentNode.Parent;
+
+            return currentNode.Parent;
+        }
+
+        /// <summary>
+        /// Finds the next larger node in value compared to the specified node.
+        /// </summary>
+        protected virtual BSTNode<T> _findNextLarger(BSTNode<T> node)
+        {
+            if (node == null)
+                return node;
+
+            if (node.HasRightChild)
+                return _findMinNode(node.RightChild);
+
+            var currentNode = node;
+            while (currentNode.Parent != null && currentNode.IsRightChild)
+                currentNode = currentNode.Parent;
+
+            return currentNode.Parent;
         }
 
         /// <summary>
@@ -413,7 +455,7 @@ namespace DataStructures.Trees
             _inOrderTraverse(currentNode.RightChild, ref list);
         }
 
-        
+
         /// <summary>
         /// Return the number of elements in this tree
         /// </summary>
@@ -520,6 +562,34 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             return _findMinNode(Root).Value;
+        }
+
+        /// <summary>
+        /// Finds the next smaller element in tree, compared to the specified item.
+        /// </summary>
+        public virtual T FindNextSmaller(T item)
+        {
+            var node = _findNode(Root, item);
+            var nextSmaller = _findNextSmaller(node);
+
+            if (nextSmaller == null)
+                throw new Exception("Item was not found.");
+
+            return nextSmaller.Value;
+        }
+
+        /// <summary>
+        /// Finds the next larger element in tree, compared to the specified item.
+        /// </summary>
+        public virtual T FindNextLarger(T item)
+        {
+            var node = _findNode(Root, item);
+            var nextLarger = _findNextLarger(node);
+
+            if (nextLarger == null)
+                throw new Exception("Item was not found.");
+
+            return nextLarger.Value;
         }
 
         /// <summary>
