@@ -33,7 +33,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Insert(7); // insert
 
             // ASSERT CAST 1;
-            AssertCase1(avlTree);
+            AssertCase_1(avlTree);
 
 
             //
@@ -57,7 +57,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Insert(1); // insert
 
             // ASSERT CASE 2
-            AssertCase2(avlTree);
+            AssertCase_2(avlTree);
 
 
             //
@@ -84,7 +84,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Insert(3); // insert
 
             // ASSERT CASE 3
-            AssertCase3(avlTree);
+            AssertCase_3(avlTree);
 
 
             //
@@ -111,11 +111,33 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Insert(6); // insert
 
             // ASSERT CASE 4
-            AssertCase4(avlTree);
+            AssertCase_4(avlTree);
 
 
             //
+            // CASE #5
+            // REMOVE the tree's root: 4.
+            //
+            /**************************************************************************
+             ** UNBALANCED     ===>    TRANSITION (1st R)    ===>    BALANCED (2nd Rt)
+             **       null                                               6
+             **      /   \                                             /   \
+             **     2     6    ===>                      ===>         2     7
+             **    / \   / \                                         / \   /
+             **   1   3 5   7                                       1   3 5
+             **
+             **************************************************************************
+             */
+            avlTree.Remove(avlTree.Root.Value); // REMOVE 4
+
+            // ASSERT CASE 5
+            AssertCase_5(avlTree);
+
+            
+            //
             // CLEAR THE TREE AND START OVER
+            // Compare two binary trees with each other (height-wise) using bulk-inserts
+
             avlTree = new AVLTree<int>();
             var bsTree = new BinarySearchTree<int>();
 
@@ -132,7 +154,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
         //
         // DEBUG.ASSERT <- CASE 1
-        private static void AssertCase1(AVLTree<int> avlTree)
+        private static void AssertCase_1(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
             Debug.Assert(avlRoot.Value == 5, "Wrong root.");
@@ -149,7 +171,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
         //
         // DEBUG.ASSERT <- CASE 2
-        private static void AssertCase2(AVLTree<int> avlTree)
+        private static void AssertCase_2(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
             Debug.Assert(avlRoot.Value == 5, "Wrong root.");
@@ -170,7 +192,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
         //
         // DEBUG.ASSERT <- CASE 3
-        private static void AssertCase3(AVLTree<int> avlTree)
+        private static void AssertCase_3(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
             Debug.Assert(avlRoot.Height == 2, "Wrong root height!");
@@ -192,7 +214,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
         //
         // DEBUG.ASSERT <- CASE 4
-        private static void AssertCase4(AVLTree<int> avlTree)
+        private static void AssertCase_4(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
             Debug.Assert(avlRoot.Height == 2, "Wrong root height!");
@@ -213,6 +235,29 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 "Wrong heights at the leaf nodes!.");
         }
 
+
+        //
+        // DEBUG.ASSERT <- CASE 5
+        private static void AssertCase_5(AVLTree<int> avlTree)
+        {
+            var avlRoot = avlTree.Root;
+            Debug.Assert(avlRoot.Height == 2, "Wrong root height!");
+            Debug.Assert(avlRoot.Value == 6, "Wrong root.");
+            Debug.Assert(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
+            Debug.Assert(avlRoot.RightChild.Value == 7, "Wrong right child from root.");
+            Debug.Assert(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
+            Debug.Assert(avlRoot.LeftChild.RightChild.Value == 3, "Wrong value at {root->left->right}.");
+            Debug.Assert(avlRoot.RightChild.LeftChild.Value == 5, "Wrong value at {root->right->left}.");
+            Debug.Assert(avlRoot.RightChild.RightChild == null, "Wrong value at {root->right->right}.");
+
+            Debug.Assert(
+                avlRoot.LeftChild.LeftChild.Height == 0
+                && avlRoot.LeftChild.RightChild.Height == 0
+                && avlRoot.RightChild.LeftChild.Height == 0
+                ,
+                "Wrong heights at the leaf nodes!.");
+
+        }
     }
 
 }
