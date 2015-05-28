@@ -1,59 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using DataStructures.Common;
+
 namespace DataStructures.Lists
 {
     /// <summary>
-    /// Singly Linked List Data Structure
+    /// The Singly-Linked List Node class
     /// </summary>
-    public class SLinkedList<T>
+    /// <typeparam name="T"></typeparam>
+    public class SLinkedListNode<T> : IComparable<SLinkedListNode<T>> where T : IComparable<T>
     {
-        /// <summary>
-        /// The Singly-Linked List Node class
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        internal class SLinkedListNode
+        private T _data;
+        private SLinkedListNode<T> _next;
+
+        public SLinkedListNode()
         {
-            public SLinkedListNode Next { get; set; }
-            public T Data { get; set; }
-
-            public SLinkedListNode()
-            {
-                Next = null;
-                Data = default(T);
-            }
-
-            public SLinkedListNode(T dataItem)
-            {
-                Next = null;
-                Data = dataItem;
-            }
+            Next = null;
+            Data = default(T);
         }
 
+        public SLinkedListNode(T dataItem)
+        {
+            Next = null;
+            Data = dataItem;
+        }
 
+        public T Data
+        {
+            get { return this._data; }
+            set { this._data = value; }
+        }
+
+        public SLinkedListNode<T> Next
+        {
+            get { return this._next;  }
+            set { this._next = value; }
+        }
+
+        public int CompareTo(SLinkedListNode<T> other)
+        {
+            if (other == null) return -1;
+
+            return this.Data.CompareTo(other.Data);
+        }
+    }
+    
+    
+    /// <summary>
+    /// Singly Linked List Data Structure
+    /// </summary>
+    public class SLinkedList<T> : IEnumerable<T> where T : IComparable<T>
+    {
         /// <summary>
         /// Instance variables
         /// </summary>
-        private SLinkedListNode _firstNode { get; set; }
-        private SLinkedListNode _lastNode { get; set; }
-        public int Count { private set; get; }
-
-
-        /// <summary>
-        /// A function that is used to update the _lastNode reference.
-        /// </summary>
-        private void UpdateLastNode()
+        private int _count;
+        private SLinkedListNode<T> _firstNode { get; set; }
+        private SLinkedListNode<T> _lastNode { get; set; }
+        
+        public int Count
         {
-            var currentNode = _firstNode;
-
-            while (currentNode.Next != null)
-            {
-                currentNode = currentNode.Next;
-            }
-
-            _lastNode = currentNode;
+            get { return _count; }
         }
-
+        
+        public virtual SLinkedListNode<T> Head
+        {
+            get { return this._firstNode; }
+        }
 
         /// <summary>
         /// CONSTRUCTOR
@@ -62,9 +76,8 @@ namespace DataStructures.Lists
         {
             _firstNode = null;
             _lastNode = null;
-            Count = 0;
+            _count = 0;
         }
-
 
         /// <summary>
         /// The Is List Empty check.
@@ -74,7 +87,6 @@ namespace DataStructures.Lists
         {
             return (Count == 0);
         }
-
 
         /// <summary>
         /// Getter function that returns the first element
@@ -86,7 +98,6 @@ namespace DataStructures.Lists
                 return (_firstNode == null ? default(T) : _firstNode.Data);
             }
         }
-
 
         /// <summary>
         /// Getter function that returns the last element
@@ -116,14 +127,13 @@ namespace DataStructures.Lists
             }
         }
 
-
         /// <summary>
         /// Inserts the specified dataItem at the beginning of the list.
         /// </summary>
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Prepend(T dataItem)
         {
-            SLinkedListNode newNode = new SLinkedListNode(dataItem);
+            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
             if (_firstNode == null)
             {
@@ -137,9 +147,8 @@ namespace DataStructures.Lists
             }
 
             // Increment the count.
-            ++Count;
+            _count++;
         }
-
 
         /// <summary>
         /// Inserts the specified dataItem at the end of the list.
@@ -147,7 +156,7 @@ namespace DataStructures.Lists
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Append(T dataItem)
         {
-            SLinkedListNode newNode = new SLinkedListNode(dataItem);
+            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
 
             if (_firstNode == null)
             {
@@ -155,20 +164,14 @@ namespace DataStructures.Lists
             }
             else
             {
-                if (_lastNode == null)
-                {
-                    UpdateLastNode();
-                }
-
                 var currentNode = _lastNode;
                 currentNode.Next = newNode;
                 _lastNode = newNode;
             }
 
             // Increment the count.
-            ++Count;
+            _count++;
         }
-
 
         /// <summary>
         /// Inserts a specified item dataItem at an index.
@@ -190,7 +193,7 @@ namespace DataStructures.Lists
             else if (index > 0 && index < Count)
             {
                 var currentNode = _firstNode;
-                SLinkedListNode newNode = new SLinkedListNode(dataItem);
+                var newNode = new SLinkedListNode<T>(dataItem);
 
                 for (int i = 1; i < index; ++i)
                 {
@@ -201,14 +204,13 @@ namespace DataStructures.Lists
                 currentNode.Next = newNode;
 
                 // Increment the count
-                ++Count;
+                _count++;
             }
             else
             {
                 throw new IndexOutOfRangeException();
             }
         }
-
 
         /// <summary>
         /// Removes the item at the specified index.
@@ -217,18 +219,29 @@ namespace DataStructures.Lists
         public void RemoveAt(int index)
         {
             // Handle index out of bound errors
-            if (Count == 0 || index >= Count)
-            {
+            if (IsEmpty() || index < 0 || index >= Count)
                 throw new IndexOutOfRangeException();
-            }
 
             // Remove
             if (index == 0)
             {
                 _firstNode = _firstNode.Next;
 
-                // Decrement the count.
-                --Count;
+                // Decrement count.
+                _count--;
+            }
+            else if (index == Count - 1)
+            {
+                var currentNode = _firstNode;
+
+                while (currentNode.Next != null && currentNode.Next != _lastNode)
+                    currentNode = currentNode.Next;
+
+                currentNode.Next = null;
+                _lastNode = currentNode;
+
+                // Decrement count.
+                _count--;
             }
             else
             {
@@ -241,13 +254,7 @@ namespace DataStructures.Lists
                         currentNode.Next = currentNode.Next.Next;
 
                         // Decrement the count.
-                        --Count;
-
-                        if (index == (Count - 1))
-                        {
-                            _lastNode = null;
-                        }
-
+                        _count--;
                         break;
                     }
 
@@ -257,7 +264,6 @@ namespace DataStructures.Lists
             }
         }
 
-
         /// <summary>
         /// Clears all the items in the list.
         /// </summary>
@@ -265,9 +271,8 @@ namespace DataStructures.Lists
         {
             _firstNode = null;
             _lastNode = null;
-            Count = 0;
+            _count = 0;
         }
-
 
         /// <summary>
         /// Get the element at the specified index
@@ -298,7 +303,6 @@ namespace DataStructures.Lists
                 throw new IndexOutOfRangeException();
             }
         }
-
 
         /// <summary>
         /// Returns a number of elements as specified by countOfElements, starting from the specified index.
@@ -337,6 +341,33 @@ namespace DataStructures.Lists
             return newList;
         }
 
+        /// <summary>
+        /// Sorts the entire list using Selection Sort.
+        /// </summary>
+        public virtual void SelectionSort()
+        {
+            if (IsEmpty())
+                return;
+
+            var currentNode = _firstNode;
+            while (currentNode != null)
+            {
+                var nextNode = currentNode.Next;
+                while (nextNode != null)
+                {
+                    if (nextNode.Data.IsLessThan(currentNode.Data))
+                    {
+                        var temp = nextNode.Data;
+                        nextNode.Data = currentNode.Data;
+                        currentNode.Data = temp;
+                    }
+
+                    nextNode = nextNode.Next;
+                }
+
+                currentNode = currentNode.Next;
+            }
+        }
 
         /// <summary>
         /// Return an array version of this list.
@@ -363,7 +394,6 @@ namespace DataStructures.Lists
             return array;
         }
 
-
         /// <summary>
         /// Returns a System.List version of this SLinkedList instace.
         /// </summary>
@@ -389,7 +419,6 @@ namespace DataStructures.Lists
             return list;
         }
 
-
         /// <summary>
         /// Returns the list items as a readable multi--line string.
         /// </summary>
@@ -410,6 +439,59 @@ namespace DataStructures.Lists
             return listAsString;
         }
 
+        /********************************************************************************/
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new SLinkedListEnumerator(this);
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return new SLinkedListEnumerator(this);
+        }
+
+        /********************************************************************************/
+
+        internal class SLinkedListEnumerator : IEnumerator<T>
+        {
+            private SLinkedListNode<T> _current;
+            private SLinkedList<T> _doublyLinkedList;
+
+            public SLinkedListEnumerator(SLinkedList<T> list)
+            {
+                this._doublyLinkedList = list;
+                this._current = list.Head;
+            }
+
+            public T Current
+            {
+                get { return this._current.Data; }
+            }
+
+            object System.Collections.IEnumerator.Current
+            {
+                get { return Current; }
+            }
+
+            public bool MoveNext()
+            {
+                _current = _current.Next;
+
+                return (this._current != null);
+            }
+
+            public void Reset()
+            {
+                _current = _doublyLinkedList.Head;
+            }
+
+            public void Dispose()
+            {
+                _current = null;
+                _doublyLinkedList = null;
+            }
+        }
     }
 
 }

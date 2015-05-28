@@ -125,7 +125,6 @@ namespace DataStructures.Lists
             }
         }
 
-
         /// <summary>
         /// Sets the value of the element at the specified index
         /// </summary>
@@ -183,7 +182,6 @@ namespace DataStructures.Lists
             _lastNode = null;
         }
 
-
         /// <summary>
         /// Determines whether this List is empty.
         /// </summary>
@@ -192,7 +190,6 @@ namespace DataStructures.Lists
         {
             return (Count == 0);
         }
-
 
         /// <summary>
         /// Getter function that returns the first element
@@ -211,7 +208,6 @@ namespace DataStructures.Lists
                 }
             }
         }
-
 
         /// <summary>
         /// Getter function that returns the last element
@@ -241,7 +237,6 @@ namespace DataStructures.Lists
             }
         }
 
-
         /// <summary>
         /// Implements the collection-index operator.
         /// Gets or sets the element at the specified index
@@ -252,7 +247,6 @@ namespace DataStructures.Lists
             get { return this._getElementAt(index); }
             set { this._setElementAt(index, value); }
         }
-
 
         /// <summary>
         /// Prepend the specified dataItem at the beginning of the list.
@@ -277,7 +271,6 @@ namespace DataStructures.Lists
             // Increment the count.
             _count++;
         }
-
 
         /// <summary>
         /// Append the specified dataItem at the end of the list.
@@ -307,8 +300,7 @@ namespace DataStructures.Lists
             // Increment the count.
             _count++;
         }
-
-
+        
         /// <summary>
         /// Inserts the dataItem at the specified index.
         /// </summary>
@@ -362,7 +354,6 @@ namespace DataStructures.Lists
             }
         }
 
-
         /// <summary>
         /// Inserts the dataItem after specified index.
         /// </summary>
@@ -374,7 +365,6 @@ namespace DataStructures.Lists
             InsertAt(dataItem, index - 1);
         }
 
-
         /// <summary>
         /// Removes the item at the specified index.
         /// </summary>
@@ -384,9 +374,7 @@ namespace DataStructures.Lists
         {
             // Handle index out of bound errors
             if (IsEmpty() || index < 0 || index >= Count)
-            {
                 throw new IndexOutOfRangeException();
-            }
 
             // Remove
             if (index == 0)
@@ -437,7 +425,6 @@ namespace DataStructures.Lists
             }//end-else
         }
 
-
         /// <summary>
         /// Clears the list.
         /// </summary>
@@ -446,7 +433,6 @@ namespace DataStructures.Lists
             _count = 0;
             _firstNode = _lastNode = null;
         }
-
 
         /// <summary>
         /// Chesk whether the specified element exists in the list.
@@ -467,7 +453,6 @@ namespace DataStructures.Lists
                 return false;
             }
         }
-
 
         /// <summary>
         /// Find the specified item in the list.
@@ -490,7 +475,6 @@ namespace DataStructures.Lists
 
             throw new Exception("Item was not found.");
         }
-
 
         /// <summary>
         /// Find all elements in list that match the predicate.
@@ -515,7 +499,6 @@ namespace DataStructures.Lists
 
             return list;
         }
-
 
         /// <summary>
         /// Returns a number of elements as specified by countOfElements, starting from the specified index.
@@ -568,6 +551,33 @@ namespace DataStructures.Lists
             return newList;
         }
 
+        /// <summary>
+        /// Sorts the entire list using Selection Sort.
+        /// </summary>
+        public virtual void SelectionSort()
+        {
+            if (IsEmpty())
+                return;
+
+            var currentNode = _firstNode;
+            while(currentNode != null)
+            {
+                var nextNode = currentNode.Next;
+                while(nextNode != null)
+                {
+                    if(nextNode.Data.IsLessThan(currentNode.Data))
+                    {
+                        var temp = nextNode.Data;
+                        nextNode.Data = currentNode.Data;
+                        currentNode.Data = temp;
+                    }
+
+                    nextNode = nextNode.Next;
+                }
+
+                currentNode = currentNode.Next;
+            }
+        }
 
         /// <summary>
         /// Return an array version of this list.
@@ -594,7 +604,6 @@ namespace DataStructures.Lists
             return array;
         }
 
-
         /// <summary>
         /// Returns a System.List version of this DLList instace.
         /// </summary>
@@ -619,7 +628,6 @@ namespace DataStructures.Lists
 
             return list;
         }
-
 
         /// <summary>
         /// Returns the list items as a readable multi--line string.

@@ -100,18 +100,41 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             /****************************************************************************************/
 
-            var enumerator = listOfStrings.GetEnumerator();
+            var stringsIterators = listOfStrings.GetEnumerator();
 
-            Debug.Assert(enumerator.Current == listOfStrings[0], "Wrong enumeration.");
-            
-            if (enumerator.MoveNext() == true)
+            Debug.Assert(stringsIterators.Current == listOfStrings[0], "Wrong enumeration.");
+
+            if (stringsIterators.MoveNext() == true)
             {
-                Debug.Assert(enumerator.Current == listOfStrings[1], "Wrong enumeration.");
+                Debug.Assert(stringsIterators.Current == listOfStrings[1], "Wrong enumeration.");
             }
 
-            enumerator.Dispose();
+            stringsIterators.Dispose();
 
             Debug.Assert(listOfStrings != null && listOfStrings.Count > 0, "Enumartor has side effects!");
+
+            /****************************************************************************************/
+
+            var listOfNumbers = new DLinkedList<int>();
+
+            listOfNumbers.Append(23);
+            listOfNumbers.Append(42);
+            listOfNumbers.Append(4);
+            listOfNumbers.Append(16);
+            listOfNumbers.Append(8);
+            listOfNumbers.Append(15);
+            listOfNumbers.Append(9);
+            listOfNumbers.Append(55);
+            listOfNumbers.Append(0);
+            listOfNumbers.Append(34);
+            listOfNumbers.Append(12);
+            listOfNumbers.Append(2);
+
+            listOfNumbers.SelectionSort();
+
+            var intArray = listOfNumbers.ToArray();
+
+            Debug.Assert(intArray[0] == 0 && intArray[intArray.Length - 1] == 55, "Wrong sorting!");
 		}
 	}
 }
