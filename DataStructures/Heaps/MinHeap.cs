@@ -30,7 +30,6 @@ namespace DataStructures.Heaps
             _heapComparer = comparer ?? Comparer<T>.Default;
         }
 
-
         /// <summary>
         /// Builds a min heap from the inner array-list _collection.
         /// </summary>
@@ -44,7 +43,6 @@ namespace DataStructures.Heaps
                 MinHeapify(node, lastIndex);
             }
         }
-
 
         /// <summary>
         /// Private Method. Used in Building a Min Heap.
@@ -75,7 +73,6 @@ namespace DataStructures.Heaps
             }
         }
 
-
         /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
@@ -84,7 +81,6 @@ namespace DataStructures.Heaps
             return _collection.Count;
         }
 
-
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
@@ -92,7 +88,6 @@ namespace DataStructures.Heaps
         {
             return (_collection.Count == 0);
         }
-
 
         /// <summary>
         /// Gets or sets the at the specified index.
@@ -126,7 +121,6 @@ namespace DataStructures.Heaps
             }
         }
 
-
         /// <summary>
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
@@ -149,7 +143,6 @@ namespace DataStructures.Heaps
             }
         }
 
-
         /// <summary>
         /// Adding a new key to the heap.
         /// </summary>
@@ -167,7 +160,6 @@ namespace DataStructures.Heaps
             }
         }
 
-
         /// <summary>
         /// Find the minimum node of a min heap.
         /// </summary>
@@ -181,7 +173,6 @@ namespace DataStructures.Heaps
 
             return _collection.First;
         }
-
 
         /// <summary>
         /// Removes the node of minimum value from a min heap.
@@ -203,7 +194,6 @@ namespace DataStructures.Heaps
             MinHeapify(0, last);
         }
 
-
         /// <summary>
         /// Returns the node of minimum value from a min heap after removing it from the heap.
         /// </summary>
@@ -214,7 +204,6 @@ namespace DataStructures.Heaps
             RemoveMin();
             return min;
         }
-
 
         /// <summary>
         /// Clear this heap.
@@ -229,31 +218,51 @@ namespace DataStructures.Heaps
             _collection.Clear();
         }
 
-
         /// <summary>
         /// Returns an array version of this heap.
         /// </summary>
-        /// <returns>The array.</returns>
         public T[] ToArray()
         {
             return _collection.ToArray();
         }
 
-
         /// <summary>
         /// Returns a list version of this heap.
         /// </summary>
-        /// <returns>The list.</returns>
         public List<T> ToList()
         {
             return _collection.ToList();
         }
 
+		/// <summary>
+		/// Union two heaps together, returns a new min-heap of both heaps' elements, 
+		/// ... and then destroys the original ones.
+		/// </summary>
+		public MinHeap<T> Union(ref MinHeap<T> firstMinHeap, ref MinHeap<T> secondMinHeap)
+		{
+			if (firstMinHeap == null || secondMinHeap == null)
+				throw new ArgumentNullException ("Null heaps are not allowed.");
+
+			// Create a new heap with reserved size.
+			int size = firstMinHeap.Count() + secondMinHeap.Count();
+			var newHeap = new MinHeap<T> (size, Comparer<T>.Default);
+
+			// Insert into the new heap.
+			while (firstMinHeap.IsEmpty () == false)
+				newHeap.Insert (firstMinHeap.ExtractMin ());
+
+			while (secondMinHeap.IsEmpty () == false)
+				newHeap.Insert (secondMinHeap.ExtractMin ());
+
+			// Destroy the two heaps.
+			firstMinHeap = secondMinHeap = null;
+
+			return newHeap;
+		}
 
         /// <summary>
         /// Returns a new max heap that contains all elements of this heap.
         /// </summary>
-        /// <returns>The max heap.</returns>
         public MaxHeap<T> ToMaxHeap()
         {
             MaxHeap<T> newMaxHeap = new MaxHeap<T>(this.Count(), this._heapComparer);
