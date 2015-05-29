@@ -141,9 +141,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree = new AVLTree<int>();
             var bsTree = new BinarySearchTree<int>();
 
-            List<int> list = new List<int>() { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
-            avlTree.Insert(list);
-            bsTree.Insert(list);
+            List<int> treeDataList = new List<int>() { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
+            avlTree.Insert(treeDataList);
+            bsTree.Insert(treeDataList);
 
             int avlTreeHeight = avlTree.Height();
             int bsTreeHeight = bsTree.Height();
@@ -163,21 +163,46 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             //
             // OUTPUT OF AVL TREE DRAWER
-            /*
-             * ************
-             * ** AVL TREE:
-             * ************
-             *                    ....15...
-             *                   /         \
-             *             ...9..      ..20.
-             *            /      \    /     \
-             *       ..5.      11   16    28
-             *      /    \    /  \ / \   /  \
-             *    1     7   9   12  19 25  30
-             *    /\   / \ / \ / \  /\ /\ / \
-             *  -1   7   8  10  13         39
-             *  /\   /\ /\  /\  /\         /\
+            /*****
+             ** ************
+             ** ** AVL TREE:
+             ** ************
+             **                    ....15...
+             **                   /         \
+             **             ...9..      ..20.
+             **            /      \    /     \
+             **       ..5.      11   16    28
+             **      /    \    /  \ / \   /  \
+             **    1     7   9   12  19 25  30
+             **    /\   / \ / \ / \  /\ /\ / \
+             **  -1   7   8  10  13         39
+             **  /\   /\ /\  /\  /\         /\
              *  
+             */
+
+
+            treeDataList = new List<int>() { 15, 25, 5, 12, 1, 9, 7, -1, 11, 30, 8, 10, 13, 28, 39 };
+            avlTree.Clear();
+            avlTree.Insert(treeDataList);
+
+            Console.WriteLine(String.Format("************\r\n** AVL TREE:\r\n************\r\n"));
+            Console.WriteLine(avlTree.DrawTree());
+
+            //
+            // OUTPUT OF AVL TREE DRAWER
+            /*****
+             ** 
+             **           .......9......
+             **          /              \
+             **       .5       ....12...
+             **      /  \     /         \
+             **    1   7    11      .25.
+             **    /\ / \   /\     /    \
+             **  -1     8  10    15    30
+             **  /\    /\  /\    /\   / \
+             **                 13   28 39
+             **                 /\   /\ /\
+             **
              */
 
             Console.ReadLine();

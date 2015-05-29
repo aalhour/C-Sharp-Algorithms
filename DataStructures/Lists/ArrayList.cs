@@ -26,7 +26,7 @@ namespace DataStructures.Lists
         private readonly T[] _emptyArray = new T[0];
 
         // The default capacity to resize to, when a minimum is lower than 5.
-        private const int _defaultCapacity = 4;
+        private const int _defaultCapacity = 8;
 
         // The internal array of elements.
         private T[] _collection { get; set; }
