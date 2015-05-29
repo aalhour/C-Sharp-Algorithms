@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hashing\HashMap.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
