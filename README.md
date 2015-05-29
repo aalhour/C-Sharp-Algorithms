@@ -42,11 +42,11 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
   * [Merge Sort](Algorithms/Sorting/MergeSorter.cs)
   * [Heap Sort](Algorithms/Sorting/HeapSorter.cs)
   * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs). Implements an unbalanced binary search tree sort.
+  * [Counting Sort](Algorithms/Sorting/CountingSorter.cs). Only sorts arrays of integers.
 
     ```
-    List<long> list = new List<long> () {
-       23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 
-    };
+    int[] array = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0 };
+    List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0 };
     
     // The value comparer object. Can be any value comparer that implmenets IComparer.
     var valueComparer = Comparer<long>.Default;
@@ -56,6 +56,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     list.MergeSort (valueComparer);
     list.HeapSort (valueComparer);
     list.UnbalancedBSTSort();
+    array.CountingSort();
     ```
 
 #### Visualization:
