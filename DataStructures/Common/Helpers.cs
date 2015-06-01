@@ -34,7 +34,6 @@ namespace DataStructures.Common
 			list[secondIndex] = temp;
 		}
 
-
         /// <summary>
         /// Centralize a text.
         /// </summary>
@@ -56,6 +55,28 @@ namespace DataStructures.Common
             for (int i = newWidth - padRight; i < newWidth; i++) resultBuilder.Insert(i, fillerCharacter);
             return resultBuilder.ToString();
         }
-	}
-}
 
+        /// <summary>
+        /// Checks if a number is a Prime Number.
+        /// </summary>
+        public static bool IsPrime(int candidate)
+        {
+            if ((candidate & 1) != 0) 
+            {
+                int limit = (int)Math.Sqrt (candidate);
+                
+                for (int divisor = 3; divisor <= limit; divisor+=2)
+                {
+                    if ((candidate % divisor) == 0)
+                        return false;
+                }
+
+                return true;
+            }
+
+            return (candidate == 2);
+        }
+
+	}
+
+}
