@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hashing\HashMap.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
@@ -62,6 +61,8 @@
     <Compile Include="Trees\BinaryTree.cs" />
     <Compile Include="Trees\IBinaryTree.cs" />
     <Compile Include="Trees\TreeDrawer.cs" />
+    <Compile Include="Dictionaries\HashTable.cs" />
+    <Compile Include="Lists\DLinkedList_KeyValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -72,4 +73,7 @@
   </Target>
   -->
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Dictionaries\" />
+  </ItemGroup>
 </Project>

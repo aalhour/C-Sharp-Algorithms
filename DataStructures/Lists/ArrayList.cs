@@ -69,7 +69,7 @@ namespace DataStructures.Lists
         /// Ensures the capacity.
         /// </summary>
         /// <param name="minCapacity">Minimum capacity.</param>
-        private void EnsureCapacity(int minCapacity)
+        private void _ensureCapacity(int minCapacity)
         {
             // If the length of the inner collection is less than the minCapacity
             // ... and if the maximum capacity wasn't reached yet, 
@@ -92,7 +92,7 @@ namespace DataStructures.Lists
                     newCapacity = minCapacity;
                 }
 
-                this.ResizeCapacity(newCapacity);
+                this._resizeCapacity(newCapacity);
             }
         }
 
@@ -101,7 +101,7 @@ namespace DataStructures.Lists
         /// Resizes the collection to a new maximum number of capacity.
         /// </summary>
         /// <param name="newCapacity">New capacity.</param>
-        private void ResizeCapacity(int newCapacity)
+        private void _resizeCapacity(int newCapacity)
         {
             if (newCapacity != _collection.Length && newCapacity > _size)
             {
@@ -121,7 +121,7 @@ namespace DataStructures.Lists
                     if (DefaultMaxCapacityIsX64 == true)
                     {
                         DefaultMaxCapacityIsX64 = false;
-                        EnsureCapacity(newCapacity);
+                        _ensureCapacity(newCapacity);
                     }
 
                     throw;
@@ -234,7 +234,7 @@ namespace DataStructures.Lists
         {
             if (_size == _collection.Length)
             {
-                EnsureCapacity(_size + 1);
+                _ensureCapacity(_size + 1);
             }
 
             _collection[_size++] = dataItem;
@@ -257,7 +257,7 @@ namespace DataStructures.Lists
             // ... then maximize it's capacity to a minimum of _size + 1.
             if (_size == _collection.Length)
             {
-                EnsureCapacity(_size + 1);
+                _ensureCapacity(_size + 1);
             }
 
             // If the index is not "at the end", then copy the elements of the array

@@ -1,28 +1,22 @@
 ﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MainProgram/DataStructuresTests/BinarySearchTreeTest.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataStructures/Heaps/MaxHeap.cs">
     <Files>
-      <File FileName="MainProgram/Program.cs" Line="17" Column="35" />
-      <File FileName="DataStructures/BinarySearchTree.cs" Line="149" Column="32" />
-      <File FileName="MainProgram/DataStructuresTests/BinarySearchTreeTest.cs" Line="38" Column="7" />
+      <File FileName="DataStructures/Heaps/MinHeap.cs" Line="247" Column="59" />
+      <File FileName="DataStructures/Heaps/MaxHeap.cs" Line="32" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="C-Sharp-Algorithms" expanded="True">
             <Node name="DataStructures" expanded="True">
-              <Node name="Interfaces" expanded="True" />
-            </Node>
-            <Node name="MainProgram" expanded="True">
-              <Node name="DataStructuresTests" expanded="True">
-                <Node name="BinarySearchTreeTest.cs" selected="True" />
+              <Node name="Heaps" expanded="True">
+                <Node name="MaxHeap.cs" selected="True" />
               </Node>
             </Node>
+            <Node name="MainProgram" expanded="True" />
           </Node>
         </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>

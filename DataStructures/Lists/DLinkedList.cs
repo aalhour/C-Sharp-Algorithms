@@ -286,11 +286,6 @@ namespace DataStructures.Lists
             }
             else
             {
-                //if (_lastNode == null)
-                //{
-                //    UpdateLastNode();
-                //}
-
                 var currentNode = _lastNode;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
