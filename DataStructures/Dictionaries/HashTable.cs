@@ -13,9 +13,9 @@ namespace DataStructures.Dictionaries
     {
 		private int _size;
 		private DLinkedList<int>[] _keysMap;
-		private int[] _valuesMap;
+        //private DLinkedList<int>[] _valuesMap;
 		private const int _defaultCapacity = 8;
-		private static readonly int[] _emptyArray = new int[8];
+        private static readonly DLinkedList<int>[] _emptyArray = new DLinkedList<int>[8];
 
 		// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
 		// Set the flag IsMaximumCapacityReached to false
@@ -32,7 +32,7 @@ namespace DataStructures.Dictionaries
 		{
 			this._size = 0;
 			this._keysMap = _emptyArray;
-			this._valuesMap = _emptyArray;
+            //this._valuesMap = _emptyArray;
 		}
 
 
@@ -49,17 +49,17 @@ namespace DataStructures.Dictionaries
 
 				//
 				// Try to expand the size
-				int[] newKeysMap = new int[newCapacity];
-				int[] newValuesMap = new int[newCapacity];
+                DLinkedList<int>[] newKeysMap = new DLinkedList<int>[newCapacity];
+                //DLinkedList<int>[] newValuesMap = new DLinkedList<int>[newCapacity];
 
 				if (_size > 0)
 				{
 					Array.Copy(_keysMap, 0, newKeysMap, 0, _size);
-					Array.Copy(_valuesMap, 0, newValuesMap, 0, _size);
+                    //Array.Copy(_valuesMap, 0, newValuesMap, 0, _size);
 				}
 
 				_keysMap = newKeysMap;
-				_valuesMap = newValuesMap;
+                //_valuesMap = newValuesMap;
 			}
 		}
 
@@ -91,17 +91,17 @@ namespace DataStructures.Dictionaries
 				// Try to expand the size
 				try
 				{
-					int[] newKeysMap = new int[newCapacity];
-					int[] newValuesMap = new int[newCapacity];
+                    DLinkedList<int>[] newKeysMap = new DLinkedList<int>[newCapacity];
+                    //int[] newValuesMap = new int[newCapacity];
 
 					if (_size > 0)
 					{
 						Array.Copy(_keysMap, 0, newKeysMap, 0, _size);
-						Array.Copy(_valuesMap, 0, newValuesMap, 0, _size);
+                        //Array.Copy(_valuesMap, 0, newValuesMap, 0, _size);
 					}
 
 					_keysMap = newKeysMap;
-					_valuesMap = newValuesMap;
+                    //_valuesMap = newValuesMap;
 				}
 				catch (OutOfMemoryException)
 				{

@@ -63,7 +63,7 @@ namespace DataStructures.Lists
 	/// Doubly-Linked List Data Structure.
 	/// </summary>
 	/// <typeparam name="T">Type</typeparam>
-	public class DLinkedList<TKey, TValue> : IEnumerable<TKey, TValue> where TKey : IComparable<TKey>
+	public class DLinkedList<TKey, TValue> where TKey : IComparable<TKey>
 	{
 		/// <summary>
 		/// Instance variables.
@@ -173,11 +173,11 @@ namespace DataStructures.Lists
 
 			if (index == 0)
 			{
-				_firstNode.Key = value;
+				_firstNode.Value = value;
 			}
 			else if (index == (Count - 1))
 			{
-				_lastNode.Key = value;
+				_lastNode.Value = value;
 			}
 			else if (index > 0 && index < (Count - 1))
 			{
@@ -212,16 +212,16 @@ namespace DataStructures.Lists
 		/// </summary>
 		protected virtual void _setNodeByKey(TKey key, TValue value)
 		{
-			if (IsEmpty() || index < 0 || index >= Count)
+			if (IsEmpty())
 				throw new IndexOutOfRangeException("List is empty.");
 
 			if (key.IsEqualTo(_firstNode.Key))
 			{
-				_firstNode.Key = value;
+				_firstNode.Value = value;
 			}
 			else if (key.IsEqualTo(_lastNode.Key))
 			{
-				_lastNode.Key = value;
+				_lastNode.Value = value;
 			}
 			else
 			{
@@ -369,11 +369,11 @@ namespace DataStructures.Lists
 		{
 			if (index == 0)
 			{
-				Prepend(dataItem);
+				Prepend(key, value);
 			}
 			else if (index == Count)
 			{
-				Append(dataItem);
+                Append(key, value);
 			}
 			else if (index > 0 && index < Count)
 			{
@@ -692,35 +692,9 @@ namespace DataStructures.Lists
 		}
 
 		/// <summary>
-		/// Return an array version of this list.
+		/// Returns a list of the keys.
 		/// </summary>
-		/// <returns></returns>
-		public virtual T[] ToArray()
-		{
-			T[] array = new T[Count];
-
-			var currentNode = _firstNode;
-			for (int i = 0; i < Count; ++i)
-			{
-				if (currentNode != null)
-				{
-					array[i] = currentNode.Key;
-					currentNode = currentNode.Next;
-				}
-				else
-				{
-					break;
-				}
-			}
-
-			return array;
-		}
-
-		/// <summary>
-		/// Returns a System.List version of this DLList instace.
-		/// </summary>
-		/// <returns>System.List of elements</returns>
-		public virtual List<TKey> ToList()
+		public virtual List<TKey> Keys()
 		{
 			List<TKey> list = new List<TKey>(Count);
 
@@ -740,6 +714,30 @@ namespace DataStructures.Lists
 
 			return list;
 		}
+
+        /// <summary>
+        /// Returns a list of the values.
+        /// </summary>
+        public virtual List<TValue> Values()
+        {
+            List<TValue> list = new List<TValue>(Count);
+
+            var currentNode = _firstNode;
+            for (int i = 0; i < Count; ++i)
+            {
+                if (currentNode != null)
+                {
+                    list.Add(currentNode.Value);
+                    currentNode = currentNode.Next;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return list;
+        }
 
 		/// <summary>
 		/// Returns the list items as a readable multi--line string.
@@ -761,66 +759,6 @@ namespace DataStructures.Lists
 			return listAsString;
 		}
 
-		/********************************************************************************/
-
-		public IEnumerator<TKey> GetEnumerator()
-		{
-			return new DLinkedListEnumerator(this);
-		}
-
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return new DLinkedListEnumerator(this);
-		}
-
-		/********************************************************************************/
-
-		internal class DLinkedListEnumerator : IEnumerator<TKey>
-		{
-			private DLinkedListNode<TKey, TValue> _current;
-			private DLinkedList<TKey> _doublyLinkedList;
-
-			public DLinkedListEnumerator(DLinkedList<TKey> list)
-			{
-				this._doublyLinkedList = list;
-				this._current = list.Head;
-			}
-
-			public T Current
-			{
-				get { return this._current.Key; }
-			}
-
-			object System.Collections.IEnumerator.Current
-			{
-				get { return Current; }
-			}
-
-			public bool MoveNext()
-			{
-				_current = _current.Next;
-
-				return (this._current != null);
-			}
-
-			public bool MovePrevious()
-			{
-				_current = _current.Previous;
-
-				return (this._current != null);
-			}
-
-			public void Reset()
-			{
-				_current = _doublyLinkedList.Head;
-			}
-
-			public void Dispose()
-			{
-				_current = null;
-				_doublyLinkedList = null;
-			}
-		}
 	}
 
 }
