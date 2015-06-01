@@ -351,6 +351,60 @@ namespace DataStructures.Lists
         }
 
         /// <summary>
+        /// Returns a list of the keys.
+        /// </summary>
+        public virtual List<TKey> Keys
+        {
+            get
+            {
+                List<TKey> list = new List<TKey>(Count);
+
+                var currentNode = _firstNode;
+                for (int i = 0; i < Count; ++i)
+                {
+                    if (currentNode != null)
+                    {
+                        list.Add(currentNode.Key);
+                        currentNode = currentNode.Next;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                return list;
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of the values.
+        /// </summary>
+        public virtual List<TValue> Values
+        {
+            get
+            {
+                List<TValue> list = new List<TValue>(Count);
+
+                var currentNode = _firstNode;
+                for (int i = 0; i < Count; ++i)
+                {
+                    if (currentNode != null)
+                    {
+                        list.Add(currentNode.Value);
+                        currentNode = currentNode.Next;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                return list;
+            }
+        }
+
+        /// <summary>
         /// Prepend the key-value at the beginning of the list.
         /// </summary>
         public virtual void Prepend(TKey key, TValue value)
@@ -655,7 +709,7 @@ namespace DataStructures.Lists
             if (currentNode != null)
                 return new KeyValuePair<TKey, TValue>(currentNode.Key, currentNode.Value);
             else
-                throw new Exception("Item was not found.");
+                throw new KeyNotFoundException("Item was not found.");
         }
 
         /// <summary>
@@ -688,10 +742,10 @@ namespace DataStructures.Lists
         /// <param name="index">Starting index.</param>
         /// <param name="countOfElements">The number of elements to return.</param>
         /// <returns>Doubly-Linked List of elements</returns>
-        public virtual DLinkedList<TKey, TValue> GetRange(int index, int countOfElements)
+        public virtual List<KeyValuePair<TKey, TValue>> GetRange(int index, int countOfElements)
         {
             DLinkedListNode<TKey, TValue> currentNode = null;
-            DLinkedList<TKey, TValue> newList = new DLinkedList<TKey, TValue>();
+            List<KeyValuePair<TKey, TValue>> newList = new List<KeyValuePair<TKey, TValue>>();
 
             // Handle Index out of Bound errors
             if (Count == 0)
@@ -726,7 +780,8 @@ namespace DataStructures.Lists
             // Append the elements to the new list using the currentNode reference
             while (currentNode != null && newList.Count <= countOfElements)
             {
-                newList.Append(currentNode.Key, currentNode.Value);
+                var keyValue = new KeyValuePair<TKey, TValue>(currentNode.Key, currentNode.Value);
+                newList.Add(keyValue);
                 currentNode = currentNode.Next;
             }
 
@@ -759,54 +814,6 @@ namespace DataStructures.Lists
 
                 currentNode = currentNode.Next;
             }
-        }
-
-        /// <summary>
-        /// Returns a list of the keys.
-        /// </summary>
-        public virtual List<TKey> Keys()
-        {
-            List<TKey> list = new List<TKey>(Count);
-
-            var currentNode = _firstNode;
-            for (int i = 0; i < Count; ++i)
-            {
-                if (currentNode != null)
-                {
-                    list.Add(currentNode.Key);
-                    currentNode = currentNode.Next;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return list;
-        }
-
-        /// <summary>
-        /// Returns a list of the values.
-        /// </summary>
-        public virtual List<TValue> Values()
-        {
-            List<TValue> list = new List<TValue>(Count);
-
-            var currentNode = _firstNode;
-            for (int i = 0; i < Count; ++i)
-            {
-                if (currentNode != null)
-                {
-                    list.Add(currentNode.Value);
-                    currentNode = currentNode.Next;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return list;
         }
 
         /// <summary>
