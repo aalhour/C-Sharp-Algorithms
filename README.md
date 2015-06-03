@@ -34,7 +34,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 
 #### Dictionary(s):
 
- * [Hash Table w/ Chaining](DataStructures/Dictionaries/HashTable_SeparateChaining.cs). A hash table that implements the **separate-chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+ * **[Chained Hash Table](DataStructures/Dictionaries/HashTable_SeparateChaining.cs)**. A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction) based on prime numbers.
 
 
 ## ALGORITHMS:
