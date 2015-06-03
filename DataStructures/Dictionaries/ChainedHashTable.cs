@@ -9,7 +9,7 @@ namespace DataStructures.Dictionaries
     /// <summary>
     /// Hash Table with Chaining.
     /// </summary>
-    public class HashTable_SeparateChaining<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
+    public class ChainedHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
         /// Used in the ensure capacity function
@@ -62,7 +62,7 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public HashTable_SeparateChaining()
+        public ChainedHashTable()
         {
             this._size = 0;
             this._hashTableStore = _emptyArray;

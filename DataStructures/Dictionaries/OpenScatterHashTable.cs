@@ -6,7 +6,7 @@ using DataStructures.Lists;
 
 namespace DataStructures.Dictionaries
 {
-    public class HashTable_OpenAddressing<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
+    public class OpenScatterHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
         public void Add(TKey key, TValue value)
         {

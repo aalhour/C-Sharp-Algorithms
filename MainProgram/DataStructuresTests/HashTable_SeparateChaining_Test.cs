@@ -10,7 +10,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
     {
         public static void DoTest()
         {
-            var studentsMarks = new HashTable_SeparateChaining<string, int>();
+            var studentsMarks = new ChainedHashTable<string, int>();
 
             //
             // TEST ADD KEY-VALUE PAIRS
