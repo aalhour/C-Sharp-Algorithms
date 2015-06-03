@@ -266,6 +266,19 @@ namespace DataStructures.Dictionaries
         private int _getPreHashOfKey(TKey key)
         {
             return Math.Abs(_keysComparer.GetHashCode(key));
+
+            //int preHash = 0;
+            //if(key is string && false == key.IsEqualTo(default(TKey)))
+            //{
+            //    var stringKey = Convert.ToString(key);
+            //    for (int i = 0; i < stringKey.Length; ++i)
+            //        preHash += (26 * i) + stringKey[i];
+            //}
+            //else
+            //{
+            //    preHash = Math.Abs(_keysComparer.GetHashCode(key));
+            //}
+            //return preHash;
         }
 
         /// <summary>
@@ -335,10 +348,12 @@ namespace DataStructures.Dictionaries
 
                         while (i < array.Length)
                         {
-                            pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+                            pair = new KeyValuePair<TKey, TValue>(headOfChain.Key, headOfChain.Value);
                             array[i] = pair;
                             i++;
                             hashTableIndex++;
+
+                            headOfChain = headOfChain.Next;
                         }
                     }//end-if-else
                 }//end-if
