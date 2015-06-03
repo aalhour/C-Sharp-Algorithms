@@ -16,6 +16,10 @@ namespace DataStructures.Dictionaries
         Deleted
     }
 
+
+    /*************************************************************************************************************/
+
+
     /// <summary>
     /// Hash Table Cell.
     /// </summary>
@@ -49,6 +53,10 @@ namespace DataStructures.Dictionaries
         }
     }
 
+
+    /*************************************************************************************************************/
+
+
     /// <summary>
     /// Hash Table with Open Addressing.
     /// </summary>
@@ -57,12 +65,11 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Used in the ensure capacity function
         /// </summary>
-        public enum CapacityManagementMode
+        private enum CapacityManagementMode
         {
             Contract = 0,
             Expand = 1
         }
-
 
         /// <summary>
         /// INSTANCE VARIABLES
