@@ -26,11 +26,16 @@ namespace DataStructures.Dictionaries
         private int _size;
         private int _freeSlotsCount;
         private decimal _occupiedSlotsLoadRatio;
-        private decimal _overallSlotsLoadRatio;
         private const int _defaultCapacity = 7;
         private DLinkedList<TKey, TValue>[] _keysValuesMap;
         private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[7];
-
+        private List<TKey> _keysCollection { get; set; }
+        private List<TValue> _valuesCollection { get; set; }
+        
+        // Keys and Values Comparers
+        private EqualityComparer<TKey> _keysComparer { get; set; }
+        private EqualityComparer<TValue> _valuesComparer { get; set; }
+        
         // A collection of prime numbers to use as hash table sizes. 
         internal static readonly int[] _primes = {
             //2, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
@@ -42,10 +47,6 @@ namespace DataStructures.Dictionaries
 
         // Random numbers generator.
         private Random _randomNumberGenerator { get; set; }
-
-        // Keys and Values Comparers
-        private EqualityComparer<TKey> _keysComparer { get; set; }
-        private EqualityComparer<TValue> _valuesComparer { get; set; }
 
         // This is the maximum prime that is smaller than the C# maximum allowed size of arrays.
         // Check the following reference: 
@@ -378,10 +379,7 @@ namespace DataStructures.Dictionaries
         /// </summary>
         public ICollection<TKey> Keys
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { return _keysCollection; }
         }
 
         /// <summary>
@@ -389,7 +387,7 @@ namespace DataStructures.Dictionaries
         /// </summary>
         public ICollection<TValue> Values
         {
-            get { throw new NotImplementedException(); }
+            get { return _valuesCollection; }
         }
 
 
@@ -532,6 +530,10 @@ namespace DataStructures.Dictionaries
             _keysValuesMap[hashcode].Append(key, value);
             _size++;
 
+            //Add the key-value to the keys and values collections
+            _keysCollection.Add(key);
+            _valuesCollection.Add(value);
+
             _occupiedSlotsLoadRatio = Decimal.Divide(
                 Convert.ToDecimal(_size),
                 Convert.ToDecimal(_keysValuesMap.Length));
@@ -562,25 +564,37 @@ namespace DataStructures.Dictionaries
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
             {
-                if (_keysValuesMap[hashcode].ContainsKey(key) == true)
+                try
                 {
-                    _keysValuesMap[hashcode].RemoveBy(key);
-                    _size--;
+                    var keyValuePair = _keysValuesMap[hashcode].Find(key);
 
-                    // check if no other keys exist in this slot.
-                    if (_keysValuesMap[hashcode].Count == 0)
+                    if (keyValuePair.Key.IsEqualTo(key))
                     {
-                        // Nullify the chain of collisions at this slot.
-                        _keysValuesMap[hashcode] = null;
+                        _keysValuesMap[hashcode].RemoveBy(key);
+                        _size--;
 
-                        // Increase the number of free slots.
-                        _freeSlotsCount++;
+                        // check if no other keys exist in this slot.
+                        if (_keysValuesMap[hashcode].Count == 0)
+                        {
+                            // Nullify the chain of collisions at this slot.
+                            _keysValuesMap[hashcode] = null;
 
-                        // Capacity management
-                        _ensureCapacity(CapacityManagementMode.Contract);
+                            // Increase the number of free slots.
+                            _freeSlotsCount++;
+
+                            // Capacity management
+                            _ensureCapacity(CapacityManagementMode.Contract);
+                        }
+
+                        _keysCollection.Remove(key);
+                        _valuesCollection.Remove(keyValuePair.Value);
+
+                        return true;
                     }
-
-                    return true;
+                }
+                catch
+                {
+                    // do nothing
                 }
             }
 
@@ -620,6 +634,9 @@ namespace DataStructures.Dictionaries
                             // Capacity management
                             _ensureCapacity(CapacityManagementMode.Contract);
                         }
+
+                        _keysCollection.Remove(keyValuePair.Key);
+                        _valuesCollection.Remove(keyValuePair.Value);
 
                         return true;
                     }
