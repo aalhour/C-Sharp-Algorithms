@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 using DataStructures.Dictionaries;
 
@@ -100,6 +101,11 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             studentsMarks.Remove("Test888888888");
 
             Debug.Assert(studentsMarks.Count == 3);
+
+            KeyValuePair<string, int>[] array = new KeyValuePair<string, int>[studentsMarks.Count];
+            studentsMarks.CopyTo(array, 0);
+
+            Debug.Assert(array.Length == studentsMarks.Count);
         }
     }
 }

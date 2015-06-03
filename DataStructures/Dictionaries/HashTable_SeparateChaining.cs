@@ -27,19 +27,18 @@ namespace DataStructures.Dictionaries
         private int _freeSlotsCount;
         private decimal _occupiedSlotsLoadRatio;
         private const int _defaultCapacity = 7;
-        private DLinkedList<TKey, TValue>[] _keysValuesMap;
+        private DLinkedList<TKey, TValue>[] _hashTableStore;
         private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[7];
         private List<TKey> _keysCollection { get; set; }
         private List<TValue> _valuesCollection { get; set; }
-        
+
         // Keys and Values Comparers
         private EqualityComparer<TKey> _keysComparer { get; set; }
         private EqualityComparer<TValue> _valuesComparer { get; set; }
-        
+
         // A collection of prime numbers to use as hash table sizes. 
         internal static readonly int[] _primes = {
-            //2, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
-            7, 17, 29, 59, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
+            7, 17, 29, 59, 107, 131, 197, 239, 293, 353, 431, 521, 631, 761, 919,
             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
             17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
             187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
@@ -66,11 +65,14 @@ namespace DataStructures.Dictionaries
         public HashTable_SeparateChaining()
         {
             this._size = 0;
-            this._keysValuesMap = _emptyArray;
-            this._freeSlotsCount = this._keysValuesMap.Length;
+            this._hashTableStore = _emptyArray;
+            this._freeSlotsCount = this._hashTableStore.Length;
             this._keysComparer = EqualityComparer<TKey>.Default;
             this._valuesComparer = EqualityComparer<TValue>.Default;
             this._randomNumberGenerator = new Random(Int32.MaxValue / 2);
+
+            this._keysCollection = new List<TKey>();
+            this._valuesCollection = new List<TValue>();
         }
 
 
@@ -120,8 +122,6 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Get the next smaller prime that is smaller than half the size of the internal array (size / 2);
         /// </summary>
-        /// <param name="oldSize"></param>
-        /// <returns></returns>
         private int _getContractPrime(int oldSize)
         {
             int newSize = oldSize / 2;
@@ -134,11 +134,11 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private void _contractCapacity()
         {
-            int oneThird = (_keysValuesMap.Length / 3);
+            int oneThird = (_hashTableStore.Length / 3);
 
             if (_size <= oneThird)
             {
-                int newCapacity = (_keysValuesMap.Length == 0 ? _defaultCapacity : _getContractPrime(_keysValuesMap.Length));
+                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
 
                 //
                 // Try to expand the size
@@ -150,9 +150,9 @@ namespace DataStructures.Dictionaries
                     // Reset the free slots count
                     _freeSlotsCount = newKeysMap.Length;
 
-                    for (int i = 0; i < _keysValuesMap.Length; ++i)
+                    for (int i = 0; i < _hashTableStore.Length; ++i)
                     {
-                        var chain = _keysValuesMap[i];
+                        var chain = _hashTableStore[i];
 
                         if (chain != null && chain.Count > 0)
                         {
@@ -176,7 +176,7 @@ namespace DataStructures.Dictionaries
                     }//end-for
                 }//end-if
 
-                _keysValuesMap = newKeysMap;
+                _hashTableStore = newKeysMap;
             }
         }
 
@@ -185,9 +185,9 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private void _expandCapacity(int minCapacity)
         {
-            if (_keysValuesMap.Length < minCapacity)
+            if (_hashTableStore.Length < minCapacity)
             {
-                int newCapacity = (_keysValuesMap.Length == 0 ? _defaultCapacity : _getExpandPrime(_keysValuesMap.Length));
+                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getExpandPrime(_hashTableStore.Length));
 
                 if (newCapacity >= MaxPrimeArrayLength)
                     newCapacity = MaxPrimeArrayLength;
@@ -203,15 +203,15 @@ namespace DataStructures.Dictionaries
                         // Reset the free slots count
                         _freeSlotsCount = newKeysMap.Length;
 
-                        for(int i = 0; i < _keysValuesMap.Length; ++i)
+                        for (int i = 0; i < _hashTableStore.Length; ++i)
                         {
-                            var chain = _keysValuesMap[i];
-                            
-                            if(chain != null && chain.Count > 0)
+                            var chain = _hashTableStore[i];
+
+                            if (chain != null && chain.Count > 0)
                             {
                                 var head = chain.Head;
-                                
-                                while(head != null)
+
+                                while (head != null)
                                 {
                                     int hash = _getHashOfKey(head.Key, newKeysMap.Length);
 
@@ -220,7 +220,7 @@ namespace DataStructures.Dictionaries
                                         _freeSlotsCount--;
                                         newKeysMap[hash] = new DLinkedList<TKey, TValue>();
                                     }
-                                    
+
                                     newKeysMap[hash].Append(head.Key, head.Value);
 
                                     head = head.Next;
@@ -229,7 +229,7 @@ namespace DataStructures.Dictionaries
                         }//end-for
                     }//end-if
 
-                    _keysValuesMap = newKeysMap;
+                    _hashTableStore = newKeysMap;
                 }
                 catch (OutOfMemoryException)
                 {
@@ -247,7 +247,7 @@ namespace DataStructures.Dictionaries
         {
             // If the size of the internal collection is less than or equal to third of 
             // ... the total capacity then contract the internal collection
-            int oneThird = (_keysValuesMap.Length / 3);
+            int oneThird = (_hashTableStore.Length / 3);
 
             if (mode == CapacityManagementMode.Contract && _size <= oneThird)
             {
@@ -277,13 +277,13 @@ namespace DataStructures.Dictionaries
             int hashcode, a, b, primeNum;
 
             if (length == -1)
-                length = _keysValuesMap.Length;
+                length = _hashTableStore.Length;
 
             primeNum = _primes[_primes.Length - 1];
             a = _randomNumberGenerator.Next(0, (primeNum - 1) / 2);
             b = _randomNumberGenerator.Next((primeNum) / 2, primeNum - 1);
 
-            hashcode = Math.Abs((((a * _getPreHashOfKey(key)) + b) % primeNum) % _keysValuesMap.Length);
+            hashcode = Math.Abs((((a * _getPreHashOfKey(key)) + b) % primeNum) % _hashTableStore.Length);
 
             return hashcode;
         }
@@ -295,12 +295,58 @@ namespace DataStructures.Dictionaries
         private int _getHashOfKey(TKey key, int length = -1)
         {
             if (length <= 0)
-                length = _keysValuesMap.Length;
+                length = _hashTableStore.Length;
 
             int prehash = _getPreHashOfKey(key);
             int hash = prehash % length;
 
             return hash;
+        }
+
+        /// <summary>
+        /// Copy the key-value pairs in the hash table to an array starting from the specified index.
+        /// </summary>
+        private void _copyHashTableTo(ref KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+
+            int i = arrayIndex;
+            int hashTableIndex = 0;
+            int countOfElements = (array.Length - arrayIndex);
+
+            while (true)
+            {
+                KeyValuePair<TKey, TValue> pair;
+
+                if (i >= array.Length)
+                    break;
+
+                if (_hashTableStore[hashTableIndex] != null && _hashTableStore[hashTableIndex].Count > 0)
+                {
+                    if (_hashTableStore[hashTableIndex].Count == 1)
+                    {
+                        pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+                        array[i] = pair;
+                        i++;
+                        hashTableIndex++;
+                    }
+                    else
+                    {
+                        var headOfChain = _hashTableStore[hashTableIndex].Head;
+
+                        while (i < array.Length)
+                        {
+                            pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+                            array[i] = pair;
+                            i++;
+                            hashTableIndex++;
+                        }
+                    }//end-if-else
+                }//end-if
+                else
+                {
+                    hashTableIndex++;
+                }
+            }
         }
 
 
@@ -337,9 +383,9 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
-                return _keysValuesMap[hashcode].ContainsKey(key);
+                return _hashTableStore[hashcode].ContainsKey(key);
             }
 
             // else
@@ -355,11 +401,11 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(item.Key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
                 try
                 {
-                    var existingPair = _keysValuesMap[hashcode].Find(item.Key);
+                    var existingPair = _hashTableStore[hashcode].Find(item.Key);
 
                     if (existingPair.Key.IsEqualTo(item.Key) && _valuesComparer.Equals(existingPair.Value, item.Value))
                         return true;
@@ -400,11 +446,11 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
                 try
                 {
-                    var existingPair = _keysValuesMap[hashcode].Find(key);
+                    var existingPair = _hashTableStore[hashcode].Find(key);
                     value = existingPair.Value;
                     return true;
                 }
@@ -430,11 +476,11 @@ namespace DataStructures.Dictionaries
                 int hashcode = _getHashOfKey(key);
 
                 // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-                if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+                if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
                 {
                     try
                     {
-                        var existingPair = _keysValuesMap[hashcode].Find(key);
+                        var existingPair = _hashTableStore[hashcode].Find(key);
                         return existingPair.Value;
                     }
                     catch (KeyNotFoundException)
@@ -452,12 +498,12 @@ namespace DataStructures.Dictionaries
                 int hashcode = _getHashOfKey(key);
 
                 // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-                if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+                if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
                 {
-                    bool exists = _keysValuesMap[hashcode].ContainsKey(key);
+                    bool exists = _hashTableStore[hashcode].ContainsKey(key);
 
                     if (exists == true)
-                        _keysValuesMap[hashcode].UpdateValueByKey(key, value);
+                        _hashTableStore[hashcode].UpdateValueByKey(key, value);
                 }
 
                 // NOT FOUND
@@ -473,35 +519,7 @@ namespace DataStructures.Dictionaries
             if (array == null)
                 array = new KeyValuePair<TKey, TValue>[_size];
 
-            int countOfElements = (array.Length - arrayIndex);
-            int hashTableIndex = 0;
-
-            for(int i = arrayIndex; i < array.Length; ++i)
-            {
-                KeyValuePair<TKey, TValue> pair;
-
-                if (_keysValuesMap[hashTableIndex] != null && _keysValuesMap[hashTableIndex].Count > 0)
-                {
-                    if (_keysValuesMap[hashTableIndex].Count == 1)
-                    {
-                        pair = new KeyValuePair<TKey, TValue>(_keysValuesMap[hashTableIndex].First.Key, _keysValuesMap[hashTableIndex].First.Value);
-                        array[i] = pair;
-                        hashTableIndex++;
-                    }
-                    else
-                    {
-                        var headOfChain = _keysValuesMap[hashTableIndex].Head;
-
-                        while(hashTableIndex < countOfElements && i < array.Length)
-                        {
-                            pair = new KeyValuePair<TKey, TValue>(_keysValuesMap[hashTableIndex].First.Key, _keysValuesMap[hashTableIndex].First.Value);
-                            array[i] = pair;
-                            i++;
-                            hashTableIndex++;
-                        }
-                    }
-                }//end-if
-            }//end-for
+            _copyHashTableTo(ref array, arrayIndex);
         }
 
         /// <summary>
@@ -513,21 +531,21 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] == null)
+            if (_hashTableStore[hashcode] == null)
             {
                 // This is an empty slot. Initialize the chain of collisions.
-                _keysValuesMap[hashcode] = new DLinkedList<TKey, TValue>();
+                _hashTableStore[hashcode] = new DLinkedList<TKey, TValue>();
 
                 // Decrease the number of free slots.
                 _freeSlotsCount--;
             }
-            else if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            else if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
-                if (_keysValuesMap[hashcode].ContainsKey(key) == true)
+                if (_hashTableStore[hashcode].ContainsKey(key) == true)
                     throw new ArgumentException("Key already exists in the hash table.");
             }
 
-            _keysValuesMap[hashcode].Append(key, value);
+            _hashTableStore[hashcode].Append(key, value);
             _size++;
 
             //Add the key-value to the keys and values collections
@@ -536,12 +554,12 @@ namespace DataStructures.Dictionaries
 
             _occupiedSlotsLoadRatio = Decimal.Divide(
                 Convert.ToDecimal(_size),
-                Convert.ToDecimal(_keysValuesMap.Length));
+                Convert.ToDecimal(_hashTableStore.Length));
 
             // Capacity management
             if (_occupiedSlotsLoadRatio.IsGreaterThanOrEqualTo(Convert.ToDecimal(0.90)))
             {
-                _ensureCapacity(CapacityManagementMode.Expand, _keysValuesMap.Length + 1);
+                _ensureCapacity(CapacityManagementMode.Expand, _hashTableStore.Length + 1);
             }
         }
 
@@ -562,22 +580,22 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
                 try
                 {
-                    var keyValuePair = _keysValuesMap[hashcode].Find(key);
+                    var keyValuePair = _hashTableStore[hashcode].Find(key);
 
                     if (keyValuePair.Key.IsEqualTo(key))
                     {
-                        _keysValuesMap[hashcode].RemoveBy(key);
+                        _hashTableStore[hashcode].RemoveBy(key);
                         _size--;
 
                         // check if no other keys exist in this slot.
-                        if (_keysValuesMap[hashcode].Count == 0)
+                        if (_hashTableStore[hashcode].Count == 0)
                         {
                             // Nullify the chain of collisions at this slot.
-                            _keysValuesMap[hashcode] = null;
+                            _hashTableStore[hashcode] = null;
 
                             // Increase the number of free slots.
                             _freeSlotsCount++;
@@ -611,22 +629,22 @@ namespace DataStructures.Dictionaries
             int hashcode = _getHashOfKey(item.Key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
-            if (_keysValuesMap[hashcode] != null && _keysValuesMap[hashcode].Count > 0)
+            if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
             {
                 try
                 {
-                    var keyValuePair = _keysValuesMap[hashcode].Find(item.Key);
+                    var keyValuePair = _hashTableStore[hashcode].Find(item.Key);
 
                     if (keyValuePair.Key.IsEqualTo(item.Key) && _valuesComparer.Equals(keyValuePair.Value, item.Value))
                     {
-                        _keysValuesMap[hashcode].RemoveBy(item.Key);
+                        _hashTableStore[hashcode].RemoveBy(item.Key);
                         _size--;
 
                         // check if no other keys exist in this slot.
-                        if (_keysValuesMap[hashcode].Count == 0)
+                        if (_hashTableStore[hashcode].Count == 0)
                         {
                             // Nullify the chain of collisions at this slot.
-                            _keysValuesMap[hashcode] = null;
+                            _hashTableStore[hashcode] = null;
 
                             // Increase the number of free slots.
                             _freeSlotsCount++;
@@ -656,8 +674,15 @@ namespace DataStructures.Dictionaries
         /// </summary>
         public void Clear()
         {
+            // Clear the elements in the store
+            Array.Clear(_hashTableStore, 0, _hashTableStore.Length);
+
+            // Re-initialize to empty collection.
+            _hashTableStore = _emptyArray;
+
             _size = 0;
-            _keysValuesMap = _emptyArray;
+            _occupiedSlotsLoadRatio = 0;
+            _freeSlotsCount = _hashTableStore.Length;
         }
 
 
