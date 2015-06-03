@@ -1,24 +1,9 @@
 ﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataStructures/Heaps/MaxHeap.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DataStructures/Dictionaries/ChainedHashTable.cs">
     <Files>
-      <File FileName="DataStructures/Heaps/MinHeap.cs" Line="247" Column="59" />
-      <File FileName="DataStructures/Heaps/MaxHeap.cs" Line="32" Column="3" />
+      <File FileName="DataStructures/Dictionaries/ChainedHashTable.cs" Line="567" Column="4" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="C-Sharp-Algorithms" expanded="True">
-            <Node name="DataStructures" expanded="True">
-              <Node name="Heaps" expanded="True">
-                <Node name="MaxHeap.cs" selected="True" />
-              </Node>
-            </Node>
-            <Node name="MainProgram" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>

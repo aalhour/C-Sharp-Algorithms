@@ -40,6 +40,10 @@ namespace DataStructures.Dictionaries
         // Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
         private const int MAX_ARRAY_LENGTH = 0X7FEFFFFF;
 
+		// Initial hash value.
+		private const uint INITIAL_HASH = 0x9e3779b9;
+
+
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
@@ -55,6 +59,41 @@ namespace DataStructures.Dictionaries
             this._valuesCollection = new List<TValue>();
         }
 
+
+		/// <summary>
+		/// Rehash the the current collection elements to a new collection.
+		/// </summary>
+		private void _rehash(ref DLinkedList<TKey, TValue>[] newHashTableStore, int oldHashTableSize)
+		{
+			// Reset the free slots count
+			this._freeSlotsCount = newHashTableStore.Length;
+
+			for (int i = 0; i < oldHashTableSize; ++i)
+			{
+				var chain = _hashTableStore[i];
+
+				if (chain != null && chain.Count > 0)
+				{
+					var head = chain.Head;
+
+					while (head != null)
+					{
+						uint hash = _getHashOfKey(head.Key, newHashTableStore.Length);
+
+						if (newHashTableStore[hash] == null)
+						{
+							_freeSlotsCount--;
+							newHashTableStore[hash] = new DLinkedList<TKey, TValue>();
+						}
+
+						newHashTableStore[hash].Append(head.Key, head.Value);
+
+						head = head.Next;
+					}
+				}
+			}//end-for
+		}
+
         /// <summary>
         /// Contracts the capacity of the keys and values arrays.
         /// </summary>
@@ -68,41 +107,15 @@ namespace DataStructures.Dictionaries
                 int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : twoThirds);
 
                 // Try to expand the size
-                DLinkedList<TKey, TValue>[] newKeysMap = new DLinkedList<TKey, TValue>[newCapacity];
+				DLinkedList<TKey, TValue>[] newHashTableStore = new DLinkedList<TKey, TValue>[newCapacity];
 
                 // Rehash
                 if (_size > 0)
                 {
-                    // Reset the free slots count
-                    _freeSlotsCount = newKeysMap.Length;
-
-                    for (int i = 0; i < _hashTableStore.Length; ++i)
-                    {
-                        var chain = _hashTableStore[i];
-
-                        if (chain != null && chain.Count > 0)
-                        {
-                            var head = chain.Head;
-
-                            while (head != null)
-                            {
-                                int hash = _getHashOfKey(head.Key, newKeysMap.Length);
-
-                                if (newKeysMap[hash] == null)
-                                {
-                                    _freeSlotsCount--;
-                                    newKeysMap[hash] = new DLinkedList<TKey, TValue>();
-                                }
-
-                                newKeysMap[hash].Append(head.Key, head.Value);
-
-                                head = head.Next;
-                            }
-                        }
-                    }//end-for
+					_rehash (ref newHashTableStore, _hashTableStore.Length);
                 }//end-if
 
-                _hashTableStore = newKeysMap;
+                _hashTableStore = newHashTableStore;
             }
         }
 
@@ -128,41 +141,15 @@ namespace DataStructures.Dictionaries
                 // Try to expand the size
                 try
                 {
-                    DLinkedList<TKey, TValue>[] newKeysMap = new DLinkedList<TKey, TValue>[newCapacity];
+					DLinkedList<TKey, TValue>[] newHashTableStore = new DLinkedList<TKey, TValue>[newCapacity];
                     
                     // Rehash
                     if (_size > 0)
                     {
-                        // Reset the free slots count
-                        _freeSlotsCount = newKeysMap.Length;
-
-                        for (int i = 0; i < _hashTableStore.Length; ++i)
-                        {
-                            var chain = _hashTableStore[i];
-
-                            if (chain != null && chain.Count > 0)
-                            {
-                                var head = chain.Head;
-
-                                while (head != null)
-                                {
-                                    int hash = _getHashOfKey(head.Key, newKeysMap.Length);
-
-                                    if (newKeysMap[hash] == null)
-                                    {
-                                        _freeSlotsCount--;
-                                        newKeysMap[hash] = new DLinkedList<TKey, TValue>();
-                                    }
-
-                                    newKeysMap[hash].Append(head.Key, head.Value);
-
-                                    head = head.Next;
-                                }
-                            }
-                        }//end-for
+						_rehash (ref newHashTableStore, _hashTableStore.Length);
                     }//end-if
 
-                    _hashTableStore = newKeysMap;
+					_hashTableStore = newHashTableStore;
                 }
                 catch (OutOfMemoryException)
                 {
@@ -192,91 +179,84 @@ namespace DataStructures.Dictionaries
             }
         }
 
-        /// <summary>
-        /// Returns an integer that represents the key.
-        /// Used in the _hashKey function.
-        /// </summary>
-        private int _getPreHashOfKey(TKey key)
-        {
-            return Math.Abs(_keysComparer.GetHashCode(key));
+		/// <summary>
+		/// Hash Function.
+		/// The universal hashing principle method.
+		/// </summary>
+        private uint _universalHashFunction(TKey key, int length)
+		{
+			if (length < 0)
+				throw new IndexOutOfRangeException ();
+			
+			// Hashes
+			uint prehash = 0, hash = INITIAL_HASH;
 
-            //int preHash = 0;
-            //if(key is string && false == key.IsEqualTo(default(TKey)))
-            //{
-            //    var stringKey = Convert.ToString(key);
-            //    for (int i = 0; i < stringKey.Length; ++i)
-            //        preHash += (26 * i) + stringKey[i];
-            //}
-            //else
-            //{
-            //    preHash = Math.Abs(_keysComparer.GetHashCode(key));
-            //}
-            //return preHash;
-        }
+			// Primes
+			int a = 197, b = 4049, p = 7199369;
+			
+			prehash = _getPreHashOfKey(key);
+			hash = Convert.ToUInt32(((a * prehash + b) % p) % length);
+
+			return hash;
+		}
+
+		/// <summary>
+		/// Hash Function.
+		/// The division method hashing.
+		/// </summary>
+		private uint _divisionMethodHashFunction(TKey key, int length)
+		{
+			uint prehash = 0, hash = INITIAL_HASH;
+
+			if (length < 0)
+				throw new IndexOutOfRangeException ();
+
+			if (key is string && key.IsEqualTo (default(TKey)) == false)
+			{
+				var stringKey = Convert.ToString (key);
+
+				for (int i = 0; i < stringKey.Length; ++i)
+				{
+					hash = (hash ^ stringKey[i]) + ((hash << 26) + (hash >> 6));
+				}
+
+				if(hash > length)
+					hash = Convert.ToUInt32(hash % length);
+			}
+			else
+			{
+				prehash = _getPreHashOfKey(key);
+				hash = Convert.ToUInt32((37 * prehash) % length);
+			}
+
+			return hash;
+		}
+
+		/// <summary>
+		/// Returns an integer that represents the key.
+		/// Used in the _hashKey function.
+		/// </summary>
+		private uint _getPreHashOfKey(TKey key)
+		{
+			return Convert.ToUInt32(Math.Abs(_keysComparer.GetHashCode(key)));
+		}
 
         /// <summary>
         /// Returns a key from 0 to m where m is the size of the keys-and-values map. The hash serves as an index.
-        /// Division Method.
         /// </summary>
-        private int _getHashOfKey(TKey key, int length = -1)
+        private uint _getHashOfKey(TKey key, int length)
         {
-            if (length <= 0)
-                length = _hashTableStore.Length;
-
-            int prehash = _getPreHashOfKey(key);
-            int hash = prehash % length;
-
-            return hash;
+			return _universalHashFunction (key, length);
         }
 
-        /// <summary>
-        /// Copy the key-value pairs in the hash table to an array starting from the specified index.
-        /// </summary>
-        private void _copyHashTableTo(ref KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-
-            int i = arrayIndex;
-            int hashTableIndex = 0;
-            int countOfElements = (array.Length - arrayIndex);
-
-            while (true)
-            {
-                KeyValuePair<TKey, TValue> pair;
-
-                if (i >= array.Length)
-                    break;
-
-                if (_hashTableStore[hashTableIndex] != null && _hashTableStore[hashTableIndex].Count > 0)
-                {
-                    if (_hashTableStore[hashTableIndex].Count == 1)
-                    {
-                        pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
-                        array[i] = pair;
-                        i++;
-                        hashTableIndex++;
-                    }
-                    else
-                    {
-                        var headOfChain = _hashTableStore[hashTableIndex].Head;
-
-                        while (i < array.Length)
-                        {
-                            pair = new KeyValuePair<TKey, TValue>(headOfChain.Key, headOfChain.Value);
-                            array[i] = pair;
-                            i++;
-                            hashTableIndex++;
-
-                            headOfChain = headOfChain.Next;
-                        }
-                    }//end-if-else
-                }//end-if
-                else
-                {
-                    hashTableIndex++;
-                }
-            }
-        }
-
+		/// <summary>
+		/// Returns a key from 0 to m where m is the size of the keys-and-values map. The hash serves as an index.
+		/// Division Method.
+		/// </summary>
+		private uint _getHashOfKey(TKey key)
+		{
+			return _universalHashFunction (key, _hashTableStore.Length);
+		}
 
         /// <summary>
         /// Return count of elements in the hash table.
@@ -308,7 +288,7 @@ namespace DataStructures.Dictionaries
         public bool ContainsKey(TKey key)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(key);
+            var hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -326,7 +306,7 @@ namespace DataStructures.Dictionaries
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(item.Key);
+            var hashcode = _getHashOfKey(item.Key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -371,7 +351,7 @@ namespace DataStructures.Dictionaries
         public bool TryGetValue(TKey key, out TValue value)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(key);
+            var hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -401,7 +381,7 @@ namespace DataStructures.Dictionaries
             get
             {
                 // Get hash of the key
-                int hashcode = _getHashOfKey(key);
+                var hashcode = _getHashOfKey(key);
 
                 // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
                 if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -423,7 +403,7 @@ namespace DataStructures.Dictionaries
             set
             {
                 // Get hash of the key
-                int hashcode = _getHashOfKey(key);
+                var hashcode = _getHashOfKey(key);
 
                 // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
                 if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -440,23 +420,12 @@ namespace DataStructures.Dictionaries
         }
 
         /// <summary>
-        /// Copy the key-value pairs in the hash table to an array starting from the specified index.
-        /// </summary>
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            if (array == null)
-                array = new KeyValuePair<TKey, TValue>[_size];
-
-            _copyHashTableTo(ref array, arrayIndex);
-        }
-
-        /// <summary>
         /// Add a key and value to the hash table.
         /// </summary>
         public void Add(TKey key, TValue value)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(key);
+            var hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] == null)
@@ -505,7 +474,7 @@ namespace DataStructures.Dictionaries
         public bool Remove(TKey key)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(key);
+            var hashcode = _getHashOfKey(key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -554,7 +523,7 @@ namespace DataStructures.Dictionaries
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
             // Get hash of the key
-            int hashcode = _getHashOfKey(item.Key);
+            var hashcode = _getHashOfKey(item.Key);
 
             // The chain of colliding keys are found at _keysValuesMap[hashcode] as a doubly-linked-list.
             if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
@@ -596,6 +565,56 @@ namespace DataStructures.Dictionaries
             // else
             return false;
         }
+
+		/// <summary>
+		/// Copy the key-value pairs in the hash table to an array starting from the specified index.
+		/// </summary>
+		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+		{
+			if (array == null)
+				array = new KeyValuePair<TKey, TValue>[_size];
+
+			int i = arrayIndex;
+			int hashTableIndex = 0;
+			int countOfElements = (array.Length - arrayIndex);
+
+			while (true)
+			{
+				KeyValuePair<TKey, TValue> pair;
+
+				if (i >= array.Length)
+					break;
+
+				if (_hashTableStore[hashTableIndex] != null && _hashTableStore[hashTableIndex].Count > 0)
+				{
+					if (_hashTableStore[hashTableIndex].Count == 1)
+					{
+						pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+						array[i] = pair;
+						i++;
+						hashTableIndex++;
+					}
+					else
+					{
+						var headOfChain = _hashTableStore[hashTableIndex].Head;
+
+						while (i < array.Length)
+						{
+							pair = new KeyValuePair<TKey, TValue>(headOfChain.Key, headOfChain.Value);
+							array[i] = pair;
+							i++;
+							hashTableIndex++;
+
+							headOfChain = headOfChain.Next;
+						}
+					}//end-if-else
+				}//end-if
+				else
+				{
+					hashTableIndex++;
+				}
+			}
+		}
 
         /// <summary>
         /// Clears this instance.
