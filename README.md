@@ -13,8 +13,8 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
  * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
  * [Array List](DataStructures/Lists/ArrayList.cs). A generic arrays-based list. Implements auto-resizing and handles overflow.
- * [Stack](DataStructures/Lists/Stack.cs). Based on *my ArrayList\<T\>*.
- * [Queue](DataStructures/Lists/Queue.cs). Based on *my ArrayList\<T\>*.
+ * [Stack](DataStructures/Lists/Stack.cs). Based on my *ArrayList\<T\>*.
+ * [Queue](DataStructures/Lists/Queue.cs). Based on my *ArrayList\<T\>*.
 
 #### Priority Queues:
 
@@ -34,7 +34,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 
 #### Dictionary(s):
 
- * **[Chained Hash Table](DataStructures/Dictionaries/HashTable_SeparateChaining.cs)**. A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction) based on prime numbers.
+ * **[Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs)**. A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
 
 
 ## ALGORITHMS:
