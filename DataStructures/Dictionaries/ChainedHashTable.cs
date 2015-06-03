@@ -25,10 +25,10 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private int _size;
         private int _freeSlotsCount;
-        private decimal _occupiedSlotsLoadRatio;
-        private const int _defaultCapacity = 7;
+        private decimal _slotsLoadFactor;
+        private const int _defaultCapacity = 8;
         private DLinkedList<TKey, TValue>[] _hashTableStore;
-        private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[7];
+        private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[_defaultCapacity];
         private List<TKey> _keysCollection { get; set; }
         private List<TValue> _valuesCollection { get; set; }
 
@@ -36,28 +36,9 @@ namespace DataStructures.Dictionaries
         private EqualityComparer<TKey> _keysComparer { get; set; }
         private EqualityComparer<TValue> _valuesComparer { get; set; }
 
-        // A collection of prime numbers to use as hash table sizes. 
-        internal static readonly int[] _primes = {
-            7, 17, 29, 59, 107, 131, 197, 239, 293, 353, 431, 521, 631, 761, 919,
-            1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
-            17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
-            187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
-            1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369 };
-
-        // Random numbers generator.
-        private Random _randomNumberGenerator { get; set; }
-
-        // This is the maximum prime that is smaller than the C# maximum allowed size of arrays.
-        // Check the following reference: 
-        // C# Maximum Array Length (before encountering overflow).
-        // Link: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-        private const int MaxPrimeArrayLength = 0x7FEFFFFD;
-
-        // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
-        // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
-        // The choice is largely arbitrary.
-        private const int HashPrime = 101;
-
+        // The C# Maximum Array Length (before encountering overflow)
+        // Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
+        private const int MAX_ARRAY_LENGTH = 0X7FEFFFFF;
 
         /// <summary>
         /// CONSTRUCTOR
@@ -69,64 +50,9 @@ namespace DataStructures.Dictionaries
             this._freeSlotsCount = this._hashTableStore.Length;
             this._keysComparer = EqualityComparer<TKey>.Default;
             this._valuesComparer = EqualityComparer<TValue>.Default;
-            this._randomNumberGenerator = new Random(Int32.MaxValue / 2);
 
             this._keysCollection = new List<TKey>();
             this._valuesCollection = new List<TValue>();
-        }
-
-
-        /// <summary>
-        /// Returns a prime number that is greater than the specified number.
-        /// </summary>
-        private int _getUpperBoundPrime(int minNumber)
-        {
-            if (minNumber < 0)
-                throw new ArgumentException("Number should be greater than or equal to 0.");
-
-            for (int i = 0; i < _primes.Length; i++)
-            {
-                int prime = _primes[i];
-
-                if (prime >= minNumber)
-                    return prime;
-            }
-
-            // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = (minNumber | 1); i < Int32.MaxValue; i += 2)
-            {
-                if (Helpers.IsPrime(i) && ((i - 1) % HashPrime != 0))
-                    return i;
-            }
-
-            return minNumber;
-        }
-
-        /// <summary>
-        /// Returns the next biggest prime that is greater than twice the size of the interal array (size * 2).
-        /// </summary>
-        private int _getExpandPrime(int oldSize)
-        {
-            int newSize = 2 * oldSize;
-
-            // Allow the hashtables to grow to maximum possible size (~2G elements) before encoutering capacity overflow.
-            // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-            if ((uint)newSize > MaxPrimeArrayLength && MaxPrimeArrayLength > oldSize)
-            {
-                return MaxPrimeArrayLength;
-            }
-
-            return _getUpperBoundPrime(newSize);
-        }
-
-        /// <summary>
-        /// Get the next smaller prime that is smaller than half the size of the internal array (size / 2);
-        /// </summary>
-        private int _getContractPrime(int oldSize)
-        {
-            int newSize = oldSize / 2;
-
-            return _getUpperBoundPrime(newSize);
         }
 
         /// <summary>
@@ -135,16 +61,16 @@ namespace DataStructures.Dictionaries
         private void _contractCapacity()
         {
             int oneThird = (_hashTableStore.Length / 3);
+            int twoThirds = 2 * oneThird;
 
             if (_size <= oneThird)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
+                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : twoThirds);
 
-                //
                 // Try to expand the size
-                DLinkedList<TKey, TValue>[] newKeysMap =
-                    new DLinkedList<TKey, TValue>[newCapacity];
+                DLinkedList<TKey, TValue>[] newKeysMap = new DLinkedList<TKey, TValue>[newCapacity];
 
+                // Rehash
                 if (_size > 0)
                 {
                     // Reset the free slots count
@@ -187,17 +113,24 @@ namespace DataStructures.Dictionaries
         {
             if (_hashTableStore.Length < minCapacity)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getExpandPrime(_hashTableStore.Length));
+                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _hashTableStore.Length * 2);
 
-                if (newCapacity >= MaxPrimeArrayLength)
-                    newCapacity = MaxPrimeArrayLength;
+                // Make sure it doesn't divide by 2 or 10
+                if (newCapacity % 2 == 0 || newCapacity % 10 == 0)
+                    newCapacity = newCapacity + 1;
+
+                // Handle overflow
+                if (newCapacity >= MAX_ARRAY_LENGTH)
+                    newCapacity = MAX_ARRAY_LENGTH;
+                else if (newCapacity < minCapacity)
+                    newCapacity = minCapacity;
 
                 // Try to expand the size
                 try
                 {
-                    DLinkedList<TKey, TValue>[] newKeysMap =
-                        new DLinkedList<TKey, TValue>[newCapacity];
-
+                    DLinkedList<TKey, TValue>[] newKeysMap = new DLinkedList<TKey, TValue>[newCapacity];
+                    
+                    // Rehash
                     if (_size > 0)
                     {
                         // Reset the free slots count
@@ -279,26 +212,6 @@ namespace DataStructures.Dictionaries
             //    preHash = Math.Abs(_keysComparer.GetHashCode(key));
             //}
             //return preHash;
-        }
-
-        /// <summary>
-        /// Returns a key from 0 to m where m is the size of the keys-and-values map. The hash serves as an index.
-        /// This is based on the Simple Universal Hashing Principle.
-        /// </summary>
-        private int _universalHashingPrinciple(TKey key, int length = -1)
-        {
-            int hashcode, a, b, primeNum;
-
-            if (length == -1)
-                length = _hashTableStore.Length;
-
-            primeNum = _primes[_primes.Length - 1];
-            a = _randomNumberGenerator.Next(0, (primeNum - 1) / 2);
-            b = _randomNumberGenerator.Next((primeNum) / 2, primeNum - 1);
-
-            hashcode = Math.Abs((((a * _getPreHashOfKey(key)) + b) % primeNum) % _hashTableStore.Length);
-
-            return hashcode;
         }
 
         /// <summary>
@@ -567,12 +480,12 @@ namespace DataStructures.Dictionaries
             _keysCollection.Add(key);
             _valuesCollection.Add(value);
 
-            _occupiedSlotsLoadRatio = Decimal.Divide(
+            _slotsLoadFactor = Decimal.Divide(
                 Convert.ToDecimal(_size),
                 Convert.ToDecimal(_hashTableStore.Length));
 
             // Capacity management
-            if (_occupiedSlotsLoadRatio.IsGreaterThanOrEqualTo(Convert.ToDecimal(0.90)))
+            if (_slotsLoadFactor.IsGreaterThanOrEqualTo(Convert.ToDecimal(0.90)))
             {
                 _ensureCapacity(CapacityManagementMode.Expand, _hashTableStore.Length + 1);
             }
@@ -696,7 +609,7 @@ namespace DataStructures.Dictionaries
             _hashTableStore = _emptyArray;
 
             _size = 0;
-            _occupiedSlotsLoadRatio = 0;
+            _slotsLoadFactor = 0;
             _freeSlotsCount = _hashTableStore.Length;
         }
 
