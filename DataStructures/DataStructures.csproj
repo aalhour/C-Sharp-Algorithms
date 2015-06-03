@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dictionaries\HashTable_OpenAddressing.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Trees\BinaryTree.cs" />
     <Compile Include="Trees\IBinaryTree.cs" />
     <Compile Include="Trees\TreeDrawer.cs" />
-    <Compile Include="Dictionaries\HashTable.cs" />
+    <Compile Include="Dictionaries\HashTable_SeparateChaining.cs" />
     <Compile Include="Lists\DLinkedList_KeyValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -73,7 +74,5 @@
   </Target>
   -->
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Dictionaries\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

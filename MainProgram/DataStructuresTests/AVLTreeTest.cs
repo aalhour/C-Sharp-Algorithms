@@ -10,7 +10,6 @@ namespace C_Sharp_Algorithms.DataStructuresTests
     {
         public static void DoTest()
         {
-            AVLTreeNode<int> avlRoot;
             AVLTree<int> avlTree = new AVLTree<int>();
 
             //

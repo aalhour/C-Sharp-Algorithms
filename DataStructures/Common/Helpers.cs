@@ -39,7 +39,7 @@ namespace DataStructures.Common
         /// </summary>
         public static string PadCenter(this string text, int newWidth, char fillerCharacter = ' ')
         {
-            if (string.IsNullOrEmpty(text) || fillerCharacter == null)
+            if (string.IsNullOrEmpty(text))
                 return text;
 
             int length = text.Length;

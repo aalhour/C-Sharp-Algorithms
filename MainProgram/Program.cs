@@ -10,12 +10,11 @@ using C_Sharp_Algorithms.DataStructuresTests;
 
 namespace C_Sharp_Algorithms
 {
-    class Program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            AVLTreeTest.DoTest();
-            //CountingSortTest.DoTest();
+            HashTable_SeparateChaining_Test.DoTest();
         }
     }
 }
