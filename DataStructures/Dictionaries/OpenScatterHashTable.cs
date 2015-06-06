@@ -6,81 +6,57 @@ using DataStructures.Lists;
 
 namespace DataStructures.Dictionaries
 {
-    /// <summary>
-    /// The hash table cell status modes: Empty cell, Occupied cell, Deleted cell.
-    /// </summary>
-    public enum HashTableCellStatus
-    {
-        Empty = 0,
-        Occupied,
-        Deleted
-    }
-
-
-    /*************************************************************************************************************/
-
-
-    /// <summary>
-    /// Hash Table Cell.
-    /// </summary>
-    public class HashTableCell<TKey, TValue> where TKey : IComparable<TKey>
-    {
-        public TKey Key { get; set; }
-        public TValue Value { get; set; }
-        public HashTableCellStatus Status { get; set; }
-
-        public HashTableCell() : this(default(TKey), default(TValue)) { }
-        public HashTableCell(TKey key, TValue value, HashTableCellStatus status = HashTableCellStatus.Occupied)
-        {
-            Key = key;
-            Value = value;
-            Status = status;
-        }
-
-        public bool IsEmpty
-        {
-            get { return this.Status == HashTableCellStatus.Empty; }
-        }
-
-        public bool IsOccupied
-        {
-            get { return this.Status == HashTableCellStatus.Occupied; }
-        }
-
-        public bool IsDeleted
-        {
-            get { return this.Status == HashTableCellStatus.Deleted; }
-        }
-    }
-
-
-    /*************************************************************************************************************/
-
-
+    
     /// <summary>
     /// Hash Table with Open Addressing.
     /// </summary>
     public class OpenScatterHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
-        /// Used in the ensure capacity function
+        /// Hash Table Cell.
         /// </summary>
-        private enum CapacityManagementMode
+        private class HashTableEntry<TKey, TValue> where TKey : IComparable<TKey>
         {
-            Contract = 0,
-            Expand = 1
+            public TKey Key { get; set; }
+            public TValue Value { get; set; }
+            public EntryStatus Status { get; set; }
+
+            public HashTableEntry() : this(default(TKey), default(TValue)) { }
+            public HashTableEntry(TKey key, TValue value, EntryStatus status = EntryStatus.Occupied)
+            {
+                Key = key;
+                Value = value;
+                Status = status;
+            }
+
+            public bool IsEmpty
+            {
+                get { return this.Status == EntryStatus.Empty; }
+            }
+
+            public bool IsOccupied
+            {
+                get { return this.Status == EntryStatus.Occupied; }
+            }
+
+            public bool IsDeleted
+            {
+                get { return this.Status == EntryStatus.Deleted; }
+            }
         }
+
+
 
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
         private int _size;
         private decimal _loadFactor;
-        private HashTableCell<TKey, TValue>[] _hashTableStore;
+        private HashTableEntry<TKey, TValue>[] _hashTableStore;
         
         // Initialization-related
         private const int _defaultCapacity = 7;
-        private static readonly HashTableCell<TKey, TValue>[] _emptyArray = new HashTableCell<TKey, TValue>[_defaultCapacity];
+        private static readonly HashTableEntry<TKey, TValue>[] _emptyArray = new HashTableEntry<TKey, TValue>[_defaultCapacity];
         
         // Helper collections.
         private List<TKey> _keysCollection { get; set; }
@@ -95,7 +71,7 @@ namespace DataStructures.Dictionaries
             7, 17, 29, 59, 107, 131, 197, 239, 293, 353, 431, 521, 631, 761, 919,
             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
             17519, 21023, 25229, 30293, 36353, 43627, 52361, 62851, 75431, 90523, 108631, 130363, 156437,
-            187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263,
+            187751, 225307, 270371, 324449, 389357, 467237, 560689, 672827, 807403, 968897, 1162687, 1395263, 
             1674319, 2009191, 2411033, 2893249, 3471899, 4166287, 4999559, 5999471, 7199369 };
 
         // This is the maximum prime that is smaller than the C# maximum allowed size of arrays.
@@ -108,6 +84,17 @@ namespace DataStructures.Dictionaries
         // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
         // The choice is largely arbitrary.
         private const int HASH_PRIME = 131;
+
+        /// <summary>
+        /// The hash table cell status modes: Empty cell, Occupied cell, Deleted cell.
+        /// </summary>
+        private enum EntryStatus { Empty = 0, Occupied = 1, Deleted = 2 }
+
+        /// <summary>
+        /// Used in the ensure capacity function
+        /// </summary>
+        private enum CapacityManagementMode { Contract = 0, Expand = 1 }
+
 
 
         /// <summary>
@@ -174,7 +161,7 @@ namespace DataStructures.Dictionaries
                 int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
 
                 // Try to expand the size
-                HashTableCell<TKey, TValue>[] newKeysMap = new HashTableCell<TKey, TValue>[newCapacity];
+                HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
 
                 if (_size > 0)
                 {
@@ -200,7 +187,7 @@ namespace DataStructures.Dictionaries
                 // Try to expand the size
                 try
                 {
-                    HashTableCell<TKey, TValue>[] newKeysMap = new HashTableCell<TKey, TValue>[newCapacity];
+                    HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
 
                     if (_size > 0)
                     {
