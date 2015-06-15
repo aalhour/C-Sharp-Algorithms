@@ -44,13 +44,12 @@ namespace DataStructures.Hashing
         /// </summary>
         public void GenerateNewFunctions()
         {
-            //
             // Clear the multipliers vectors
             Array.Clear(_multipliersVector, 0, _multipliersVector.Length);
 
             for (int i = 0; i < _numberOfHashFunctions; i++)
             {
-                var randomIndex = _randomizer.Next(0, _primes.Count);
+                var randomIndex = _randomizer.Next(0, _primes.Count - 1);
                 _multipliersVector[i] = _primes[randomIndex];
             }
         }
@@ -66,16 +65,11 @@ namespace DataStructures.Hashing
             if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
                 throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
-            int hashValue = 0;
+            int preHashValue = 0;
             int multiplier = _multipliersVector[whichHashFunction - 1];
             var characters = preHashedKey.ToString().ToCharArray();
 
-            foreach (var character in characters)
-            {
-                hashValue = multiplier * hashValue + Convert.ToInt32(Char.GetNumericValue(character));
-            }
-
-            return hashValue;
+            return (multiplier * preHashValue);
         }
 
         /// <summary>
@@ -86,22 +80,18 @@ namespace DataStructures.Hashing
         /// <returns></returns>
         public int Hash(string key, int whichHashFunction)
         {
-            if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
-                throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
-
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentException("Key is either an empty string or null.");
 
-            int hashValue = 0;
-            int multiplier = _multipliersVector[whichHashFunction - 1];
+            int preHashValue = 0;
             var characters = key.ToCharArray();
 
-            foreach(var character in characters)
+            foreach (var character in characters)
             {
-                hashValue = multiplier * hashValue + character;
+                preHashValue += Convert.ToInt32(Char.GetNumericValue(character));
             }
 
-            return hashValue;
+            return Hash(preHashValue, whichHashFunction);
         }
 
     }
