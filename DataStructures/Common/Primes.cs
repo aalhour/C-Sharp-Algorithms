@@ -76,9 +76,17 @@ namespace DataStructures.Common
         }
 
         /// <summary>
+        /// Return count of primes.
+        /// </summary>
+        public int Count
+        {
+            get { return _primes.Count; }
+        }
+
+        /// <summary>
         /// Returns prime number at the specified index.
         /// </summary>
-        int this[int index]
+        public int this[int index]
         {
             get
             {

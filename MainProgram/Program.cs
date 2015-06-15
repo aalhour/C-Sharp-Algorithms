@@ -3,9 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-using Algorithms;
-using DataStructures;
 using DataStructures.Common;
+using DataStructures.Hashing;
 using C_Sharp_Algorithms.AlgorithmsTests;
 using C_Sharp_Algorithms.DataStructuresTests;
 

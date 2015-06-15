@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Common\Primes.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
-    <Compile Include="Hashing\HashingFamily.cs" />
+    <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
