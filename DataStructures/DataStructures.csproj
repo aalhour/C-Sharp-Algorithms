@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Primes.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
+    <Compile Include="Hashing\HashingFamily.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
@@ -74,7 +76,13 @@
   </Target>
   -->
   <ItemGroup>
-    <Folder Include="NewFolder1\" />
+    <None Include="Data\PrimesDocument_10K.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Data\PrimesDocument_10K.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
