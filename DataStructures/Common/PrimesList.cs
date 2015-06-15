@@ -7,6 +7,10 @@ using System.Reflection;
 
 namespace DataStructures.Common
 {
+    /// <summary>
+    /// Provides a list of the first 10,000 primes.
+    /// This class is a singleton, and read the primes from the file @"Data\PrimesList_10K.csv".
+    /// </summary>
     public sealed class PrimesList
     {
         //
