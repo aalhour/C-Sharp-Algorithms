@@ -28,13 +28,17 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  
 #### Trees:
 
- * **[Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)**. Standard BST.
- * **[Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)**. A BST that is augmented to keep track of the subtrees-size for each node. Extends the *BinarySearchTree\<T\>* class.
- * **[AVL Tree](DataStructures/Trees/AVLTree.cs)**. The self-balancing AVL binary-search tree. Extends the *BinarySearchTree\<T\>* class.
+ * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs). Standard BST.
+ * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs). A BST that is augmented to keep track of the subtrees-size for each node. Extends the *BinarySearchTree\<T\>* class.
+ * [AVL Tree](DataStructures/Trees/AVLTree.cs). The self-balancing AVL binary-search tree. Extends the *BinarySearchTree\<T\>* class.
 
 #### Dictionary(s):
 
- * **[Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs)**. A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+ * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs). A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+
+#### Hashing:
+ * [Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs). Implements a simple family of hash functions using primes. Supports re-generation of functions using randomized multipliers.
+ * [Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs). Implements a family of simple suniversal-hashing functions. It uses the [Common/PrimesList](DataStructures/Common/PrimesList.cs) helper class.
 
 
 ## ALGORITHMS:
