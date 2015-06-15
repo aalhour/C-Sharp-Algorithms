@@ -29,20 +29,11 @@ namespace DataStructures.Dictionaries
                 Status = status;
             }
 
-            public bool IsEmpty
-            {
-                get { return this.Status == EntryStatus.Empty; }
-            }
+            public bool IsEmpty { get { return this.Status == EntryStatus.Empty; } }
 
-            public bool IsOccupied
-            {
-                get { return this.Status == EntryStatus.Occupied; }
-            }
+            public bool IsOccupied { get { return this.Status == EntryStatus.Occupied; } }
 
-            public bool IsDeleted
-            {
-                get { return this.Status == EntryStatus.Deleted; }
-            }
+            public bool IsDeleted { get { return this.Status == EntryStatus.Deleted; } }
         }
 
 
