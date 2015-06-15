@@ -7,26 +7,32 @@ using DataStructures.Hashing;
 namespace DataStructures.Hashing
 {
     /// <summary>
-    /// Implements a family of randomized Hash Functions
+    /// Implements a family of Universal Hash Functions
     /// </summary>
-    public class PrimeHashingFamily
+    public class UniversalHashingFamily
     {
+        // A large prime, arbitrarily chosen
+        // In decimal = 2,146,435,069;
+        private const int BIG_PRIME = 0x7FEFFFFD;
+
         private Random _randomizer { get; set; }
         private int _numberOfHashFunctions { get; set; }
-        private int[] _multipliersVector { get; set; }
+        private int[] _firstMultipliersVector { get; set; }
+        private int[] _secondMultipliersVector { get; set; }
         private static readonly PrimesList _primes = PrimesList.Instance;
 
         /// <summary>
         /// Initializes the family with a specified number of hash functions.
         /// </summary>
-        public PrimeHashingFamily(int numberOfHashFunctions)
+        public UniversalHashingFamily(int numberOfHashFunctions)
         {
             if (numberOfHashFunctions <= 0)
                 throw new ArgumentOutOfRangeException("Number of hash functions should be greater than zero.");
 
             _randomizer = new Random();
             _numberOfHashFunctions = numberOfHashFunctions;
-            _multipliersVector = new int[_numberOfHashFunctions];
+            _firstMultipliersVector = new int[_numberOfHashFunctions];
+            _secondMultipliersVector = new int[_numberOfHashFunctions];
 
             GenerateNewFunctions();
         }
@@ -46,35 +52,44 @@ namespace DataStructures.Hashing
         {
             //
             // Clear the multipliers vectors
-            Array.Clear(_multipliersVector, 0, _multipliersVector.Length);
+            Array.Clear(_firstMultipliersVector, 0, _firstMultipliersVector.Length);
+            Array.Clear(_secondMultipliersVector, 0, _secondMultipliersVector.Length);
 
             for (int i = 0; i < _numberOfHashFunctions; i++)
             {
-                var randomIndex = _randomizer.Next(0, _primes.Count);
-                _multipliersVector[i] = _primes[randomIndex];
+                //
+                // Get only the primes that are smaller than the biggest-chosen prime.
+                int randomIndex = _randomizer.Next(0, _primes.Count);
+                while (_primes[randomIndex] < BIG_PRIME)
+                    randomIndex = _randomizer.Next(0, _primes.Count);
+                
+                _firstMultipliersVector[i] = _primes[randomIndex];
+
+                randomIndex = _randomizer.Next(0, _primes.Count);
+                while (_primes[randomIndex] < BIG_PRIME)
+                    randomIndex = _randomizer.Next(0, _primes.Count);
+
+                _secondMultipliersVector[i] = _primes[randomIndex];
             }
         }
 
         /// <summary>
-        /// Returns hash value of an integer prehash key, given the specified number of the hash function to use.
+        /// Returns hash value of a string, given the specified number of the hash function to use.
         /// </summary>
         /// <param name="preHashedKey">Int pre-hash code of an object.</param>
         /// <param name="whichHashFunction">Non-zero, non-negative integer that specified the number of the hash function to use.</param>
         /// <returns></returns>
-        public int Hash(int preHashedKey, int whichHashFunction)
+        public int UniversalHash(int preHashedKey, int whichHashFunction)
         {
             if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
                 throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
             int hashValue = 0;
-            int multiplier = _multipliersVector[whichHashFunction - 1];
+            int a = _firstMultipliersVector[whichHashFunction - 1];
+            int b = _secondMultipliersVector[whichHashFunction - 1];
             var characters = preHashedKey.ToString().ToCharArray();
 
-            foreach (var character in characters)
-            {
-                hashValue = multiplier * hashValue + Convert.ToInt32(Char.GetNumericValue(character));
-            }
-
+            hashValue = ((a * preHashedKey) + b) % BIG_PRIME;
             return hashValue;
         }
 
@@ -83,25 +98,22 @@ namespace DataStructures.Hashing
         /// </summary>
         /// <param name="key">string key.</param>
         /// <param name="whichHashFunction">Non-zero, non-negative integer that specified the number of the hash function to use.</param>
-        /// <returns></returns>
-        public int Hash(string key, int whichHashFunction)
+        public int UniversalHash(string key, int whichHashFunction)
         {
             if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
                 throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentException("Key is either an empty string or null.");
-
-            int hashValue = 0;
-            int multiplier = _multipliersVector[whichHashFunction - 1];
+            int a = _firstMultipliersVector[whichHashFunction - 1];
+            int b = _secondMultipliersVector[whichHashFunction - 1];
             var characters = key.ToCharArray();
 
-            foreach(var character in characters)
+            int prehash = 0;
+            foreach (var character in characters)
             {
-                hashValue = multiplier * hashValue + character;
+                prehash += Convert.ToInt32(Char.GetNumericValue(character));
             }
 
-            return hashValue;
+            return UniversalHash(prehash, whichHashFunction);
         }
 
     }
