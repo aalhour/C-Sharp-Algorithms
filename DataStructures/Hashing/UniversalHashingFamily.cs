@@ -54,23 +54,23 @@ namespace DataStructures.Hashing
             Array.Clear(_firstMultipliersVector, 0, _firstMultipliersVector.Length);
             Array.Clear(_secondMultipliersVector, 0, _secondMultipliersVector.Length);
 
-            int randomeIndexMin = 0;
-            int randomIndexMax = _primes.Count - 1;
+			int randomMin = 0;
+			int randomMax = _primes.Count - 1;
 
             for (int i = 0; i < _numberOfHashFunctions; i++)
             {
                 // Get only the primes that are smaller than the biggest-chosen prime.
-                int randomIndex = _randomizer.Next(randomeIndexMin, randomIndexMax);
+                int randomIndex = _randomizer.Next(randomMin, randomMax);
 
-                while (_primes[randomIndex] < BIG_PRIME)
-                    randomIndex = _randomizer.Next(randomeIndexMin, randomIndexMax);
+                while (_primes[randomIndex] >= BIG_PRIME)
+                    randomIndex = _randomizer.Next(randomMin, randomMax);
                 
                 _firstMultipliersVector[i] = _primes[randomIndex];
 
-                randomIndex = _randomizer.Next(randomeIndexMin, randomIndexMax);
+                randomIndex = _randomizer.Next(randomMin, randomMax);
 
-                while (_primes[randomIndex] < BIG_PRIME)
-                    randomIndex = _randomizer.Next(randomeIndexMin, randomIndexMax);
+                while (_primes[randomIndex] >= BIG_PRIME)
+                    randomIndex = _randomizer.Next(randomMin, randomMax);
 
                 _secondMultipliersVector[i] = _primes[randomIndex];
             }
@@ -105,10 +105,11 @@ namespace DataStructures.Hashing
 
             int prehash = 0;
             var characters = key.ToCharArray();
+			int n = characters.Length;
 
-            foreach (var character in characters)
+			for (int i = 0; i < n; ++i)
             {
-                prehash += Convert.ToInt32(Char.GetNumericValue(character));
+				prehash = prehash + (characters[i] ^ (n - 1));
             }
 
             return UniversalHash(prehash, whichHashFunction);

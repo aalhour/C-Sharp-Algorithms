@@ -14,10 +14,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            var primes = PrimesList.Instance;
-
-            int[] array = new int[20000];
-            primes.CopyTo(array, 15000);
+            
         }
     }
 }

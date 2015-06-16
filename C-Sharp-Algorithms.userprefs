@@ -1,8 +1,10 @@
 ﻿<Properties StartupItem="MainProgram/MainProgram.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DataStructures/Dictionaries/ChainedHashTable.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MainProgram/DataStructuresTests/HashTable_SeparateChaining_Test.cs">
     <Files>
-      <File FileName="DataStructures/Dictionaries/ChainedHashTable.cs" Line="567" Column="4" />
+      <File FileName="DataStructures/Dictionaries/ChainedHashTable.cs" Line="1" Column="1" />
+      <File FileName="MainProgram/DataStructuresTests/HashTable_SeparateChaining_Test.cs" Line="109" Column="1" />
+      <File FileName="DataStructures/Common/Helpers.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

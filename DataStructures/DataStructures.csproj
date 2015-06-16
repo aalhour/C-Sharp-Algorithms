@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Primes.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Trees\TreeDrawer.cs" />
     <Compile Include="Dictionaries\ChainedHashTable.cs" />
     <Compile Include="Lists\DLinkedList_KeyValue.cs" />
+    <Compile Include="Common\PrimesList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
