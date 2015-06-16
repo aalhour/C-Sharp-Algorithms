@@ -1,4 +1,4 @@
-# C-SHARP-ALGORITHMS
+# C# ALGORITHMS
 
 Implementations of Data Structures and Algorithms in C#.
 
