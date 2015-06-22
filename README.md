@@ -10,35 +10,36 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 
 #### Lists:
 
- * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
- * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
- * [Array List](DataStructures/Lists/ArrayList.cs). A generic arrays-based list. Implements auto-resizing and handles overflow.
- * [Stack](DataStructures/Lists/Stack.cs). Based on my *ArrayList\<T\>*.
- * [Queue](DataStructures/Lists/Queue.cs). Based on my *ArrayList\<T\>*.
+ * **[Single-Linked List](DataStructures/Lists/SLinkedList.cs).**
+ * **[Double-Linked List](DataStructures/Lists/DLinkedList.cs).**
+ * **[Array List](DataStructures/Lists/ArrayList.cs).** A generic arrays-based list. Implements auto-resizing and handles overflow.
+ * **[Stack](DataStructures/Lists/Stack.cs).** Based on my *ArrayList\<T\>*.
+ * **[Queue](DataStructures/Lists/Queue.cs).** Based on my *ArrayList\<T\>*.
 
 #### Priority Queues:
 
- * [Priority Queue](DataStructures/Heaps/PriorityQueue.cs). Based on my *MaxHeap\<T\>*.
- * [Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs). Based on my *MaxHeap\<T\>*.
+ * **[Priority Queue](DataStructures/Heaps/PriorityQueue.cs).** Based on my *MaxHeap\<T\>*.
+ * **[Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs).** Based on my *MaxHeap\<T\>*.
 
 #### Heaps:
 
- * [Min-Heap](DataStructures/Heaps/MinHeap.cs). Based on my *ArrayList\<T\>*.
- * [Max-Heap](DataStructures/Heaps/MaxHeap.cs). Based on my *ArrayList\<T\>*.
+ * **[Min-Heap](DataStructures/Heaps/MinHeap.cs).** Based on my *ArrayList\<T\>*.
+ * **[Max-Heap](DataStructures/Heaps/MaxHeap.cs).** Based on my *ArrayList\<T\>*.
  
 #### Trees:
 
- * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs). Standard BST.
- * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs). A BST that is augmented to keep track of the subtrees-size for each node. Extends the *BinarySearchTree\<T\>* class.
- * [AVL Tree](DataStructures/Trees/AVLTree.cs). The self-balancing AVL binary-search tree. Extends the *BinarySearchTree\<T\>* class.
+ * **[Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).** Standard BST.
+ * **[Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).** A BST that is augmented to keep track of the subtrees-size for each node. Extends the *BinarySearchTree\<T\>* class.
+ * **[AVL Tree](DataStructures/Trees/AVLTree.cs).** The self-balancing AVL binary-search tree. Extends the *BinarySearchTree\<T\>* class.
 
 #### Dictionary(s):
 
- * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs). A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+ * **[Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).** A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+ * **[Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).** A hash table that implements the **Cuckoo Hashing** algorithm for resolving keys-collisions. This is a single-table implementation, the source behind this is the work of Mark Allen Weiss, 2014.
 
 #### Hashing:
- * [Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs). Implements a simple family of hash functions using primes. The functions are initialized by randomly selecting primes. Supports re-generation of functions.
- * [Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs). Implements a family class of simple universal-hashing functions. Supports re-generation of functions. It uses the [Common/PrimesList](DataStructures/Common/PrimesList.cs) helper class.
+ * **[Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs).** Implements a simple family of hash functions using primes. The functions are initialized by randomly selecting primes. Supports re-generation of functions.
+ * **[Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs).** Implements a family class of simple universal-hashing functions. Supports re-generation of functions. It uses the [Common/PrimesList](DataStructures/Common/PrimesList.cs) helper class.
 
 
 ## ALGORITHMS:
