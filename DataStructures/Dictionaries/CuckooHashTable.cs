@@ -15,15 +15,15 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// THE CUCKOO HASH TABLE ENTERY
         /// </summary>
-        private class CuckooHashEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class CHashEntry<TKey, TValue> where TKey : IComparable<TKey>
         {
             public TKey Key { get; set; }
             public TValue Value { get; set; }
             public bool IsActive { get; set; }
 
-            public CuckooHashEntry() : this(default(TKey), default(TValue), false) { }
+            public CHashEntry() : this(default(TKey), default(TValue), false) { }
 
-            public CuckooHashEntry(TKey key, TValue value, bool isActive)
+            public CHashEntry(TKey key, TValue value, bool isActive)
             {
                 Key = key;
                 Value = value;
@@ -46,7 +46,7 @@ namespace DataStructures.Dictionaries
 
         private int _size { get; set; }
         private int _numberOfRehashes { get; set; }
-        private CuckooHashEntry<TKey, TValue>[] _collection { get; set; }
+        private CHashEntry<TKey, TValue>[] _collection { get; set; }
         private UniversalHashingFamily _universalHashingFamily { get; set; }
         private EqualityComparer<TKey> _equalityComparer = EqualityComparer<TKey>.Default;
 
@@ -63,14 +63,13 @@ namespace DataStructures.Dictionaries
             _size = 0;
             _numberOfRehashes = 0;
             _randomizer = new Random();
-            _collection = new CuckooHashEntry<TKey, TValue>[DEFAULT_CAPACITY];
+            _collection = new CHashEntry<TKey, TValue>[DEFAULT_CAPACITY];
             _universalHashingFamily = new UniversalHashingFamily(NUMBER_OF_HASH_FUNCTIONS);
         }
 
         /// <summary>
         /// Expands the size of internal collection.
         /// </summary>
-        /// <param name="minSize"></param>
         private void _expandCapacity(int minCapacity)
         {
             int newCapacity = (_collection.Length == 0 ? DEFAULT_CAPACITY : _collection.Length * 2);
@@ -115,7 +114,7 @@ namespace DataStructures.Dictionaries
 
             try
             {
-                this._collection = new CuckooHashEntry<TKey, TValue>[newCapacity];
+                this._collection = new CHashEntry<TKey, TValue>[newCapacity];
 
                 // Reset size
                 _size = 0;
@@ -124,7 +123,7 @@ namespace DataStructures.Dictionaries
                 {
                     if(oldCollection[i] != null && oldCollection[i].IsActive == true)
                     {
-                        Add(oldCollection[i].Key, oldCollection[i].Value);
+						_insertHelper(oldCollection[i].Key, oldCollection[i].Value);
                     }
                 }
             }
@@ -191,7 +190,7 @@ namespace DataStructures.Dictionaries
         private void _insertHelper(TKey key, TValue value)
         {
             int COUNT_LIMIT = 100;
-            var newEntry = new CuckooHashEntry<TKey, TValue>(key, value, isActive: true);
+            var newEntry = new CHashEntry<TKey, TValue>(key, value, isActive: true);
 
             while(true)
             {
