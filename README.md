@@ -32,14 +32,14 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * **[Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).** A BST that is augmented to keep track of the subtrees-size for each node. Extends the *BinarySearchTree\<T\>* class.
  * **[AVL Tree](DataStructures/Trees/AVLTree.cs).** The self-balancing AVL binary-search tree. Extends the *BinarySearchTree\<T\>* class.
 
-#### Dictionary(s):
+#### Hashing Functions:
+ * **[Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs).** Implements a simple family of hash functions using primes. The functions are initialized by randomly selecting primes. Supports re-generation of functions.
+ * **[Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs).** Implements a family class of simple universal-hashing functions. Supports re-generation of functions. It uses the [Common/PrimesList](DataStructures/Common/PrimesList.cs) helper class.
+
+#### Hash Tables / Dictionaries:
 
  * **[Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).** A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
  * **[Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).** A hash table that implements the **Cuckoo Hashing** algorithm for resolving keys-collisions. This is a single-table implementation, the source behind this is the work of Mark Allen Weiss, 2014.
-
-#### Hashing:
- * **[Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs).** Implements a simple family of hash functions using primes. The functions are initialized by randomly selecting primes. Supports re-generation of functions.
- * **[Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs).** Implements a family class of simple universal-hashing functions. Supports re-generation of functions. It uses the [Common/PrimesList](DataStructures/Common/PrimesList.cs) helper class.
 
 
 ## ALGORITHMS:
