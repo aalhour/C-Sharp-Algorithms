@@ -13,15 +13,6 @@ namespace DataStructures.Dictionaries
     public class CuckooHashTable<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
-        /// Used in the ensure capacity function
-        /// </summary>
-        public enum CapacityManagementMode
-        {
-            Contract = 0,
-            Expand = 1
-        }
-
-        /// <summary>
         /// THE CUCKOO HASH TABLE ENTERY
         /// </summary>
         private class CuckooHashEntry<TKey, TValue> where TKey : IComparable<TKey>
