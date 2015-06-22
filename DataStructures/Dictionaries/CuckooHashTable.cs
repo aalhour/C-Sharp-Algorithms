@@ -124,7 +124,7 @@ namespace DataStructures.Dictionaries
                 {
                     if(oldCollection[i] != null && oldCollection[i].IsActive == true)
                     {
-                        Insert(oldCollection[i].Key, oldCollection[i].Value);
+                        Add(oldCollection[i].Key, oldCollection[i].Value);
                     }
                 }
             }
@@ -264,15 +264,26 @@ namespace DataStructures.Dictionaries
             return (_size == 0);
         }
 
-        TValue this[int index]
+        /// <summary>
+        /// Returns the value of the specified key, if exists; otherwise, raises an exception.
+        /// </summary>
+        public TValue this[TKey key]
         {
             get
             {
-                throw new NotImplementedException();
+                int position = _findPosition(key);
+                
+                if (position != -1)
+                    return _collection[position].Value;
+
+                throw new KeyNotFoundException();
             }
             set
             {
-                throw new NotImplementedException();
+                if (ContainsKey(key) == true)
+                    Update(key, value);
+
+                throw new KeyNotFoundException();
             }
         }
 
@@ -289,7 +300,7 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Insert key-value pair into hash table.
         /// </summary>
-        public void Insert(TKey key, TValue value)
+        public void Add(TKey key, TValue value)
         {
             if (ContainsKey(key))
                 throw new Exception("Key already exists in the hash table.");
@@ -298,6 +309,19 @@ namespace DataStructures.Dictionaries
                 _expandCapacity(_collection.Length + 1);
 
             _insertHelper(key, value);
+        }
+
+        /// <summary>
+        /// Updates a key-value pair with a new value.
+        /// </summary>
+        public void Update(TKey key, TValue value)
+        {
+            int position = _findPosition(key);
+
+            if (position == -1)
+                throw new KeyNotFoundException();
+
+            _collection[position].Value = value;
         }
 
         /// <summary>
