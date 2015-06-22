@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dictionaries\CuckooHashTable.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />

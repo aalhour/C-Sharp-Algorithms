@@ -45,6 +45,7 @@
     <Compile Include="AlgorithmsTests\CountingSortTest.cs" />
     <Compile Include="AlgorithmsTests\HeapSorterTest.cs" />
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
+    <Compile Include="DataStructuresTests\CuckooHashTableTest.cs" />
     <Compile Include="DataStructuresTests\HashTable_SeparateChaining_Test.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

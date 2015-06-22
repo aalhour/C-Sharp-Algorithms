@@ -69,7 +69,7 @@ namespace DataStructures.Dictionaries
         // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
         // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
         // The choice is largely arbitrary.
-        private const int HASH_PRIME = 131;
+        private const int HASH_PRIME = 101;
 
         /// <summary>
         /// The hash table cell status modes: Empty cell, Occupied cell, Deleted cell.
@@ -81,31 +81,6 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private enum CapacityManagementMode { Contract = 0, Expand = 1 }
 
-
-
-        /// <summary>
-        /// Returns a prime number that is greater than the specified number.
-        /// </summary>
-        private int _getUpperBoundPrime(int minNumber)
-        {
-            if (minNumber < 0)
-                throw new ArgumentException("Number should be greater than or equal to 0.");
-
-            for (int i = 0; i < _primes.Count; i++)
-            {
-                if (_primes[i] >= minNumber)
-                    return _primes[i];
-            }
-
-            // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = (minNumber | 1); i < Int32.MaxValue; i += 2)
-            {
-                if (Helpers.IsPrime(i) && ((i - 1) % HASH_PRIME != 0))
-                    return i;
-            }
-
-            return minNumber;
-        }
 
         /// <summary>
         /// Returns the next biggest prime that is greater than twice the size of the interal array (size * 2).
@@ -121,7 +96,7 @@ namespace DataStructures.Dictionaries
                 return MAX_PRIME_ARRAY_LENGTH;
             }
 
-            return _getUpperBoundPrime(newSize);
+            return _primes.GetNextPrime(newSize);
         }
 
         /// <summary>
@@ -131,7 +106,7 @@ namespace DataStructures.Dictionaries
         {
             int newSize = oldSize / 2;
 
-            return _getUpperBoundPrime(newSize);
+            return _primes.GetNextPrime(newSize);
         }
 
         /// <summary>

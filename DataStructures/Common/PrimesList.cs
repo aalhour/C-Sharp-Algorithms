@@ -26,6 +26,12 @@ namespace DataStructures.Common
         private static string _primesDocPath = string.Empty;
         private readonly static List<int> _primes = new List<int>();
 
+        // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
+        // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
+        // The choice is largely arbitrary.
+        public const int HASH_PRIME = 101;
+
+
         /// <summary>
         /// Empty private constructor.
         /// </summary>
@@ -99,6 +105,77 @@ namespace DataStructures.Common
 
                 return _primes[index];
             }
+        }
+
+        /// <summary>
+        /// Checks if a number is a Prime Number.
+        /// </summary>
+        public bool IsPrime(int candidate)
+        {
+            if ((candidate & 1) != 0)
+            {
+                int limit = (int)Math.Sqrt(candidate);
+
+                for (int divisor = 3; divisor <= limit; divisor += 2)
+                {
+                    if ((candidate % divisor) == 0)
+                        return false;
+                }
+
+                return true;
+            }
+
+            return (candidate == 2);
+        }
+
+        /// <summary>
+        /// Returns the next biggest prime number.
+        /// </summary>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        public int GetNextPrime(int number)
+        {
+            if (number < 0)
+                throw new ArgumentException("Number should be greater than or equal to 0.");
+
+            for (int i = 0; i < _primes.Count; i++)
+            {
+                if (_primes[i] >= number)
+                    return _primes[i];
+            }
+
+            // Outside of our predefined table. Compute the prime the hard way. 
+            for (int i = (number | 1); i < Int32.MaxValue; i += 2)
+            {
+                if (IsPrime(i) && ((i - 1) % HASH_PRIME != 0))
+                    return i;
+            }
+
+            return number;
+        }
+
+        /// <summary>
+        /// Returns the next minimum prime number.
+        /// </summary>
+        public int GetPreviousPrime(int number)
+        {
+            if (number < 0)
+                throw new ArgumentException("Number should be greater than or equal to 0.");
+
+            for (int i = 0; i < _primes.Count; i++)
+            {
+                if (_primes[i] >= number)
+                    return _primes[i];
+            }
+
+            // Outside of our predefined table. Compute the prime the hard way. 
+            for (int i = (number | 1); i < Int32.MaxValue; i += 2)
+            {
+                if (IsPrime(i) && ((i - 1) % HASH_PRIME != 0))
+                    return i;
+            }
+
+            return number;
         }
 
         /// <summary>
