@@ -119,15 +119,15 @@ namespace DataStructures.Dictionaries
                 // Reset size
                 _size = 0;
 
-                for(int i = 0; i < oldCollection.Length; ++i)
+                for (int i = 0; i < oldCollection.Length; ++i)
                 {
-                    if(oldCollection[i] != null && oldCollection[i].IsActive == true)
+                    if (oldCollection[i] != null && oldCollection[i].IsActive == true)
                     {
-						_insertHelper(oldCollection[i].Key, oldCollection[i].Value);
+                        _insertHelper(oldCollection[i].Key, oldCollection[i].Value);
                     }
                 }
             }
-            catch(OutOfMemoryException ex)
+            catch (OutOfMemoryException ex)
             {
                 // In case a memory overflow happens, return the data to it's old state
                 // ... then throw the exception.
@@ -143,15 +143,10 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private int _cuckooHash(TKey key, int whichHashFunction)
         {
-            int hashCode = 0;
-
             if (whichHashFunction <= 0 || whichHashFunction > _universalHashingFamily.NumberOfFunctions)
                 throw new ArgumentOutOfRangeException("Which Hash Function parameter must be betwwen 1 and " + NUMBER_OF_HASH_FUNCTIONS + ".");
 
-            if(key is string)
-                hashCode = _universalHashingFamily.UniversalHash(Convert.ToString(key), whichHashFunction);
-            else
-                hashCode = _universalHashingFamily.UniversalHash(_equalityComparer.GetHashCode(key), whichHashFunction);
+            int hashCode = Math.Abs(_universalHashingFamily.UniversalHash(_equalityComparer.GetHashCode(key), whichHashFunction));
 
             return hashCode % _collection.Length;
         }
@@ -192,19 +187,18 @@ namespace DataStructures.Dictionaries
             int COUNT_LIMIT = 100;
             var newEntry = new CHashEntry<TKey, TValue>(key, value, isActive: true);
 
-            while(true)
+            while (true)
             {
-                int position,
-                    lastPosition = -1;
+                int position, lastPosition = -1;
 
-                for(int count = 0; count < COUNT_LIMIT; count++)
+                for (int count = 0; count < COUNT_LIMIT; count++)
                 {
                     // The hash functions numbers are indexed from 1 not zero
-                    for(int i = 1; i <= NUMBER_OF_HASH_FUNCTIONS; i++)
+                    for (int i = 1; i <= NUMBER_OF_HASH_FUNCTIONS; i++)
                     {
                         position = _cuckooHash(key, i);
 
-                        if(!_isActive(position))
+                        if (!_isActive(position))
                         {
                             _collection[position] = newEntry;
 
@@ -215,21 +209,24 @@ namespace DataStructures.Dictionaries
                         }
                     }
 
+                    // Eviction strategy:
                     // No available spot was found. Choose a random one.
                     int j = 0;
-                    do {
+                    do
+                    {
                         position = _cuckooHash(key, _randomizer.Next(1, NUMBER_OF_HASH_FUNCTIONS));
                     } while (position == lastPosition && j++ < NUMBER_OF_HASH_FUNCTIONS);
 
-                    // SWAP
+                    // SWAP ENTRY
                     lastPosition = position;
 
                     var temp = _collection[position];
                     _collection[position] = newEntry;
                     newEntry = temp;
+
                 }//end-for
 
-                if(++_numberOfRehashes > ALLOWED_REHASHES)
+                if (++_numberOfRehashes > ALLOWED_REHASHES)
                 {
                     // Expand the table.
                     _expandCapacity(_collection.Length + 1);
@@ -271,7 +268,7 @@ namespace DataStructures.Dictionaries
             get
             {
                 int position = _findPosition(key);
-                
+
                 if (position != -1)
                     return _collection[position].Value;
 
@@ -349,10 +346,14 @@ namespace DataStructures.Dictionaries
         {
             this._size = 0;
 
-            lock (_collection)
-            {
-                Parallel.ForEach(_collection, (item) => { item.IsActive = false; });
-            }
+            Parallel.ForEach(_collection, 
+                (item) =>  
+                {
+                    if (item != null && item.IsActive == true)
+                    {
+                        item.IsActive = false;
+                    }
+                });
         }
     }
 

@@ -39,6 +39,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             var Sameeros = cuckooTable["Sameeros"];
             Debug.Assert(Sameeros == 16);
+
+            cuckooTable.Clear();
         }
     }
 }
