@@ -6,7 +6,7 @@ I started writing this organized collection of classes as part of my preparation
 
 This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and Visual Studio. It has two separate projects: 1) Algorithms, 2) DataStructures. Both of them are class-library projects.
 
-## DATA STRUCTURES:
+## Data Structures
 
 #### Lists:
 
@@ -42,7 +42,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * **[Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).** A hash table that implements the **Cuckoo Hashing** algorithm for resolving keys-collisions. This is a single-table implementation, the source behind this is the work of Mark Allen Weiss, 2014.
 
 
-## ALGORITHMS:
+## Algorithms
 
 #### Sorting:
  Sorting algorithms are implemented as an extension method. They support the native Array\<T\>, and List\<T\> classes. They can takes value comparers. Insertion Sort supports my ArrayList\<T\> class.
@@ -94,6 +94,6 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     ```
 
 
-## LICENSE
+## License
 
 This project is licensed under the [MIT License](LICENSE).
