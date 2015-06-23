@@ -94,6 +94,6 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     ```
 
 
-#### LICENSE
+## LICENSE
 
 This project is licensed under the [MIT License](LICENSE).
