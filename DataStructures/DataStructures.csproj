@@ -43,6 +43,7 @@
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />
+    <Compile Include="Heaps\BionomialHeap.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
@@ -56,8 +57,8 @@
     <Compile Include="Lists\DLinkedList.cs" />
     <Compile Include="Lists\SLinkedList.cs" />
     <Compile Include="Lists\Queue.cs" />
-    <Compile Include="Heaps\MinHeap.cs" />
-    <Compile Include="Heaps\MaxHeap.cs" />
+    <Compile Include="Heaps\MinBinaryHeap.cs" />
+    <Compile Include="Heaps\MaxBinaryHeap.cs" />
     <Compile Include="Common\Helpers.cs" />
     <Compile Include="Heaps\KeyedPriorityQueue.cs" />
     <Compile Include="Heaps\PriorityQueue.cs" />

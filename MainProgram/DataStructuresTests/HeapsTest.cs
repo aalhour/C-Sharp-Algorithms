@@ -11,7 +11,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 	{
 		public static void DoTest ()
 		{
-			MinHeap<long> minHeap = new MinHeap<long> (Comparer<long>.Default);
+			MinBinaryHeap<long> minHeap = new MinBinaryHeap<long> (Comparer<long>.Default);
 
 			minHeap.Insert (23);
 			minHeap.Insert (42);

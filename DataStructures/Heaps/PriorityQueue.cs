@@ -13,7 +13,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Instance variables
         /// </summary>
-        private MaxHeap<PriorityQueueNode<V, P>> _heap { get; set; }
+        private MaxBinaryHeap<PriorityQueueNode<V, P>> _heap { get; set; }
         private Comparer<PriorityQueueNode<V, P>> _priorityComparer { get; set; }
 
 
@@ -46,7 +46,7 @@ namespace DataStructures.Heaps
                     _priorityComparer = priorityComparer;
                 }
 
-                _heap = new MaxHeap<PriorityQueueNode<V, P>>(capacity, this._priorityComparer);
+                _heap = new MaxBinaryHeap<PriorityQueueNode<V, P>>(capacity, this._priorityComparer);
             }
             else
             {
