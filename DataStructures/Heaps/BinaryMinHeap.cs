@@ -263,70 +263,12 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns a new max heap that contains all elements of this heap.
         /// </summary>
-        public MaxBinaryHeap<T> ToMaxHeap()
+        public IMaxHeap<T> ToBinaryMaxHeap()
         {
-            MaxBinaryHeap<T> newMaxHeap = new MaxBinaryHeap<T>(this.Count(), this._heapComparer);
+            BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count(), this._heapComparer);
             newMaxHeap.Heapify(this._collection.ToArray());
             return newMaxHeap;
         }
-
-
-        /***
-         * COMMENTED FUNCTIONS.
-         * Not necessary for the purposes of MinHeaps.
-         * Might be useful in some cases.
-         */
-
-
-        ///// <summary>
-        ///// Remove a key from the heap.
-        ///// </summary>
-        ///// <param name="heapKey">Heap key.</param>
-        //public void Remove(T heapKey)
-        //{
-        //    if (!IsEmpty)
-        //    {
-        //        int last = _collection.Count - 1;
-        //        int index = _collection.IndexOf(heapKey);
-        //        _collection.Swap (index, last);
-        //        _collection.RemoveAt (last);
-        //        last--;
-        //        MinHeapify<T>(0, last);
-        //    }
-        //}
-
-
-        ///// <summary>
-        ///// Removes the key at index.
-        ///// </summary>
-        ///// <param name="index">Index.</param>
-        //public void RemoveAt(int index)
-        //{
-        //    if (!IsEmpty)
-        //    {
-        //        int last = _collection.Count - 1;
-        //        _collection.Swap (index, last);
-        //        _collection.RemoveAt (last);
-        //        last--;
-        //        MinHeapify<T>(0, last);
-        //    }
-        //}
-
-
-        ///// <summary>
-        ///// Removes all keys that match the predicate.
-        ///// </summary>
-        ///// <param name="searchMatch">Search match.</param>
-        //public void RemoveAll(Predicate<T> searchMatch)
-        //{
-        //    for (int i = 0; i < _collection.Count; ++i)
-        //    {
-        //        if (searchMatch (_collection [i]))
-        //        {
-        //            RemoveAt (i);
-        //        }
-        //    }
-        //}
 
     }
 

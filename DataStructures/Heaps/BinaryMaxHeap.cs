@@ -9,7 +9,7 @@ namespace DataStructures.Heaps
     /// <summary>
     /// Maximum Heap Data Structure.
     /// </summary>
-    public class MaxBinaryHeap<T> : IMaxHeap<T> where T : IComparable<T>
+    public class BinaryMaxHeap<T> : IMaxHeap<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance Variables.
@@ -22,9 +22,9 @@ namespace DataStructures.Heaps
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public MaxBinaryHeap() : this(0, null) { }
-        public MaxBinaryHeap(Comparer<T> comparer) : this(0, comparer) { }
-        public MaxBinaryHeap(int capacity, Comparer<T> comparer)
+        public BinaryMaxHeap() : this(0, null) { }
+        public BinaryMaxHeap(Comparer<T> comparer) : this(0, comparer) { }
+        public BinaryMaxHeap(int capacity, Comparer<T> comparer)
         {
             _collection = new ArrayList<T>(capacity);
             _heapComparer = comparer ?? Comparer<T>.Default;
@@ -230,14 +230,14 @@ namespace DataStructures.Heaps
 		/// Union two heaps together, returns a new min-heap of both heaps' elements, 
 		/// ... and then destroys the original ones.
 		/// </summary>
-		public MaxBinaryHeap<T> Union(ref MaxBinaryHeap<T> firstMaxHeap, ref MaxBinaryHeap<T> secondMaxHeap)
+		public BinaryMaxHeap<T> Union(ref BinaryMaxHeap<T> firstMaxHeap, ref BinaryMaxHeap<T> secondMaxHeap)
 		{
 			if (firstMaxHeap == null || secondMaxHeap == null)
 				throw new ArgumentNullException ("Null heaps are not allowed.");
 
 			// Create a new heap with reserved size.
 			int size = firstMaxHeap.Count() + secondMaxHeap.Count();
-			var newHeap = new MaxBinaryHeap<T> (size, Comparer<T>.Default);
+			var newHeap = new BinaryMaxHeap<T> (size, Comparer<T>.Default);
 
 			// Insert into the new heap.
 			while (firstMaxHeap.IsEmpty () == false)
@@ -255,65 +255,13 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns a new min heap that contains all elements of this heap.
         /// </summary>
-        public MinBinaryHeap<T> ToMinHeap()
+        public IMinHeap<T> ToBinaryMinHeap()
         {
             MinBinaryHeap<T> newMinHeap = new MinBinaryHeap<T>(this.Count(), this._heapComparer);
             newMinHeap.Heapify(this._collection.ToArray());
             return newMinHeap;
         }
 
-
-        /***
-         * COMMENTED FUNCTIONS.
-         * Not necessary for the purposes of MaxHeaps.
-         * Might be useful in some cases.
-         */
-
-        ///// <summary>
-        ///// Remove a key from the heap.
-        ///// </summary>
-        ///// <param name="heapKey">Heap key.</param>
-        //public void Remove(T heapKey)
-        //{
-        //    if (!IsEmpty)
-        //    {
-        //        int last = _collection.Count - 1;
-        //        int index = _collection.IndexOf(heapKey);
-        //        _collection.Swap (index, last);
-        //        _collection.RemoveAt (last);
-        //        last--;
-        //        MaxHeapify(0, last);
-        //    }
-        //}
-        ///// <summary>
-        ///// Removes the key at index.
-        ///// </summary>
-        ///// <param name="index">Index.</param>
-        //public void RemoveAt(int index)
-        //{
-        //    if (!IsEmpty)
-        //    {
-        //        int last = _collection.Count - 1;
-        //        _collection.Swap (index, last);
-        //        _collection.RemoveAt (last);
-        //        last--;
-        //        MaxHeapify(0, last);
-        //    }
-        //}
-        ///// <summary>
-        ///// Removes all keys that match the predicate.
-        ///// </summary>
-        ///// <param name="searchMatch">Search match.</param>
-        //public void RemoveAll(Predicate<T> searchMatch)
-        //{
-        //    for (int i = 0; i < _collection.Count; ++i)
-        //    {
-        //        if (searchMatch (_collection [i]))
-        //        {
-        //            RemoveAt (i);
-        //        }
-        //    }
-        //}
     }
 
 }
