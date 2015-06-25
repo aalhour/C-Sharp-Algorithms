@@ -36,7 +36,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Debug.Assert (list.Count == minHeap.Count(), "Wrong size.");
 
 			array.HeapSortDescending();
-			var maxHeap = minHeap.ToBinaryMaxHeap ();
+			var maxHeap = minHeap.ToMaxHeap ();
 			Debug.Assert (maxHeap.Peek() == array[0], "Wrong maximum.");
 		}
 	}

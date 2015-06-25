@@ -263,7 +263,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns a new max heap that contains all elements of this heap.
         /// </summary>
-        public IMaxHeap<T> ToBinaryMaxHeap()
+        public IMaxHeap<T> ToMaxHeap()
         {
             BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count(), this._heapComparer);
             newMaxHeap.Heapify(this._collection.ToArray());

@@ -255,7 +255,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns a new min heap that contains all elements of this heap.
         /// </summary>
-        public IMinHeap<T> ToBinaryMinHeap()
+        public IMinHeap<T> ToMinHeap()
         {
             MinBinaryHeap<T> newMinHeap = new MinBinaryHeap<T>(this.Count(), this._heapComparer);
             newMinHeap.Heapify(this._collection.ToArray());

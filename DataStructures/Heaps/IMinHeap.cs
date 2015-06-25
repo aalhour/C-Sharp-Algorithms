@@ -63,6 +63,6 @@ namespace DataStructures.Heaps
         /// Returns a new min heap that contains all elements of this heap.
         /// </summary>
         /// <returns>The min heap.</returns>
-        IMaxHeap<T> ToBinaryMaxHeap();
+        IMaxHeap<T> ToMaxHeap();
     }
 }
