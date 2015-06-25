@@ -23,8 +23,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 
 #### Heaps:
 
- * **[Min-Heap](DataStructures/Heaps/MinHeap.cs).** Based on my *ArrayList\<T\>*.
- * **[Max-Heap](DataStructures/Heaps/MaxHeap.cs).** Based on my *ArrayList\<T\>*.
+ * **[Binary Min-Heap](DataStructures/Heaps/BinaryMinHeap.cs).** Uses the *ArrayList\<T\>* class.
+ * **[Binary Max-Heap](DataStructures/Heaps/BinaryMaxHeap.cs).** Uses the *ArrayList\<T\>* class.
+ * **[Binomial Min-Heap](DataStructures/Heaps/BinomialMinHeap.cs).** Work in progress.
  
 #### Trees:
 
