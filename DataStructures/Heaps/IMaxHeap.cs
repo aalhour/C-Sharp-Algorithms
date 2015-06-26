@@ -17,7 +17,7 @@ namespace DataStructures.Heaps
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
         /// <param name="newCollection">New collection.</param>
-        void Heapify(System.Collections.Generic.IList<T> newCollection);
+        void Initialize(System.Collections.Generic.IList<T> newCollection);
 
         /// <summary>
         /// Adding a new key to the heap.

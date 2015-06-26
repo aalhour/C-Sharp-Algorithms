@@ -120,7 +120,7 @@ namespace DataStructures.Heaps
 		/// <summary>
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
-        public void Heapify(IList<T> newCollection)
+        public void Initialize(IList<T> newCollection)
         {
             if (newCollection.Count > 0)
             {
@@ -258,7 +258,7 @@ namespace DataStructures.Heaps
         public IMinHeap<T> ToMinHeap()
         {
             MinBinaryHeap<T> newMinHeap = new MinBinaryHeap<T>(this.Count(), this._heapComparer);
-            newMinHeap.Heapify(this._collection.ToArray());
+            newMinHeap.Initialize(this._collection.ToArray());
             return newMinHeap;
         }
 

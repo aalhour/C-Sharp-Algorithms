@@ -125,7 +125,7 @@ namespace DataStructures.Heaps
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
         /// <param name="newCollection">New collection.</param>
-        public void Heapify(IList<T> newCollection)
+        public void Initialize(IList<T> newCollection)
         {
             if (newCollection.Count > 0)
             {
@@ -266,7 +266,7 @@ namespace DataStructures.Heaps
         public IMaxHeap<T> ToMaxHeap()
         {
             BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count(), this._heapComparer);
-            newMaxHeap.Heapify(this._collection.ToArray());
+            newMaxHeap.Initialize(this._collection.ToArray());
             return newMaxHeap;
         }
 
