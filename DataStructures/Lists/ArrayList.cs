@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace DataStructures.Lists
@@ -242,6 +243,39 @@ namespace DataStructures.Lists
 
 
         /// <summary>
+        /// Adds an enumerable collection of items to list.
+        /// </summary>
+        /// <param name="elements"></param>
+        public void AddRange(IEnumerable<T> elements)
+        {
+            if (elements == null)
+                throw new ArgumentNullException();
+
+            if (((uint)_size + elements.Count()) > MAXIMUM_ARRAY_LENGTH_x64)
+                throw new OverflowException();
+
+            foreach(var element in elements)
+                this.Add(element);
+        }
+
+
+        /// <summary>
+        /// Adds an element to list repeatedly for a specified count.
+        /// </summary>
+        public void AddRepeatedly(T value, int count)
+        {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException();
+
+            if (((uint)_size + count) > MAXIMUM_ARRAY_LENGTH_x64)
+                throw new OverflowException();
+
+            for(int i = 0; i < count; i++)
+                this.Add(value);
+        }
+
+
+        /// <summary>
         /// Inserts a new element at an index. Doesn't override the cell at index.
         /// </summary>
         /// <param name="dataItem">Data item to insert.</param>
@@ -330,6 +364,38 @@ namespace DataStructures.Lists
             {
                 Array.Clear(_collection, 0, _size);
                 _size = 0;
+            }
+        }
+
+
+        /// <summary>
+        /// Resize the List to a new size.
+        /// </summary>
+        public void Resize(int newSize)
+        {
+            Resize(newSize, default(T));
+        }
+
+
+        /// <summary>
+        /// Resize the list to a new size.
+        /// </summary>
+        public void Resize(int newSize, T defaultValue)
+        {
+            int currentSize = this.Count;
+
+            if (newSize < currentSize)
+            {
+                this._ensureCapacity(newSize);
+            }
+            else if (newSize > currentSize)
+            {
+                // Optimisation step.
+                // This is just to avoid multiple automatic capacity changes.
+                if (newSize > this._collection.Length)
+                    this._ensureCapacity(newSize + 1);
+
+                this.AddRange(Enumerable.Repeat<T>(defaultValue, newSize - currentSize));
             }
         }
 

@@ -6,7 +6,7 @@ namespace DataStructures.Lists
     /// <summary>
     /// The Queue (FIFO) Data Structure.
     /// </summary>
-    public class Queue<T>
+    public class Queue<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance varialbes.

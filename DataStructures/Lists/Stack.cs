@@ -7,7 +7,7 @@ namespace DataStructures.Lists
     /// The Stack (LIFO) Data Structure.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public class Stack<T>
+    public class Stack<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance variables.
