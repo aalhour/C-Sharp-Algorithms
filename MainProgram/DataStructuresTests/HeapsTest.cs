@@ -13,21 +13,21 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 		{
 			MinBinaryHeap<long> minHeap = new MinBinaryHeap<long> (Comparer<long>.Default);
 
-			minHeap.Insert (23);
-			minHeap.Insert (42);
-			minHeap.Insert (4);
-			minHeap.Insert (16);
-			minHeap.Insert (8);
-			minHeap.Insert (15);
-			minHeap.Insert (9);
-			minHeap.Insert (55);
-			minHeap.Insert (0);
-			minHeap.Insert (34);
-			minHeap.Insert (12);
-			minHeap.Insert (2);
-			minHeap.Insert (93);
-			minHeap.Insert (14);
-			minHeap.Insert (27);
+			minHeap.Add (23);
+			minHeap.Add (42);
+			minHeap.Add (4);
+			minHeap.Add (16);
+			minHeap.Add (8);
+			minHeap.Add (15);
+			minHeap.Add (9);
+			minHeap.Add (55);
+			minHeap.Add (0);
+			minHeap.Add (34);
+			minHeap.Add (12);
+			minHeap.Add (2);
+			minHeap.Add (93);
+			minHeap.Add (14);
+			minHeap.Add (27);
 
 			var array = minHeap.ToArray ();
 			Debug.Assert (array.Length == minHeap.Count(), "Wrong size.");

@@ -147,7 +147,7 @@ namespace DataStructures.Heaps
         /// Adding a new key to the heap.
         /// </summary>
         /// <param name="heapKey">Heap key.</param>
-        public void Insert(T heapKey)
+        public void Add(T heapKey)
         {
             if (IsEmpty())
             {
@@ -249,10 +249,10 @@ namespace DataStructures.Heaps
 
 			// Insert into the new heap.
 			while (firstMinHeap.IsEmpty () == false)
-				newHeap.Insert (firstMinHeap.ExtractMin ());
+				newHeap.Add (firstMinHeap.ExtractMin ());
 
 			while (secondMinHeap.IsEmpty () == false)
-				newHeap.Insert (secondMinHeap.ExtractMin ());
+				newHeap.Add (secondMinHeap.ExtractMin ());
 
 			// Destroy the two heaps.
 			firstMinHeap = secondMinHeap = null;

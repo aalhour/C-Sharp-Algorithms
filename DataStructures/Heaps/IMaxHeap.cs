@@ -23,7 +23,7 @@ namespace DataStructures.Heaps
         /// Adding a new key to the heap.
         /// </summary>
         /// <param name="heapKey">Heap key.</param>
-        void Insert(T heapKey);
+        void Add(T heapKey);
 
         /// <summary>
         /// Find the maximum node of a max heap.

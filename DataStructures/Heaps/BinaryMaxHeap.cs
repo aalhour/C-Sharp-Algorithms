@@ -141,7 +141,7 @@ namespace DataStructures.Heaps
 		/// <summary>
         /// Adding a new key to the heap.
         /// </summary>
-        public void Insert(T heapKey)
+        public void Add(T heapKey)
         {
             if (IsEmpty())
             {
@@ -241,10 +241,10 @@ namespace DataStructures.Heaps
 
 			// Insert into the new heap.
 			while (firstMaxHeap.IsEmpty () == false)
-				newHeap.Insert (firstMaxHeap.ExtractMax ());
+				newHeap.Add (firstMaxHeap.ExtractMax ());
 
 			while (secondMaxHeap.IsEmpty () == false)
-				newHeap.Insert (secondMaxHeap.ExtractMax ());
+				newHeap.Add (secondMaxHeap.ExtractMax ());
 
 			// Destroy the two heaps.
 			firstMaxHeap = secondMaxHeap = null;

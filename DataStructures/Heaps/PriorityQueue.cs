@@ -107,7 +107,7 @@ namespace DataStructures.Heaps
         public void Enqueue(V value, P priority)
         {
             var newNode = new PriorityQueueNode<V, P>(value, priority);
-            _heap.Insert(newNode);
+            _heap.Add(newNode);
         }
 
 
