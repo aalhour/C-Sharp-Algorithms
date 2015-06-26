@@ -145,6 +145,15 @@ namespace DataStructures.Lists
 
 
         /// <summary>
+        /// Returns the capacity of list, which is the total number of slots.
+        /// </summary>
+        public int Capacity
+        {
+            get { return _collection.Length; }
+        }
+
+
+        /// <summary>
         /// Determines whether this list is empty.
         /// </summary>
         /// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
