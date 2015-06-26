@@ -20,8 +20,8 @@ namespace DataStructures.Lists
 
         // The C# Maximum Array Length (before encountering overflow)
         // Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-        private const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
-        private const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
+        public const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
+        public const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
 
         // This is used as a default empty list initialization.
         private readonly T[] _emptyArray = new T[0];
@@ -371,8 +371,9 @@ namespace DataStructures.Lists
         {
             if (_size > 0)
             {
-                Array.Clear(_collection, 0, _size);
                 _size = 0;
+                Array.Clear(_collection, 0, _size);
+                _collection = _emptyArray;
             }
         }
 

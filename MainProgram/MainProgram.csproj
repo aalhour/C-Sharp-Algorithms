@@ -45,6 +45,7 @@
     <Compile Include="AlgorithmsTests\CountingSortTest.cs" />
     <Compile Include="AlgorithmsTests\HeapSorterTest.cs" />
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
+    <Compile Include="DataStructuresTests\BinomialHeapsTest.cs" />
     <Compile Include="DataStructuresTests\CuckooHashTableTest.cs" />
     <Compile Include="DataStructuresTests\HashTable_SeparateChaining_Test.cs" />
     <Compile Include="Program.cs" />
@@ -57,7 +58,7 @@
     <Compile Include="DataStructuresTests\SLinkedListTest.cs" />
     <Compile Include="DataStructuresTests\ArrayListTest.cs" />
     <Compile Include="AlgorithmsTests\MergeSorterTest.cs" />
-    <Compile Include="DataStructuresTests\HeapsTest.cs" />
+    <Compile Include="DataStructuresTests\BinaryHeapsTest.cs" />
     <Compile Include="DataStructuresTests\PriorityQueuesTest.cs" />
     <Compile Include="DataStructuresTests\BinarySearchTreeTest.cs" />
   </ItemGroup>
