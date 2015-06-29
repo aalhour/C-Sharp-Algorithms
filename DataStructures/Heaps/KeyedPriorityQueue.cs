@@ -136,7 +136,7 @@ namespace DataStructures.Heaps
             }
 
             var newNode = new PriorityQueueNode<K, V, P>(key, value, priority);
-            _heap.Insert(newNode);
+            _heap.Add(newNode);
         }
 
 

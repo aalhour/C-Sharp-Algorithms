@@ -25,7 +25,7 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 
  * **[Binary Min-Heap](DataStructures/Heaps/BinaryMinHeap.cs).** Uses the *ArrayList\<T\>* class.
  * **[Binary Max-Heap](DataStructures/Heaps/BinaryMaxHeap.cs).** Uses the *ArrayList\<T\>* class.
- * **[Binomial Min-Heap](DataStructures/Heaps/BinomialMinHeap.cs).** Work in progress.
+ * **[Binomial Min-Heap](DataStructures/Heaps/BinomialMinHeap.cs).** Uses the *ArrayList\<T\>* class as a collection of connected BinomialNode lists. The BinomialNode is a private class inside the Heap data structure class.
  
 #### Trees:
 

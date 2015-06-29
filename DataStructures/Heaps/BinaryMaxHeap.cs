@@ -120,7 +120,7 @@ namespace DataStructures.Heaps
 		/// <summary>
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
-        public void Heapify(IList<T> newCollection)
+        public void Initialize(IList<T> newCollection)
         {
             if (newCollection.Count > 0)
             {
@@ -141,7 +141,7 @@ namespace DataStructures.Heaps
 		/// <summary>
         /// Adding a new key to the heap.
         /// </summary>
-        public void Insert(T heapKey)
+        public void Add(T heapKey)
         {
             if (IsEmpty())
             {
@@ -241,10 +241,10 @@ namespace DataStructures.Heaps
 
 			// Insert into the new heap.
 			while (firstMaxHeap.IsEmpty () == false)
-				newHeap.Insert (firstMaxHeap.ExtractMax ());
+				newHeap.Add (firstMaxHeap.ExtractMax ());
 
 			while (secondMaxHeap.IsEmpty () == false)
-				newHeap.Insert (secondMaxHeap.ExtractMax ());
+				newHeap.Add (secondMaxHeap.ExtractMax ());
 
 			// Destroy the two heaps.
 			firstMaxHeap = secondMaxHeap = null;
@@ -258,7 +258,7 @@ namespace DataStructures.Heaps
         public IMinHeap<T> ToMinHeap()
         {
             MinBinaryHeap<T> newMinHeap = new MinBinaryHeap<T>(this.Count(), this._heapComparer);
-            newMinHeap.Heapify(this._collection.ToArray());
+            newMinHeap.Initialize(this._collection.ToArray());
             return newMinHeap;
         }
 

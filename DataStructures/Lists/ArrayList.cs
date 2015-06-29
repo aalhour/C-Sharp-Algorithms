@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace DataStructures.Lists
@@ -19,8 +20,8 @@ namespace DataStructures.Lists
 
         // The C# Maximum Array Length (before encountering overflow)
         // Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-        private const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
-        private const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
+        public const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
+        public const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
 
         // This is used as a default empty list initialization.
         private readonly T[] _emptyArray = new T[0];
@@ -144,6 +145,15 @@ namespace DataStructures.Lists
 
 
         /// <summary>
+        /// Returns the capacity of list, which is the total number of slots.
+        /// </summary>
+        public int Capacity
+        {
+            get { return _collection.Length; }
+        }
+
+
+        /// <summary>
         /// Determines whether this list is empty.
         /// </summary>
         /// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
@@ -242,6 +252,39 @@ namespace DataStructures.Lists
 
 
         /// <summary>
+        /// Adds an enumerable collection of items to list.
+        /// </summary>
+        /// <param name="elements"></param>
+        public void AddRange(IEnumerable<T> elements)
+        {
+            if (elements == null)
+                throw new ArgumentNullException();
+
+            if (((uint)_size + elements.Count()) > MAXIMUM_ARRAY_LENGTH_x64)
+                throw new OverflowException();
+
+            foreach(var element in elements)
+                this.Add(element);
+        }
+
+
+        /// <summary>
+        /// Adds an element to list repeatedly for a specified count.
+        /// </summary>
+        public void AddRepeatedly(T value, int count)
+        {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException();
+
+            if (((uint)_size + count) > MAXIMUM_ARRAY_LENGTH_x64)
+                throw new OverflowException();
+
+            for(int i = 0; i < count; i++)
+                this.Add(value);
+        }
+
+
+        /// <summary>
         /// Inserts a new element at an index. Doesn't override the cell at index.
         /// </summary>
         /// <param name="dataItem">Data item to insert.</param>
@@ -328,8 +371,41 @@ namespace DataStructures.Lists
         {
             if (_size > 0)
             {
-                Array.Clear(_collection, 0, _size);
                 _size = 0;
+                Array.Clear(_collection, 0, _size);
+                _collection = _emptyArray;
+            }
+        }
+
+
+        /// <summary>
+        /// Resize the List to a new size.
+        /// </summary>
+        public void Resize(int newSize)
+        {
+            Resize(newSize, default(T));
+        }
+
+
+        /// <summary>
+        /// Resize the list to a new size.
+        /// </summary>
+        public void Resize(int newSize, T defaultValue)
+        {
+            int currentSize = this.Count;
+
+            if (newSize < currentSize)
+            {
+                this._ensureCapacity(newSize);
+            }
+            else if (newSize > currentSize)
+            {
+                // Optimisation step.
+                // This is just to avoid multiple automatic capacity changes.
+                if (newSize > this._collection.Length)
+                    this._ensureCapacity(newSize + 1);
+
+                this.AddRange(Enumerable.Repeat<T>(defaultValue, newSize - currentSize));
             }
         }
 
