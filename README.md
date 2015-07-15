@@ -70,6 +70,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     array.CountingSort();
     ```
 
+#### Numeric:
+ * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs). A class that calculates the catalan numbers. A dynamic-programming solution.
+
 #### Visualization:
  * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs). Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
     ```
