@@ -31,6 +31,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Numeric\BinomialCoefficients.cs" />
+    <Compile Include="Numeric\CatalanNumbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sorting\BinarySearchTreeSorter.cs" />
     <Compile Include="Sorting\CountingSorter.cs" />

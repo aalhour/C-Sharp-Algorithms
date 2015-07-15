@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlgorithmsTests\BinarySearchTreeSorterTest.cs" />
+    <Compile Include="AlgorithmsTests\CatalanNumbersTest.cs" />
     <Compile Include="AlgorithmsTests\CountingSortTest.cs" />
     <Compile Include="AlgorithmsTests\HeapSorterTest.cs" />
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
