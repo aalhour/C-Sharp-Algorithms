@@ -67,6 +67,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			listOfStrings.InsertAfter("InsertedAfter 11", 11);
 			Console.WriteLine("Inserts 3 items At:\r\n" + listOfStrings.ToReadable());
 
+			// Test the remove item method
+			listOfStrings.Remove ("trd");
+			Console.WriteLine("Removed item 'trd':\r\n" + listOfStrings.ToReadable());
+
+			listOfStrings.Remove ("InsertedAt 9");
+			Console.WriteLine("Removed item 'InsertedAt 9':\r\n" + listOfStrings.ToReadable());
+
 			// Print count
 			Console.WriteLine("Count: " + listOfStrings.Count);
 
@@ -97,6 +104,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			var arrayVersion = listOfStrings.ToArray();
 			Debug.Assert (arrayVersion.Length == listOfStrings.Count);
+
+
 
             /****************************************************************************************/
 

@@ -248,6 +248,27 @@ namespace DataStructures.Lists
             set { this._setElementAt(index, value); }
         }
 
+		/// <summary>
+		/// Returns the index of an item if exists.
+		/// </summary>
+		public virtual int IndexOf(T dataItem)
+		{
+			int i = 0;
+			var currentNode = _firstNode;
+
+			// Get currentNode to reference the element at the index.
+			while (i <= _count)
+			{
+				if (currentNode.Data.IsEqualTo (dataItem))
+					break;
+
+				currentNode = currentNode.Next;
+				i++;
+			}//end-while
+
+			return (i == Count ? -1 : i);
+		}
+
         /// <summary>
         /// Prepend the specified dataItem at the beginning of the list.
         /// </summary>
@@ -319,7 +340,7 @@ namespace DataStructures.Lists
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (_lastNode reference)
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
-                if (index > (Count / 2))
+                /*if (index > (Count / 2))
                 {
                     currentNode = _lastNode;
                     for (int i = (Count - 1); i > index - 1; --i)
@@ -334,9 +355,20 @@ namespace DataStructures.Lists
                     {
                         currentNode = currentNode.Next;
                     }
-                }
+                }*/
 
-                newNode.Next = currentNode.Next;
+				currentNode = this._firstNode;
+				for (int i = 0; i < index - 1; ++i)
+				{
+					currentNode = currentNode.Next;
+				}
+
+				var oldNext = currentNode.Next;
+
+				if (oldNext != null)
+					currentNode.Next.Previous = newNode;
+				
+				newNode.Next = oldNext;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
 
@@ -359,6 +391,47 @@ namespace DataStructures.Lists
             // Insert at previous index.
             InsertAt(dataItem, index - 1);
         }
+
+		/// <summary>
+		/// Remove the specified dataItem.
+		/// </summary>
+		public virtual void Remove(T dataItem)
+		{
+			// Handle index out of bound errors
+			if (IsEmpty())
+				throw new IndexOutOfRangeException();
+
+			// Remove
+			var currentNode = _firstNode;
+
+			// Get currentNode to reference the element at the index.
+			while (currentNode.Next != null)
+			{
+				if (currentNode.Data.IsEqualTo (dataItem))
+					break;
+				
+				currentNode = currentNode.Next;
+			}//end-while
+
+			// Throw exception if item was not found
+			if (!currentNode.Data.IsEqualTo(dataItem))
+				throw new Exception ("Item was not found!");
+
+			// Remove element
+			DLinkedListNode<T> newPrevious = currentNode.Previous;
+			DLinkedListNode<T> newNext = currentNode.Next;
+
+			if(newPrevious != null)
+				newPrevious.Next = newNext;
+
+			if (newNext != null)
+				newNext.Previous = newPrevious;
+
+			currentNode = newPrevious;
+
+			// Decrement count.
+			_count--;
+		}
 
         /// <summary>
         /// Removes the item at the specified index.
@@ -436,9 +509,6 @@ namespace DataStructures.Lists
         /// <returns>True if found; false otherwise.</returns>
         public virtual bool Contains(T dataItem)
         {
-            if (IsEmpty())
-                throw new Exception("List is empty.");
-
             try
             {
                 return Find(dataItem).IsEqualTo(dataItem);

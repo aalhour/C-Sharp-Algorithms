@@ -69,6 +69,9 @@
     <Compile Include="Dictionaries\ChainedHashTable.cs" />
     <Compile Include="Lists\DLinkedList_KeyValue.cs" />
     <Compile Include="Common\PrimesList.cs" />
+    <Compile Include="Graphs\UndirectedDenseGraph.cs" />
+    <Compile Include="Graphs\IUndirectedGraph.cs" />
+    <Compile Include="Graphs\UndirectedSparseGraph.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -87,5 +90,8 @@
     <Content Include="Data\PrimesDocument_10K.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphs\" />
   </ItemGroup>
 </Project>
