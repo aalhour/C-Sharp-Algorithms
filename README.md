@@ -42,6 +42,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
  * **[Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).** A hash table that implements the **Separate-Chaining** scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
  * **[Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).** A hash table that implements the **Cuckoo Hashing** algorithm for resolving keys-collisions. This is a single-table implementation, the source behind this is the work of Mark Allen Weiss, 2014.
 
+#### Graphs:
+ * **[Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).** An adjacency list graph representation. Implemented using a Dictionary of IComparable\<T\> keys and Double-Linked Lists values. The IComparable\<T\> keys serve as the nodes (vertices), and the lists serve as each node's adjacent nodes.
+
 
 ## Algorithms
 
