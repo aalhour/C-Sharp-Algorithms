@@ -7,7 +7,7 @@ namespace DataStructures.Lists
     /// <summary>
     /// The Array-Based List Data Structure.
     /// </summary>
-    public class ArrayList<T>
+	public class ArrayList<T> : IEnumerable<T>
     {
         /// <summary>
         /// Instance variables.
@@ -804,6 +804,23 @@ namespace DataStructures.Lists
 
             return listAsString;
         }
+
+
+		/********************************************************************************/
+
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			for (int i = 0; i < Count; i++)
+			{
+				yield return _collection [i];
+			}
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator ();
+		}
 
     }
 
