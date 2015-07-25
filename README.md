@@ -74,6 +74,10 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     array.CountingSort();
     ```
 
+#### Graphs:
+ * [Depth-First Search](Algorithms/Graphs/DepthFirstSearch.cs). Implements the DFS algorithm in two ways: Iterative and Recursive. Provides two functions for traversing graphs: VisitAll(), and FindFirstMatch(). The VisitAll() function takes an Action\<T\> and apply it to the graph nodes. The FindFirstMatch() function takes a Predicate\<T\> function and depth-first-searches for a first match in the graph.
+ * [Breadth-First Search](Algorithms/Graphs/BreadthFirstSearch.cs). Implements the DFS algorithm in an iterative fashion. Provides two functions for traversing graphs: VisitAll(), and FindFirstMatch(). The VisitAll() function takes an Action\<T\> and apply it to the graph nodes. The FindFirstMatch() function takes a Predicate\<T\> function and breadth-first-searches for a first match in the graph.
+
 #### Numeric:
  * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs). A class that calculates the catalan numbers. A dynamic-programming solution.
 
