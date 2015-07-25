@@ -35,12 +35,14 @@ namespace Algorithms.Graphs
 		/// </summary>
 		public static void VisitAll<T> (ref IUndirectedGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
 		{
+			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
-				return;
-			
+				throw new Exception ("Graph is empty!");
+
+			// Check if graph has the starting vertex
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
-
+			
 			var parents = new Dictionary<T, object> (Graph.VerticesCount);	// keeps track of visited nodes and tree-edges
 
 			foreach (var vertex in Graph.Neighbours(StartVertex))
@@ -61,13 +63,53 @@ namespace Algorithms.Graphs
 
 		/// <summary>
 		/// Iterative DFS Implementation.
+		/// Given a starting node, dfs the graph and print the nodes as they get visited.
+		/// </summary>
+		public static void PrintAll<T>(IUndirectedGraph<T> Graph, T StartVertex) where T : IComparable<T>
+		{
+			// Check if graph is empty
+			if (Graph.VerticesCount == 0)
+				throw new Exception ("Graph is empty!");
+
+			// Check if graph has the starting vertex
+			if (!Graph.HasVertex (StartVertex))
+				throw new Exception ("Starting vertex doesn't belong to graph.");
+			
+			var stack = new Stack<T> (Graph.VerticesCount);
+			var visited = new HashSet<T> (Graph.VerticesCount);
+
+			stack.Push (StartVertex);
+
+			while (stack.Count > 0) 
+			{
+				var current = stack.Pop ();
+
+				if (visited.Contains (current))
+					continue;
+				
+				// DFS VISIT NODE STEP
+				Console.WriteLine (String.Format ("({0}) ", current));
+				visited.Add (current);
+
+				// Get the adjacent nodes of current
+				foreach (var adjacent in Graph.Neighbours(current)) 
+					if (!visited.Contains (adjacent))
+						stack.Push (adjacent);
+			}
+
+		}
+
+		/// <summary>
+		/// Iterative DFS Implementation.
 		/// Given a predicate function and a starting node, this function searches the nodes of the graph for a first match.
 		/// </summary>
 		public static T FindFirstMatch<T> (IUndirectedGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
 		{
+			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
 				throw new Exception ("Graph is empty!");
 
+			// Check if graph has the starting vertex
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
 			
@@ -93,14 +135,10 @@ namespace Algorithms.Graphs
 				if (Match (current))
 					return current;
 
-				// Get currents adjacent nodes
+				// Get currents adjacent nodes (might add already visited nodes).
 				foreach (var adjacent in Graph.Neighbours(current)) 
-				{
-					// Optimization check.
-					// Add the adjacent to the to-be-visited stack, IFF it wasn't visited already.
 					if(!parents.ContainsKey(adjacent))
 						stack.Push (adjacent);
-				}
 
 				// Mark current as the father of its adjacents. This helps keep track of tree-nodes.
 				currentParent = current;

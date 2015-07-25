@@ -9,19 +9,61 @@ namespace Algorithms.Graphs
 	{
 		/// <summary>
 		/// Iterative BFS implementation.
+		/// Traverses nodes in graph starting from a specific node, printing them as they get visited.
+		/// </summary>
+		public static void PrintAll<T> (IUndirectedGraph<T> Graph, T StartVertex) where T : IComparable<T>
+		{
+			// Check if graph is empty
+			if (Graph.VerticesCount == 0)
+				throw new Exception ("Graph is empty!");
+
+			// Check if graph has the starting vertex
+			if (!Graph.HasVertex (StartVertex))
+				throw new Exception ("Starting vertex doesn't belong to graph.");
+			
+			var visited = new HashSet<T> (Graph.VerticesCount);
+			var queue = new Queue<T> (Graph.VerticesCount);
+
+			// BFS VISIT NODE STEP
+			var current = StartVertex;
+			Console.Write (String.Format("({0}) ", current));
+			visited.Add (current);
+
+			while (queue.Count > 0) 
+			{
+				current = queue.Dequeue ();
+
+				foreach (var adjacent in Graph.Neighbours(current)) 
+				{
+					if (visited.Contains (adjacent))
+						continue;
+
+					// BFS VISIT NODE STEP
+					Console.Write (String.Format("({0}) ", adjacent));
+					visited.Add (adjacent);
+
+					queue.Enqueue (adjacent);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Iterative BFS implementation.
 		/// Traverses all the nodes in a graph starting from a specific node, applying the passed action to every node.
 		/// </summary>
 		public static void VisitAll<T> (ref IUndirectedGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
 		{
+			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
-				return;
+				throw new Exception ("Graph is empty!");
 
+			// Check if graph has the starting vertex
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
-
-			int level = 0;													// keeps track of levels
+			
+			int level = 0;													// keeps track of level
 			var frontiers = new List<T>();									// keeps track of previous levels, i - 1
-			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes
+			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
 			var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
 
 			frontiers.Add (StartVertex);
@@ -63,15 +105,17 @@ namespace Algorithms.Graphs
 		/// </summary>
 		public static T FindFirstMatch<T> (IUndirectedGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
 		{
+			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
 				throw new Exception ("Graph is empty!");
 
+			// Check if graph has the starting vertex
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
-
+			
 			int level = 0;													// keeps track of levels
 			var frontiers = new List<T>();									// keeps track of previous levels, i - 1
-			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes
+			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
 			var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
 
 			frontiers.Add (StartVertex);
