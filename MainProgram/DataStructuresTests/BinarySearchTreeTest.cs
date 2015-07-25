@@ -37,13 +37,13 @@ namespace C_Sharp_Algorithms
             //binarySearchTree.VisualizeTree();
             //Console.ReadLine();
 
-            var count = binarySearchTree.Count();
+            //var count = binarySearchTree.Count();
 
             // Test find
             var found = binarySearchTree.Find(10);
             Debug.Assert(found == 10, "Wrong element.");
 
-            int height = binarySearchTree.Height();
+            //int height = binarySearchTree.Height();
 
             // Test find all
 			var list = binarySearchTree.FindAll(element => element > 15);

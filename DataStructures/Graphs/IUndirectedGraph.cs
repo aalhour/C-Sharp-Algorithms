@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 using DataStructures.Lists;
 
 namespace DataStructures.Graphs
@@ -29,6 +31,11 @@ namespace DataStructures.Graphs
 		/// Deletes an edge, if exists, between two vertices.
 		/// </summary>
 		bool RemoveEdge(T firstVertex, T secondVertex);
+
+		/// <summary>
+		/// Adds a list of vertices to the graph.
+		/// </summary>
+		void AddVertices(IList<T> collection);
 
 		/// <summary>
 		/// Adds a new vertex to graph.
