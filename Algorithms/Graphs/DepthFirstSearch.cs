@@ -88,8 +88,13 @@ namespace Algorithms.Graphs
 					return current;
 
 				// Get currents adjacent nodes
-				foreach (var adjacent in Graph.Neighbours(current))
-					stack.Push (adjacent);
+				foreach (var adjacent in Graph.Neighbours(current)) 
+				{
+					// Optimization check.
+					// Add the adjacent to the to-be-visited stack, IFF it wasn't visited already.
+					if(!parents.ContainsKey(adjacent))
+						stack.Push (adjacent);
+				}
 
 				// Mark current as the father of its adjacents. This helps keep track of tree-nodes.
 				currentParent = current;
