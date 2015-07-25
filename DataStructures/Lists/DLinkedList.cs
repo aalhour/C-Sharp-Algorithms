@@ -51,6 +51,9 @@ namespace DataStructures.Lists
     }
 
 
+	/***********************************************************************************/
+
+
     /// <summary>
     /// Doubly-Linked List Data Structure.
     /// </summary>
@@ -401,33 +404,50 @@ namespace DataStructures.Lists
 			if (IsEmpty())
 				throw new IndexOutOfRangeException();
 
-			// Remove
-			var currentNode = _firstNode;
-
-			// Get currentNode to reference the element at the index.
-			while (currentNode.Next != null)
+			if(_firstNode.Data.IsEqualTo(dataItem))
 			{
-				if (currentNode.Data.IsEqualTo (dataItem))
-					break;
-				
-				currentNode = currentNode.Next;
-			}//end-while
+				_firstNode = _firstNode.Next;
 
-			// Throw exception if item was not found
-			if (!currentNode.Data.IsEqualTo(dataItem))
-				throw new Exception ("Item was not found!");
+				if (_firstNode != null)
+					_firstNode.Previous = null;
+			}
+			else if(_lastNode.Data.IsEqualTo(dataItem))
+			{
+				_lastNode = _lastNode.Previous;
 
-			// Remove element
-			DLinkedListNode<T> newPrevious = currentNode.Previous;
-			DLinkedListNode<T> newNext = currentNode.Next;
+				if (_lastNode != null)
+					_lastNode.Next = null;
+			}
+			else
+			{
+				// Remove
+				var currentNode = _firstNode;
 
-			if(newPrevious != null)
-				newPrevious.Next = newNext;
+				// Get currentNode to reference the element at the index.
+				while (currentNode.Next != null)
+				{
+					if (currentNode.Data.IsEqualTo (dataItem))
+						break;
 
-			if (newNext != null)
-				newNext.Previous = newPrevious;
+					currentNode = currentNode.Next;
+				}//end-while
 
-			currentNode = newPrevious;
+				// Throw exception if item was not found
+				if (!currentNode.Data.IsEqualTo(dataItem))
+					throw new Exception ("Item was not found!");
+
+				// Remove element
+				DLinkedListNode<T> newPrevious = currentNode.Previous;
+				DLinkedListNode<T> newNext = currentNode.Next;
+
+				if(newPrevious != null)
+					newPrevious.Next = newNext;
+
+				if (newNext != null)
+					newNext.Previous = newPrevious;
+
+				currentNode = newPrevious;
+			}
 
 			// Decrement count.
 			_count--;
@@ -451,9 +471,6 @@ namespace DataStructures.Lists
 
                 if (_firstNode != null)
                     _firstNode.Previous = null;
-
-                // Decrement count.
-                _count--;
             }
             else if (index == Count - 1)
             {
@@ -461,9 +478,6 @@ namespace DataStructures.Lists
 
                 if (_lastNode != null)
                     _lastNode.Next = null;
-
-                // Decrement count.
-                _count--;
             }
             else
             {
@@ -487,10 +501,10 @@ namespace DataStructures.Lists
                     newNext.Previous = newPrevious;
 
                 currentNode = newPrevious;
-
-                // Decrement count.
-                _count--;
             }//end-else
+
+			// Decrement count.
+			_count--;
         }
 
         /// <summary>
@@ -718,12 +732,23 @@ namespace DataStructures.Lists
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new DLinkedListEnumerator(this);
+			var node = _firstNode;
+			while (node != null)
+			{
+				yield return node.Data;
+				node = node.Next;
+			}
+
+			// Alternative: IEnumerator class instance
+            // return new DLinkedListEnumerator(this);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return new DLinkedListEnumerator(this);
+			return this.GetEnumerator ();
+
+			// Alternative: IEnumerator class instance
+			// return new DLinkedListEnumerator(this);
         }
 
         /********************************************************************************/
@@ -735,8 +760,8 @@ namespace DataStructures.Lists
 
             public DLinkedListEnumerator(DLinkedList<T> list)
             {
+				this._current = list.Head;
                 this._doublyLinkedList = list;
-                this._current = list.Head;
             }
 
             public T Current
@@ -751,21 +776,27 @@ namespace DataStructures.Lists
 
             public bool MoveNext()
             {
-                _current = _current.Next;
+				if (_current.Next != null)
+					_current = _current.Next;
+				else
+					return false;
 
-                return (this._current != null);
+				return true;
             }
 
             public bool MovePrevious()
             {
-                _current = _current.Previous;
+				if (_current.Previous != null)
+					_current = _current.Previous;
+				else
+					return false;
 
-                return (this._current != null);
+				return true;
             }
 
             public void Reset()
             {
-                _current = _doublyLinkedList.Head;
+				_current = _doublyLinkedList.Head;
             }
 
             public void Dispose()
@@ -774,6 +805,7 @@ namespace DataStructures.Lists
                 _doublyLinkedList = null;
             }
         }
+
     }
 
 }
