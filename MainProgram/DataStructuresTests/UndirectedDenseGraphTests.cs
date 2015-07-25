@@ -60,7 +60,7 @@ namespace C_Sharp_Algorithms
 			Console.WriteLine(graph.ToReadable() + "\r\n");
 
 			Console.WriteLine ("Walk the graph using BFS:");
-			graph.BreadthFirstSearchWalk ("s");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
+			graph.BreadthFirstWalk ("s");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
 			Console.WriteLine ("\r\n");
 
 
@@ -91,7 +91,7 @@ namespace C_Sharp_Algorithms
 			Console.WriteLine(graph.ToReadable() + "\r\n");
 
 			Console.WriteLine ("Walk the graph using DFS:");
-			graph.DepthFirstSearchWalk ();		// output: (a) (b) (e) (d) (c) (f) 
+			graph.DepthFirstWalk ();		// output: (a) (b) (e) (d) (c) (f) 
 		}
 	}
 }

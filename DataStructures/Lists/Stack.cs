@@ -7,7 +7,7 @@ namespace DataStructures.Lists
     /// The Stack (LIFO) Data Structure.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-    public class Stack<T> where T : IComparable<T>
+	public class Stack<T> : IEnumerable<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance variables.
@@ -87,36 +87,19 @@ namespace DataStructures.Lists
         /// <summary>
         /// Removes the top element from stack.
         /// </summary>
-        public void Pop()
+        public T Pop()
         {
             if (Count > 0)
             {
+				var top = Top;
                 _collection.RemoveAt(0);
+				return top;
             }
             else
             {
                 throw new Exception("Stack is empty.");
             }
         }
-
-
-        /// <summary>
-        /// Removes the Top Element from stack, and assigns it's value to the "top" parameter.
-        /// </summary>
-        /// <param name="top">Varialbe to hold the Top Element value.</param>
-        public void Pop(out T top)
-        {
-            if (Count > 0)
-            {
-                top = Top;
-                _collection.RemoveAt(0);
-            }
-            else
-            {
-                throw new Exception("Stack is empty.");
-            }
-        }
-
 
         /// <summary>
         /// Returns an array version of this stack.
@@ -136,6 +119,20 @@ namespace DataStructures.Lists
         {
             return _collection.ToHumanReadable();
         }
+
+
+		/********************************************************************************/
+
+
+		public IEnumerator<T> GetEnumerator ()
+		{
+			return _collection.GetEnumerator ();
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return this.GetEnumerator ();
+		}
 
     }
 

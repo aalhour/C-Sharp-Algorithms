@@ -24,8 +24,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			var array = stack.ToArray();
 			Debug.Assert (array.Length == stack.Count, "Wrong size!");
 
-			stack.Pop();
-			stack.Pop(out top);
+			top = stack.Pop();
 
 			Console.WriteLine("Old 2nd-last: " + top);
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());

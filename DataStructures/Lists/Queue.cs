@@ -6,7 +6,7 @@ namespace DataStructures.Lists
     /// <summary>
     /// The Queue (FIFO) Data Structure.
     /// </summary>
-    public class Queue<T> where T : IComparable<T>
+	public class Queue<T> : IEnumerable<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance varialbes.
@@ -104,9 +104,9 @@ namespace DataStructures.Lists
         {
             if (Count > 0)
             {
-                var top = Top;
+                var topItem = Top;
                 _collection.RemoveAt(0);
-                return Top;
+				return topItem;
             }
             else
             {
@@ -133,6 +133,20 @@ namespace DataStructures.Lists
         {
             return _collection.ToHumanReadable();
         }
+
+
+		/********************************************************************************/
+
+
+		public IEnumerator<T> GetEnumerator ()
+		{
+			return _collection.GetEnumerator ();
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
+		{
+			return this.GetEnumerator ();
+		}
 
     }
 
