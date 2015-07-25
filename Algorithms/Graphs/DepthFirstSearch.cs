@@ -37,6 +37,9 @@ namespace Algorithms.Graphs
 		{
 			if (Graph.VerticesCount == 0)
 				return;
+			
+			if (!Graph.HasVertex (StartVertex))
+				throw new Exception ("Starting vertex doesn't belong to graph.");
 
 			var parents = new Dictionary<T, object> (Graph.VerticesCount);	// keeps track of visited nodes and tree-edges
 
@@ -65,6 +68,9 @@ namespace Algorithms.Graphs
 			if (Graph.VerticesCount == 0)
 				throw new Exception ("Graph is empty!");
 
+			if (!Graph.HasVertex (StartVertex))
+				throw new Exception ("Starting vertex doesn't belong to graph.");
+			
 			var stack = new Stack<T> ();
 			var parents = new Dictionary<T, object> (Graph.VerticesCount);	// keeps track of visited nodes and tree-edges
 

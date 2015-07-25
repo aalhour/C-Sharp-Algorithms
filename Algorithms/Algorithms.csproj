@@ -43,6 +43,7 @@
     <Compile Include="Common\Comparers.cs" />
     <Compile Include="Common\Helpers.cs" />
     <Compile Include="Graphs\DepthFirstSearch.cs" />
+    <Compile Include="Graphs\BreadthFirstSearch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

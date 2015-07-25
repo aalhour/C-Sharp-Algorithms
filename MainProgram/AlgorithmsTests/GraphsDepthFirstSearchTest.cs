@@ -6,7 +6,7 @@ using Algorithms.Graphs;
 
 namespace C_Sharp_Algorithms.AlgorithmsTests
 {
-	public static class DepthFirstSearchTest
+	public static class GraphsDepthFirstSearchTest
 	{
 		public static void DoTest ()
 		{
@@ -29,7 +29,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 			graph.AddEdge("v", "f");
 
 			string searchResult = null;
-			string startFromNode = "a";
+			string startFromNode = "d";
 			Action<string> writeToConsole = (node) => Console.Write (String.Format ("({0}) ", node));
 			Predicate<string> searchPredicate = (node) => node == "f" || node == "c";
 
@@ -57,6 +57,8 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 			{
 				Console.WriteLine ("Search predicate was not matched by any node in the graph.");
 			}
+
+			Console.WriteLine ("\r\n");
 		}
 	}
 }

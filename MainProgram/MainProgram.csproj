@@ -64,7 +64,8 @@
     <Compile Include="DataStructuresTests\BinarySearchTreeTest.cs" />
     <Compile Include="DataStructuresTests\UndirectedSparseGraphTests.cs" />
     <Compile Include="DataStructuresTests\UndirectedDenseGraphTests.cs" />
-    <Compile Include="AlgorithmsTests\DepthFirstSearchTest.cs" />
+    <Compile Include="AlgorithmsTests\GraphsDepthFirstSearchTest.cs" />
+    <Compile Include="AlgorithmsTests\GraphsBreadthFirstSearchTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
