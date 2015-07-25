@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 using Algorithms.Common;
@@ -24,12 +25,10 @@ namespace Algorithms.Graphs
 		// A const that represent an infinite distance
 		private const Int64 INFINITY = Int64.MaxValue;
 
-		// The index of the source vertex
-		private int _sourceVertexIndex { get; set; }
-
 
 		/// <summary>
-		/// CONSTRUCTOR
+		/// CONSTRUCTOR.
+		/// Breadth First Searcher from Single Source.
 		/// </summary>
 		public BreadthFirstPaths (IGraph<T> Graph, T Source)
 		{
@@ -38,6 +37,41 @@ namespace Algorithms.Graphs
 			else if (!Graph.HasVertex (Source))
 				throw new ArgumentException ("The source vertex doesn't belong to graph.");
 
+			// Init
+			_initializeDataMembers (Graph);
+
+			// Single source BFS
+			_breadthFirstSearch (Graph, Source);
+
+			//bool optimalityConditionsSatisfied = checkOptimalityConditions (Graph, Source);
+			Debug.Assert (checkOptimalityConditions (Graph, Source));
+		}
+
+
+		/// <summary>
+		/// CONSTRUCTOR.
+		/// Breadth First Searcher from Multiple Sources.
+		/// </summary>
+		public BreadthFirstPaths (IGraph<T> Graph, IList<T> Sources)
+		{
+			if (Graph == null)
+				throw new ArgumentNullException ();
+			else if (Sources == null || Sources.Count == 0)
+				throw new ArgumentException ("Sources list is either null or empty.");
+
+			// Init
+			_initializeDataMembers (Graph);
+
+			// Multiple sources BFS
+			_breadthFirstSearch (Graph, Sources);
+		}
+
+
+		/// <summary>
+		/// Constructors helper function. Initializes some of the data memebers.
+		/// </summary>
+		private void _initializeDataMembers(IGraph<T> Graph)
+		{
 			_edgesCount = Graph.EdgesCount;
 			_verticesCount = Graph.VerticesCount;
 
@@ -48,6 +82,11 @@ namespace Algorithms.Graphs
 			_nodesToIndices = new Dictionary<T, int> ();
 			_indicesToNodes = new Dictionary<int, T> ();
 
+			// Reset the visited, distances and predeccessors arrays
+			_visited.Populate (false);
+			_distances.Populate (INFINITY);
+			_predecessors.Populate (-1);
+
 			int i = 0;
 			foreach (var node in Graph.Vertices) 
 			{
@@ -55,22 +94,13 @@ namespace Algorithms.Graphs
 				_indicesToNodes.Add (i, node);
 				++i;
 			}
-
-			_sourceVertexIndex = _nodesToIndices [Source];
-
-			_breadthFirstSearch (Graph, Source);
 		}
 
-
 		/// <summary>
-		/// Privat Breadth First Search helper.
+		/// Privat helper. Breadth First Search from Single Source.
 		/// </summary>
 		private void _breadthFirstSearch(IGraph<T> graph, T source)
 		{
-			// Reset the visited and distances arrays
-			_visited.Populate (false);
-			_distances.Populate (INFINITY);
-
 			// Define helper variables.
 			var current = source;
 			var queue = new DataStructures.Lists.Queue<T> (_verticesCount);
@@ -102,6 +132,109 @@ namespace Algorithms.Graphs
 					}
 				}//end-foreach
 			}//end-while
+		}
+
+		/// <summary>
+		/// Privat helper. Breadth First Search from Multiple Sources.
+		/// </summary>
+		private void _breadthFirstSearch(IGraph<T> graph, IList<T> sources)
+		{
+			// Define helper variables.
+			var queue = new DataStructures.Lists.Queue<T> (_verticesCount);
+
+			foreach (var source in sources) 
+			{
+				if (!graph.HasVertex (source))
+					throw new Exception ("Graph doesn't has a vertex '" + source + "'");
+
+				int index = _nodesToIndices [source];
+				_distances [index] = 0;
+				_visited [index] = true;
+				queue.Enqueue (source);
+			}
+
+			while (!queue.IsEmpty) 
+			{
+				var current = queue.Dequeue ();
+				int indexOfCurrent = _nodesToIndices[current];
+
+				foreach (var adjacent in graph.Neighbours(current)) 
+				{
+					int indexOfAdjacent = _nodesToIndices [adjacent];
+
+					if (!_visited [indexOfAdjacent]) 
+					{
+						_predecessors [indexOfAdjacent] = indexOfCurrent;
+						_distances [indexOfAdjacent] = _distances [indexOfCurrent] + 1;
+						_visited [indexOfAdjacent] = true;
+
+						queue.Enqueue (adjacent);
+					}
+				}//end-foreach
+			}//end-while
+		}
+
+		/// <summary>
+		/// Private helper. Checks optimality conditions for single source
+		/// </summary>
+		private bool checkOptimalityConditions(IGraph<T> graph, T source)
+		{
+			int indexOfSource = _nodesToIndices [source];
+
+			// check that the distance of s = 0
+			if (_distances[indexOfSource] != 0) {
+				Console.WriteLine("Distance of source '" + source + "' to itself = " + _distances[indexOfSource]);
+				return false;
+			}
+
+			// check that for each edge v-w dist[w] <= dist[v] + 1
+			// provided v is reachable from s
+			foreach (var node in graph.Vertices) 
+			{
+				int v = _nodesToIndices [node];
+
+				foreach (var adjacent in graph.Neighbours(node)) 
+				{
+					int w = _nodesToIndices [adjacent];
+
+					if (HasPathTo(node) != HasPathTo(adjacent)) 
+					{
+						Console.WriteLine("edge " + node + "-" + adjacent);
+						Console.WriteLine("hasPathTo(" + node + ") = " + HasPathTo(node));
+						Console.WriteLine("hasPathTo(" + adjacent + ") = " + HasPathTo(adjacent));
+						return false;
+					}
+					if (HasPathTo(node) && (_distances[w] > _distances[v] + 1)) 
+					{
+						Console.WriteLine("edge " + node + "-" + adjacent);
+						Console.WriteLine("distanceTo[" + node + "] = " + _distances[v]);
+						Console.WriteLine("distanceTo[" + adjacent + "] = " + _distances[w]);
+						return false;
+					}
+				}
+			}
+
+			// check that v = edgeTo[w] satisfies distTo[w] + distTo[v] + 1
+			// provided v is reachable from source
+			foreach (var node in graph.Vertices) 
+			{
+				int w = _nodesToIndices[node];
+
+				if (!HasPathTo (node) || node.IsEqualTo(source))
+					continue;
+				
+				int v = _predecessors[w];
+
+				if (_distances[w] != _distances[v] + 1)
+				{
+					Console.WriteLine("shortest path edge " + v + "-" + w);
+					Console.WriteLine("distanceTo[" + v + "] = " + _distances[v]);
+					Console.WriteLine("distanceTo[" + w + "] = " + _distances[w]);
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 
