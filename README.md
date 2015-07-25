@@ -75,8 +75,9 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
     ```
 
 #### Graphs:
- * [Depth-First Search](Algorithms/Graphs/DepthFirstSearch.cs). Implements the DFS algorithm in two ways: Iterative and Recursive. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
- * [Breadth-First Search](Algorithms/Graphs/BreadthFirstSearch.cs). Implements the DFS algorithm in an iterative fashion. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
+ * **[Depth-First Searcher](Algorithms/Graphs/DepthFirstSearcher.cs).** Implements the DFS algorithm in two ways: Iterative and Recursive. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
+ * **[Breadth-First Searcher](Algorithms/Graphs/BreadthFirstSearcher.cs).** Implements the DFS algorithm in an iterative fashion. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
+ * **[Breadth First Paths](Algorithms/Graphs/BreadthFirstPaths.cs).** A class that takes a Graph instance upon object-instantiation as a parameter, and then applies BFS to the graph. Meanwhile applying BFS to the graph, it extracts information about shortest-paths and connectivity. It provides the capability to find shortest-paths from single-sources and multiple-sources. Also, to check for reachable and unreachable nodes from the specified source-node(s).
 
 #### Numeric:
  * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs). A class that calculates the catalan numbers. A dynamic-programming solution.
