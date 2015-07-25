@@ -41,7 +41,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Gets the count of vetices.
 		/// </summary>
-		public virtual int VeticesCount
+		public virtual int VerticesCount
 		{
 			get { return adjacencyList.Count; }
 		}
@@ -57,13 +57,14 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Returns the list of Vertices.
 		/// </summary>
-		public virtual DLinkedList<T> Vertices
+		public virtual ArrayList<T> Vertices
 		{
 			get
 			{
-				var list = new DLinkedList<T> ();
+				var list = new ArrayList<T> ();
 				foreach (var vertex in adjacencyList.Keys)
-					list.Append (vertex);
+					list.Add (vertex);
+				
 				return list;
 			}
 		}
@@ -100,7 +101,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Deletes an edge, if exists, between two vertices.
 		/// </summary>
-		public virtual bool DeleteEdge(T firstVertex, T secondVertex)
+		public virtual bool RemoveEdge(T firstVertex, T secondVertex)
 		{
 			bool status = false;
 
@@ -111,7 +112,7 @@ namespace DataStructures.Graphs
 
 				// Check existence of an edge in one list.
 				// If edge doesn't exist, add the connecting edge to both vertices' neighbours lists.
-				if (!neighbours.Contains (secondVertex))
+				if (neighbours.Contains (secondVertex))
 				{
 					adjacencyList [firstVertex].Remove(secondVertex);
 					adjacencyList [secondVertex].Remove(firstVertex);

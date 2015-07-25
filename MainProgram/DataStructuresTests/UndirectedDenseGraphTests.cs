@@ -3,13 +3,13 @@ using System.Diagnostics;
 
 using DataStructures.Graphs;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace C_Sharp_Algorithms
 {
-	public static class UndirectedSparseGraphTests
+	public static class UndirectedDenseGraphTests
 	{
 		public static void DoTest()
 		{
-			var graph = new UndirectedSparseGraph<string>();
+			var graph = new UndirectedDenseGraph<string>();
 
 			graph.AddVertex("a");
 			graph.AddVertex("z");
@@ -34,7 +34,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Debug.Assert (graph.VerticesCount == 8, "Wrong vertices count.");
 			Debug.Assert (graph.EdgesCount == 10, "Wrong edges count.");
 
-			Console.WriteLine ("[*] Undirected Sparse Graph:");
+			Console.WriteLine ("[*] Undirected Dense Graph:");
 			Console.WriteLine ("Graph nodes and edges:");
 			Console.WriteLine(graph.ToReadable() + "\r\n");
 

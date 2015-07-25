@@ -8,7 +8,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Gets the count of vetices.
 		/// </summary>
-		int VeticesCount { get; }
+		int VerticesCount { get; }
 
 		/// <summary>
 		/// Gets the count of edges.
@@ -18,7 +18,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Returns the list of Vertices.
 		/// </summary>
-		DLinkedList<T> Vertices { get; }
+		ArrayList<T> Vertices { get; }
 
 		/// <summary>
 		/// Connects two vertices together.
@@ -28,7 +28,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Deletes an edge, if exists, between two vertices.
 		/// </summary>
-		bool DeleteEdge(T firstVertex, T secondVertex);
+		bool RemoveEdge(T firstVertex, T secondVertex);
 
 		/// <summary>
 		/// Adds a new vertex to graph.

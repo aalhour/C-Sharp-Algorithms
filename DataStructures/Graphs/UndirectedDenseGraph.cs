@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using DataStructures.Common;
 using DataStructures.Lists;
@@ -18,26 +19,39 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// INSTANCE VARIABLES
 		/// </summary>
-		protected virtual int edgesCount { get; set; }
-		protected virtual ArrayList<ArrayList<T>> adjacencyMatrix { get; set; }
+		protected virtual int _edgesCount { get; set; }
+		protected virtual int _verticesCapacity { get; set; }
+		protected virtual ArrayList<T> _vertices { get; set; }
+		protected virtual bool[,] _adjacencyMatrix { get; set; }
 
 
 		/// <summary>
 		/// CONSTRUCTORS
 		/// </summary>
-		public UndirectedDenseGraph()
+		public UndirectedDenseGraph(uint verticesCount = 10)
 		{
-			edgesCount = 0;
-			adjacencyMatrix = new ArrayList<ArrayList<T>> ();
+			_edgesCount = 0;
+			_verticesCapacity = (int)verticesCount;
+			_vertices = new ArrayList<T> (_verticesCapacity);
+			_adjacencyMatrix = new bool[_verticesCapacity, _verticesCapacity];
+			_adjacencyMatrix.Populate (rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: false);
 		}
 
 
 		/// <summary>
+		/// Helper function that looks up if an edge exists.
+		/// </summary>
+		private bool _doesEdgeExist(int index1, int index2)
+		{
+			return (_adjacencyMatrix [index1, index2] || _adjacencyMatrix [index2, index1]);
+		}
+
+		/// <summary>
 		/// Gets the count of vetices.
 		/// </summary>
-		public int VeticesCount
+		public int VerticesCount
 		{
-			get { throw new NotImplementedException (); }
+			get { return _vertices.Count; }
 		}
 
 		/// <summary>
@@ -45,15 +59,15 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public int EdgesCount
 		{
-			get { throw new NotImplementedException (); }
+			get { return _edgesCount; }
 		}
 
 		/// <summary>
 		/// Returns the list of Vertices.
 		/// </summary>
-		public DataStructures.Lists.DLinkedList<T> Vertices
+		public DataStructures.Lists.ArrayList<T> Vertices
 		{
-			get { throw new NotImplementedException (); }
+			get { return _vertices; }
 		}
 
 		/// <summary>
@@ -61,15 +75,43 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public bool AddEdge (T firstVertex, T secondVertex)
 		{
-			throw new NotImplementedException ();
+			int indexOfFirst = _vertices.IndexOf (firstVertex);
+			int indexOfSecond = _vertices.IndexOf (secondVertex);
+
+			if (indexOfFirst == -1 || indexOfSecond == -1)
+				return false;
+			else if (_doesEdgeExist (indexOfFirst, indexOfSecond))
+				return false;
+			
+			_adjacencyMatrix [indexOfFirst, indexOfSecond] = true;
+			_adjacencyMatrix [indexOfSecond, indexOfFirst] = true;
+
+			// Increment the edges count.
+			++_edgesCount;
+
+			return true;
 		}
 
 		/// <summary>
 		/// Deletes an edge, if exists, between two vertices.
 		/// </summary>
-		public bool DeleteEdge (T firstVertex, T secondVertex)
+		public bool RemoveEdge (T firstVertex, T secondVertex)
 		{
-			throw new NotImplementedException ();
+			int indexOfFirst = _vertices.IndexOf (firstVertex);
+			int indexOfSecond = _vertices.IndexOf (secondVertex);
+
+			if (indexOfFirst == -1 || indexOfSecond == -1)
+				return false;
+			else if (!_doesEdgeExist (indexOfFirst, indexOfSecond))
+				return false;
+			
+			_adjacencyMatrix [indexOfFirst, indexOfSecond] = false;
+			_adjacencyMatrix [indexOfSecond, indexOfFirst] = false;
+
+			// Decrement the edges count.
+			--_edgesCount;
+
+			return true;
 		}
 
 		/// <summary>
@@ -77,7 +119,17 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public bool AddVertex (T vertex)
 		{
-			throw new NotImplementedException ();
+			// Return if graph reached it's maximum capacity
+			if (_vertices.Count == _verticesCapacity)
+				return false;
+			
+			// Return if vertex exists
+			if (_vertices.Contains (vertex))
+				return false;
+			
+			_vertices.Add (vertex);
+
+			return true;
 		}
 
 		/// <summary>
@@ -85,7 +137,27 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public bool RemoveVertex (T vertex)
 		{
-			throw new NotImplementedException ();
+			int index = _vertices.IndexOf (vertex);
+
+			// Return if vertex doesn't exists
+			if (index == -1)
+				return false;
+
+			_vertices.Remove (vertex);
+
+			for (int i = 0; i < _verticesCapacity; ++i)
+			{
+				if (_doesEdgeExist (index, i))
+				{
+					_adjacencyMatrix [index, i] = false;
+					_adjacencyMatrix [i, index] = false;
+
+					// Decrement the edges count
+					--_edgesCount;
+				}
+			}
+
+			return true;
 		}
 
 		/// <summary>
@@ -93,7 +165,14 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public bool AreConnected (T firstVertex, T secondVertex)
 		{
-			throw new NotImplementedException ();
+			int indexOfFirst = _vertices.IndexOf (firstVertex);
+			int indexOfSecond = _vertices.IndexOf (secondVertex);
+
+			// Check for existence
+			if (indexOfFirst == -1 || indexOfSecond == -1)
+				return false;
+			
+			return _doesEdgeExist (indexOfFirst, indexOfSecond);
 		}
 
 		/// <summary>
@@ -101,7 +180,7 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public bool HasVertex (T vertex)
 		{
-			throw new NotImplementedException ();
+			return _vertices.Contains (vertex);
 		}
 
 		/// <summary>
@@ -109,7 +188,19 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public DataStructures.Lists.DLinkedList<T> Neighbours (T vertex)
 		{
-			throw new NotImplementedException ();
+			var neighbours = new DLinkedList<T> ();
+			int index = _vertices.IndexOf (vertex);
+
+			if (index == -1)
+				return neighbours;
+
+			for (int i = 0; i < _vertices.Count; ++i)
+			{
+				if (_doesEdgeExist(index, i))
+					neighbours.Append (_vertices [i]);
+			}
+
+			return neighbours;
 		}
 
 		/// <summary>
@@ -117,7 +208,7 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public int Degree (T vertex)
 		{
-			throw new NotImplementedException ();
+			return Neighbours (vertex).Count;
 		}
 
 		/// <summary>
@@ -125,7 +216,31 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public string ToReadable ()
 		{
-			throw new NotImplementedException ();
+			string output = string.Empty;
+
+			for (int i = 0; i < _vertices.Count; ++i)
+			{
+				var node = _vertices [i];
+				var adjacents = string.Empty;
+
+				output = String.Format (
+					"{0}\r\n{1}: ["
+					, output
+					, node
+				);
+
+				foreach (var adjacentNode in Neighbours(node))
+				{
+					adjacents = String.Format ("{0}{1},", adjacents, adjacentNode);
+				}
+
+				if(adjacents.Length > 0)
+					adjacents.Remove (adjacents.Length - 1);
+
+				output = String.Format ("{0}{1}]", output, adjacents);
+			}
+
+			return output;
 		}
 
 	}

@@ -63,6 +63,7 @@
     <Compile Include="DataStructuresTests\PriorityQueuesTest.cs" />
     <Compile Include="DataStructuresTests\BinarySearchTreeTest.cs" />
     <Compile Include="DataStructuresTests\UndirectedSparseGraphTests.cs" />
+    <Compile Include="DataStructuresTests\UndirectedDenseGraphTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

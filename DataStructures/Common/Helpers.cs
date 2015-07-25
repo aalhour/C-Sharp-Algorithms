@@ -56,6 +56,20 @@ namespace DataStructures.Common
             return resultBuilder.ToString();
         }
 
+		/// <summary>
+		/// Populates the specified two-dimensional with a default value.
+		/// </summary>
+		public static void Populate<T>(this T[,] array, int rows, int columns, T defaultValue = default(T))
+		{
+			for (int i = 0; i < rows; ++i)
+			{
+				for (int j = 0; j < columns; ++j)
+				{
+					array [i, j] = defaultValue;
+				}
+			}
+		}
+
 	}
 
 }
