@@ -42,8 +42,9 @@
     <Compile Include="Sorting\MergeSorter.cs" />
     <Compile Include="Common\Comparers.cs" />
     <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Graphs\DepthFirstSearch.cs" />
-    <Compile Include="Graphs\BreadthFirstSearch.cs" />
+    <Compile Include="Graphs\BreadthFirstPaths.cs" />
+    <Compile Include="Graphs\BreadthFirstSearcher.cs" />
+    <Compile Include="Graphs\DepthFirstSearcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

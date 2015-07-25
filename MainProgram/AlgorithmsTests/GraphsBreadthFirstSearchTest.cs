@@ -10,7 +10,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 	{
 		public static void DoTest ()
 		{
-			IUndirectedGraph<string> graph = new UndirectedSparseGraph<string>();
+			IGraph<string> graph = new UndirectedSparseGraph<string>();
 
 			// Add vertices
 			var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
@@ -36,13 +36,13 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 			Console.WriteLine ("[*] BFS Visit All Nodes:");
 			Console.WriteLine ("Graph traversal started at node: '" + startFromNode + "'");
 
-			BreadthFirstSearch.VisitAll (ref graph, startFromNode, writeToConsole);
+			BreadthFirstSearcher.VisitAll (ref graph, startFromNode, writeToConsole);
 
 			Console.WriteLine ("\r\n");
 
 			try 
 			{
-				searchResult = BreadthFirstSearch.FindFirstMatch(graph, startFromNode, searchPredicate);
+				searchResult = BreadthFirstSearcher.FindFirstMatch(graph, startFromNode, searchPredicate);
 
 				Debug.Assert(searchResult == "c" || searchResult == "f");
 
