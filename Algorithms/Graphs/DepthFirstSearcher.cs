@@ -5,13 +5,13 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-	public static class DepthFirstSearch
+	public static class DepthFirstSearcher
 	{
 		/// <summary>
 		/// DFS Recursive Helper function. 
 		/// Visits the neighbors of a given vertex recusively, and applies the given Action<T> to each one of them.
 		/// </summary>
-		private static void _visitNeighbors<T>(T Vertex, ref IUndirectedGraph<T> Graph, ref Dictionary<T, object> Parents, Action<T> Action) where T : IComparable<T>
+		private static void _visitNeighbors<T>(T Vertex, ref IGraph<T> Graph, ref Dictionary<T, object> Parents, Action<T> Action) where T : IComparable<T>
 		{
 			foreach (var adjacent in Graph.Neighbours(Vertex))
 			{
@@ -33,7 +33,7 @@ namespace Algorithms.Graphs
 		/// Recursive DFS Implementation with helper.
 		/// Traverses all the nodes in a graph starting from a specific node, applying the passed action to every node.
 		/// </summary>
-		public static void VisitAll<T> (ref IUndirectedGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
+		public static void VisitAll<T> (ref IGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
@@ -65,7 +65,7 @@ namespace Algorithms.Graphs
 		/// Iterative DFS Implementation.
 		/// Given a starting node, dfs the graph and print the nodes as they get visited.
 		/// </summary>
-		public static void PrintAll<T>(IUndirectedGraph<T> Graph, T StartVertex) where T : IComparable<T>
+		public static void PrintAll<T>(IGraph<T> Graph, T StartVertex) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
@@ -74,9 +74,9 @@ namespace Algorithms.Graphs
 			// Check if graph has the starting vertex
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
-			
+
+			var visited = new HashSet<T> ();
 			var stack = new Stack<T> (Graph.VerticesCount);
-			var visited = new HashSet<T> (Graph.VerticesCount);
 
 			stack.Push (StartVertex);
 
@@ -103,7 +103,7 @@ namespace Algorithms.Graphs
 		/// Iterative DFS Implementation.
 		/// Given a predicate function and a starting node, this function searches the nodes of the graph for a first match.
 		/// </summary>
-		public static T FindFirstMatch<T> (IUndirectedGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
+		public static T FindFirstMatch<T> (IGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)

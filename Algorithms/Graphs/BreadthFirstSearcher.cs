@@ -5,13 +5,13 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-	public static class BreadthFirstSearch
+	public static class BreadthFirstSearcher
 	{
 		/// <summary>
 		/// Iterative BFS implementation.
 		/// Traverses nodes in graph starting from a specific node, printing them as they get visited.
 		/// </summary>
-		public static void PrintAll<T> (IUndirectedGraph<T> Graph, T StartVertex) where T : IComparable<T>
+		public static void PrintAll<T> (IGraph<T> Graph, T StartVertex) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
@@ -21,7 +21,7 @@ namespace Algorithms.Graphs
 			if (!Graph.HasVertex (StartVertex))
 				throw new Exception ("Starting vertex doesn't belong to graph.");
 			
-			var visited = new HashSet<T> (Graph.VerticesCount);
+			var visited = new HashSet<T> ();
 			var queue = new Queue<T> (Graph.VerticesCount);
 
 			// BFS VISIT NODE STEP
@@ -51,7 +51,7 @@ namespace Algorithms.Graphs
 		/// Iterative BFS implementation.
 		/// Traverses all the nodes in a graph starting from a specific node, applying the passed action to every node.
 		/// </summary>
-		public static void VisitAll<T> (ref IUndirectedGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
+		public static void VisitAll<T> (ref IGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)
@@ -103,7 +103,7 @@ namespace Algorithms.Graphs
 		/// Iterative BFS Implementation.
 		/// Given a predicate function and a starting node, this function searches the nodes of the graph for a first match.
 		/// </summary>
-		public static T FindFirstMatch<T> (IUndirectedGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
+		public static T FindFirstMatch<T> (IGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
 		{
 			// Check if graph is empty
 			if (Graph.VerticesCount == 0)

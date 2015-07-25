@@ -12,8 +12,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-			GraphsDepthFirstSearchTest.DoTest ();
-			GraphsBreadthFirstSearchTest.DoTest ();
+			GraphsBreadthFirstPathsTest.DoTest ();
         }
     }
 }

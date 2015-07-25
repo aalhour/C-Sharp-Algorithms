@@ -13,7 +13,7 @@ namespace DataStructures.Graphs
 	/// 
 	/// This class represents the graph as an adjacency list (dictionary).
 	/// </summary>
-	public class UndirectedSparseGraph<T> : IUndirectedGraph<T> where T : IComparable<T>
+	public class UndirectedSparseGraph<T> : IGraph<T> where T : IComparable<T>
 	{
 		/// <summary>
 		/// INSTANCE VARIABLES
@@ -198,7 +198,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Checks whether two vertices are connected (there is an edge between firstVertex & secondVertex)
 		/// </summary>
-		public virtual bool AreConnected(T firstVertex, T secondVertex)
+		public virtual bool HasEdge (T firstVertex, T secondVertex)
 		{
 			bool status = false;
 
@@ -291,113 +291,100 @@ namespace DataStructures.Graphs
 		}
 
 		/// <summary>
-		/// A depth first search traversal of the graph. Prints nodes as they get visited.
+		/// A depth first search traversal of the graph starting from the first inserted node.
+		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public virtual void DepthFirstSearchWalk()
+		public virtual ArrayList<T> DepthFirstWalk()
 		{
 			if (VerticesCount == 0)
-			{
-				Console.Write ("Graph is empty!");
-				return;
-			}
+				return new ArrayList<T> ();
 
-			var parents = new Dictionary<T, object> (VerticesCount);	// keeps track of tree-edges and visited nodes
-
-			foreach (var node in _adjacencyList)
-			{
-				if (!parents.ContainsKey (node.Key))
-				{
-					_visitNode(node.Key);
-					parents.Add (node.Key, null);
-					_DFSVisitNeighbors (node.Key, ref parents);
-				}
-			}
+			return DepthFirstWalk (_firstInsertedNode);
 		}
 
 		/// <summary>
-		/// A depth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// A depth first search traversal of the graph, starting from a specified vertex.
+		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public virtual void DepthFirstSearchWalk(T startingVertex)
+		public virtual ArrayList<T> DepthFirstWalk(T startingVertex)
 		{
 			if (VerticesCount == 0)
-			{
-				Console.Write ("Graph is empty!");
-				return;
-			}
+				return new ArrayList<T> ();
 			else if (!HasVertex (startingVertex))
+				throw new Exception ("The specified starting vertex doesn't exist.");
+
+			var current = startingVertex;
+			var stack = new Lists.Stack<T> (VerticesCount);
+			var visited = new HashSet<T> ();
+			var listOfNodes = new ArrayList<T> (VerticesCount);
+
+			stack.Push (current);
+
+			while (!stack.IsEmpty) 
 			{
-				Console.Write ("Vertex doesn't exist!");
-				return;
+				current = stack.Pop ();
+
+				if (visited.Contains (current))
+					continue;
+
+				listOfNodes.Add (current);
+
+				foreach (var adjacent in Neighbours(current))
+					if (!visited.Contains (adjacent))
+						stack.Push (adjacent);
 			}
 
-			var parents = new Dictionary<T, object> (VerticesCount);	// keeps track of tree-edges and visited nodes
-			_DFSVisitNeighbors(startingVertex, ref parents);
+			return listOfNodes;
 		}
 
 		/// <summary>
-		/// A breadth first search traversal of the graph. Prints nodes as they get visited.
+		/// A breadth first search traversal of the graphstarting from the first inserted node.
+		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public virtual void BreadthFirstSearchWalk()
+		public virtual ArrayList<T> BreadthFirstWalk()
 		{
 			if (VerticesCount == 0)
-			{
-				Console.Write ("Graph is empty!");
-				return;
-			}
-				
-			BreadthFirstSearchWalk (_firstInsertedNode);
+				return new ArrayList<T> ();
+
+			return BreadthFirstWalk (_firstInsertedNode);
 		}
 
 		/// <summary>
-		/// A breadth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// A breadth first search traversal of the graph, starting from a specified vertex.
+		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public virtual void BreadthFirstSearchWalk(T startingVertex)
+		public virtual ArrayList<T> BreadthFirstWalk(T startingVertex)
 		{
 			if (VerticesCount == 0)
-			{
-				Console.Write ("Graph is empty!");
-				return;
-			}
+				return new ArrayList<T> ();
 			else if (!HasVertex (startingVertex))
+				throw new Exception ("The specified starting vertex doesn't exist.");
+
+			var current = startingVertex;
+			var queue = new Lists.Queue<T> (VerticesCount);
+			var visited = new HashSet<T> ();
+			var listOfNodes = new ArrayList<T> (VerticesCount);
+
+			listOfNodes.Add (current);
+			visited.Add (current);
+
+			queue.Enqueue (current);
+
+			while (!queue.IsEmpty) 
 			{
-				Console.Write ("Vertex doesn't exist!");
-				return;
-			}
+				current = queue.Dequeue ();
 
-			int i = 0;
-			List<T> frontier = new List<T> ();
-			Dictionary<T, int> levels = new Dictionary<T, int> ();
-			Dictionary<T, object> parents = new Dictionary<T, object> ();
-
-			frontier.Add (startingVertex);		// previous level: i - 1
-			levels.Add (startingVertex, 0);		// keeps track of visited nodes
-			parents.Add(startingVertex, null);	// keeps track of tree-edges
-
-			// Visit the starting node
-			_visitNode (startingVertex);
-
-			// Loop over the frontiers
-			while (frontier.Count > 0)
-			{
-				var next = new List<T> ();	// next level, i
-
-				foreach (var node in frontier) 
+				foreach (var adjacent in Neighbours(current)) 
 				{
-					foreach (var adjacent in Neighbours(node))
+					if(!visited.Contains(adjacent))
 					{
-						if (!levels.ContainsKey (adjacent))	// not yet seen
-						{
-							_visitNode (adjacent);
-							levels.Add (adjacent, i);		// level[node] + 1
-							parents.Add (adjacent, node);
-							next.Add (adjacent);
-						}
+						listOfNodes.Add (adjacent);
+						queue.Enqueue (adjacent);
 					}
 				}
-
-				frontier = next;
-				i = i + 1;
 			}
+
+			return listOfNodes;
 		}
 
 		/// <summary>
