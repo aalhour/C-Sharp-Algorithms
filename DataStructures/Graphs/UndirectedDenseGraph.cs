@@ -22,6 +22,7 @@ namespace DataStructures.Graphs
 		protected virtual int _edgesCount { get; set; }
 		protected virtual int _verticesCapacity { get; set; }
 		protected virtual ArrayList<T> _vertices { get; set; }
+		protected virtual T _firstInsertedNode { get; set; }
 		protected virtual bool[,] _adjacencyMatrix { get; set; }
 
 
@@ -44,6 +45,14 @@ namespace DataStructures.Graphs
 		private bool _doesEdgeExist(int index1, int index2)
 		{
 			return (_adjacencyMatrix [index1, index2] || _adjacencyMatrix [index2, index1]);
+		}
+
+		/// <summary>
+		/// A helper function used in graph traversal algorithsm. Prints the node.
+		/// </summary>
+		private void _visitNode(T vertex)
+		{
+			Console.Write (String.Format("({0}) ", vertex));
 		}
 
 		/// <summary>
@@ -115,6 +124,20 @@ namespace DataStructures.Graphs
 		}
 
 		/// <summary>
+		/// Adds a list of vertices to the graph.
+		/// </summary>
+		public virtual void AddVertices(IList<T> collection)
+		{
+			if (collection == null)
+				throw new ArgumentNullException ();
+
+			foreach (var item in collection)
+			{
+				this.AddVertex (item);
+			}
+		}
+
+		/// <summary>
 		/// Adds a new vertex to graph.
 		/// </summary>
 		public bool AddVertex (T vertex)
@@ -126,6 +149,9 @@ namespace DataStructures.Graphs
 			// Return if vertex exists
 			if (_vertices.Contains (vertex))
 				return false;
+
+			if (_vertices.Count == 0)
+				_firstInsertedNode = vertex;
 			
 			_vertices.Add (vertex);
 
@@ -241,6 +267,142 @@ namespace DataStructures.Graphs
 			}
 
 			return output;
+		}
+
+		/// <summary>
+		/// Recursive DFS Helper function. Visits the neighbors of a given vertex.
+		/// </summary>
+		protected virtual void _DFSVisitNeighbors(T fromVertex, ref Dictionary<T, object> parents)
+		{
+			foreach (var adjacent in Neighbours(fromVertex))
+			{
+				if (!parents.ContainsKey (adjacent))
+				{
+					_visitNode (adjacent);
+					parents.Add (adjacent, fromVertex);
+					_DFSVisitNeighbors (adjacent, ref parents);
+				}
+			}
+		}
+
+		/// <summary>
+		/// A depth first search traversal of the graph. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void DepthFirstSearchWalk()
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+
+			var parents = new Dictionary<T, object> (VerticesCount);	// keeps track of tree-edges and visited nodes
+
+			foreach (var node in _vertices)
+			{
+				if (!parents.ContainsKey (node))
+				{
+					_visitNode(node);
+					parents.Add (node, null);
+					_DFSVisitNeighbors (node, ref parents);
+				}
+			}
+		}
+
+		/// <summary>
+		/// A depth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void DepthFirstSearchWalk(T startingVertex)
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+			else if (!HasVertex (startingVertex))
+			{
+				Console.Write ("Vertex doesn't exist!");
+				return;
+			}
+
+			var parents = new Dictionary<T, object> (VerticesCount);
+			_DFSVisitNeighbors (startingVertex, ref parents);
+		}
+
+		/// <summary>
+		/// A breadth first search traversal of the graph. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void BreadthFirstSearchWalk()
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+
+			BreadthFirstSearchWalk (_firstInsertedNode);
+		}
+
+		/// <summary>
+		/// A breadth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void BreadthFirstSearchWalk(T startingVertex)
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+			else if (!HasVertex (startingVertex))
+			{
+				Console.Write ("Vertex doesn't exist!");
+				return;
+			}
+
+			int i = 0;
+			List<T> frontiers = new List<T> ();
+			Dictionary<T, int> levels = new Dictionary<T, int> ();
+			Dictionary<T, object> parents = new Dictionary<T, object> ();
+
+			frontiers.Add (startingVertex);		// previous level: i - 1
+			levels.Add (startingVertex, 0);		// keeps track of visited nodes
+			parents.Add(startingVertex, null);	// keeps track of tree-edges
+
+			// Visit the startingVertex
+			_visitNode(startingVertex);
+
+			while (frontiers.Count > 0) 
+			{
+				var next = new List<T> (); // next-level, i
+
+				foreach (var node in frontiers)
+				{
+					foreach (var adjacent in Neighbours(node))
+					{
+						if(!levels.ContainsKey(adjacent))	// not yet visited
+						{
+							_visitNode (adjacent);
+							levels.Add (adjacent, i);		// level[node] + 1
+							parents.Add (adjacent, node);	// add it's parent
+							next.Add(adjacent);
+						}
+					}
+				}
+
+				frontiers = next;
+				i = i + 1;
+			}
+		}
+
+		/// <summary>
+		/// Clear this graph.
+		/// </summary>
+		public virtual void Clear()
+		{
+			_edgesCount = 0;
+			_vertices.Clear();
+			_adjacencyMatrix = new bool[_verticesCapacity, _verticesCapacity];
+			_adjacencyMatrix.Populate (rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: false);
 		}
 
 	}

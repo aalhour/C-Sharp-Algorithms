@@ -18,8 +18,9 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// INSTANCE VARIABLES
 		/// </summary>
-		protected virtual int edgesCount { get; set; }
-		protected virtual Dictionary<T, DLinkedList<T>> adjacencyList { get; set; }
+		protected virtual int _edgesCount { get; set; }
+		protected virtual T _firstInsertedNode { get; set; } 
+		protected virtual Dictionary<T, DLinkedList<T>> _adjacencyList { get; set; }
 
 
 		/// <summary>
@@ -27,23 +28,31 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public UndirectedSparseGraph ()
 		{
-			edgesCount = 0;
-			adjacencyList = new Dictionary<T, DLinkedList<T>> ();
+			_edgesCount = 0;
+			_adjacencyList = new Dictionary<T, DLinkedList<T>> ();
 		}
 
 		public UndirectedSparseGraph(int size)
 		{
-			edgesCount = 0;
-			adjacencyList = new Dictionary<T, DLinkedList<T>> (size);
+			_edgesCount = 0;
+			_adjacencyList = new Dictionary<T, DLinkedList<T>> (size);
 		}
 
+
+		/// <summary>
+		/// A helper function used in graph traversal algorithsm. Prints the node.
+		/// </summary>
+		private void _visitNode(T vertex)
+		{
+			Console.Write (String.Format("({0}) ", vertex));
+		}
 
 		/// <summary>
 		/// Gets the count of vetices.
 		/// </summary>
 		public virtual int VerticesCount
 		{
-			get { return adjacencyList.Count; }
+			get { return _adjacencyList.Count; }
 		}
 
 		/// <summary>
@@ -51,7 +60,7 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public virtual int EdgesCount
 		{
-			get { return edgesCount; }
+			get { return _edgesCount; }
 		}
 
 		/// <summary>
@@ -62,7 +71,7 @@ namespace DataStructures.Graphs
 			get
 			{
 				var list = new ArrayList<T> ();
-				foreach (var vertex in adjacencyList.Keys)
+				foreach (var vertex in _adjacencyList.Keys)
 					list.Add (vertex);
 				
 				return list;
@@ -77,19 +86,19 @@ namespace DataStructures.Graphs
 			bool status = false;
 
 			// Check existence of vertices
-			if (adjacencyList.ContainsKey (firstVertex) && adjacencyList.ContainsKey (secondVertex))
+			if (_adjacencyList.ContainsKey (firstVertex) && _adjacencyList.ContainsKey (secondVertex))
 			{
-				var neighbours = adjacencyList [firstVertex];
+				var neighbours = _adjacencyList [firstVertex];
 
 				// Check existence of an edge in one list.
 				// If edge doesn't exist, add the connecting edge to both vertices' neighbours lists.
 				if (!neighbours.Contains (secondVertex))
 				{
-					adjacencyList [firstVertex].Append(secondVertex);
-					adjacencyList [secondVertex].Append (firstVertex);
+					_adjacencyList [firstVertex].Append(secondVertex);
+					_adjacencyList [secondVertex].Append (firstVertex);
 
 					// Increment the edges count
-					++edgesCount;
+					++_edgesCount;
 
 					status = true;
 				}
@@ -106,19 +115,19 @@ namespace DataStructures.Graphs
 			bool status = false;
 
 			// Check existence of vertices
-			if (adjacencyList.ContainsKey (firstVertex) && adjacencyList.ContainsKey (secondVertex))
+			if (_adjacencyList.ContainsKey (firstVertex) && _adjacencyList.ContainsKey (secondVertex))
 			{
-				var neighbours = adjacencyList [firstVertex];
+				var neighbours = _adjacencyList [firstVertex];
 
 				// Check existence of an edge in one list.
 				// If edge doesn't exist, add the connecting edge to both vertices' neighbours lists.
 				if (neighbours.Contains (secondVertex))
 				{
-					adjacencyList [firstVertex].Remove(secondVertex);
-					adjacencyList [secondVertex].Remove(firstVertex);
+					_adjacencyList [firstVertex].Remove(secondVertex);
+					_adjacencyList [secondVertex].Remove(firstVertex);
 
 					// Decrement the edges count
-					--edgesCount;
+					--_edgesCount;
 
 					status = true;
 				}
@@ -128,20 +137,35 @@ namespace DataStructures.Graphs
 		}
 
 		/// <summary>
+		/// Adds a list of vertices to the graph.
+		/// </summary>
+		public virtual void AddVertices(IList<T> collection)
+		{
+			if (collection == null)
+				throw new ArgumentNullException ();
+
+			foreach (var item in collection)
+			{
+				this.AddVertex (item);
+			}
+		}
+
+		/// <summary>
 		/// Adds a new vertex to graph.
 		/// </summary>
 		public virtual bool AddVertex(T vertex)
 		{
-			bool status = false;
-
 			// Check existence of vertex
-			if (!adjacencyList.ContainsKey (vertex))
+			if (!_adjacencyList.ContainsKey (vertex))
 			{
-				adjacencyList.Add (vertex, new DLinkedList<T> ());
-				status = true;
+				if (_adjacencyList.Count == 0)
+					_firstInsertedNode = vertex;
+
+				_adjacencyList.Add (vertex, new DLinkedList<T> ());
+				return true;
 			}
 
-			return status;
+			return false;
 		}
 
 		/// <summary>
@@ -149,28 +173,26 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public virtual bool RemoveVertex(T vertex)
 		{
-			bool status = false;
-
 			// Check existence
-			if (adjacencyList.ContainsKey (vertex))
+			if (_adjacencyList.ContainsKey (vertex))
 			{
-				adjacencyList.Remove (vertex);
+				_adjacencyList.Remove (vertex);
 
-				foreach(var adjacent in adjacencyList)
+				foreach(var adjacent in _adjacencyList)
 				{
 					if (adjacent.Value.Contains (vertex))
 					{
 						adjacent.Value.Remove (vertex);
 
 						// Decrement the edges count.
-						--edgesCount;
+						--_edgesCount;
 					}
 				}
 
-				status = true;
+				return true;
 			}
 
-			return status;
+			return false;
 		}
 
 		/// <summary>
@@ -181,11 +203,11 @@ namespace DataStructures.Graphs
 			bool status = false;
 
 			// Check existence of vertices
-			if (adjacencyList.ContainsKey (firstVertex) && adjacencyList.ContainsKey (secondVertex))
+			if (_adjacencyList.ContainsKey (firstVertex) && _adjacencyList.ContainsKey (secondVertex))
 			{
 				// Check the neighbours of only one, because the edge is always added to the two vertices.
 				// If the edge is there, it returns true, else it returns false.
-				status |= adjacencyList [firstVertex].Contains (secondVertex);	// binary or
+				status |= _adjacencyList [firstVertex].Contains (secondVertex);	// binary or
 			}
 
 			return status;
@@ -196,7 +218,7 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public virtual bool HasVertex(T vertex)
 		{
-			return adjacencyList.ContainsKey (vertex);
+			return _adjacencyList.ContainsKey (vertex);
 		}
 
 		/// <summary>
@@ -204,8 +226,8 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public virtual DLinkedList<T> Neighbours(T vertex)
 		{
-			if (adjacencyList.ContainsKey (vertex))
-				return adjacencyList [vertex];
+			if (_adjacencyList.ContainsKey (vertex))
+				return _adjacencyList [vertex];
 
 			return null;
 		}
@@ -215,10 +237,10 @@ namespace DataStructures.Graphs
 		/// </summary>
 		public virtual int Degree(T vertex)
 		{
-			if (!adjacencyList.ContainsKey (vertex))
+			if (!_adjacencyList.ContainsKey (vertex))
 				throw new KeyNotFoundException ();
 
-			return adjacencyList [vertex].Count;
+			return _adjacencyList [vertex].Count;
 		}
 
 		/// <summary>
@@ -228,7 +250,7 @@ namespace DataStructures.Graphs
 		{
 			string output = string.Empty;
 
-			foreach (var node in adjacencyList)
+			foreach (var node in _adjacencyList)
 			{
 				var adjacents = string.Empty;
 
@@ -250,6 +272,141 @@ namespace DataStructures.Graphs
 			}
 
 			return output;
+		}
+
+		/// <summary>
+		/// Recursive DFS Helper function. Visits the neighbors of a given vertex.
+		/// </summary>
+		protected virtual void _DFSVisitNeighbors(T fromVertex, ref Dictionary<T, object> parents)
+		{
+			foreach (var node in Neighbours(fromVertex))
+			{
+				if (!parents.ContainsKey (node))
+				{
+					_visitNode (node);
+					parents.Add (node, fromVertex);
+					_DFSVisitNeighbors (node, ref parents);
+				}
+			}
+		}
+
+		/// <summary>
+		/// A depth first search traversal of the graph. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void DepthFirstSearchWalk()
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+
+			var parents = new Dictionary<T, object> (VerticesCount);	// keeps track of tree-edges and visited nodes
+
+			foreach (var node in _adjacencyList)
+			{
+				if (!parents.ContainsKey (node.Key))
+				{
+					_visitNode(node.Key);
+					parents.Add (node.Key, null);
+					_DFSVisitNeighbors (node.Key, ref parents);
+				}
+			}
+		}
+
+		/// <summary>
+		/// A depth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void DepthFirstSearchWalk(T startingVertex)
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+			else if (!HasVertex (startingVertex))
+			{
+				Console.Write ("Vertex doesn't exist!");
+				return;
+			}
+
+			var parents = new Dictionary<T, object> (VerticesCount);	// keeps track of tree-edges and visited nodes
+			_DFSVisitNeighbors(startingVertex, ref parents);
+		}
+
+		/// <summary>
+		/// A breadth first search traversal of the graph. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void BreadthFirstSearchWalk()
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+				
+			BreadthFirstSearchWalk (_firstInsertedNode);
+		}
+
+		/// <summary>
+		/// A breadth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
+		/// </summary>
+		public virtual void BreadthFirstSearchWalk(T startingVertex)
+		{
+			if (VerticesCount == 0)
+			{
+				Console.Write ("Graph is empty!");
+				return;
+			}
+			else if (!HasVertex (startingVertex))
+			{
+				Console.Write ("Vertex doesn't exist!");
+				return;
+			}
+
+			int i = 0;
+			List<T> frontier = new List<T> ();
+			Dictionary<T, int> levels = new Dictionary<T, int> ();
+			Dictionary<T, object> parents = new Dictionary<T, object> ();
+
+			frontier.Add (startingVertex);		// previous level: i - 1
+			levels.Add (startingVertex, 0);		// keeps track of visited nodes
+			parents.Add(startingVertex, null);	// keeps track of tree-edges
+
+			// Visit the starting node
+			_visitNode (startingVertex);
+
+			// Loop over the frontiers
+			while (frontier.Count > 0)
+			{
+				var next = new List<T> ();	// next level, i
+
+				foreach (var node in frontier) 
+				{
+					foreach (var adjacent in Neighbours(node))
+					{
+						if (!levels.ContainsKey (adjacent))	// not yet seen
+						{
+							_visitNode (adjacent);
+							levels.Add (adjacent, i);		// level[node] + 1
+							parents.Add (adjacent, node);
+							next.Add (adjacent);
+						}
+					}
+				}
+
+				frontier = next;
+				i = i + 1;
+			}
+		}
+
+		/// <summary>
+		/// Clear this graph.
+		/// </summary>
+		public virtual void Clear()
+		{
+			_edgesCount = 0;
+			_adjacencyList.Clear ();
 		}
 
 	}
