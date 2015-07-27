@@ -45,7 +45,8 @@ This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and
 #### Graphs:
  * **[Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).** An adjacency-list graph representation. Implemented using a Dictionary of IComparable\<T\> keys and Double-Linked Lists values. The IComparable\<T\> keys serve as the nodes (vertices), and the lists serve as each node's adjacent nodes.
  * **[Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).** An incidence-matrix graph representation. Implemented using the native two dimensional arrays in C#. The two dimenssional array holds boolean values that represent the edges connectivity between vertices. The vertices are held inside an internal dynamic list. The index of each vertex represent its key. Keys of vertices are managed systematically between the vertices-vector and the adjacency-matrix. It was implemented this way to achieve the capability of inserting any IComparable\<Type\> of vertex into the graph.
- * **[Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).** An adjacency-list graph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges.
+ * **[Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).** An adjacency-list digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges.
+ * **[Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs).** An incidence-matrix digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges.
 
 
 ## Algorithms
