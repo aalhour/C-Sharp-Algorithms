@@ -19,7 +19,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// INSTANCE VARIABLES
 		/// </summary>
-		private const object EMPTY_VERTEX_SLOT = null;
+		private const object EMPTY_VERTEX_SLOT = (object)null;
 
 		protected virtual int _edgesCount { get; set; }
 		protected virtual int _verticesCount { get; set; }
@@ -28,7 +28,10 @@ namespace DataStructures.Graphs
 		protected virtual T _firstInsertedNode { get; set; }
 		protected virtual bool[,] _adjacencyMatrix { get; set; }
 
-		
+
+		/// <summary>
+		/// CONSTRUCTOR
+		/// </summary>
 		public DirectedDenseGraph (uint capacity = 10)
 		{
 			_edgesCount = 0;
@@ -44,7 +47,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Helper function. Checks if edge exist in graph.
 		/// </summary>
-		private bool _doesEdgeExist(int source, int destination)
+		protected virtual bool _doesEdgeExist(int source, int destination)
 		{
 			return (_adjacencyMatrix[source, destination] == true);
 		}
@@ -149,7 +152,7 @@ namespace DataStructures.Graphs
 				throw new ArgumentNullException();
 
 			foreach (var vertex in collection)
-				this.AddVertex(vertex);
+				AddVertex(vertex);
 		}
 
 		/// <summary>
@@ -170,7 +173,7 @@ namespace DataStructures.Graphs
 				_firstInsertedNode = vertex;
 
 			// Try inserting vertex at previously lazy-deleted slot
-			int indexOfNull = _vertices.IndexOf ((object)null);
+			int indexOfNull = _vertices.IndexOf (EMPTY_VERTEX_SLOT);
 
 			if (indexOfNull != -1)
 				_vertices[indexOfNull] = vertex;
@@ -201,7 +204,7 @@ namespace DataStructures.Graphs
 
 			// Lazy-delete the vertex from graph
 			//_vertices.Remove (vertex);
-			_vertices[index] = null;
+			_vertices[index] = EMPTY_VERTEX_SLOT;
 
 			// Decrement the vertices count
 			--_verticesCount;
@@ -272,7 +275,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Returns the degree of the specified vertex.
 		/// </summary>
-		public int Degree (T vertex)
+		public virtual int Degree (T vertex)
 		{
 			if (!HasVertex(vertex))
 				throw new KeyNotFoundException();
@@ -283,7 +286,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Returns a human-readable string of the graph.
 		/// </summary>
-		public string ToReadable ()
+		public virtual string ToReadable ()
 		{
 			string output = string.Empty;
 
@@ -313,7 +316,7 @@ namespace DataStructures.Graphs
 		/// A depth first search traversal of the graph starting from the first inserted node.
 		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public IEnumerable<T> DepthFirstWalk ()
+		public virtual IEnumerable<T> DepthFirstWalk ()
 		{
 			return DepthFirstWalk (_firstInsertedNode);
 		}
@@ -322,7 +325,7 @@ namespace DataStructures.Graphs
 		/// A depth first search traversal of the graph, starting from a specified vertex.
 		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public IEnumerable<T> DepthFirstWalk (T source)
+		public virtual IEnumerable<T> DepthFirstWalk (T source)
 		{
 			if (_verticesCount == 0)
 				return new ArrayList<T>();
@@ -357,7 +360,7 @@ namespace DataStructures.Graphs
 		/// A breadth first search traversal of the graphstarting from the first inserted node.
 		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public IEnumerable<T> BreadthFirstWalk ()
+		public virtual IEnumerable<T> BreadthFirstWalk ()
 		{
 			return BreadthFirstWalk (_firstInsertedNode);
 		}
@@ -366,7 +369,7 @@ namespace DataStructures.Graphs
 		/// A breadth first search traversal of the graph, starting from a specified vertex.
 		/// Returns the visited vertices of the graph.
 		/// </summary>
-		public IEnumerable<T> BreadthFirstWalk (T source)
+		public virtual IEnumerable<T> BreadthFirstWalk (T source)
 		{
 			if (_verticesCount == 0)
 				return new ArrayList<T>();
@@ -404,7 +407,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Clear this graph.
 		/// </summary>
-		public void Clear ()
+		public virtual void Clear ()
 		{
 			_edgesCount = 0;
 			_verticesCount = 0;

@@ -38,7 +38,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Helper function. Checks if edge exist in graph.
 		/// </summary>
-		private bool _doesEdgeExist(T vertex1, T vertex2)
+		protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
 		{
 			return (_adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1));
 		}
@@ -47,7 +47,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-        public bool IsDirected
+		public virtual bool IsDirected
         {
             get { return false; }
         }
@@ -55,7 +55,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public bool IsWeighted
+		public virtual bool IsWeighted
         {
             get { return false; }
         }

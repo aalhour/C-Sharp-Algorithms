@@ -19,7 +19,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private const object EMPTY_VERTEX_SLOT = null;
+		private const object EMPTY_VERTEX_SLOT = (object)null;
 
         protected virtual int _edgesCount { get; set; }
         protected virtual int _verticesCount { get; set; }
@@ -47,7 +47,7 @@ namespace DataStructures.Graphs
 		/// <summary>
 		/// Helper function. Checks if edge exist in graph.
 		/// </summary>
-        private bool _doesEdgeExist(int index1, int index2)
+		protected virtual bool _doesEdgeExist(int index1, int index2)
         {
             return (_adjacencyMatrix[index1, index2] || _adjacencyMatrix[index2, index1]);
         }
@@ -55,7 +55,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Helper function that checks whether a vertex exist.
         /// </summary>
-        private bool _doesVertexExist(T vertex)
+		protected virtual bool _doesVertexExist(T vertex)
         {
             return _vertices.Contains(vertex);
         }
@@ -64,7 +64,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-        public bool IsDirected
+		public virtual bool IsDirected
         {
             get { return false; }
         }
@@ -72,7 +72,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public bool IsWeighted
+		public virtual bool IsWeighted
         {
             get { return false; }
         }
@@ -180,7 +180,7 @@ namespace DataStructures.Graphs
                 _firstInsertedNode = vertex;
 
 			// Try inserting vertex at previously lazy-deleted slot
-            int indexOfDeleted = _vertices.IndexOf((object)null);
+			int indexOfDeleted = _vertices.IndexOf(EMPTY_VERTEX_SLOT);
 
             if (indexOfDeleted != -1)
                 _vertices[indexOfDeleted] = vertex;
@@ -211,7 +211,7 @@ namespace DataStructures.Graphs
 
 			// Lazy-delete the vertex from graph
             //_vertices.Remove (vertex);
-            _vertices[index] = null;
+			_vertices[index] = EMPTY_VERTEX_SLOT;
 
             // Decrement the vertices count
             --_verticesCount;
