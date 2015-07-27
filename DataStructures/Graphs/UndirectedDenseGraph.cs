@@ -60,14 +60,6 @@ namespace DataStructures.Graphs
             return _vertices.Contains(vertex);
         }
 
-        /// <summary>
-        /// A helper function used in graph traversal algorithsm. Prints the node.
-        /// </summary>
-        private void _visitNode(T vertex)
-        {
-            Console.Write(String.Format("({0}) ", vertex));
-        }
-
 
         /// <summary>
         /// Gets the count of vetices.

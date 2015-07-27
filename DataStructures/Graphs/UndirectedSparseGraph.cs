@@ -26,25 +26,12 @@ namespace DataStructures.Graphs
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public UndirectedSparseGraph()
+        public UndirectedSparseGraph() : this(10) { }
+
+        public UndirectedSparseGraph(uint initialCapacity)
         {
             _edgesCount = 0;
-            _adjacencyList = new Dictionary<T, DLinkedList<T>>();
-        }
-
-        public UndirectedSparseGraph(int size)
-        {
-            _edgesCount = 0;
-            _adjacencyList = new Dictionary<T, DLinkedList<T>>(size);
-        }
-
-
-        /// <summary>
-        /// A helper function used in graph traversal algorithsm. Prints the node.
-        /// </summary>
-        private void _visitNode(T vertex)
-        {
-            Console.Write(String.Format("({0}) ", vertex));
+            _adjacencyList = new Dictionary<T, DLinkedList<T>>((int)initialCapacity);
         }
 
 
@@ -273,22 +260,6 @@ namespace DataStructures.Graphs
             }
 
             return output;
-        }
-
-        /// <summary>
-        /// Recursive DFS Helper function. Visits the neighbors of a given vertex.
-        /// </summary>
-        protected virtual void _DFSVisitNeighbors(T fromVertex, ref Dictionary<T, object> parents)
-        {
-            foreach (var node in Neighbours(fromVertex))
-            {
-                if (!parents.ContainsKey(node))
-                {
-                    _visitNode(node);
-                    parents.Add(node, fromVertex);
-                    _DFSVisitNeighbors(node, ref parents);
-                }
-            }
         }
 
         /// <summary>
