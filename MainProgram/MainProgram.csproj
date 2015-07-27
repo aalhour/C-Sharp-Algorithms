@@ -69,6 +69,7 @@
     <Compile Include="AlgorithmsTests\GraphsBreadthFirstSearchTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsBreadthFirstPathsTest.cs" />
     <Compile Include="DataStructuresTests\DirectedDenseGraphTests.cs" />
+    <Compile Include="DataStructuresTests\DirectedWeightedDenseGraphTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -12,10 +12,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-			//GraphsBreadthFirstPathsTest.DoTest();
-            //UndirectedDenseGraphTests.DoTest();
-            //DirectedSparseGraphTests.DoTest();
-			DirectedDenseGraphTests.DoTest();
+			DirectedWeightedDenseGraphTests.DoTest ();
         }
     }
 }

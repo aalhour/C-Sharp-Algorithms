@@ -74,6 +74,8 @@
     <Compile Include="Graphs\UndirectedSparseGraph.cs" />
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\DirectedDenseGraph.cs" />
+    <Compile Include="Graphs\DirectedWeightedDenseGraph.cs" />
+    <Compile Include="Graphs\IWeightedGraph.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
