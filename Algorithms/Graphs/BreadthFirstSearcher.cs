@@ -5,157 +5,157 @@ using DataStructures.Graphs;
 
 namespace Algorithms.Graphs
 {
-	public static class BreadthFirstSearcher
-	{
-		/// <summary>
-		/// Iterative BFS implementation.
-		/// Traverses nodes in graph starting from a specific node, printing them as they get visited.
-		/// </summary>
-		public static void PrintAll<T> (IGraph<T> Graph, T StartVertex) where T : IComparable<T>
-		{
-			// Check if graph is empty
-			if (Graph.VerticesCount == 0)
-				throw new Exception ("Graph is empty!");
+    public static class BreadthFirstSearcher
+    {
+        /// <summary>
+        /// Iterative BFS implementation.
+        /// Traverses nodes in graph starting from a specific node, printing them as they get visited.
+        /// </summary>
+        public static void PrintAll<T>(IGraph<T> Graph, T StartVertex) where T : IComparable<T>
+        {
+            // Check if graph is empty
+            if (Graph.VerticesCount == 0)
+                throw new Exception("Graph is empty!");
 
-			// Check if graph has the starting vertex
-			if (!Graph.HasVertex (StartVertex))
-				throw new Exception ("Starting vertex doesn't belong to graph.");
-			
-			var visited = new HashSet<T> ();
-			var queue = new Queue<T> (Graph.VerticesCount);
+            // Check if graph has the starting vertex
+            if (!Graph.HasVertex(StartVertex))
+                throw new Exception("Starting vertex doesn't belong to graph.");
 
-			// BFS VISIT NODE STEP
-			var current = StartVertex;
-			Console.Write (String.Format("({0}) ", current));
-			visited.Add (current);
+            var visited = new HashSet<T>();
+            var queue = new Queue<T>(Graph.VerticesCount);
 
-			while (queue.Count > 0) 
-			{
-				current = queue.Dequeue ();
+            // BFS VISIT NODE STEP
+            var current = StartVertex;
+            Console.Write(String.Format("({0}) ", current));
+            visited.Add(current);
 
-				foreach (var adjacent in Graph.Neighbours(current)) 
-				{
-					if (visited.Contains (adjacent))
-						continue;
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
 
-					// BFS VISIT NODE STEP
-					Console.Write (String.Format("({0}) ", adjacent));
-					visited.Add (adjacent);
+                foreach (var adjacent in Graph.Neighbours(current))
+                {
+                    if (visited.Contains(adjacent))
+                        continue;
 
-					queue.Enqueue (adjacent);
-				}
-			}
-		}
+                    // BFS VISIT NODE STEP
+                    Console.Write(String.Format("({0}) ", adjacent));
+                    visited.Add(adjacent);
 
-		/// <summary>
-		/// Iterative BFS implementation.
-		/// Traverses all the nodes in a graph starting from a specific node, applying the passed action to every node.
-		/// </summary>
-		public static void VisitAll<T> (ref IGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
-		{
-			// Check if graph is empty
-			if (Graph.VerticesCount == 0)
-				throw new Exception ("Graph is empty!");
+                    queue.Enqueue(adjacent);
+                }
+            }
+        }
 
-			// Check if graph has the starting vertex
-			if (!Graph.HasVertex (StartVertex))
-				throw new Exception ("Starting vertex doesn't belong to graph.");
-			
-			int level = 0;													// keeps track of level
-			var frontiers = new List<T>();									// keeps track of previous levels, i - 1
-			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
-			var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
+        /// <summary>
+        /// Iterative BFS implementation.
+        /// Traverses all the nodes in a graph starting from a specific node, applying the passed action to every node.
+        /// </summary>
+        public static void VisitAll<T>(ref IGraph<T> Graph, T StartVertex, Action<T> Action) where T : IComparable<T>
+        {
+            // Check if graph is empty
+            if (Graph.VerticesCount == 0)
+                throw new Exception("Graph is empty!");
 
-			frontiers.Add (StartVertex);
-			levels.Add (StartVertex, 0);
-			parents.Add (StartVertex, null);
+            // Check if graph has the starting vertex
+            if (!Graph.HasVertex(StartVertex))
+                throw new Exception("Starting vertex doesn't belong to graph.");
 
-			// BFS VISIT CURRENT NODE
-			Action(StartVertex);
+            int level = 0;													// keeps track of level
+            var frontiers = new List<T>();									// keeps track of previous levels, i - 1
+            var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
+            var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
 
-			// TRAVERSE GRAPH
-			while (frontiers.Count > 0) 
-			{
-				var next = new List<T> ();									// keeps track of the current level, i
+            frontiers.Add(StartVertex);
+            levels.Add(StartVertex, 0);
+            parents.Add(StartVertex, null);
 
-				foreach (var node in frontiers) 
-				{
-					foreach (var adjacent in Graph.Neighbours(node)) 
-					{
-						if (!levels.ContainsKey (adjacent)) 				// not visited yet
-						{
-							// BFS VISIT NODE STEP
-							Action (adjacent);
+            // BFS VISIT CURRENT NODE
+            Action(StartVertex);
 
-							levels.Add (adjacent, level);					// level[node] + 1
-							parents.Add (adjacent, node);
-							next.Add (adjacent);
-						}
-					}
-				}
+            // TRAVERSE GRAPH
+            while (frontiers.Count > 0)
+            {
+                var next = new List<T>();									// keeps track of the current level, i
 
-				frontiers = next;
-				level = level + 1;
-			}
-		}
+                foreach (var node in frontiers)
+                {
+                    foreach (var adjacent in Graph.Neighbours(node))
+                    {
+                        if (!levels.ContainsKey(adjacent)) 				// not visited yet
+                        {
+                            // BFS VISIT NODE STEP
+                            Action(adjacent);
 
-		/// <summary>
-		/// Iterative BFS Implementation.
-		/// Given a predicate function and a starting node, this function searches the nodes of the graph for a first match.
-		/// </summary>
-		public static T FindFirstMatch<T> (IGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
-		{
-			// Check if graph is empty
-			if (Graph.VerticesCount == 0)
-				throw new Exception ("Graph is empty!");
+                            levels.Add(adjacent, level);					// level[node] + 1
+                            parents.Add(adjacent, node);
+                            next.Add(adjacent);
+                        }
+                    }
+                }
 
-			// Check if graph has the starting vertex
-			if (!Graph.HasVertex (StartVertex))
-				throw new Exception ("Starting vertex doesn't belong to graph.");
-			
-			int level = 0;													// keeps track of levels
-			var frontiers = new List<T>();									// keeps track of previous levels, i - 1
-			var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
-			var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
+                frontiers = next;
+                level = level + 1;
+            }
+        }
 
-			frontiers.Add (StartVertex);
-			levels.Add (StartVertex, 0);
-			parents.Add (StartVertex, null);
+        /// <summary>
+        /// Iterative BFS Implementation.
+        /// Given a predicate function and a starting node, this function searches the nodes of the graph for a first match.
+        /// </summary>
+        public static T FindFirstMatch<T>(IGraph<T> Graph, T StartVertex, Predicate<T> Match) where T : IComparable<T>
+        {
+            // Check if graph is empty
+            if (Graph.VerticesCount == 0)
+                throw new Exception("Graph is empty!");
 
-			// BFS VISIT CURRENT NODE
-			if (Match (StartVertex))
-				return StartVertex;
+            // Check if graph has the starting vertex
+            if (!Graph.HasVertex(StartVertex))
+                throw new Exception("Starting vertex doesn't belong to graph.");
 
-			// TRAVERSE GRAPH
-			while (frontiers.Count > 0) 
-			{
-				var next = new List<T> ();									// keeps track of the current level, i
+            int level = 0;													// keeps track of levels
+            var frontiers = new List<T>();									// keeps track of previous levels, i - 1
+            var levels = new Dictionary<T, int>(Graph.VerticesCount);		// keeps track of visited nodes and their distances
+            var parents = new Dictionary<T, object>(Graph.VerticesCount);	// keeps track of tree-nodes
 
-				foreach (var node in frontiers) 
-				{
-					foreach (var adjacent in Graph.Neighbours(node)) 
-					{
-						if (!levels.ContainsKey (adjacent)) 				// not visited yet
-						{
-							// BFS VISIT NODE STEP
-							if (Match (adjacent))
-								return adjacent;
+            frontiers.Add(StartVertex);
+            levels.Add(StartVertex, 0);
+            parents.Add(StartVertex, null);
 
-							levels.Add (adjacent, level);					// level[node] + 1
-							parents.Add (adjacent, node);
-							next.Add (adjacent);
-						}
-					}
-				}
+            // BFS VISIT CURRENT NODE
+            if (Match(StartVertex))
+                return StartVertex;
 
-				frontiers = next;
-				level = level + 1;
-			}
+            // TRAVERSE GRAPH
+            while (frontiers.Count > 0)
+            {
+                var next = new List<T>();									// keeps track of the current level, i
 
-			throw new Exception ("Item was not found!");
-		}
+                foreach (var node in frontiers)
+                {
+                    foreach (var adjacent in Graph.Neighbours(node))
+                    {
+                        if (!levels.ContainsKey(adjacent)) 				// not visited yet
+                        {
+                            // BFS VISIT NODE STEP
+                            if (Match(adjacent))
+                                return adjacent;
 
-	}
+                            levels.Add(adjacent, level);					// level[node] + 1
+                            parents.Add(adjacent, node);
+                            next.Add(adjacent);
+                        }
+                    }
+                }
+
+                frontiers = next;
+                level = level + 1;
+            }
+
+            throw new Exception("Item was not found!");
+        }
+
+    }
 
 }
 
