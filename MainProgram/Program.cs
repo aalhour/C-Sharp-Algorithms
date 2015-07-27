@@ -14,7 +14,8 @@ namespace C_Sharp_Algorithms
         {
 			//GraphsBreadthFirstPathsTest.DoTest();
             //UndirectedDenseGraphTests.DoTest();
-            DirectedSparseGraphTests.DoTest();
+            //DirectedSparseGraphTests.DoTest();
+			DirectedDenseGraphTests.DoTest();
         }
     }
 }
