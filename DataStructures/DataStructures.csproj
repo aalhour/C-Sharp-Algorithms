@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Dictionaries\CuckooHashTable.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
+    <Compile Include="Graphs\DirectedSparseGraph.cs" />
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />
     <Compile Include="Heaps\BinomialMinHeap.cs" />
@@ -91,7 +92,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphs\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>

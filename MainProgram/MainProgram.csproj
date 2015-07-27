@@ -48,6 +48,7 @@
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
     <Compile Include="DataStructuresTests\BinomialHeapsTest.cs" />
     <Compile Include="DataStructuresTests\CuckooHashTableTest.cs" />
+    <Compile Include="DataStructuresTests\DirectedSparseGraphTests.cs" />
     <Compile Include="DataStructuresTests\HashTable_SeparateChaining_Test.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
