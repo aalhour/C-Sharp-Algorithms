@@ -47,6 +47,7 @@ namespace DataStructures.Graphs
             Console.Write(String.Format("({0}) ", vertex));
         }
 
+
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>

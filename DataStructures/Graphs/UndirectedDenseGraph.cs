@@ -68,10 +68,11 @@ namespace DataStructures.Graphs
             Console.Write(String.Format("({0}) ", vertex));
         }
 
+
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
-        public int VerticesCount
+        public virtual int VerticesCount
         {
             get { return _verticesCount; }
         }
@@ -79,7 +80,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Gets the count of edges.
         /// </summary>
-        public int EdgesCount
+        public virtual int EdgesCount
         {
             get { return _edgesCount; }
         }
@@ -87,7 +88,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the list of Vertices.
         /// </summary>
-        public IEnumerable<T> Vertices
+        public virtual IEnumerable<T> Vertices
         {
             get
             {
@@ -102,7 +103,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together.
         /// </summary>
-        public bool AddEdge(T firstVertex, T secondVertex)
+        public virtual bool AddEdge(T firstVertex, T secondVertex)
         {
             int indexOfFirst = _vertices.IndexOf(firstVertex);
             int indexOfSecond = _vertices.IndexOf(secondVertex);
@@ -124,7 +125,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Deletes an edge, if exists, between two vertices.
         /// </summary>
-        public bool RemoveEdge(T firstVertex, T secondVertex)
+        public virtual bool RemoveEdge(T firstVertex, T secondVertex)
         {
             int indexOfFirst = _vertices.IndexOf(firstVertex);
             int indexOfSecond = _vertices.IndexOf(secondVertex);
@@ -160,7 +161,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Adds a new vertex to graph.
         /// </summary>
-        public bool AddVertex(T vertex)
+        public virtual bool AddVertex(T vertex)
         {
             // Return if graph reached it's maximum capacity
             if (_verticesCount >= _verticesCapacity)
@@ -189,7 +190,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Removes the specified vertex from graph.
         /// </summary>
-        public bool RemoveVertex(T vertex)
+        public virtual bool RemoveVertex(T vertex)
         {
             int index = _vertices.IndexOf(vertex);
 
@@ -222,7 +223,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Checks whether two vertices are connected (there is an edge between firstVertex & secondVertex)
         /// </summary>
-        public bool HasEdge(T firstVertex, T secondVertex)
+        public virtual bool HasEdge(T firstVertex, T secondVertex)
         {
             int indexOfFirst = _vertices.IndexOf(firstVertex);
             int indexOfSecond = _vertices.IndexOf(secondVertex);
@@ -237,7 +238,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Determines whether this graph has the specified vertex.
         /// </summary>
-        public bool HasVertex(T vertex)
+        public virtual bool HasVertex(T vertex)
         {
             return _vertices.Contains(vertex);
         }
@@ -245,7 +246,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours doubly-linked list for the specified vertex.
         /// </summary>
-        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
+        public virtual DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
         {
             var neighbours = new DLinkedList<T>();
             int index = _vertices.IndexOf(vertex);
@@ -265,7 +266,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the degree of the specified vertex.
         /// </summary>
-        public int Degree(T vertex)
+        public virtual int Degree(T vertex)
         {
             return Neighbours(vertex).Count;
         }
@@ -273,7 +274,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns a human-readable string of the graph.
         /// </summary>
-        public string ToReadable()
+        public virtual string ToReadable()
         {
             string output = string.Empty;
 
