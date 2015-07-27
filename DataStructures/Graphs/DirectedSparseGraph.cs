@@ -35,6 +35,15 @@ namespace DataStructures.Graphs
         }
 
 
+		/// <summary>
+		/// Helper function. Checks if edge exist in graph.
+		/// </summary>
+		private bool _doesEdgeExist(T vertex1, T vertex2)
+		{
+			return (_adjacencyList[vertex1].Contains(vertex2));
+		}
+
+
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
@@ -211,6 +220,9 @@ namespace DataStructures.Graphs
             return _adjacencyList[vertex];
         }
 
+		/// <summary>
+		/// Returns the degree of the specified vertex.
+		/// </summary>
         public int Degree(T vertex)
         {
             if (!HasVertex(vertex))
@@ -219,6 +231,9 @@ namespace DataStructures.Graphs
             return _adjacencyList[vertex].Count;
         }
 
+		/// <summary>
+		/// Returns a human-readable string of the graph.
+		/// </summary>
         public string ToReadable()
         {
             string output = string.Empty;
@@ -227,16 +242,10 @@ namespace DataStructures.Graphs
             {
                 var adjacents = string.Empty;
 
-                output = String.Format(
-                    "{0}\r\n{1}: ["
-                    , output
-                    , node.Key
-                );
+                output = String.Format("{0}\r\n{1}: [", output, node.Key);
 
                 foreach (var adjacentNode in node.Value)
-                {
                     adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
-                }
 
                 if (adjacents.Length > 0)
                     adjacents.Remove(adjacents.Length - 1);

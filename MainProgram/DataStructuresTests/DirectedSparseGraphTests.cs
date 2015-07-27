@@ -33,7 +33,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Debug.Assert(graph.VerticesCount == 8, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 14, "Wrong edges count.");
 
-            Console.WriteLine("[*] Undirected Sparse Graph:");
+            Console.WriteLine("[*] Directed Sparse Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 
@@ -113,7 +113,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Debug.Assert(graph.VerticesCount == 6, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 8, "Wrong edges count.");
 
-            Console.WriteLine("[*] NEW Undirected Sparse Graph:");
+            Console.WriteLine("[*] NEW Directed Sparse Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 

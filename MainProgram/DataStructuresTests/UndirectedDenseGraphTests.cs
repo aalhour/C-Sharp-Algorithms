@@ -50,7 +50,7 @@ namespace C_Sharp_Algorithms
             Debug.Assert(graph.HasVertex("v") == true, "Vertex v does not exist.");
             Debug.Assert(graph.HasVertex("f") == true, "Vertex f does not exist.");
 
-            Console.WriteLine("[*] Undirected Sparse Graph:");
+            Console.WriteLine("[*] Undirected Dense Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 
@@ -109,7 +109,7 @@ namespace C_Sharp_Algorithms
             Debug.Assert(graph.VerticesCount == 6, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 8, "Wrong edges count.");
 
-            Console.WriteLine("[*] NEW Undirected Sparse Graph:");
+            Console.WriteLine("[*] NEW Undirected Dense Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 

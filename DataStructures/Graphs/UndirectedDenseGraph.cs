@@ -12,7 +12,7 @@ namespace DataStructures.Graphs
     /// Definition:
     /// A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
     /// 
-    /// This class represents the graph as an adjacency matrix.
+	/// This class represents the graph as an incidence-matrix (two dimensional boolean array).
     /// </summary>
     public class UndirectedDenseGraph<T> : IGraph<T> where T : IComparable<T>
     {
@@ -44,9 +44,9 @@ namespace DataStructures.Graphs
         }
 
 
-        /// <summary>
-        /// Helper function that looks up if an edge exists.
-        /// </summary>
+		/// <summary>
+		/// Helper function. Checks if edge exist in graph.
+		/// </summary>
         private bool _doesEdgeExist(int index1, int index2)
         {
             return (_adjacencyMatrix[index1, index2] || _adjacencyMatrix[index2, index1]);
@@ -101,10 +101,8 @@ namespace DataStructures.Graphs
             get
             {
                 foreach (var item in _vertices)
-                {
                     if (item != null)
                         yield return (T)item;
-                }
             }
         }
 
@@ -161,9 +159,7 @@ namespace DataStructures.Graphs
                 throw new ArgumentNullException();
 
             foreach (var item in collection)
-            {
                 this.AddVertex(item);
-            }
         }
 
         /// <summary>
@@ -179,9 +175,11 @@ namespace DataStructures.Graphs
             if (_doesVertexExist(vertex))
                 return false;
 
+			// Initialize first inserted node
             if (_verticesCount == 0)
                 _firstInsertedNode = vertex;
 
+			// Try inserting vertex at previously lazy-deleted slot
             int indexOfDeleted = _vertices.IndexOf((object)null);
 
             if (indexOfDeleted != -1)
@@ -200,12 +198,18 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool RemoveVertex(T vertex)
         {
+			// Return if graph is empty
+			if (_verticesCount == 0)
+				return false;
+
+			// Get index of vertex
             int index = _vertices.IndexOf(vertex);
 
             // Return if vertex doesn't exists
             if (index == -1)
                 return false;
 
+			// Lazy-delete the vertex from graph
             //_vertices.Remove (vertex);
             _vertices[index] = null;
 
@@ -236,11 +240,8 @@ namespace DataStructures.Graphs
             int indexOfFirst = _vertices.IndexOf(firstVertex);
             int indexOfSecond = _vertices.IndexOf(secondVertex);
 
-            // Check for existence
-            if (indexOfFirst == -1 || indexOfSecond == -1)
-                return false;
-
-            return _doesEdgeExist(indexOfFirst, indexOfSecond);
+			// Check the existence of vertices and the directed edge
+			return (indexOfFirst != -1 && indexOfSecond != -1 && _doesEdgeExist(indexOfFirst, indexOfSecond) == true);
         }
 
         /// <summary>
@@ -259,14 +260,10 @@ namespace DataStructures.Graphs
             var neighbours = new DLinkedList<T>();
             int index = _vertices.IndexOf(vertex);
 
-            if (index == -1)
-                return neighbours;
-
-            for (int i = 0; i < _vertices.Count; ++i)
-            {
-                if (_vertices[i] != null && _doesEdgeExist(index, i))
-                    neighbours.Append((T)_vertices[i]);
-            }
+            if (index != -1)
+				for (int i = 0; i < _vertices.Count; ++i)
+					if (_vertices[i] != null && _doesEdgeExist(index, i))
+                    	neighbours.Append((T)_vertices[i]);
 
             return neighbours;
         }
@@ -276,6 +273,9 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual int Degree(T vertex)
         {
+			if (!HasVertex(vertex))
+				throw new KeyNotFoundException();
+			
             return Neighbours(vertex).Count;
         }
 
@@ -294,16 +294,10 @@ namespace DataStructures.Graphs
                 var node = (T)_vertices[i];
                 var adjacents = string.Empty;
 
-                output = String.Format(
-                    "{0}\r\n{1}: ["
-                    , output
-                    , node
-                );
+				output = String.Format("{0}\r\n{1}: [", output, node);
 
-                foreach (var adjacentNode in Neighbours(node))
-                {
-                    adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
-                }
+				foreach (var adjacentNode in Neighbours(node))
+					adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
 
                 if (adjacents.Length > 0)
                     adjacents.Remove(adjacents.Length - 1);
@@ -320,9 +314,6 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual IEnumerable<T> DepthFirstWalk()
         {
-            if (VerticesCount == 0)
-                return new ArrayList<T>();
-
             return DepthFirstWalk(_firstInsertedNode);
         }
 
@@ -330,33 +321,32 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual IEnumerable<T> DepthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> DepthFirstWalk(T source)
         {
-            if (VerticesCount == 0)
+			if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(startingVertex))
+			else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
-
-            var current = startingVertex;
-            var stack = new Lists.Stack<T>(VerticesCount);
+			
+            var stack = new Lists.Stack<T>(_verticesCount);
             var visited = new HashSet<T>();
-            var listOfNodes = new ArrayList<T>(VerticesCount);
+            var listOfNodes = new ArrayList<T>(_verticesCount);
 
-            stack.Push(current);
+			stack.Push(source);
 
             while (!stack.IsEmpty)
             {
-                current = stack.Pop();
+                var current = stack.Pop();
 
-                if (visited.Contains(current))
-                    continue;
+				if (!visited.Contains (current)) 
+				{
+					listOfNodes.Add(current);
+					visited.Add(current);
 
-                listOfNodes.Add(current);
-                visited.Add(current);
-
-                foreach (var adjacent in Neighbours(current))
-                    if (!visited.Contains(adjacent))
-                        stack.Push(adjacent);
+					foreach (var adjacent in Neighbours(current))
+						if (!visited.Contains(adjacent))
+							stack.Push(adjacent);
+				}
             }
 
             return listOfNodes;
@@ -368,9 +358,6 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual IEnumerable<T> BreadthFirstWalk()
         {
-            if (VerticesCount == 0)
-                return new ArrayList<T>();
-
             return BreadthFirstWalk(_firstInsertedNode);
         }
 
@@ -378,26 +365,25 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual IEnumerable<T> BreadthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> BreadthFirstWalk(T source)
         {
-            if (VerticesCount == 0)
+			if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(startingVertex))
+			else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-            var current = startingVertex;
+			var visited = new HashSet<T>();
             var queue = new Lists.Queue<T>(VerticesCount);
-            var visited = new HashSet<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-            listOfNodes.Add(current);
-            visited.Add(current);
+			listOfNodes.Add(source);
+			visited.Add(source);
 
-            queue.Enqueue(current);
+			queue.Enqueue(source);
 
             while (!queue.IsEmpty)
             {
-                current = queue.Dequeue();
+                var current = queue.Dequeue();
                 var neighbors = Neighbours(current);
 
                 foreach (var adjacent in neighbors)

@@ -35,6 +35,15 @@ namespace DataStructures.Graphs
         }
 
 
+		/// <summary>
+		/// Helper function. Checks if edge exist in graph.
+		/// </summary>
+		private bool _doesEdgeExist(T vertex1, T vertex2)
+		{
+			return (_adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1));
+		}
+
+
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
@@ -89,7 +98,7 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-            else if (HasEdge(firstVertex, secondVertex))
+			else if (_doesEdgeExist(firstVertex, secondVertex))
                 return false;
 
             _adjacencyList[firstVertex].Append(secondVertex);
@@ -108,7 +117,7 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-            else if (!HasEdge(firstVertex, secondVertex))
+			else if (!_doesEdgeExist(firstVertex, secondVertex))
                 return false;
             
             _adjacencyList[firstVertex].Remove(secondVertex);
@@ -227,16 +236,10 @@ namespace DataStructures.Graphs
             {
                 var adjacents = string.Empty;
 
-                output = String.Format(
-                    "{0}\r\n{1}: ["
-                    , output
-                    , node.Key
-                );
+                output = String.Format("{0}\r\n{1}: [", output, node.Key);
 
                 foreach (var adjacentNode in node.Value)
-                {
                     adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
-                }
 
                 if (adjacents.Length > 0)
                     adjacents.Remove(adjacents.Length - 1);
@@ -260,18 +263,18 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual IEnumerable<T> DepthFirstWalk(T startingVertex)
+		public virtual IEnumerable<T> DepthFirstWalk(T source)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(startingVertex))
+			else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
+			var visited = new HashSet<T>();
             var stack = new Lists.Stack<T>(VerticesCount);
-            var visited = new HashSet<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-            stack.Push(startingVertex);
+			stack.Push(source);
 
             while (!stack.IsEmpty)
             {
@@ -304,26 +307,26 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual IEnumerable<T> BreadthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> BreadthFirstWalk(T source)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(startingVertex))
+			else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-            var current = startingVertex;
+            
+			var visited = new HashSet<T>();
             var queue = new Lists.Queue<T>(VerticesCount);
-            var visited = new HashSet<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-            listOfNodes.Add(current);
-            visited.Add(current);
+			listOfNodes.Add(source);
+			visited.Add(source);
 
-            queue.Enqueue(current);
+			queue.Enqueue(source);
 
             while (!queue.IsEmpty)
             {
-                current = queue.Dequeue();
+                var current = queue.Dequeue();
                 var neighbors = Neighbours(current);
 
                 foreach (var adjacent in neighbors)
