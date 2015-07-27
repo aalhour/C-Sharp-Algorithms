@@ -36,6 +36,22 @@ namespace DataStructures.Graphs
 
 
         /// <summary>
+        /// Returns true, if graph is directed; false otherwise.
+        /// </summary>
+        public bool IsDirected
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Returns true, if graph is weighted; false otherwise.
+        /// </summary>
+        public bool IsWeighted
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Gets the count of vetices.
         /// </summary>
         public virtual int VerticesCount
@@ -71,28 +87,18 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool AddEdge(T firstVertex, T secondVertex)
         {
-            bool status = false;
+            if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
+                return false;
+            else if (HasEdge(firstVertex, secondVertex))
+                return false;
 
-            // Check existence of vertices
-            if (_adjacencyList.ContainsKey(firstVertex) && _adjacencyList.ContainsKey(secondVertex))
-            {
-                var neighbours = _adjacencyList[firstVertex];
+            _adjacencyList[firstVertex].Append(secondVertex);
+            _adjacencyList[secondVertex].Append(firstVertex);
 
-                // Check existence of an edge in one list.
-                // If edge doesn't exist, add the connecting edge to both vertices' neighbours lists.
-                if (!neighbours.Contains(secondVertex))
-                {
-                    _adjacencyList[firstVertex].Append(secondVertex);
-                    _adjacencyList[secondVertex].Append(firstVertex);
+            // Increment the edges count
+            ++_edgesCount;
 
-                    // Increment the edges count
-                    ++_edgesCount;
-
-                    status = true;
-                }
-            }
-
-            return status;
+            return true;
         }
 
         /// <summary>
@@ -100,28 +106,18 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool RemoveEdge(T firstVertex, T secondVertex)
         {
-            bool status = false;
+            if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
+                return false;
+            else if (!HasEdge(firstVertex, secondVertex))
+                return false;
+            
+            _adjacencyList[firstVertex].Remove(secondVertex);
+            _adjacencyList[secondVertex].Remove(firstVertex);
 
-            // Check existence of vertices
-            if (_adjacencyList.ContainsKey(firstVertex) && _adjacencyList.ContainsKey(secondVertex))
-            {
-                var neighbours = _adjacencyList[firstVertex];
+            // Decrement the edges count
+            --_edgesCount;
 
-                // Check existence of an edge in one list.
-                // If edge doesn't exist, add the connecting edge to both vertices' neighbours lists.
-                if (neighbours.Contains(secondVertex))
-                {
-                    _adjacencyList[firstVertex].Remove(secondVertex);
-                    _adjacencyList[secondVertex].Remove(firstVertex);
-
-                    // Decrement the edges count
-                    --_edgesCount;
-
-                    status = true;
-                }
-            }
-
-            return status;
+            return true;
         }
 
         /// <summary>
@@ -133,9 +129,7 @@ namespace DataStructures.Graphs
                 throw new ArgumentNullException();
 
             foreach (var item in collection)
-            {
                 this.AddVertex(item);
-            }
         }
 
         /// <summary>
@@ -144,16 +138,15 @@ namespace DataStructures.Graphs
         public virtual bool AddVertex(T vertex)
         {
             // Check existence of vertex
-            if (!_adjacencyList.ContainsKey(vertex))
-            {
-                if (_adjacencyList.Count == 0)
-                    _firstInsertedNode = vertex;
+            if (_adjacencyList.ContainsKey(vertex))
+                return false;
 
-                _adjacencyList.Add(vertex, new DLinkedList<T>());
-                return true;
-            }
+            if (_adjacencyList.Count == 0)
+                _firstInsertedNode = vertex;
 
-            return false;
+            _adjacencyList.Add(vertex, new DLinkedList<T>());
+
+            return true;
         }
 
         /// <summary>
@@ -161,26 +154,24 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool RemoveVertex(T vertex)
         {
-            // Check existence
-            if (_adjacencyList.ContainsKey(vertex))
+            // Check existence of vertex
+            if (!_adjacencyList.ContainsKey(vertex))
+                return false;
+
+            _adjacencyList.Remove(vertex);
+
+            foreach (var adjacent in _adjacencyList)
             {
-                _adjacencyList.Remove(vertex);
-
-                foreach (var adjacent in _adjacencyList)
+                if (adjacent.Value.Contains(vertex))
                 {
-                    if (adjacent.Value.Contains(vertex))
-                    {
-                        adjacent.Value.Remove(vertex);
+                    adjacent.Value.Remove(vertex);
 
-                        // Decrement the edges count.
-                        --_edgesCount;
-                    }
+                    // Decrement the edges count.
+                    --_edgesCount;
                 }
-
-                return true;
             }
 
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -188,17 +179,11 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool HasEdge(T firstVertex, T secondVertex)
         {
-            bool status = false;
-
             // Check existence of vertices
-            if (_adjacencyList.ContainsKey(firstVertex) && _adjacencyList.ContainsKey(secondVertex))
-            {
-                // Check the neighbours of only one, because the edge is always added to the two vertices.
-                // If the edge is there, it returns true, else it returns false.
-                status |= _adjacencyList[firstVertex].Contains(secondVertex);	// binary or
-            }
+            if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
+                return false;
 
-            return status;
+            return (_adjacencyList[firstVertex].Contains(secondVertex) || _adjacencyList[secondVertex].Contains(firstVertex));
         }
 
         /// <summary>
@@ -214,10 +199,10 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual DLinkedList<T> Neighbours(T vertex)
         {
-            if (_adjacencyList.ContainsKey(vertex))
-                return _adjacencyList[vertex];
-
-            return null;
+            if (!HasVertex(vertex))
+                return null;
+                
+            return _adjacencyList[vertex];
         }
 
         /// <summary>
@@ -225,7 +210,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual int Degree(T vertex)
         {
-            if (!_adjacencyList.ContainsKey(vertex))
+            if (!HasVertex(vertex))
                 throw new KeyNotFoundException();
 
             return _adjacencyList[vertex].Count;
@@ -266,11 +251,8 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph starting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> DepthFirstWalk()
+        public virtual IEnumerable<T> DepthFirstWalk()
         {
-            if (VerticesCount == 0)
-                return new ArrayList<T>();
-
             return DepthFirstWalk(_firstInsertedNode);
         }
 
@@ -278,33 +260,32 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> DepthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> DepthFirstWalk(T startingVertex)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
             else if (!HasVertex(startingVertex))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-            var current = startingVertex;
             var stack = new Lists.Stack<T>(VerticesCount);
             var visited = new HashSet<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-            stack.Push(current);
+            stack.Push(startingVertex);
 
             while (!stack.IsEmpty)
             {
-                current = stack.Pop();
+                var current = stack.Pop();
 
-                if (visited.Contains(current))
-                    continue;
+                if (!visited.Contains(current))
+                {
+                    listOfNodes.Add(current);
+                    visited.Add(current);
 
-                listOfNodes.Add(current);
-                visited.Add(current);
-
-                foreach (var adjacent in Neighbours(current))
-                    if (!visited.Contains(adjacent))
-                        stack.Push(adjacent);
+                    foreach (var adjacent in Neighbours(current))
+                        if (!visited.Contains(adjacent))
+                            stack.Push(adjacent);
+                }
             }
 
             return listOfNodes;
@@ -314,11 +295,8 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graphstarting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> BreadthFirstWalk()
+        public virtual IEnumerable<T> BreadthFirstWalk()
         {
-            if (VerticesCount == 0)
-                return new ArrayList<T>();
-
             return BreadthFirstWalk(_firstInsertedNode);
         }
 
@@ -326,7 +304,7 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> BreadthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> BreadthFirstWalk(T startingVertex)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();

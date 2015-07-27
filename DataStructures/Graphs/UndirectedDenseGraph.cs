@@ -62,6 +62,22 @@ namespace DataStructures.Graphs
 
 
         /// <summary>
+        /// Returns true, if graph is directed; false otherwise.
+        /// </summary>
+        public bool IsDirected
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Returns true, if graph is weighted; false otherwise.
+        /// </summary>
+        public bool IsWeighted
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Gets the count of vetices.
         /// </summary>
         public virtual int VerticesCount
@@ -302,7 +318,7 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph starting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> DepthFirstWalk()
+        public virtual IEnumerable<T> DepthFirstWalk()
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
@@ -314,7 +330,7 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> DepthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> DepthFirstWalk(T startingVertex)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
@@ -350,7 +366,7 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graphstarting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> BreadthFirstWalk()
+        public virtual IEnumerable<T> BreadthFirstWalk()
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
@@ -362,7 +378,7 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-        public virtual ArrayList<T> BreadthFirstWalk(T startingVertex)
+        public virtual IEnumerable<T> BreadthFirstWalk(T startingVertex)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();

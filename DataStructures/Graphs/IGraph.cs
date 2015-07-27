@@ -8,6 +8,16 @@ namespace DataStructures.Graphs
     public interface IGraph<T> where T : IComparable<T>
     {
         /// <summary>
+        /// Returns true, if graph is directed; false otherwise.
+        /// </summary>
+        bool IsDirected { get; }
+
+        /// <summary>
+        /// Returns true, if graph is weighted; false otherwise.
+        /// </summary>
+        bool IsWeighted { get; }
+
+        /// <summary>
         /// Gets the count of vetices.
         /// </summary>
         int VerticesCount { get; }
@@ -76,23 +86,23 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph. Prints nodes as they get visited.
         /// It considers the first inserted vertex as the start-vertex for the walk.
         /// </summary>
-        ArrayList<T> DepthFirstWalk();
+        IEnumerable<T> DepthFirstWalk();
 
         /// <summary>
         /// A depth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
         /// </summary>
-        ArrayList<T> DepthFirstWalk(T startingVertex);
+        IEnumerable<T> DepthFirstWalk(T startingVertex);
 
         /// <summary>
         /// A breadth first search traversal of the graph. Prints nodes as they get visited.
         /// It considers the first inserted vertex as the start-vertex for the walk.
         /// </summary>
-        ArrayList<T> BreadthFirstWalk();
+        IEnumerable<T> BreadthFirstWalk();
 
         /// <summary>
         /// A breadth first search traversal of the graph, starting from a specified vertex. Prints nodes as they get visited.
         /// </summary>
-        ArrayList<T> BreadthFirstWalk(T startingVertex);
+        IEnumerable<T> BreadthFirstWalk(T startingVertex);
 
         /// <summary>
         /// Clear this graph.
