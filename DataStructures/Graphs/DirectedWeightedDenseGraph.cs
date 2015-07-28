@@ -14,7 +14,7 @@ namespace DataStructures.Graphs
     /// A directed graph is a graph where each edge follow one direction only between any two vertices.
     /// A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
     /// 
-    /// This class represents the graph as an incidence-matrix (two dimensional boolean array).
+    /// This class represents the graph as an adjacency-matrix (two dimensional integer array).
     /// </summary>
     public class DirectedWeightedDenseGraph<T> : DirectedDenseGraph<T>, IWeightedGraph<T> where T : IComparable<T>
     {
@@ -60,6 +60,7 @@ namespace DataStructures.Graphs
         {
             return _adjacencyMatrix[source, destination];
         }
+
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.

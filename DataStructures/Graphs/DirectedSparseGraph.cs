@@ -84,12 +84,8 @@ namespace DataStructures.Graphs
         {
             get
             {
-                var list = new ArrayList<T>(VerticesCount);
-
                 foreach (var vertex in _adjacencyList)
-                    list.Add(vertex.Key);
-
-                return list;
+                    yield return vertex.Key;
             }
         }
 
@@ -99,9 +95,9 @@ namespace DataStructures.Graphs
         public virtual bool AddEdge(T source, T destination)
         {
             // Check existence of nodes and non-existence of edge
-            if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
+            if (!HasVertex(source) || !HasVertex(destination))
                 return false;
-            else if (HasEdge(source, destination))
+            else if (_doesEdgeExist(source, destination))
                 return false;
 
             // Add edge from source to destination
@@ -119,9 +115,9 @@ namespace DataStructures.Graphs
         public virtual bool RemoveEdge(T source, T destination)
         {
             // Check existence of nodes and non-existence of edge
-            if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
+            if (!HasVertex(source) || !HasVertex(destination))
                 return false;
-            else if (!HasEdge(source, destination))
+            else if (!_doesEdgeExist(source, destination))
                 return false;
 
             // Remove edge from source to destination
@@ -142,7 +138,7 @@ namespace DataStructures.Graphs
                 throw new ArgumentNullException();
 
             foreach (var vertex in collection)
-                this.AddVertex(vertex);
+                AddVertex(vertex);
         }
 
         /// <summary>
@@ -150,7 +146,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool AddVertex(T vertex)
         {
-            if (_adjacencyList.ContainsKey(vertex))
+            if (HasVertex(vertex))
                 return false;
 
             if (_adjacencyList.Count == 0)
@@ -167,7 +163,7 @@ namespace DataStructures.Graphs
         public virtual bool RemoveVertex(T vertex)
         {
             // Check existence of vertex
-            if (!_adjacencyList.ContainsKey(vertex))
+            if (!HasVertex(vertex))
                 return false;
 
             // Subtract the number of edges for this vertex from the total edges count
@@ -196,10 +192,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool HasEdge(T source, T destination)
         {
-            if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
-                return false;
-
-            return _adjacencyList[source].Contains(destination);
+            return (_adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination));
         }
 
         /// <summary>
