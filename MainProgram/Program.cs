@@ -12,7 +12,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            Graphs_DirectedWeightedSparseGraphTest.DoTest();
+			StackTest.DoTest ();
         }
     }
 }

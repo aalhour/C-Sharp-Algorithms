@@ -21,16 +21,20 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
 
+			Debug.Assert (stack.Top == 6, "Wrong top value.");
+
 			var array = stack.ToArray();
 			Debug.Assert (array.Length == stack.Count, "Wrong size!");
 
 			top = stack.Pop();
+			Debug.Assert (stack.Top == 5, "Wrong top value.");
 
 			Console.WriteLine("Old 2nd-last: " + top);
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
 
 			stack.Pop();
 			stack.Pop();
+			Debug.Assert (stack.Top == 3, "Wrong top value.");
 
 			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
 
