@@ -67,6 +67,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             /********************************************************************/
 
 
+            Console.WriteLine("***************************************************\r\n");
+
             graph.Clear();
             Console.WriteLine("Cleared the graph from all vertices and edges.\r\n");
 
