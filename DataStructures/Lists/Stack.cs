@@ -64,7 +64,7 @@ namespace DataStructures.Lists
             {
                 try
                 {
-                    return _collection.First;
+					return _collection[_collection.Count - 1];
                 }
                 catch (Exception)
                 {
@@ -80,7 +80,7 @@ namespace DataStructures.Lists
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-            _collection.InsertAt(dataItem, 0);
+			_collection.Add(dataItem);
         }
 
 
@@ -92,7 +92,7 @@ namespace DataStructures.Lists
             if (Count > 0)
             {
 				var top = Top;
-                _collection.RemoveAt(0);
+				_collection.RemoveAt(_collection.Count - 1);
 				return top;
             }
             else
