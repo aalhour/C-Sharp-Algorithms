@@ -1,10 +1,10 @@
 # C# ALGORITHMS
 
-Implementations of Data Structures and Algorithms in C#.
+## Implementations of Data Structures and Algorithms in C#.
 
 I started writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. However, the source code is stable.
 
-This is a .NET solution and it can be opened with both Xmarian (MonoDevelop) and Visual Studio. It has two separate projects: 1) Algorithms, 2) DataStructures. Both of them are class-library projects.
+This is a .NET solution and it can be opened with both Xamarin Studio (MonoDevelop) and Visual Studio. It has two separate projects: 1) Algorithms, 2) DataStructures. Both of them are class-library projects.
 
 The third project is called MainProgram and it has all the tests for all the implemented algorithms and data structures. It has two main directories:
  * [Algorithms Tests](MainProgram/AlgorithmsTests).
@@ -98,7 +98,7 @@ The third project is called MainProgram and it has all the tests for all the imp
  * **[Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).** A class that calculates the catalan numbers. A dynamic-programming solution.
 
 #### Visualization:
- * **[Tree Drawer](DataStructures/Trees/TreeDrawer.cs).** Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
+ * **[Tree Drawer](DataStructures/Trees/TreeDrawer.cs).** Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension method.
     ```
     var avlTree = new AVLTree<int>();
     var treeDataList = new List<int>() { 15, 25, 5, 12, 1, 9, 7, -1, 11, 30, 8, 10, 13, 28, 39 };
