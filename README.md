@@ -67,12 +67,12 @@ The third project is called MainProgram and it has all the tests for all the imp
 #### Sorting:
  Sorting algorithms are implemented as an extension method. They support the native Array\<T\>, and List\<T\> classes. They can takes value comparers. Insertion Sort supports my ArrayList\<T\> class.
 
-  * [Insertion Sort](Algorithms/Sorting/InsertionSorter.cs)
-  * [Quick Sort](Algorithms/Sorting/QuickSorter.cs)
-  * [Merge Sort](Algorithms/Sorting/MergeSorter.cs)
-  * [Heap Sort](Algorithms/Sorting/HeapSorter.cs)
-  * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs). Implements an unbalanced binary search tree sort.
-  * [Counting Sort](Algorithms/Sorting/CountingSorter.cs). Only sorts arrays of integers.
+  * **[Insertion Sort](Algorithms/Sorting/InsertionSorter.cs).**
+  * **[Quick Sort](Algorithms/Sorting/QuickSorter.cs).**
+  * **[Merge Sort](Algorithms/Sorting/MergeSorter.cs).**
+  * **[Heap Sort](Algorithms/Sorting/HeapSorter.cs).**
+  * **[BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs).** Implements an unbalanced binary search tree sort.
+  * **[Counting Sort](Algorithms/Sorting/CountingSorter.cs).** Only sorts arrays of integers.
 
     ```
     int[] array = new int[] { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0 };
@@ -95,10 +95,10 @@ The third project is called MainProgram and it has all the tests for all the imp
  * **[Breadth First Paths](Algorithms/Graphs/BreadthFirstPaths.cs).** A class that takes a Graph instance upon object-instantiation as a parameter, and then applies BFS to the graph. Meanwhile applying BFS to the graph, it extracts information about shortest-paths and connectivity. It provides the capability to find shortest-paths from single-sources and multiple-sources. Also, to check for reachable and unreachable nodes from the specified source-node(s).
 
 #### Numeric:
- * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs). A class that calculates the catalan numbers. A dynamic-programming solution.
+ * **[Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).** A class that calculates the catalan numbers. A dynamic-programming solution.
 
 #### Visualization:
- * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs). Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
+ * **[Tree Drawer](DataStructures/Trees/TreeDrawer.cs).** Draws any tree that extends my *BinarySearchTree\<T\>* class. It is defined as an extension function.
     ```
     var avlTree = new AVLTree<int>();
     var treeDataList = new List<int>() { 15, 25, 5, 12, 1, 9, 7, -1, 11, 30, 8, 10, 13, 28, 39 };
