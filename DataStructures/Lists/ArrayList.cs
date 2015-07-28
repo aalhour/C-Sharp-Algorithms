@@ -260,10 +260,15 @@ namespace DataStructures.Lists
             if (elements == null)
                 throw new ArgumentNullException();
 
-            if (((uint)_size + elements.Count()) > MAXIMUM_ARRAY_LENGTH_x64)
-                throw new OverflowException();
+			// make sure the size won't overflow by adding the range
+			if (((uint)_size + elements.Count ()) > MAXIMUM_ARRAY_LENGTH_x64)
+				throw new OverflowException ();
 
-            foreach(var element in elements)
+			// grow the internal collection once to avoid doing multiple redundant grows
+			if(_collection.Length - (_size + elements.Count ()) <= 1)
+				_ensureCapacity (_size + elements.Count ());
+
+			foreach(var element in elements)
                 this.Add(element);
         }
 
@@ -279,6 +284,10 @@ namespace DataStructures.Lists
             if (((uint)_size + count) > MAXIMUM_ARRAY_LENGTH_x64)
                 throw new OverflowException();
 
+			// grow the internal collection once to avoid doing multiple redundant grows
+			if(_collection.Length - (_size + count) <= 1)
+				_ensureCapacity (_size + count);
+			
             for(int i = 0; i < count; i++)
                 this.Add(value);
         }
