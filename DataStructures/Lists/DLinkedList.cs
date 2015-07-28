@@ -51,7 +51,7 @@ namespace DataStructures.Lists
     }
 
 
-	/***********************************************************************************/
+    /***********************************************************************************/
 
 
     /// <summary>
@@ -251,26 +251,26 @@ namespace DataStructures.Lists
             set { this._setElementAt(index, value); }
         }
 
-		/// <summary>
-		/// Returns the index of an item if exists.
-		/// </summary>
-		public virtual int IndexOf(T dataItem)
-		{
-			int i = 0;
-			var currentNode = _firstNode;
+        /// <summary>
+        /// Returns the index of an item if exists.
+        /// </summary>
+        public virtual int IndexOf(T dataItem)
+        {
+            int i = 0;
+            var currentNode = _firstNode;
 
-			// Get currentNode to reference the element at the index.
-			while (i <= _count)
-			{
-				if (currentNode.Data.IsEqualTo (dataItem))
-					break;
+            // Get currentNode to reference the element at the index.
+            while (i <= _count)
+            {
+                if (currentNode.Data.IsEqualTo(dataItem))
+                    break;
 
-				currentNode = currentNode.Next;
-				i++;
-			}//end-while
+                currentNode = currentNode.Next;
+                i++;
+            }//end-while
 
-			return (i == Count ? -1 : i);
-		}
+            return (i == Count ? -1 : i);
+        }
 
         /// <summary>
         /// Prepend the specified dataItem at the beginning of the list.
@@ -319,7 +319,7 @@ namespace DataStructures.Lists
             // Increment the count.
             _count++;
         }
-        
+
         /// <summary>
         /// Inserts the dataItem at the specified index.
         /// </summary>
@@ -360,18 +360,18 @@ namespace DataStructures.Lists
                     }
                 }*/
 
-				currentNode = this._firstNode;
-				for (int i = 0; i < index - 1; ++i)
-				{
-					currentNode = currentNode.Next;
-				}
+                currentNode = this._firstNode;
+                for (int i = 0; i < index - 1; ++i)
+                {
+                    currentNode = currentNode.Next;
+                }
 
-				var oldNext = currentNode.Next;
+                var oldNext = currentNode.Next;
 
-				if (oldNext != null)
-					currentNode.Next.Previous = newNode;
-				
-				newNode.Next = oldNext;
+                if (oldNext != null)
+                    currentNode.Next.Previous = newNode;
+
+                newNode.Next = oldNext;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
 
@@ -395,63 +395,63 @@ namespace DataStructures.Lists
             InsertAt(dataItem, index - 1);
         }
 
-		/// <summary>
-		/// Remove the specified dataItem.
-		/// </summary>
-		public virtual void Remove(T dataItem)
-		{
-			// Handle index out of bound errors
-			if (IsEmpty())
-				throw new IndexOutOfRangeException();
+        /// <summary>
+        /// Remove the specified dataItem.
+        /// </summary>
+        public virtual void Remove(T dataItem)
+        {
+            // Handle index out of bound errors
+            if (IsEmpty())
+                throw new IndexOutOfRangeException();
 
-			if(_firstNode.Data.IsEqualTo(dataItem))
-			{
-				_firstNode = _firstNode.Next;
+            if (_firstNode.Data.IsEqualTo(dataItem))
+            {
+                _firstNode = _firstNode.Next;
 
-				if (_firstNode != null)
-					_firstNode.Previous = null;
-			}
-			else if(_lastNode.Data.IsEqualTo(dataItem))
-			{
-				_lastNode = _lastNode.Previous;
+                if (_firstNode != null)
+                    _firstNode.Previous = null;
+            }
+            else if (_lastNode.Data.IsEqualTo(dataItem))
+            {
+                _lastNode = _lastNode.Previous;
 
-				if (_lastNode != null)
-					_lastNode.Next = null;
-			}
-			else
-			{
-				// Remove
-				var currentNode = _firstNode;
+                if (_lastNode != null)
+                    _lastNode.Next = null;
+            }
+            else
+            {
+                // Remove
+                var currentNode = _firstNode;
 
-				// Get currentNode to reference the element at the index.
-				while (currentNode.Next != null)
-				{
-					if (currentNode.Data.IsEqualTo (dataItem))
-						break;
+                // Get currentNode to reference the element at the index.
+                while (currentNode.Next != null)
+                {
+                    if (currentNode.Data.IsEqualTo(dataItem))
+                        break;
 
-					currentNode = currentNode.Next;
-				}//end-while
+                    currentNode = currentNode.Next;
+                }//end-while
 
-				// Throw exception if item was not found
-				if (!currentNode.Data.IsEqualTo(dataItem))
-					throw new Exception ("Item was not found!");
+                // Throw exception if item was not found
+                if (!currentNode.Data.IsEqualTo(dataItem))
+                    throw new Exception("Item was not found!");
 
-				// Remove element
-				DLinkedListNode<T> newPrevious = currentNode.Previous;
-				DLinkedListNode<T> newNext = currentNode.Next;
+                // Remove element
+                DLinkedListNode<T> newPrevious = currentNode.Previous;
+                DLinkedListNode<T> newNext = currentNode.Next;
 
-				if(newPrevious != null)
-					newPrevious.Next = newNext;
+                if (newPrevious != null)
+                    newPrevious.Next = newNext;
 
-				if (newNext != null)
-					newNext.Previous = newPrevious;
+                if (newNext != null)
+                    newNext.Previous = newPrevious;
 
-				currentNode = newPrevious;
-			}
+                currentNode = newPrevious;
+            }
 
-			// Decrement count.
-			_count--;
-		}
+            // Decrement count.
+            _count--;
+        }
 
         /// <summary>
         /// Removes the item at the specified index.
@@ -503,8 +503,8 @@ namespace DataStructures.Lists
                 currentNode = newPrevious;
             }//end-else
 
-			// Decrement count.
-			_count--;
+            // Decrement count.
+            _count--;
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace DataStructures.Lists
             {
                 return Find(dataItem).IsEqualTo(dataItem);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -553,6 +553,28 @@ namespace DataStructures.Lists
             }
 
             throw new Exception("Item was not found.");
+        }
+
+        /// <summary>
+        /// Find the first element that matches the predicate from all elements in list.
+        /// </summary>
+        public virtual T FindFirst(Predicate<T> match)
+        {
+            if (IsEmpty())
+                throw new Exception("List is empty.");
+
+            var currentNode = _firstNode;
+            var list = new List<T>();
+
+            while (currentNode != null)
+            {
+                if (match(currentNode.Data))
+                    return currentNode.Data;
+
+                currentNode = currentNode.Next;
+            }
+
+            throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -639,12 +661,12 @@ namespace DataStructures.Lists
                 return;
 
             var currentNode = _firstNode;
-            while(currentNode != null)
+            while (currentNode != null)
             {
                 var nextNode = currentNode.Next;
-                while(nextNode != null)
+                while (nextNode != null)
                 {
-                    if(nextNode.Data.IsLessThan(currentNode.Data))
+                    if (nextNode.Data.IsLessThan(currentNode.Data))
                     {
                         var temp = nextNode.Data;
                         nextNode.Data = currentNode.Data;
@@ -732,23 +754,23 @@ namespace DataStructures.Lists
 
         public IEnumerator<T> GetEnumerator()
         {
-			var node = _firstNode;
-			while (node != null)
-			{
-				yield return node.Data;
-				node = node.Next;
-			}
+            var node = _firstNode;
+            while (node != null)
+            {
+                yield return node.Data;
+                node = node.Next;
+            }
 
-			// Alternative: IEnumerator class instance
+            // Alternative: IEnumerator class instance
             // return new DLinkedListEnumerator(this);
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-			return this.GetEnumerator ();
+            return this.GetEnumerator();
 
-			// Alternative: IEnumerator class instance
-			// return new DLinkedListEnumerator(this);
+            // Alternative: IEnumerator class instance
+            // return new DLinkedListEnumerator(this);
         }
 
         /********************************************************************************/
@@ -760,7 +782,7 @@ namespace DataStructures.Lists
 
             public DLinkedListEnumerator(DLinkedList<T> list)
             {
-				this._current = list.Head;
+                this._current = list.Head;
                 this._doublyLinkedList = list;
             }
 
@@ -776,27 +798,27 @@ namespace DataStructures.Lists
 
             public bool MoveNext()
             {
-				if (_current.Next != null)
-					_current = _current.Next;
-				else
-					return false;
+                if (_current.Next != null)
+                    _current = _current.Next;
+                else
+                    return false;
 
-				return true;
+                return true;
             }
 
             public bool MovePrevious()
             {
-				if (_current.Previous != null)
-					_current = _current.Previous;
-				else
-					return false;
+                if (_current.Previous != null)
+                    _current = _current.Previous;
+                else
+                    return false;
 
-				return true;
+                return true;
             }
 
             public void Reset()
             {
-				_current = _doublyLinkedList.Head;
+                _current = _doublyLinkedList.Head;
             }
 
             public void Dispose()
