@@ -30,7 +30,8 @@ namespace DataStructures.Lists
         private const int _defaultCapacity = 8;
 
         // The internal array of elements.
-        private T[] _collection { get; set; }
+		// NOT A PROPERTY.
+		private T[] _collection;
 
         // This keeps track of the number of elements added to the array.
         // Serves as an index of last item + 1.
@@ -40,11 +41,7 @@ namespace DataStructures.Lists
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public ArrayList()
-            : this(capacity: 0)
-        {
-
-        }
+        public ArrayList() : this(capacity: 0) { }
 
         public ArrayList(int capacity)
         {
