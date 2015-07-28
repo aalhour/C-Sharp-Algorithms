@@ -57,7 +57,9 @@ The third project is called MainProgram and it has all the tests for all the imp
   * **[Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs).** An incidence-matrix digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
  
  * **Directed Weighted Graphs / Weighted Digraphs:**
+  * **[Directed Weighted Sparse Graph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs).** An adjacency-list weighted digraph representation. Shares a great deal of implemention details with the Directed Sparse version (DirectedSparseGraph\<T\>). Implements both interfaces: [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) and [IWeightedGraph\<T\>](DataStructures/Graphs/IWeightedGraph.cs). It manages the weights of edges through an internal WeightedEdge\<T\> class.
   * **[Directed Weighted Dense Graph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs).** An adjacency-matrix weighted digraph representation. Inherits and extends Directed Dense verion (DirectedDenseGraph\<T\>). Implements the [IWeightedGraph\<T\>](DataStructures/Graphs/IWeightedGraph.cs) interface.
+
 
 
 ## Algorithms
