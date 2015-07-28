@@ -12,14 +12,14 @@ namespace DataStructures.Graphs
     /// Definition:
     /// A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
     /// 
-	/// This class represents the graph as an incidence-matrix (two dimensional boolean array).
+    /// This class represents the graph as an incidence-matrix (two dimensional boolean array).
     /// </summary>
     public class UndirectedDenseGraph<T> : IGraph<T> where T : IComparable<T>
     {
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-		private const object EMPTY_VERTEX_SLOT = (object)null;
+        private const object EMPTY_VERTEX_SLOT = (object)null;
 
         protected virtual int _edgesCount { get; set; }
         protected virtual int _verticesCount { get; set; }
@@ -44,10 +44,10 @@ namespace DataStructures.Graphs
         }
 
 
-		/// <summary>
-		/// Helper function. Checks if edge exist in graph.
-		/// </summary>
-		protected virtual bool _doesEdgeExist(int index1, int index2)
+        /// <summary>
+        /// Helper function. Checks if edge exist in graph.
+        /// </summary>
+        protected virtual bool _doesEdgeExist(int index1, int index2)
         {
             return (_adjacencyMatrix[index1, index2] || _adjacencyMatrix[index2, index1]);
         }
@@ -55,7 +55,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Helper function that checks whether a vertex exist.
         /// </summary>
-		protected virtual bool _doesVertexExist(T vertex)
+        protected virtual bool _doesVertexExist(T vertex)
         {
             return _vertices.Contains(vertex);
         }
@@ -64,7 +64,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-		public virtual bool IsDirected
+        public virtual bool IsDirected
         {
             get { return false; }
         }
@@ -72,7 +72,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-		public virtual bool IsWeighted
+        public virtual bool IsWeighted
         {
             get { return false; }
         }
@@ -175,12 +175,12 @@ namespace DataStructures.Graphs
             if (_doesVertexExist(vertex))
                 return false;
 
-			// Initialize first inserted node
+            // Initialize first inserted node
             if (_verticesCount == 0)
                 _firstInsertedNode = vertex;
 
-			// Try inserting vertex at previously lazy-deleted slot
-			int indexOfDeleted = _vertices.IndexOf(EMPTY_VERTEX_SLOT);
+            // Try inserting vertex at previously lazy-deleted slot
+            int indexOfDeleted = _vertices.IndexOf(EMPTY_VERTEX_SLOT);
 
             if (indexOfDeleted != -1)
                 _vertices[indexOfDeleted] = vertex;
@@ -198,20 +198,20 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool RemoveVertex(T vertex)
         {
-			// Return if graph is empty
-			if (_verticesCount == 0)
-				return false;
+            // Return if graph is empty
+            if (_verticesCount == 0)
+                return false;
 
-			// Get index of vertex
+            // Get index of vertex
             int index = _vertices.IndexOf(vertex);
 
             // Return if vertex doesn't exists
             if (index == -1)
                 return false;
 
-			// Lazy-delete the vertex from graph
+            // Lazy-delete the vertex from graph
             //_vertices.Remove (vertex);
-			_vertices[index] = EMPTY_VERTEX_SLOT;
+            _vertices[index] = EMPTY_VERTEX_SLOT;
 
             // Decrement the vertices count
             --_verticesCount;
@@ -240,8 +240,8 @@ namespace DataStructures.Graphs
             int indexOfFirst = _vertices.IndexOf(firstVertex);
             int indexOfSecond = _vertices.IndexOf(secondVertex);
 
-			// Check the existence of vertices and the directed edge
-			return (indexOfFirst != -1 && indexOfSecond != -1 && _doesEdgeExist(indexOfFirst, indexOfSecond) == true);
+            // Check the existence of vertices and the directed edge
+            return (indexOfFirst != -1 && indexOfSecond != -1 && _doesEdgeExist(indexOfFirst, indexOfSecond) == true);
         }
 
         /// <summary>
@@ -261,9 +261,9 @@ namespace DataStructures.Graphs
             int index = _vertices.IndexOf(vertex);
 
             if (index != -1)
-				for (int i = 0; i < _vertices.Count; ++i)
-					if (_vertices[i] != null && _doesEdgeExist(index, i))
-                    	neighbours.Append((T)_vertices[i]);
+                for (int i = 0; i < _vertices.Count; ++i)
+                    if (_vertices[i] != null && _doesEdgeExist(index, i))
+                        neighbours.Append((T)_vertices[i]);
 
             return neighbours;
         }
@@ -273,9 +273,9 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual int Degree(T vertex)
         {
-			if (!HasVertex(vertex))
-				throw new KeyNotFoundException();
-			
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException();
+
             return Neighbours(vertex).Count;
         }
 
@@ -294,10 +294,10 @@ namespace DataStructures.Graphs
                 var node = (T)_vertices[i];
                 var adjacents = string.Empty;
 
-				output = String.Format("{0}\r\n{1}: [", output, node);
+                output = String.Format("{0}\r\n{1}: [", output, node);
 
-				foreach (var adjacentNode in Neighbours(node))
-					adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
+                foreach (var adjacentNode in Neighbours(node))
+                    adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
 
                 if (adjacents.Length > 0)
                     adjacents.Remove(adjacents.Length - 1);
@@ -323,30 +323,30 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual IEnumerable<T> DepthFirstWalk(T source)
         {
-			if (_verticesCount == 0)
+            if (_verticesCount == 0)
                 return new ArrayList<T>();
-			else if (!HasVertex(source))
+            else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
-			
+
             var stack = new Lists.Stack<T>(_verticesCount);
             var visited = new HashSet<T>();
             var listOfNodes = new ArrayList<T>(_verticesCount);
 
-			stack.Push(source);
+            stack.Push(source);
 
             while (!stack.IsEmpty)
             {
                 var current = stack.Pop();
 
-				if (!visited.Contains (current)) 
-				{
-					listOfNodes.Add(current);
-					visited.Add(current);
+                if (!visited.Contains(current))
+                {
+                    listOfNodes.Add(current);
+                    visited.Add(current);
 
-					foreach (var adjacent in Neighbours(current))
-						if (!visited.Contains(adjacent))
-							stack.Push(adjacent);
-				}
+                    foreach (var adjacent in Neighbours(current))
+                        if (!visited.Contains(adjacent))
+                            stack.Push(adjacent);
+                }
             }
 
             return listOfNodes;
@@ -367,19 +367,19 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual IEnumerable<T> BreadthFirstWalk(T source)
         {
-			if (_verticesCount == 0)
+            if (_verticesCount == 0)
                 return new ArrayList<T>();
-			else if (!HasVertex(source))
+            else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-			var visited = new HashSet<T>();
+            var visited = new HashSet<T>();
             var queue = new Lists.Queue<T>(VerticesCount);
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-			listOfNodes.Add(source);
-			visited.Add(source);
+            listOfNodes.Add(source);
+            visited.Add(source);
 
-			queue.Enqueue(source);
+            queue.Enqueue(source);
 
             while (!queue.IsEmpty)
             {

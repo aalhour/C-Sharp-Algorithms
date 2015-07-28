@@ -10,6 +10,7 @@ namespace DataStructures.Graphs
     /// 
     /// Definition:
     /// A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
+    /// A directed graph is a graph where each edge follow one direction only between any two vertices.
     /// 
     /// This class represents the digraph as an adjacency list (dictionary).
     /// </summary>
@@ -35,19 +36,19 @@ namespace DataStructures.Graphs
         }
 
 
-		/// <summary>
-		/// Helper function. Checks if edge exist in graph.
-		/// </summary>
-		protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
-		{
-			return (_adjacencyList[vertex1].Contains(vertex2));
-		}
+        /// <summary>
+        /// Helper function. Checks if edge exist in graph.
+        /// </summary>
+        protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
+        {
+            return (_adjacencyList[vertex1].Contains(vertex2));
+        }
 
 
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-		public virtual bool IsDirected
+        public virtual bool IsDirected
         {
             get { return true; }
         }
@@ -55,7 +56,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-		public virtual bool IsWeighted
+        public virtual bool IsWeighted
         {
             get { return false; }
         }
@@ -63,7 +64,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
-		public virtual int VerticesCount
+        public virtual int VerticesCount
         {
             get { return _adjacencyList.Count; }
         }
@@ -71,7 +72,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Gets the count of edges.
         /// </summary>
-		public virtual int EdgesCount
+        public virtual int EdgesCount
         {
             get { return _edgesCount; }
         }
@@ -79,9 +80,9 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the list of Vertices.
         /// </summary>
-		public virtual IEnumerable<T> Vertices
+        public virtual IEnumerable<T> Vertices
         {
-            get 
+            get
             {
                 var list = new ArrayList<T>(VerticesCount);
 
@@ -95,7 +96,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together in the direction: first->second.
         /// </summary>
-		public virtual bool AddEdge(T source, T destination)
+        public virtual bool AddEdge(T source, T destination)
         {
             // Check existence of nodes and non-existence of edge
             if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
@@ -115,7 +116,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Removes edge, if exists, from source to destination.
         /// </summary>
-		public virtual bool RemoveEdge(T source, T destination)
+        public virtual bool RemoveEdge(T source, T destination)
         {
             // Check existence of nodes and non-existence of edge
             if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
@@ -135,7 +136,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Add a collection of vertices to the graph.
         /// </summary>
-		public virtual void AddVertices(IList<T> collection)
+        public virtual void AddVertices(IList<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException();
@@ -147,7 +148,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Add vertex to the graph
         /// </summary>
-		public virtual bool AddVertex(T vertex)
+        public virtual bool AddVertex(T vertex)
         {
             if (_adjacencyList.ContainsKey(vertex))
                 return false;
@@ -163,7 +164,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Removes the specified vertex from graph.
         /// </summary>
-		public virtual bool RemoveVertex(T vertex)
+        public virtual bool RemoveVertex(T vertex)
         {
             // Check existence of vertex
             if (!_adjacencyList.ContainsKey(vertex))
@@ -193,7 +194,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Checks whether there is an edge from source to destination.
         /// </summary>
-		public virtual bool HasEdge(T source, T destination)
+        public virtual bool HasEdge(T source, T destination)
         {
             if (!_adjacencyList.ContainsKey(source) || !_adjacencyList.ContainsKey(destination))
                 return false;
@@ -204,7 +205,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Checks whether a vertex exists in the graph
         /// </summary>
-		public virtual bool HasVertex(T vertex)
+        public virtual bool HasVertex(T vertex)
         {
             return _adjacencyList.ContainsKey(vertex);
         }
@@ -212,7 +213,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours doubly-linked list for the specified vertex.
         /// </summary>
-		public virtual DLinkedList<T> Neighbours(T vertex)
+        public virtual DLinkedList<T> Neighbours(T vertex)
         {
             if (!HasVertex(vertex))
                 return null;
@@ -220,10 +221,10 @@ namespace DataStructures.Graphs
             return _adjacencyList[vertex];
         }
 
-		/// <summary>
-		/// Returns the degree of the specified vertex.
-		/// </summary>
-		public virtual int Degree(T vertex)
+        /// <summary>
+        /// Returns the degree of the specified vertex.
+        /// </summary>
+        public virtual int Degree(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException();
@@ -231,10 +232,10 @@ namespace DataStructures.Graphs
             return _adjacencyList[vertex].Count;
         }
 
-		/// <summary>
-		/// Returns a human-readable string of the graph.
-		/// </summary>
-		public virtual string ToReadable()
+        /// <summary>
+        /// Returns a human-readable string of the graph.
+        /// </summary>
+        public virtual string ToReadable()
         {
             string output = string.Empty;
 
@@ -260,7 +261,7 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph starting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-		public virtual IEnumerable<T> DepthFirstWalk()
+        public virtual IEnumerable<T> DepthFirstWalk()
         {
             return DepthFirstWalk(_firstInsertedNode);
         }
@@ -269,7 +270,7 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-		public virtual IEnumerable<T> DepthFirstWalk(T source)
+        public virtual IEnumerable<T> DepthFirstWalk(T source)
         {
             // Check for existence of source
             if (VerticesCount == 0)
@@ -283,11 +284,11 @@ namespace DataStructures.Graphs
 
             stack.Push(source);
 
-            while(!stack.IsEmpty)
+            while (!stack.IsEmpty)
             {
                 var current = stack.Pop();
 
-                if(!visited.Contains(current))
+                if (!visited.Contains(current))
                 {
                     listOfNodes.Add(current);
                     visited.Add(current);
@@ -305,7 +306,7 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graphstarting from the first inserted node.
         /// Returns the visited vertices of the graph.
         /// </summary>
-		public virtual IEnumerable<T> BreadthFirstWalk()
+        public virtual IEnumerable<T> BreadthFirstWalk()
         {
             return BreadthFirstWalk(_firstInsertedNode);
         }
@@ -314,7 +315,7 @@ namespace DataStructures.Graphs
         /// A breadth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-		public virtual IEnumerable<T> BreadthFirstWalk(T source)
+        public virtual IEnumerable<T> BreadthFirstWalk(T source)
         {
             // Check for existence of source
             if (VerticesCount == 0)
@@ -331,12 +332,12 @@ namespace DataStructures.Graphs
 
             queue.Enqueue(source);
 
-            while(!queue.IsEmpty)
+            while (!queue.IsEmpty)
             {
                 var current = queue.Dequeue();
                 var neighbors = Neighbours(current);
 
-                foreach(var adjacent in neighbors)
+                foreach (var adjacent in neighbors)
                 {
                     if (!visited.Contains(adjacent))
                     {
@@ -353,7 +354,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Clear this graph.
         /// </summary>
-		public virtual void Clear()
+        public virtual void Clear()
         {
             _edgesCount = 0;
             _adjacencyList.Clear();

@@ -35,19 +35,19 @@ namespace DataStructures.Graphs
         }
 
 
-		/// <summary>
-		/// Helper function. Checks if edge exist in graph.
-		/// </summary>
-		protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
-		{
-			return (_adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1));
-		}
+        /// <summary>
+        /// Helper function. Checks if edge exist in graph.
+        /// </summary>
+        protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
+        {
+            return (_adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1));
+        }
 
 
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-		public virtual bool IsDirected
+        public virtual bool IsDirected
         {
             get { return false; }
         }
@@ -55,7 +55,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-		public virtual bool IsWeighted
+        public virtual bool IsWeighted
         {
             get { return false; }
         }
@@ -98,7 +98,7 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-			else if (_doesEdgeExist(firstVertex, secondVertex))
+            else if (_doesEdgeExist(firstVertex, secondVertex))
                 return false;
 
             _adjacencyList[firstVertex].Append(secondVertex);
@@ -117,9 +117,9 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-			else if (!_doesEdgeExist(firstVertex, secondVertex))
+            else if (!_doesEdgeExist(firstVertex, secondVertex))
                 return false;
-            
+
             _adjacencyList[firstVertex].Remove(secondVertex);
             _adjacencyList[secondVertex].Remove(firstVertex);
 
@@ -210,7 +210,7 @@ namespace DataStructures.Graphs
         {
             if (!HasVertex(vertex))
                 return null;
-                
+
             return _adjacencyList[vertex];
         }
 
@@ -263,18 +263,18 @@ namespace DataStructures.Graphs
         /// A depth first search traversal of the graph, starting from a specified vertex.
         /// Returns the visited vertices of the graph.
         /// </summary>
-		public virtual IEnumerable<T> DepthFirstWalk(T source)
+        public virtual IEnumerable<T> DepthFirstWalk(T source)
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-			else if (!HasVertex(source))
+            else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-			var visited = new HashSet<T>();
+            var visited = new HashSet<T>();
             var stack = new Lists.Stack<T>(VerticesCount);
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-			stack.Push(source);
+            stack.Push(source);
 
             while (!stack.IsEmpty)
             {
@@ -311,18 +311,18 @@ namespace DataStructures.Graphs
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-			else if (!HasVertex(source))
+            else if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
-            
-			var visited = new HashSet<T>();
+
+            var visited = new HashSet<T>();
             var queue = new Lists.Queue<T>(VerticesCount);
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
-			listOfNodes.Add(source);
-			visited.Add(source);
+            listOfNodes.Add(source);
+            visited.Add(source);
 
-			queue.Enqueue(source);
+            queue.Enqueue(source);
 
             while (!queue.IsEmpty)
             {
