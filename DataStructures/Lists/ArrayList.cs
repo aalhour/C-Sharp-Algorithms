@@ -108,14 +108,7 @@ namespace DataStructures.Lists
             {
                 try
                 {
-                    T[] newCollection = new T[newCapacity];
-
-                    if (_size > 0)
-                    {
-                        Array.Copy(_collection, 0, newCollection, 0, _size);
-                    }
-
-                    _collection = newCollection;
+					Array.Resize<T>(ref _collection, newCapacity);
                 }
                 catch (OutOfMemoryException)
                 {
