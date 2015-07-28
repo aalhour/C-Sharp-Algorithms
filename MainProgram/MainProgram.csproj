@@ -48,8 +48,8 @@
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
     <Compile Include="DataStructuresTests\BinomialHeapsTest.cs" />
     <Compile Include="DataStructuresTests\CuckooHashTableTest.cs" />
-    <Compile Include="DataStructuresTests\DirectedSparseGraphTests.cs" />
-    <Compile Include="DataStructuresTests\HashTable_SeparateChaining_Test.cs" />
+    <Compile Include="DataStructuresTests\Graphs_DirectedSparseGraphTest.cs" />
+    <Compile Include="DataStructuresTests\HashTableSeparateChainingTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlgorithmsTests\InsertionSortTest.cs" />
@@ -63,13 +63,13 @@
     <Compile Include="DataStructuresTests\BinaryHeapsTest.cs" />
     <Compile Include="DataStructuresTests\PriorityQueuesTest.cs" />
     <Compile Include="DataStructuresTests\BinarySearchTreeTest.cs" />
-    <Compile Include="DataStructuresTests\UndirectedSparseGraphTests.cs" />
-    <Compile Include="DataStructuresTests\UndirectedDenseGraphTests.cs" />
+    <Compile Include="DataStructuresTests\Graphs_UndirectedSparseGraphTest.cs" />
+    <Compile Include="DataStructuresTests\Graphs_UndirectedDenseGraphTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsDepthFirstSearchTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsBreadthFirstSearchTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsBreadthFirstPathsTest.cs" />
-    <Compile Include="DataStructuresTests\DirectedDenseGraphTests.cs" />
-    <Compile Include="DataStructuresTests\DirectedWeightedDenseGraphTests.cs" />
+    <Compile Include="DataStructuresTests\Graphs_DirectedDenseGraphTest.cs" />
+    <Compile Include="DataStructuresTests\Graphs_DirectedWeightedDenseGraphTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
