@@ -71,6 +71,14 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			var arrayList3 = arrayList.GetRange (0, 100);
 			Console.WriteLine(arrayList3.ToHumanReadable (addHeader: true));
+
+
+			/****************************************************************/
+
+
+			arrayList = new ArrayList<long> ();
+			arrayList.AddRepeatedly (11, 32);
+
 		}
     }
 }
