@@ -8,7 +8,7 @@ using DataStructures.Lists;
 
 namespace Algorithms.Graphs
 {
-    public class BreadthFirstPaths<T> where T : IComparable<T>
+    public class BreadthFirstShortestPaths<T> where T : IComparable<T>
     {
         private int _edgesCount { get; set; }
         private int _verticesCount { get; set; }
@@ -30,7 +30,7 @@ namespace Algorithms.Graphs
         /// CONSTRUCTOR.
         /// Breadth First Searcher from Single Source.
         /// </summary>
-        public BreadthFirstPaths(IGraph<T> Graph, T Source)
+        public BreadthFirstShortestPaths(IGraph<T> Graph, T Source)
         {
             if (Graph == null)
                 throw new ArgumentNullException();
@@ -52,7 +52,7 @@ namespace Algorithms.Graphs
         /// CONSTRUCTOR.
         /// Breadth First Searcher from Multiple Sources.
         /// </summary>
-        public BreadthFirstPaths(IGraph<T> Graph, IList<T> Sources)
+        public BreadthFirstShortestPaths(IGraph<T> Graph, IList<T> Sources)
         {
             if (Graph == null)
                 throw new ArgumentNullException();
@@ -65,6 +65,9 @@ namespace Algorithms.Graphs
             // Multiple sources BFS
             _breadthFirstSearch(Graph, Sources);
         }
+
+
+        /************************************************************************************************************/
 
 
         /// <summary>
@@ -83,15 +86,19 @@ namespace Algorithms.Graphs
             _indicesToNodes = new Dictionary<int, T>();
 
             // Reset the visited, distances and predeccessors arrays
-            _visited.Populate(false);
-            _distances.Populate(INFINITY);
-            _predecessors.Populate(-1);
-
             int i = 0;
             foreach (var node in Graph.Vertices)
             {
+                if (i >= _verticesCount)
+                    break;
+
+                _visited[i] = false;
+                _distances[i] = INFINITY;
+                _predecessors[i] = -1;
+
                 _nodesToIndices.Add(node, i);
                 _indicesToNodes.Add(i, node);
+
                 ++i;
             }
         }
@@ -239,46 +246,48 @@ namespace Algorithms.Graphs
         }
 
 
+        /************************************************************************************************************/
+
+
         /// <summary>
         /// Determines whether there is a path from the source vertex to this specified vertex.
         /// </summary>
-        public bool HasPathTo(T destinationVertex)
+        public bool HasPathTo(T destination)
         {
-            if (!_nodesToIndices.ContainsKey(destinationVertex))
+            if (!_nodesToIndices.ContainsKey(destination))
                 throw new Exception("Graph doesn't have the specified vertex.");
 
-            int indexOfDest = _nodesToIndices[destinationVertex];
-            return (_visited[indexOfDest]);
+            int dstIndex = _nodesToIndices[destination];
+            return (_visited[dstIndex]);
         }
 
         /// <summary>
         /// Returns the distance between the source vertex and the specified vertex.
         /// </summary>
-        public long DistanceTo(T destinationVertex)
+        public long DistanceTo(T destination)
         {
-            if (!_nodesToIndices.ContainsKey(destinationVertex))
+            if (!_nodesToIndices.ContainsKey(destination))
                 throw new Exception("Graph doesn't have the specified vertex.");
 
-            int indexOfDest = _nodesToIndices[destinationVertex];
-            return (_distances[indexOfDest]);
+            int dstIndex = _nodesToIndices[destination];
+            return (_distances[dstIndex]);
         }
 
         /// <summary>
         /// Returns an enumerable collection of nodes that specify the shortest path from the source vertex to the destination vertex.
         /// </summary>
-        public IEnumerable<T> ShortestPathTo(T destinationVertex)
+        public IEnumerable<T> ShortestPathTo(T destination)
         {
-            if (!_nodesToIndices.ContainsKey(destinationVertex))
+            if (!_nodesToIndices.ContainsKey(destination))
                 throw new Exception("Graph doesn't have the specified vertex.");
-            else if (!HasPathTo(destinationVertex))
+            else if (!HasPathTo(destination))
                 return null;
 
-            int indexOfDest = _nodesToIndices[destinationVertex];
-
+            int dstIndex = _nodesToIndices[destination];
             var stack = new DataStructures.Lists.Stack<T>();
 
             int index;
-            for (index = indexOfDest; _distances[index] != 0; index = _predecessors[index])
+            for (index = dstIndex; _distances[index] != 0; index = _predecessors[index])
                 stack.Push(_indicesToNodes[index]);
 
             // Push the source vertex

@@ -46,7 +46,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 			graph.AddEdge("w", "m");
 
 			var sourceNode = "f";
-			var bfsPaths = new BreadthFirstPaths<string> (graph, sourceNode);
+			var bfsPaths = new BreadthFirstShortestPaths<string> (graph, sourceNode);
 
 			Console.WriteLine ("Distance from '" + sourceNode + "' to 'a' is: " + bfsPaths.DistanceTo ("a"));
 			Console.WriteLine ("Path from '" + sourceNode + "' to 'a' is : " + printPath(bfsPaths.ShortestPathTo("a")));
