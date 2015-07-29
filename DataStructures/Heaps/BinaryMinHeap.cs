@@ -76,17 +76,17 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
-        public int Count()
+        public int Count
         {
-            return _collection.Count;
+            get { return _collection.Count; }
         }
 
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return (_collection.Count == 0);
+            get { return (_collection.Count == 0); }
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace DataStructures.Heaps
         {
             get
             {
-                if (index < 0 || index > this.Count() || this.Count() == 0)
+                if (index < 0 || index > this.Count || this.Count == 0)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -106,7 +106,7 @@ namespace DataStructures.Heaps
             }
             set
             {
-                if (index < 0 || index >= this.Count())
+                if (index < 0 || index >= this.Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -149,7 +149,7 @@ namespace DataStructures.Heaps
         /// <param name="heapKey">Heap key.</param>
         public void Add(T heapKey)
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 _collection.Add(heapKey);
             }
@@ -166,7 +166,7 @@ namespace DataStructures.Heaps
         /// <returns>The minimum.</returns>
         public T Peek()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -179,7 +179,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public void RemoveMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -210,7 +210,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public void Clear()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -244,14 +244,14 @@ namespace DataStructures.Heaps
                 throw new ArgumentNullException("Null heaps are not allowed.");
 
             // Create a new heap with reserved size.
-            int size = firstMinHeap.Count() + secondMinHeap.Count();
+            int size = firstMinHeap.Count + secondMinHeap.Count;
             var newHeap = new BinaryMinHeap<T>(size, Comparer<T>.Default);
 
             // Insert into the new heap.
-            while (firstMinHeap.IsEmpty() == false)
+            while (firstMinHeap.IsEmpty == false)
                 newHeap.Add(firstMinHeap.ExtractMin());
 
-            while (secondMinHeap.IsEmpty() == false)
+            while (secondMinHeap.IsEmpty == false)
                 newHeap.Add(secondMinHeap.ExtractMin());
 
             // Destroy the two heaps.
@@ -265,7 +265,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public IMaxHeap<T> ToMaxHeap()
         {
-            BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count(), this._heapComparer);
+            BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count, this._heapComparer);
             newMaxHeap.Initialize(this._collection.ToArray());
             return newMaxHeap;
         }

@@ -30,10 +30,10 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			minHeap.Add (27);
 
 			var array = minHeap.ToArray ();
-			Debug.Assert (array.Length == minHeap.Count(), "Wrong size.");
+			Debug.Assert (array.Length == minHeap.Count, "Wrong size.");
 
 			var list = minHeap.ToList ();
-			Debug.Assert (list.Count == minHeap.Count(), "Wrong size.");
+			Debug.Assert (list.Count == minHeap.Count, "Wrong size.");
 
 			array.HeapSortDescending();
 			var maxHeap = minHeap.ToMaxHeap ();

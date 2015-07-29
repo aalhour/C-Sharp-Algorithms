@@ -169,18 +169,18 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns count of elements in heap.
         /// </summary>
-        public int Count()
+        public int Count
         {
-            return _size;
+            get { return _size; }
         }
 
         /// <summary>
         /// Checks if heap is empty
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return (_size == 0);
+            get { return (_size == 0); }
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public T Peek()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Heap is empty.");
 
             int minIndex = _findMinIndex();
@@ -235,7 +235,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public void RemoveMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Heap is empty.");
 
             _removeAtIndex(_findMinIndex());
@@ -246,7 +246,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public T ExtractMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Heap is empty.");
 
             // Get the min-node index
@@ -269,7 +269,7 @@ namespace DataStructures.Heaps
                 return;
 
             // Avoid null or empty cases
-            if (otherHeap == null || otherHeap.IsEmpty())
+            if (otherHeap == null || otherHeap.IsEmpty)
                 return;
 
             BinomialNode<T> carryNode = null;
