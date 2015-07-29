@@ -80,14 +80,13 @@ namespace DataStructures.Lists
                 // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
                 int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
 
-                if (newCapacity >= maxCapacity)
+				if (newCapacity < minCapacity)
+					newCapacity = minCapacity;
+
+				if (newCapacity >= maxCapacity)
                 {
                     newCapacity = maxCapacity - 1;
                     IsMaximumCapacityReached = true;
-                }
-                else if (newCapacity < minCapacity)
-                {
-                    newCapacity = minCapacity;
                 }
 
                 this._resizeCapacity(newCapacity);
@@ -255,11 +254,13 @@ namespace DataStructures.Lists
 				throw new OverflowException ();
 
 			// grow the internal collection once to avoid doing multiple redundant grows
-			if(_collection.Length - (_size + elements.Count ()) <= 1)
+			if (elements.Any ()) 
+			{
 				_ensureCapacity (_size + elements.Count ());
 
-			foreach(var element in elements)
-                this.Add(element);
+				foreach (var element in elements)
+					this.Add (element);
+			}
         }
 
 
@@ -275,11 +276,13 @@ namespace DataStructures.Lists
                 throw new OverflowException();
 
 			// grow the internal collection once to avoid doing multiple redundant grows
-			if(_collection.Length - (_size + count) <= 1)
+			if (count > 0) 
+			{
 				_ensureCapacity (_size + count);
 			
-            for(int i = 0; i < count; i++)
-                this.Add(value);
+				for (int i = 0; i < count; i++)
+					this.Add (value);
+			}
         }
 
 
