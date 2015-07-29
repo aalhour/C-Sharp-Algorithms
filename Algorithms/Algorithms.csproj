@@ -31,6 +31,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\DijkstraShortestPaths.cs" />
     <Compile Include="Numeric\BinomialCoefficients.cs" />
     <Compile Include="Numeric\CatalanNumbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -42,7 +43,7 @@
     <Compile Include="Sorting\MergeSorter.cs" />
     <Compile Include="Common\Comparers.cs" />
     <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Graphs\BreadthFirstPaths.cs" />
+    <Compile Include="Graphs\BreadthFirstShortestPaths.cs" />
     <Compile Include="Graphs\BreadthFirstSearcher.cs" />
     <Compile Include="Graphs\DepthFirstSearcher.cs" />
   </ItemGroup>
@@ -55,7 +56,5 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Graphs\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
