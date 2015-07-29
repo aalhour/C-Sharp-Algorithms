@@ -48,6 +48,11 @@ namespace DataStructures.Heaps
         void Clear();
 
         /// <summary>
+        /// Rebuilds the heap.
+        /// </summary>
+        void RebuildHeap();
+
+        /// <summary>
         /// Returns an array version of this heap.
         /// </summary>
         /// <returns>The array.</returns>

@@ -33,21 +33,21 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Private Method. Builds a max heap from the inner array-list _collection.
         /// </summary>
-        private void BuildMaxHeap()
+        private void _buildMaxHeap()
         {
             int lastIndex = _collection.Count - 1;
             int lastNodeWithChildren = (lastIndex / 2);
 
             for (int node = lastNodeWithChildren; node >= 0; node--)
             {
-                MaxHeapify(node, lastIndex);
+                _maxHeapify(node, lastIndex);
             }
         }
 
         /// <summary>
         /// Private Method. Used in Building a Max Heap.
         /// </summary>
-        private void MaxHeapify(int nodeIndex, int lastIndex)
+        private void _maxHeapify(int nodeIndex, int lastIndex)
         {
             // assume that the subtrees left(node) and right(node) are max-heaps
             int left = (nodeIndex * 2) + 1;
@@ -66,9 +66,10 @@ namespace DataStructures.Heaps
             if (largest != nodeIndex)
             {
                 _collection.Swap(nodeIndex, largest);
-                MaxHeapify(largest, lastIndex);
+                _maxHeapify(largest, lastIndex);
             }
         }
+
 
         /// <summary>
         /// Returns the number of elements in heap
@@ -112,7 +113,7 @@ namespace DataStructures.Heaps
                 if (_heapComparer.Compare(_collection[index], _collection[0]) >= 0) // greater than or equal to max
                 {
                     _collection.Swap(0, index);
-                    BuildMaxHeap();
+                    _buildMaxHeap();
                 }
             }
         }
@@ -134,7 +135,7 @@ namespace DataStructures.Heaps
                 }
 
                 // Build the heap
-                BuildMaxHeap();
+                _buildMaxHeap();
             }
         }
 
@@ -150,7 +151,7 @@ namespace DataStructures.Heaps
             else
             {
                 _collection.Add(heapKey);
-                BuildMaxHeap();
+                _buildMaxHeap();
             }
         }
 
@@ -184,7 +185,7 @@ namespace DataStructures.Heaps
             _collection.RemoveAt(last);
             last--;
 
-            MaxHeapify(0, last);
+            _maxHeapify(0, last);
         }
 
         /// <summary>
@@ -208,6 +209,14 @@ namespace DataStructures.Heaps
             }
 
             _collection.Clear();
+        }
+
+        /// <summary>
+        /// Rebuilds the heap.
+        /// </summary>
+        public void RebuildHeap()
+        {
+            _buildMaxHeap();
         }
 
         /// <summary>

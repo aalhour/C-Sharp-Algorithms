@@ -30,17 +30,18 @@ namespace DataStructures.Heaps
             _heapComparer = comparer ?? Comparer<T>.Default;
         }
 
+
         /// <summary>
         /// Builds a min heap from the inner array-list _collection.
         /// </summary>
-        private void BuildMinHeap()
+        private void _buildMinHeap()
         {
             int lastIndex = _collection.Count - 1;
             int lastNodeWithChildren = (lastIndex / 2);
 
             for (int node = lastNodeWithChildren; node >= 0; node--)
             {
-                MinHeapify(node, lastIndex);
+                _minHeapify(node, lastIndex);
             }
         }
 
@@ -50,7 +51,7 @@ namespace DataStructures.Heaps
         /// <typeparam name="T">Type of Heap elements</typeparam>
         /// <param name="nodeIndex">The node index to heapify at.</param>
         /// <param name="lastIndex">The last index of collection to stop at.</param>
-        private void MinHeapify(int nodeIndex, int lastIndex)
+        private void _minHeapify(int nodeIndex, int lastIndex)
         {
             // assume that the subtrees left(node) and right(node) are max-heaps
             int left = (nodeIndex * 2) + 1;
@@ -69,9 +70,10 @@ namespace DataStructures.Heaps
             if (smallest != nodeIndex)
             {
                 _collection.Swap(nodeIndex, smallest);
-                MinHeapify(smallest, lastIndex);
+                _minHeapify(smallest, lastIndex);
             }
         }
+
 
         /// <summary>
         /// Returns the number of elements in heap
@@ -116,7 +118,7 @@ namespace DataStructures.Heaps
                 if (_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
                 {
                     _collection.Swap(0, index);
-                    BuildMinHeap();
+                    _buildMinHeap();
                 }
             }
         }
@@ -139,7 +141,7 @@ namespace DataStructures.Heaps
                 }
 
                 // Build the heap
-                BuildMinHeap();
+                _buildMinHeap();
             }
         }
 
@@ -156,7 +158,7 @@ namespace DataStructures.Heaps
             else
             {
                 _collection.Add(heapKey);
-                BuildMinHeap();
+                _buildMinHeap();
             }
         }
 
@@ -191,7 +193,7 @@ namespace DataStructures.Heaps
             _collection.RemoveAt(last);
             last--;
 
-            MinHeapify(0, last);
+            _minHeapify(0, last);
         }
 
         /// <summary>
@@ -216,6 +218,14 @@ namespace DataStructures.Heaps
             }
 
             _collection.Clear();
+        }
+
+        /// <summary>
+        /// Rebuilds the heap.
+        /// </summary>
+        public void RebuildHeap()
+        {
+            _buildMinHeap();
         }
 
         /// <summary>
