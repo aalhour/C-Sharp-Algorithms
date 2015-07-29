@@ -44,7 +44,7 @@ namespace DataStructures.Heaps
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// Private Method. Used in Building a Max Heap.
         /// </summary>
         private void MaxHeapify(int nodeIndex, int lastIndex)
@@ -70,30 +70,30 @@ namespace DataStructures.Heaps
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
-        public int Count()
+        public int Count
         {
-            return _collection.Count;
+            get { return _collection.Count; }
         }
 
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return (_collection.Count == 0);
+            get { return (_collection.Count == 0); }
         }
 
-		/// <summary>
+        /// <summary>
         /// Gets or sets the at the specified index.
         /// </summary>
         public T this[int index]
         {
             get
             {
-                if (index < 0 || index > this.Count() || this.Count() == 0)
+                if (index < 0 || index > this.Count || this.Count == 0)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -102,7 +102,7 @@ namespace DataStructures.Heaps
             }
             set
             {
-                if (index < 0 || index >= this.Count())
+                if (index < 0 || index >= this.Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -117,7 +117,7 @@ namespace DataStructures.Heaps
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// Heapifies the specified newCollection. Overrides the current heap.
         /// </summary>
         public void Initialize(IList<T> newCollection)
@@ -138,12 +138,12 @@ namespace DataStructures.Heaps
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// Adding a new key to the heap.
         /// </summary>
         public void Add(T heapKey)
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 _collection.Add(heapKey);
             }
@@ -154,12 +154,12 @@ namespace DataStructures.Heaps
             }
         }
 
-		/// <summary>
+        /// <summary>
         /// Find the maximum node of a max heap.
         /// </summary>
         public T Peek()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -167,12 +167,12 @@ namespace DataStructures.Heaps
             return _collection.First;
         }
 
-		/// <summary>
+        /// <summary>
         /// Removes the node of minimum value from a min heap.
         /// </summary>
         public void RemoveMax()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -187,7 +187,7 @@ namespace DataStructures.Heaps
             MaxHeapify(0, last);
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns the node of maximum value from a max heap after removing it from the heap.
         /// </summary>
         public T ExtractMax()
@@ -197,12 +197,12 @@ namespace DataStructures.Heaps
             return max;
         }
 
-		/// <summary>
+        /// <summary>
         /// Clear this heap.
         /// </summary>
         public void Clear()
         {
-            if (IsEmpty())
+            if (IsEmpty)
             {
                 throw new Exception("Heap is empty.");
             }
@@ -210,7 +210,7 @@ namespace DataStructures.Heaps
             _collection.Clear();
         }
 
-		/// <summary>
+        /// <summary>
         /// Returns an array version of this heap.
         /// </summary>
         public T[] ToArray()
@@ -226,38 +226,38 @@ namespace DataStructures.Heaps
             return _collection.ToList();
         }
 
-		/// <summary>
-		/// Union two heaps together, returns a new min-heap of both heaps' elements, 
-		/// ... and then destroys the original ones.
-		/// </summary>
-		public BinaryMaxHeap<T> Union(ref BinaryMaxHeap<T> firstMaxHeap, ref BinaryMaxHeap<T> secondMaxHeap)
-		{
-			if (firstMaxHeap == null || secondMaxHeap == null)
-				throw new ArgumentNullException ("Null heaps are not allowed.");
+        /// <summary>
+        /// Union two heaps together, returns a new min-heap of both heaps' elements, 
+        /// ... and then destroys the original ones.
+        /// </summary>
+        public BinaryMaxHeap<T> Union(ref BinaryMaxHeap<T> firstMaxHeap, ref BinaryMaxHeap<T> secondMaxHeap)
+        {
+            if (firstMaxHeap == null || secondMaxHeap == null)
+                throw new ArgumentNullException("Null heaps are not allowed.");
 
-			// Create a new heap with reserved size.
-			int size = firstMaxHeap.Count() + secondMaxHeap.Count();
-			var newHeap = new BinaryMaxHeap<T> (size, Comparer<T>.Default);
+            // Create a new heap with reserved size.
+            int size = firstMaxHeap.Count + secondMaxHeap.Count;
+            var newHeap = new BinaryMaxHeap<T>(size, Comparer<T>.Default);
 
-			// Insert into the new heap.
-			while (firstMaxHeap.IsEmpty () == false)
-				newHeap.Add (firstMaxHeap.ExtractMax ());
+            // Insert into the new heap.
+            while (firstMaxHeap.IsEmpty == false)
+                newHeap.Add(firstMaxHeap.ExtractMax());
 
-			while (secondMaxHeap.IsEmpty () == false)
-				newHeap.Add (secondMaxHeap.ExtractMax ());
+            while (secondMaxHeap.IsEmpty == false)
+                newHeap.Add(secondMaxHeap.ExtractMax());
 
-			// Destroy the two heaps.
-			firstMaxHeap = secondMaxHeap = null;
+            // Destroy the two heaps.
+            firstMaxHeap = secondMaxHeap = null;
 
-			return newHeap;
-		}
+            return newHeap;
+        }
 
         /// <summary>
         /// Returns a new min heap that contains all elements of this heap.
         /// </summary>
         public IMinHeap<T> ToMinHeap()
         {
-            BinaryMinHeap<T> newMinHeap = new BinaryMinHeap<T>(this.Count(), this._heapComparer);
+            BinaryMinHeap<T> newMinHeap = new BinaryMinHeap<T>(this.Count, this._heapComparer);
             newMinHeap.Initialize(this._collection.ToArray());
             return newMinHeap;
         }

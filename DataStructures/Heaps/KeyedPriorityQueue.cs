@@ -50,7 +50,7 @@ namespace DataStructures.Heaps
                 }
 
                 _heap = new BinaryMaxHeap<PriorityQueueNode<K, V, P>>(capacity, this._priorityComparer);
-				_keysMap = new Dictionary<K, int> ();
+                _keysMap = new Dictionary<K, int>();
             }
             else
             {
@@ -62,9 +62,9 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the count of elements in the queue.
         /// </summary>
-        public int Count()
+        public int Count
         {
-            return _heap.Count();
+            get { return _heap.Count; }
         }
 
 
@@ -72,9 +72,9 @@ namespace DataStructures.Heaps
         /// Checks if the queue is empty
         /// <returns>True if queue is empty; false otherwise.</returns>
         /// </summary>
-        public bool IsEmpty()
+        public bool IsEmpty
         {
-            return _heap.IsEmpty();
+            get { return _heap.IsEmpty; }
         }
 
 
@@ -98,7 +98,7 @@ namespace DataStructures.Heaps
         /// <returns>The at highest priority.</returns>
         public V PeekAtHighestPriority()
         {
-            if (_heap.IsEmpty())
+            if (_heap.IsEmpty)
             {
                 throw new ArgumentOutOfRangeException("Queue is empty.");
             }
@@ -145,7 +145,7 @@ namespace DataStructures.Heaps
         /// </summary>
         public V Dequeue()
         {
-            if (_heap.IsEmpty())
+            if (_heap.IsEmpty)
             {
                 throw new ArgumentOutOfRangeException("Queue is empty.");
             }
@@ -172,7 +172,7 @@ namespace DataStructures.Heaps
         public void SetPriority(K key, P newPriority)
         {
             // Handle boundaries errors
-            if (_heap.IsEmpty())
+            if (_heap.IsEmpty)
             {
                 throw new ArgumentOutOfRangeException("Queue is empty.");
             }
@@ -183,7 +183,7 @@ namespace DataStructures.Heaps
 
             var keyComparer = Comparer<K>.Default;
 
-            for (int i = 0; i < _heap.Count(); ++i)
+            for (int i = 0; i < _heap.Count; ++i)
             {
                 if (keyComparer.Compare(_heap[i].Key, key) == 0)
                 {

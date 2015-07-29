@@ -29,13 +29,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             firstHeap.Merge(secondHeap);
             thirdHeap = firstHeap;
 
-            for (i = 1; i <= thirdHeap.Count(); i++)
+            for (i = 1; i <= thirdHeap.Count; i++)
             {
                 var min = thirdHeap.ExtractMin();
                 Debug.Assert(min == i, "WRONG MIN");
             }
 
-            Debug.Assert(secondHeap.IsEmpty(), "SECOND HEAP SHOULD BE EMPTY");
+            Debug.Assert(secondHeap.IsEmpty, "SECOND HEAP SHOULD BE EMPTY");
 
             Console.WriteLine("END OF TEST");
 
