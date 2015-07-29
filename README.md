@@ -1,6 +1,6 @@
 # C# ALGORITHMS
 
-## Implementations of Data Structures and Algorithms in C#.
+### Implementations of Data Structures and Algorithms in C#.
 
 I started writing this organized collection of classes as part of my preparation for technical interviews. This is for educational purposes only. However, the source code is stable.
 
@@ -23,7 +23,7 @@ The third project is called MainProgram and it has all the tests for all the imp
 
 #### Priority Queues:
 
- * **[Priority Queue](DataStructures/Heaps/PriorityQueue.cs).** Based on my *MaxHeap\<T\>*.
+ * **[Min-Priority Queue](DataStructures/Heaps/MinPriorityQueue.cs).** Based on my *MinHeap\<T\>*.
  * **[Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs).** Based on my *MaxHeap\<T\>*.
 
 #### Heaps:
@@ -90,9 +90,10 @@ The third project is called MainProgram and it has all the tests for all the imp
     ```
 
 #### Graphs:
- * **[Depth-First Searcher](Algorithms/Graphs/DepthFirstSearcher.cs).** Implements the DFS algorithm in two ways: Iterative and Recursive. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
- * **[Breadth-First Searcher](Algorithms/Graphs/BreadthFirstSearcher.cs).** Implements the DFS algorithm in an iterative fashion. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
- * **[Breadth First Paths](Algorithms/Graphs/BreadthFirstPaths.cs).** A class that takes a Graph instance upon object-instantiation as a parameter, and then applies BFS to the graph. Meanwhile applying BFS to the graph, it extracts information about shortest-paths and connectivity. It provides the capability to find shortest-paths from single-sources and multiple-sources. Also, to check for reachable and unreachable nodes from the specified source-node(s).
+ * **[Depth-First Searcher](Algorithms/Graphs/DepthFirstSearcher.cs).** Implements the **DFS algorithm** in two ways: Iterative and Recursive. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
+ * **[Breadth-First Searcher](Algorithms/Graphs/BreadthFirstSearcher.cs).** Implements the **BFS algorithm** in an iterative fashion. Provides multiple functions for traversing graphs: PrintAll(), VisitAll(Action\<T\> forEachFunc), FindFirstMatch(Predicate\<T\> match). The VisitAll() applies a function to every graph nodes. The FindFirstMatch() function takes searches the graph for a predicate match.
+ * **[Breadth First Shortest Paths](Algorithms/Graphs/BreadthFirstShortestPaths.cs).** A class that takes a Graph instance upon object-instantiation as a parameter, and then applies **BFS algorithm** to the graph. Meanwhile applying BFS to the graph, it extracts information about shortest-paths and connectivity. It provides the capability to find shortest-paths from single-sources and multiple-sources. Also, to check for reachable and unreachable nodes from the specified source-node(s).
+ * **[Dijkstra Shortest Paths](Algorithms/Graphs/DijkstraShortestPaths.cs).** A class that behaves the same way as the breadth-first shortest path class, except that the Graph-object parameter has to be of a class that implements both IGraph\<T\> and IWeightedGrap\<T\>. It applies **Dijkstra's Algorithm** to the graph, and extracts the information about shortest-paths and connectivity.
 
 #### Numeric:
  * **[Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).** A class that calculates the catalan numbers. A dynamic-programming solution.
