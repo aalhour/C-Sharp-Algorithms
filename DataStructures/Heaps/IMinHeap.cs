@@ -6,12 +6,12 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
-        int Count();
+        int Count { get; }
 
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        bool IsEmpty();
+        bool IsEmpty { get; }
 
         /// <summary>
         /// Heapifies the specified newCollection. Overrides the current heap.

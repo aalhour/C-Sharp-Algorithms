@@ -63,7 +63,7 @@
     <Compile Include="Heaps\BinaryMaxHeap.cs" />
     <Compile Include="Common\Helpers.cs" />
     <Compile Include="Heaps\KeyedPriorityQueue.cs" />
-    <Compile Include="Heaps\PriorityQueue.cs" />
+    <Compile Include="Heaps\MinPriorityQueue.cs" />
     <Compile Include="Common\Comparers.cs" />
     <Compile Include="Trees\BinaryTree.cs" />
     <Compile Include="Trees\IBinaryTree.cs" />

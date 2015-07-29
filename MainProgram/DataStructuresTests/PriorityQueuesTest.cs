@@ -7,7 +7,7 @@ namespace C_Sharp_Algorithms
 {
 	public static class PriorityQueuesTest
 	{
-        internal class Process
+        internal class Process : IComparable<Process>
         {
             public int Id { get; set; }
             public Action Action { get; set; }
@@ -19,7 +19,16 @@ namespace C_Sharp_Algorithms
                 Action = action;
                 Description = desc;
             }
+
+            public int CompareTo(Process other)
+            {
+                if (other == null)
+                    return -1;
+
+                return Id.CompareTo(other.Id);
+            }
         }
+
 
 		public static void DoTest ()
 		{
@@ -38,19 +47,19 @@ namespace C_Sharp_Algorithms
 			//
 			// Integer-index priority-queue
 			string alphabet = "abcdefghijklmnopqrstuvwxyz";
-			PriorityQueue<string, int> priorityQueue = new PriorityQueue<string, int> (alphabet.Length);
+			MinPriorityQueue<string, int> priorityQueue = new MinPriorityQueue<string, int> ((uint)alphabet.Length);
 
 			for (int i = 0; i < alphabet.Length; ++i)
 			{
 				priorityQueue.Enqueue (alphabet[i].ToString(), (i/3) + 1);
 			}
 
-			var PQHighest = priorityQueue.Dequeue ();
-			Debug.Assert (PQHighest == "y", "Wrong node!");
+			var PQMin = priorityQueue.Dequeue ();
+            Debug.Assert(PQMin == "a", "Wrong node!");
 
             //
             // Processes with priorities
-            PriorityQueue<Process, int> sysProcesses = new PriorityQueue<Process, int>();
+            MinPriorityQueue<Process, int> sysProcesses = new MinPriorityQueue<Process, int>();
 
             var process1 = new Process(
                 id: 432654, 
@@ -89,25 +98,25 @@ namespace C_Sharp_Algorithms
             sysProcesses.Enqueue(process5, 3);
             sysProcesses.Enqueue(process6, 6);
 
-            var highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
-            Debug.Assert(highestPriorityProcess.Id == process2.Id, "Wrong process!");
+            var leastPriorityProcess = sysProcesses.PeekAtMinPriority();
+            Debug.Assert(leastPriorityProcess.Id == process1.Id, "Wrong process!");
 
             sysProcesses.Dequeue();
 
-            highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
-            Debug.Assert(highestPriorityProcess.Id == process4.Id, "Wrong process!");
+            leastPriorityProcess = sysProcesses.PeekAtMinPriority();
+            Debug.Assert(leastPriorityProcess.Id == process5.Id, "Wrong process!");
 
             sysProcesses.Dequeue();
 
-            highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
-            Debug.Assert(highestPriorityProcess.Id == process6.Id, "Wrong process!");
+            leastPriorityProcess = sysProcesses.PeekAtMinPriority();
+            Debug.Assert(leastPriorityProcess.Id == process3.Id, "Wrong process!");
 
             sysProcesses.Dequeue();
 
-            highestPriorityProcess = sysProcesses.PeekAtHighestPriority();
-            Debug.Assert(highestPriorityProcess.Id == process3.Id, "Wrong process!");
+            leastPriorityProcess = sysProcesses.PeekAtMinPriority();
+            Debug.Assert(leastPriorityProcess.Id == process6.Id, "Wrong process!");
 
-            highestPriorityProcess.Action();
+            leastPriorityProcess.Action();
 		}
 	}
 }
