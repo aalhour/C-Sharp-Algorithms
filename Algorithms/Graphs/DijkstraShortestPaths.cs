@@ -63,21 +63,21 @@ namespace Algorithms.Graphs
         /// </summary>
         private void _dijkstra(TGraph graph, TVertex source)
         {
-            var minPQ = new MinPriorityQueue<TVertex, long>((uint)_nodesToIndices.Count);
+            var minPQ = new MinPriorityQueue<TVertex, long>((uint)_verticesCount);
 
             int srcIndex = _nodesToIndices[source];
             _distances[srcIndex] = 0;
 
             // Add all vertices to the queue
             foreach (var vertex in _nodesToIndices)
-                minPQ.Enqueue(source, _distances[vertex.Value]);
+                minPQ.Enqueue(vertex.Key, _distances[vertex.Value]);
 
             // Main loop
             while (!minPQ.IsEmpty)
             {
                 var current = minPQ.DequeueMin();               // get vertex with min weight
                 var currentIndex = _nodesToIndices[current];    // get its index
-                var edges = graph.OutgoingEdges(current);   // get its neighbors with their weights
+                var edges = graph.OutgoingEdges(current);       // get its outgoing weighted edges
 
                 foreach (var edge in edges)
                 {
@@ -110,7 +110,7 @@ namespace Algorithms.Graphs
             _nodesToIndices = new Dictionary<TVertex, int>();
             _indicesToNodes = new Dictionary<int, TVertex>();
 
-            // Reset the visited, distances and predeccessors arrays
+            // Reset the information arrays
             int i = 0;
             foreach (var node in Graph.Vertices)
             {
@@ -135,6 +135,7 @@ namespace Algorithms.Graphs
         /// </summary>
         private bool _checkOptimalityConditions(TGraph graph, TVertex source)
         {
+            // Get the source index (to be used with the information arrays).
             int s = _nodesToIndices[source];
 
             // check that edge weights are nonnegative
