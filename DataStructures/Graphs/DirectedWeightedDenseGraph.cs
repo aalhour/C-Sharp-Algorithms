@@ -71,6 +71,19 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
+        /// An enumerable collection of edges.
+        /// </summary>
+        public virtual IEnumerable<WeightedEdge<T>> Edges
+        {
+            get
+            {
+                foreach (var vertex in _vertices)
+                    foreach (var edge in NeighboursMap((T)vertex))
+                        yield return (new WeightedEdge<T>((T)vertex, edge.Key, edge.Value));
+            }
+        }
+
+        /// <summary>
         /// Obsolete. Another AddEdge function is implemented with a weight parameter.
         /// </summary>
         [Obsolete("Use the AddEdge method with the weight parameter.")]
@@ -202,21 +215,29 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
-        /// Returns the edge weight from source to destination.
+        /// Get edge object from source to destination.
         /// </summary>
-        public virtual int GetEdgeWeight(T source, T destination)
+        public virtual WeightedEdge<T> GetEdge(T source, T destination)
         {
             // Get indices of vertices
             int srcIndex = _vertices.IndexOf(source);
             int dstIndex = _vertices.IndexOf(destination);
 
+            // Check the existence of vertices and the directed edge
             if (srcIndex == -1 || dstIndex == -1)
-                throw new Exception("One of the vertices don't exist.");
+                throw new Exception("One of the vertices or both of them doesn't exist.");
             else if (!_doesEdgeExist(srcIndex, dstIndex))
                 throw new Exception("Edge doesn't exist.");
 
-            // Check the existence of vertices and the directed edge
-            return _getEdgeWeight(srcIndex, dstIndex);
+            return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));
+        }
+
+        /// <summary>
+        /// Returns the edge weight from source to destination.
+        /// </summary>
+        public virtual int GetEdgeWeight(T source, T destination)
+        {
+            return GetEdge(source, destination).Weight;
         }
 
         /// <summary>
@@ -224,6 +245,9 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual Dictionary<T, int> NeighboursMap(T vertex)
         {
+            if (!HasVertex(vertex))
+                return null;
+
             var neighbors = new Dictionary<T, int>();
             int source = _vertices.IndexOf(vertex);
 
@@ -234,6 +258,37 @@ namespace DataStructures.Graphs
                         neighbors.Add((T)_vertices[adjacent], _getEdgeWeight(source, adjacent));
 
             return neighbors;
+        }
+
+        /// <summary>
+        /// Get all outgoing weighted edges from vertex
+        /// </summary>
+        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                return null;
+
+            int source = _vertices.IndexOf(vertex);
+            var list = new DLinkedList<WeightedEdge<T>>();
+
+            // Check existence of vertex
+            if (source != -1)
+            {
+                for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+                {
+                    if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                    {
+                        var edge = new WeightedEdge<T>(
+                                (T)_vertices[source],
+                                (T)_vertices[adjacent],
+                                _getEdgeWeight(source, adjacent));
+
+                        list.Append(edge);
+                    }
+                }
+            }
+
+            return list;
         }
 
         /// <summary>
