@@ -44,7 +44,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			arrayList.InsertAt (99999, index);
 
 			var allNines = arrayList.FindAll (item => item == 99999);
-			Debug.Assert (allNines.Count == 1, "Wrong result!");
+			Debug.Assert (allNines.Count == 6, "Wrong result!");
 
 			bool doesMillionExist = arrayList.Exists (item => item == 1000000);
 			Debug.Assert (doesMillionExist == false, "Wrong result!");
@@ -78,7 +78,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			arrayList = new ArrayList<long> ();
 			arrayList.AddRepeatedly (11, 32);
-
+            Debug.Assert(arrayList.Count == 32, "Wrong array size.");
 		}
     }
 }
