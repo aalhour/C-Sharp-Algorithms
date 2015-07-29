@@ -9,7 +9,7 @@ namespace DataStructures.Heaps
     /// <summary>
     /// Minimum Heap Data Structure.
     /// </summary>
-    public class MinBinaryHeap<T> : IMinHeap<T> where T : IComparable<T>
+    public class BinaryMinHeap<T> : IMinHeap<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance Variables.
@@ -22,9 +22,9 @@ namespace DataStructures.Heaps
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public MinBinaryHeap() : this(0, null) { }
-        public MinBinaryHeap(Comparer<T> comparer) : this(0, comparer) { }
-        public MinBinaryHeap(int capacity, Comparer<T> comparer)
+        public BinaryMinHeap() : this(0, null) { }
+        public BinaryMinHeap(Comparer<T> comparer) : this(0, comparer) { }
+        public BinaryMinHeap(int capacity, Comparer<T> comparer)
         {
             _collection = new ArrayList<T>(capacity);
             _heapComparer = comparer ?? Comparer<T>.Default;
@@ -234,31 +234,31 @@ namespace DataStructures.Heaps
             return _collection.ToList();
         }
 
-		/// <summary>
-		/// Union two heaps together, returns a new min-heap of both heaps' elements, 
-		/// ... and then destroys the original ones.
-		/// </summary>
-		public MinBinaryHeap<T> Union(ref MinBinaryHeap<T> firstMinHeap, ref MinBinaryHeap<T> secondMinHeap)
-		{
-			if (firstMinHeap == null || secondMinHeap == null)
-				throw new ArgumentNullException ("Null heaps are not allowed.");
+        /// <summary>
+        /// Union two heaps together, returns a new min-heap of both heaps' elements, 
+        /// ... and then destroys the original ones.
+        /// </summary>
+        public BinaryMinHeap<T> Union(ref BinaryMinHeap<T> firstMinHeap, ref BinaryMinHeap<T> secondMinHeap)
+        {
+            if (firstMinHeap == null || secondMinHeap == null)
+                throw new ArgumentNullException("Null heaps are not allowed.");
 
-			// Create a new heap with reserved size.
-			int size = firstMinHeap.Count() + secondMinHeap.Count();
-			var newHeap = new MinBinaryHeap<T> (size, Comparer<T>.Default);
+            // Create a new heap with reserved size.
+            int size = firstMinHeap.Count() + secondMinHeap.Count();
+            var newHeap = new BinaryMinHeap<T>(size, Comparer<T>.Default);
 
-			// Insert into the new heap.
-			while (firstMinHeap.IsEmpty () == false)
-				newHeap.Add (firstMinHeap.ExtractMin ());
+            // Insert into the new heap.
+            while (firstMinHeap.IsEmpty() == false)
+                newHeap.Add(firstMinHeap.ExtractMin());
 
-			while (secondMinHeap.IsEmpty () == false)
-				newHeap.Add (secondMinHeap.ExtractMin ());
+            while (secondMinHeap.IsEmpty() == false)
+                newHeap.Add(secondMinHeap.ExtractMin());
 
-			// Destroy the two heaps.
-			firstMinHeap = secondMinHeap = null;
+            // Destroy the two heaps.
+            firstMinHeap = secondMinHeap = null;
 
-			return newHeap;
-		}
+            return newHeap;
+        }
 
         /// <summary>
         /// Returns a new max heap that contains all elements of this heap.
