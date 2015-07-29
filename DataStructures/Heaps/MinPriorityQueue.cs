@@ -191,7 +191,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Dequeue this instance.
         /// </summary>
-        public TKey Dequeue()
+        public TKey DequeueMin()
         {
             if (_heap.IsEmpty)
                 throw new ArgumentOutOfRangeException("Queue is empty.");
@@ -222,6 +222,7 @@ namespace DataStructures.Heaps
                 throw new KeyNotFoundException();
 
             _heap[index].Priority = newPriority;
+            //_heap.RebuildHeap();
         }
 
         /// <summary>

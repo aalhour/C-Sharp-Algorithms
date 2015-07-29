@@ -340,6 +340,14 @@ namespace DataStructures.Heaps
         }
 
         /// <summary>
+        /// Rebuilds the heap.
+        /// </summary>
+        public void RebuildHeap()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Returns a list copy of heap.
         /// </summary>
         public List<T> ToList()
