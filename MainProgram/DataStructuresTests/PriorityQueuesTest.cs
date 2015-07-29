@@ -54,7 +54,7 @@ namespace C_Sharp_Algorithms
 				priorityQueue.Enqueue (alphabet[i].ToString(), (i/3) + 1);
 			}
 
-			var PQMin = priorityQueue.Dequeue ();
+			var PQMin = priorityQueue.DequeueMin ();
             Debug.Assert(PQMin == "a", "Wrong node!");
 
             //
@@ -101,17 +101,17 @@ namespace C_Sharp_Algorithms
             var leastPriorityProcess = sysProcesses.PeekAtMinPriority();
             Debug.Assert(leastPriorityProcess.Id == process1.Id, "Wrong process!");
 
-            sysProcesses.Dequeue();
+            sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
             Debug.Assert(leastPriorityProcess.Id == process5.Id, "Wrong process!");
 
-            sysProcesses.Dequeue();
+            sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
             Debug.Assert(leastPriorityProcess.Id == process3.Id, "Wrong process!");
 
-            sysProcesses.Dequeue();
+            sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
             Debug.Assert(leastPriorityProcess.Id == process6.Id, "Wrong process!");
