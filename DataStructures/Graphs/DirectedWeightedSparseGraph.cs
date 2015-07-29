@@ -20,34 +20,6 @@ namespace DataStructures.Graphs
     public class DirectedWeightedSparseGraph<T> : IGraph<T>, IWeightedGraph<T> where T : IComparable<T>
     {
         /// <summary>
-        /// The weighted edge class.
-        /// </summary>
-        public class WeightedEdge<T> : IComparable<WeightedEdge<T>> where T : IComparable<T>
-        {
-            public T Source { get; set; }
-            public T Destination { get; set; }
-            public Int32 Weight { get; set; }
-
-            public WeightedEdge(T src, T dst, Int32 weight)
-            {
-                Source = src;
-                Destination = dst;
-                Weight = weight;
-            }
-
-            public int CompareTo(WeightedEdge<T> other)
-            {
-                bool areNodesEqual = Source.IsEqualTo<T>(other.Source) && Destination.IsEqualTo<T>(other.Destination);
-
-                if (!areNodesEqual)
-                    return -1;
-                else
-                    return Weight.CompareTo(other.Weight);
-            }
-        }
-
-
-        /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
         private const int EMPTY_EDGE_VALUE = 0;
@@ -151,6 +123,19 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
+        /// An enumerable collection of edges.
+        /// </summary>
+        public IEnumerable<WeightedEdge<T>> Edges
+        {
+            get
+            {
+                foreach (var vertex in _adjacencyList)
+                    foreach (var edge in vertex.Value)
+                        yield return edge;
+            }
+        }
+
+        /// <summary>
         /// Obsolete. Another AddEdge function is implemented with a weight parameter.
         /// </summary>
         [Obsolete("Use the AddEdge method with the weight parameter.")]
@@ -233,21 +218,29 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
-        /// Returns the edge weight from source to destination.
+        /// Get edge object from source to destination.
         /// </summary>
-        public int GetEdgeWeight(T source, T destination)
+        public virtual WeightedEdge<T> GetEdge(T source, T destination)
         {
             if (!HasVertex(source) || !HasVertex(destination))
                 throw new KeyNotFoundException("Either one of the vertices or both of them don't exist.");
 
-            // Try get edge
             var edge = _tryGetEdge(source, destination);
 
             // Check the existence of edge
             if (edge == null)
                 throw new Exception("Edge doesn't exist.");
 
-            return edge.Weight;
+            // Try get edge
+            return edge;
+        }
+
+        /// <summary>
+        /// Returns the edge weight from source to destination.
+        /// </summary>
+        public virtual int GetEdgeWeight(T source, T destination)
+        {
+            return GetEdge(source, destination).Weight;
         }
 
         /// <summary>
@@ -361,9 +354,20 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
+        /// Get all outgoing weighted edges from vertex
+        /// </summary>
+        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                return null;
+
+            return _adjacencyList[vertex];
+        }
+
+        /// <summary>
         /// Returns the degree of the specified vertex.
         /// </summary>
-        public int Degree(T vertex)
+        public virtual int Degree(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException();
