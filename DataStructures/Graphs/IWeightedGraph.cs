@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataStructures
+namespace DataStructures.Graphs
 {
     /// <summary>
     /// This interface should be implemented alongside the IGraph interface.
