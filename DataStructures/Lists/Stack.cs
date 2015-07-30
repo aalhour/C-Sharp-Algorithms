@@ -126,7 +126,8 @@ namespace DataStructures.Lists
 
 		public IEnumerator<T> GetEnumerator ()
 		{
-			return _collection.GetEnumerator ();
+			for(int i = _collection.Count - 1; i >= 0; --i)
+                yield return _collection[i];
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
