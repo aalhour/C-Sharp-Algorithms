@@ -20,21 +20,24 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			queue.Enqueue("fff");
 			queue.Enqueue("ggg");
 			queue.Enqueue("hhh");
+			Debug.Assert(queue.Count == 8);
 
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
 			var array = queue.ToArray();
 			Debug.Assert (array.Length == 8, "Wrong size.");
 
-			queue.Pop();
-			queue.Pop();
+			queue.Dequeue();
+			queue.Dequeue();
 			top = queue.Dequeue();
+			Debug.Assert (top == "ccc");
 
 			Console.WriteLine("Old 3nd-last: " + top + "\r\n");
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
-			queue.Pop();
-			queue.Pop();
+			queue.Dequeue();
+			queue.Dequeue();
+			Debug.Assert (queue.Top == "fff");
 
 			Console.WriteLine("Queue Elements:\r\n" + queue.ToHumanReadable());
 
