@@ -21,13 +21,13 @@ namespace DataStructures.Graphs
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private const int EMPTY_EDGE_SLOT = 0;
+        private const long EMPTY_EDGE_SLOT = 0;
         private const object EMPTY_VERTEX_SLOT = (object)null;
 
         // Store edges and their weights as integers.
         // Any edge with a value of zero means it doesn't exist. Otherwise, it exist with a specific weight value.
         // Default value for positive edges is 1.
-        protected new int[,] _adjacencyMatrix { get; set; }
+        protected new long[,] _adjacencyMatrix { get; set; }
 
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace DataStructures.Graphs
             _verticesCapacity = (int)capacity;
 
             _vertices = new ArrayList<object>(_verticesCapacity);
-            _adjacencyMatrix = new int[_verticesCapacity, _verticesCapacity];
+            _adjacencyMatrix = new long[_verticesCapacity, _verticesCapacity];
             _adjacencyMatrix.Populate(rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: EMPTY_EDGE_SLOT);
         }
 
@@ -56,7 +56,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Helper function. Gets the weight of a directed edge.
         /// </summary>
-        private int _getEdgeWeight(int source, int destination)
+        private long _getEdgeWeight(int source, int destination)
         {
             return _adjacencyMatrix[source, destination];
         }
@@ -95,7 +95,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together with a weight, in the direction: first->second.
         /// </summary>
-        public virtual bool AddEdge(T source, T destination, int weight)
+        public virtual bool AddEdge(T source, T destination, long weight)
         {
             // Return if the weight is equals to the empty edge value
             if (weight == EMPTY_EDGE_SLOT)
@@ -145,7 +145,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Updates the edge weight from source to destination.
         /// </summary>
-        public virtual bool UpdateEdgeWeight(T source, T destination, int weight)
+        public virtual bool UpdateEdgeWeight(T source, T destination, long weight)
         {
             // Return if the weight is equals to the empty edge value
             if (weight == EMPTY_EDGE_SLOT)
@@ -235,7 +235,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the edge weight from source to destination.
         /// </summary>
-        public virtual int GetEdgeWeight(T source, T destination)
+        public virtual long GetEdgeWeight(T source, T destination)
         {
             return GetEdge(source, destination).Weight;
         }
@@ -243,12 +243,12 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours of a vertex as a dictionary of nodes-to-weights.
         /// </summary>
-        public virtual Dictionary<T, int> NeighboursMap(T vertex)
+        public virtual Dictionary<T, long> NeighboursMap(T vertex)
         {
             if (!HasVertex(vertex))
                 return null;
 
-            var neighbors = new Dictionary<T, int>();
+            var neighbors = new Dictionary<T, long>();
             int source = _vertices.IndexOf(vertex);
 
             // Check existence of vertex
@@ -328,7 +328,7 @@ namespace DataStructures.Graphs
             _edgesCount = 0;
             _verticesCount = 0;
             _vertices = new ArrayList<object>(_verticesCapacity);
-            _adjacencyMatrix = new int[_verticesCapacity, _verticesCapacity];
+            _adjacencyMatrix = new long[_verticesCapacity, _verticesCapacity];
             _adjacencyMatrix.Populate(rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: EMPTY_EDGE_SLOT);
         }
 
