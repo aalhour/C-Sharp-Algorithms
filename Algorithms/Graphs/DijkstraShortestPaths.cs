@@ -93,8 +93,11 @@ namespace Algorithms.Graphs
                         _distances[adjacentIndex] = delta;
                         _predecessors[adjacentIndex] = currentIndex;
 
-                        // decrease priority with a new edge weight
-                        minPQ.AddOrUpdateWithPriority(edge.Destination, delta);
+                        // decrease priority with a new distance if it exists; otherwise enqueque it
+                        if (minPQ.Contains(edge.Destination))
+                            minPQ.UpdatePriority(edge.Destination, delta);
+                        else
+                            minPQ.Enqueue(edge.Destination, delta);
                     }
                 }//end-foreach
             }//end-while

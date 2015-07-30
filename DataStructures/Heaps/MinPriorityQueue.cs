@@ -17,7 +17,13 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Instance variables
         /// </summary>
+        // A dictionary of keys and number of copies in the heap.
+        private Dictionary<TKey, long> _keys { get; set; }
+
+        // The internal heap.
         private BinaryMinHeap<PriorityQueueNode<TKey, TPriority>> _heap { get; set; }
+
+        // The priorities value comparer.
         private Comparer<PriorityQueueNode<TKey, TPriority>> _priorityComparer { get; set; }
 
 
@@ -41,6 +47,7 @@ namespace DataStructures.Heaps
                 _priorityComparer = priorityComparer;
 
             // Initialize.
+            _keys = new Dictionary<TKey, long>();
             _heap = new BinaryMinHeap<PriorityQueueNode<TKey, TPriority>>((int)capacity, this._priorityComparer);
         }
 
@@ -172,26 +179,15 @@ namespace DataStructures.Heaps
         /// </summary>
         public bool Contains(TKey key)
         {
-            var status = false;
-
-            // O(N) operation
-            for (int i = 0; i < _heap.Count; ++i) {
-                if (_heap[0].Key.IsEqualTo(key)) {
-                    status = true;
-                    break;
-                }
-            }
-
-            return status;
+            return _keys.ContainsKey(key);
         }
 
         /// <summary>
         /// Enqueue the specified key, with the default-max-priority value.
         /// </summary>
-        public void Enqueue(TKey value)
+        public void Enqueue(TKey key)
         {
-            var newNode = new PriorityQueueNode<TKey, TPriority>(value, DefaultMaxPriority);
-            _heap.Add(newNode);
+            Enqueue(key, DefaultMaxPriority);
         }
 
         /// <summary>
@@ -199,10 +195,15 @@ namespace DataStructures.Heaps
         /// </summary>
         /// <param name="value">Value.</param>
         /// <param name="priority">Priority.</param>
-        public void Enqueue(TKey value, TPriority priority)
+        public void Enqueue(TKey key, TPriority priority)
         {
-            var newNode = new PriorityQueueNode<TKey, TPriority>(value, priority);
+            var newNode = new PriorityQueueNode<TKey, TPriority>(key, priority);
             _heap.Add(newNode);
+
+            if (_keys.ContainsKey(key))
+                _keys[key] += 1;
+            else
+                _keys.Add(key, 1);
         }
 
         /// <summary>
@@ -213,7 +214,16 @@ namespace DataStructures.Heaps
             if (_heap.IsEmpty)
                 throw new ArgumentOutOfRangeException("Queue is empty.");
 
-            return _heap.ExtractMin().Key;
+            var key = _heap.ExtractMin().Key;
+
+            // Decrease the key count.
+            _keys[key] = _keys[key] - 1;
+
+            // Remove key if its count is zero
+            if (_keys[key] == 0)
+                _keys.Remove(key);
+
+            return key;
         }
 
         /// <summary>
@@ -224,69 +234,16 @@ namespace DataStructures.Heaps
             // Handle boundaries errors
             if (_heap.IsEmpty)
                 throw new ArgumentOutOfRangeException("Queue is empty.");
-
-            int index = -1;
-            for (int i = 0; i < _heap.Count; ++i)
-            {
-                if (_heap[i].Key.IsEqualTo(key))
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            if (index == -1)
+            else if (!_keys.ContainsKey(key))
                 throw new KeyNotFoundException();
 
-            _heap[index].Priority = newPriority;
-        }
-
-        /// <summary>
-        /// Adds a new key-priority pair if the key doesn't exist already. Otherwise, updates it with the new priority.
-        /// </summary>
-        public void AddOrUpdateWithPriority(TKey key, TPriority priority)
-        {
-            int index = -1;
-            for (int i = 0; i < _heap.Count; ++i)
-            {
+            int i;
+            for (i = 0; i < _heap.Count; ++i)
                 if (_heap[i].Key.IsEqualTo(key))
-                {
-                    index = i;
                     break;
-                }
-            }
 
-            // Add the new key-priority if index is not a valid one (item was not found).
-            // Otherwise update it.
-            if (_heap.IsEmpty || index == -1) {
-                var newNode = new PriorityQueueNode<TKey, TPriority>(key, priority);
-                _heap.Add(newNode);
-            }
-            else if(index > -1)
-            {
-                _heap[index].Priority = priority;
-            }
+            _heap[i].Priority = newPriority;
         }
-
-        /// <summary>
-        /// Removes the node that has the specified value.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        //public void Remove(V value)
-        //{
-        //    if (_heap.IsEmpty)
-        //    {
-        //        throw new ArgumentOutOfRangeException ("Queue is empty.");
-        //    }
-        //
-        //    var valueComparer = Comparer<V>.Default;
-        //
-        //    Predicate<PriorityQueueNode<V, P>> match = 
-        //        new Predicate<PriorityQueueNode<V, P>> (
-        //            item => valueComparer.Compare(item.Value, value) == 0);
-        //
-        //    _heap.RemoveAll (match);
-        //}
 
         /// <summary>
         /// Clear this priority queue.
@@ -294,6 +251,7 @@ namespace DataStructures.Heaps
         public void Clear()
         {
             _heap.Clear();
+            _keys.Clear();
         }
     }
 
