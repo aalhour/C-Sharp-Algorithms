@@ -50,8 +50,9 @@ namespace Algorithms.Graphs
             _dijkstra(Graph, Source);
 
             // check for the acyclic invariant
-            if (!_checkOptimalityConditions(Graph, Source))
-                throw new Exception("Graph doesn't match optimality conditions.");
+            //if (!_checkOptimalityConditions(Graph, Source))
+            //    throw new Exception("Graph doesn't match optimality conditions.");
+            Debug.Assert(_checkOptimalityConditions(Graph, Source));
         }
 
 
@@ -68,9 +69,7 @@ namespace Algorithms.Graphs
             int srcIndex = _nodesToIndices[source];
             _distances[srcIndex] = 0;
 
-            // Add all vertices to the queue
-            foreach (var vertex in _nodesToIndices)
-                minPQ.Enqueue(vertex.Key, _distances[vertex.Value]);
+            minPQ.Enqueue(source, _distances[srcIndex]);
 
             // Main loop
             while (!minPQ.IsEmpty)
@@ -82,14 +81,20 @@ namespace Algorithms.Graphs
                 foreach (var edge in edges)
                 {
                     var adjacentIndex = _nodesToIndices[edge.Destination];
-                    var delta = _distances[currentIndex] + edge.Weight;  // calculate a new possible weighted path
+                    
+                    // calculate a new possible weighted path
+                    var delta = _distances[currentIndex] + edge.Weight;
 
-                    if (delta < _distances[adjacentIndex])                   // if true, a shorter path is found from current to adjacent
+                    // Relax the edge
+                    // if check is true, a shorter path is found from current to adjacent
+                    if (delta < _distances[adjacentIndex])
                     {
                         _edgeTo[adjacentIndex] = edge;
                         _distances[adjacentIndex] = delta;
                         _predecessors[adjacentIndex] = currentIndex;
-                        minPQ.UpdatePriority(edge.Destination, delta);      // decrease priority with a new edge weight
+
+                        // decrease priority with a new edge weight
+                        minPQ.AddOrUpdateWithPriority(edge.Destination, delta);
                     }
                 }//end-foreach
             }//end-while
