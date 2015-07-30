@@ -31,6 +31,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\CyclesDetector.cs" />
     <Compile Include="Graphs\DijkstraShortestPaths.cs" />
     <Compile Include="Numeric\BinomialCoefficients.cs" />
     <Compile Include="Numeric\CatalanNumbers.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Graphs\BreadthFirstShortestPaths.cs" />
     <Compile Include="Graphs\BreadthFirstSearcher.cs" />
     <Compile Include="Graphs\DepthFirstSearcher.cs" />
+    <Compile Include="Graphs\TopologicalSorter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
