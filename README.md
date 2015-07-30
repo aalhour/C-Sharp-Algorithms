@@ -49,17 +49,16 @@ The third project is called MainProgram and it has all the tests for all the imp
 
 #### Graphs:
  * **Undirected Graphs:**
-  * **[Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).** An adjacency-list graph representation. Implemented using a Dictionary of IComparable\<T\> keys and Double-Linked Lists values. The IComparable\<T\> keys serve as the nodes (vertices), and the lists serve as each node's adjacent nodes. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
-  * **[Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).** An incidence-matrix graph representation. Implemented using the native two dimensional arrays in C#. The two dimenssional array holds boolean values that represent the edges connectivity between vertices. The vertices are held inside an internal dynamic list. The index of each vertex represent its key. Keys of vertices are managed systematically between the vertices-vector and the adjacency-matrix. It was implemented this way to achieve the capability of inserting any IComparable\<Type\> of vertex into the graph. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
+  * **[Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).** An adjacency-list graph representation. Implemented using a Dictionary. The nodes are inserted as keys, and the neighbors of every node are implemented as a doubly-linked list of nodes. This class implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
+  * **[Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).** An incidence-matrix graph representation. Implemented using a two dimensional boolean array. This class implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
  
  * **Directed Graphs / Digraphs:** 
   * **[Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).** An adjacency-list digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
   * **[Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs).** An incidence-matrix digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
  
  * **Directed Weighted Graphs / Weighted Digraphs:**
-  * **[Directed Weighted Sparse Graph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs).** An adjacency-list weighted digraph representation. Shares a great deal of implemention details with the Directed Sparse version (DirectedSparseGraph\<T\>). Implements both interfaces: [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) and [IWeightedGraph\<T\>](DataStructures/Graphs/IWeightedGraph.cs). It manages the weights of edges through an internal WeightedEdge\<T\> class.
+  * **[Directed Weighted Sparse Graph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs).** An adjacency-list weighted digraph representation. Shares a good deal of implemention details with the Directed Sparse version (DirectedSparseGraph\<T\>). Edges are instances of [WeightedEdge\<T\>](DataStructures/Graphs/WeightedEdge.cs) class. Implements both interfaces: [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) and [IWeightedGraph\<T\>](DataStructures/Graphs/IWeightedGraph.cs).
   * **[Directed Weighted Dense Graph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs).** An adjacency-matrix weighted digraph representation. Inherits and extends Directed Dense verion (DirectedDenseGraph\<T\>). Implements the [IWeightedGraph\<T\>](DataStructures/Graphs/IWeightedGraph.cs) interface.
-
 
 
 ## Algorithms
