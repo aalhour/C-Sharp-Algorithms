@@ -11,9 +11,9 @@ namespace DataStructures.Graphs
     {
         public T Source { get; set; }
         public T Destination { get; set; }
-        public Int32 Weight { get; set; }
+        public Int64 Weight { get; set; }
 
-        public WeightedEdge(T src, T dst, Int32 weight)
+        public WeightedEdge(T src, T dst, Int64 weight)
         {
             Source = src;
             Destination = dst;

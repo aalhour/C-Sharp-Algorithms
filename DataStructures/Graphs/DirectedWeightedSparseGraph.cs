@@ -22,7 +22,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private const int EMPTY_EDGE_VALUE = 0;
+        private const long EMPTY_EDGE_VALUE = 0;
         protected virtual int _edgesCount { get; set; }
         protected virtual T _firstInsertedNode { get; set; }
         protected virtual Dictionary<T, DLinkedList<WeightedEdge<T>>> _adjacencyList { get; set; }
@@ -72,7 +72,7 @@ namespace DataStructures.Graphs
         /// Helper function. Gets the weight of a directed edge.
         /// Presumes edge does already exist.
         /// </summary>
-        private int _getEdgeWeight(T source, T destination)
+        private long _getEdgeWeight(T source, T destination)
         {
             return _tryGetEdge(source, destination).Weight;
         }
@@ -147,7 +147,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together with a weight, in the direction: first->second.
         /// </summary>
-        public bool AddEdge(T source, T destination, int weight)
+        public bool AddEdge(T source, T destination, long weight)
         {
             // Check existence of nodes, the validity of the weight value, and the non-existence of edge
             if (weight == EMPTY_EDGE_VALUE)
@@ -192,7 +192,7 @@ namespace DataStructures.Graphs
             return true;
         }
 
-        public bool UpdateEdgeWeight(T source, T destination, int weight)
+        public bool UpdateEdgeWeight(T source, T destination, long weight)
         {
             // Check existence of vertices and validity of the weight value
             if (weight == EMPTY_EDGE_VALUE)
@@ -238,7 +238,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the edge weight from source to destination.
         /// </summary>
-        public virtual int GetEdgeWeight(T source, T destination)
+        public virtual long GetEdgeWeight(T source, T destination)
         {
             return GetEdge(source, destination).Weight;
         }
@@ -339,13 +339,13 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours of a vertex as a dictionary of nodes-to-weights.
         /// </summary>
-        public Dictionary<T, int> NeighboursMap(T vertex)
+        public Dictionary<T, long> NeighboursMap(T vertex)
         {
             if (!HasVertex(vertex))
                 return null;
 
             var neighbors = _adjacencyList[vertex];
-            var map = new Dictionary<T, int>(neighbors.Count);
+            var map = new Dictionary<T, long>(neighbors.Count);
 
             foreach (var adjacent in neighbors)
                 map.Add(adjacent.Destination, adjacent.Weight);

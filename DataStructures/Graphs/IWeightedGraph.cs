@@ -15,12 +15,12 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together with a weight, in the direction: first->second.
         /// </summary>
-        bool AddEdge(T source, T destination, int weight);
+        bool AddEdge(T source, T destination, long weight);
 
         /// <summary>
         /// Updates the edge weight from source to destination.
         /// </summary>
-        bool UpdateEdgeWeight(T source, T destination, int weight);
+        bool UpdateEdgeWeight(T source, T destination, long weight);
 
         /// <summary>
         /// Get edge object from source to destination.
@@ -30,7 +30,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the edge weight from source to destination.
         /// </summary>
-        int GetEdgeWeight(T source, T destination);
+        long GetEdgeWeight(T source, T destination);
 
         /// <summary>
         /// Get all outgoing weighted edges from vertex
@@ -40,7 +40,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours of a vertex as a dictionary of nodes-to-weights.
         /// </summary>
-        System.Collections.Generic.Dictionary<T, int> NeighboursMap(T vertex);
+        System.Collections.Generic.Dictionary<T, long> NeighboursMap(T vertex);
     }
 }
 
