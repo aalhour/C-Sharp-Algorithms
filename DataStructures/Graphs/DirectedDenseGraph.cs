@@ -305,7 +305,7 @@ namespace DataStructures.Graphs
                     adjacents = String.Format("{0}{1},", adjacents, adjacentNode);
 
                 if (adjacents.Length > 0)
-                    adjacents.Remove(adjacents.Length - 1);
+                    adjacents = adjacents.TrimEnd(new char[] { ',', ' ' });
 
                 output = String.Format("{0}{1}]", output, adjacents);
             }
