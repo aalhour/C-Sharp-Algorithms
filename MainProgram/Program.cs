@@ -13,7 +13,7 @@ namespace C_Sharp_Algorithms
         public static void Main(string[] args)
         {
             //GraphsCyclesDetectorTests.DoTest();
-            GraphsTopologicalSorterTest.DoTest();
+			QueueTest.DoTest();
         }
     }
 }
