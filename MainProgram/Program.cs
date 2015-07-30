@@ -12,7 +12,8 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            GraphsDijkstraShortestPathsTest.DoTest();
+            //GraphsCyclesDetectorTests.DoTest();
+            GraphsTopologicalSorterTest.DoTest();
         }
     }
 }
