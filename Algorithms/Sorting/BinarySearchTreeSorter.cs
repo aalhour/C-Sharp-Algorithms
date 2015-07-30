@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Algorithms.Common;
-
-namespace Algorithms.Sorting
+﻿namespace Algorithms.Sorting
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Algorithms.Common;
+
     public static class BinarySearchTreeSorter
     {
         /// <summary>
@@ -14,8 +14,10 @@ namespace Algorithms.Sorting
         /// <param name="collection"></param>
         public static void UnbalancedBSTSort<T>(this List<T> collection) where T : IComparable<T>
         {
-            if(collection.Count == 0)
+            if (collection.Count == 0)
+            {
                 return;
+            }
 
             Node<T> treeRoot = new Node<T>() { Value = collection[0] };
 
@@ -25,10 +27,10 @@ namespace Algorithms.Sorting
                 var currentNode = treeRoot;
                 var newNode = new Node<T>() { Value = collection[i] };
 
-                while(true)
+                while (true)
                 {
                     // Go left
-                    if(newNode.Value.IsLessThan<T>(currentNode.Value))
+                    if (newNode.Value.IsLessThan<T>(currentNode.Value))
                     {
                         if (currentNode.Left == null)
                         {
@@ -61,8 +63,7 @@ namespace Algorithms.Sorting
 
             treeRootReference = treeRoot = null;
         }
-
-
+        
         /// <summary>
         /// Used to travel a node's subtrees and add the elements to the collection.
         /// </summary>
@@ -78,8 +79,7 @@ namespace Algorithms.Sorting
             collection.Add(currentNode.Value);
             _inOrderTravelAndAdd<T>(currentNode.Right, ref collection);
         }
-
-
+        
         /// <summary>
         /// Minimal BST Node class, used only for unbalanced binary search tree sort.
         /// </summary>
@@ -87,8 +87,11 @@ namespace Algorithms.Sorting
         private class Node<T> : IComparable<Node<T>> where T : IComparable<T>
         {
             public T Value { get; set; }
+
             public Node<T> Parent { get; set; }
+
             public Node<T> Left { get; set; }
+
             public Node<T> Right { get; set; }
 
             public Node()
@@ -101,7 +104,11 @@ namespace Algorithms.Sorting
 
             public int CompareTo(Node<T> other)
             {
-                if (other == null) return -1;
+                if (other == null)
+                {
+                    return -1;
+                }
+
                 return this.Value.CompareTo(other.Value);
             }
         }

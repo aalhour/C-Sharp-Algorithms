@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Algorithms.Common;
-
-namespace Algorithms.Sorting
+﻿namespace Algorithms.Sorting
 {
+    using System.Collections.Generic;
+
+    using Algorithms.Common;
+
     public static class MergeSorter
     {
-        //
         // Public merge-sort API
         public static List<T> MergeSort<T>(this List<T> collection, Comparer<T> comparer = null)
         {
@@ -16,8 +14,6 @@ namespace Algorithms.Sorting
             return InternalMergeSort(collection, 0, collection.Count - 1, comparer);
         }
 
-
-        //
         // Private static method
         // Implements the recursive merge-sort algorithm
         private static List<T> InternalMergeSort<T>(List<T> collection, int startIndex, int endIndex, Comparer<T> comparer)
@@ -49,8 +45,6 @@ namespace Algorithms.Sorting
             }
         }
 
-
-        //
         // Private static method
         // Implements the merge function inside the merge-sort
         private static List<T> InternalMerge<T>(List<T> leftCollection, List<T> rightCollection, Comparer<T> comparer)
@@ -81,7 +75,6 @@ namespace Algorithms.Sorting
                 }
             }
 
-            //
             // Either one might have elements left
             int rIndex = index + 1;
             int lIndex = index + 1;
