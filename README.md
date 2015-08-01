@@ -1,4 +1,4 @@
-# C# ALGORITHMS
+# C# ALGORITHMS [![CodeHunt.io](https://img.shields.io/badge/vote-codehunt.io-02AFD1.svg)](http://codehunt.io/sub/c-algorithms/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Implementations of Data Structures and Algorithms in C#.
 
