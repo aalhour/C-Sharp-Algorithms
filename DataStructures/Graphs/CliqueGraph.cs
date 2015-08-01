@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataStructures.Graphs;
-using System.Xml.Linq;
-using System.Runtime.Serialization;
-using System.Collections.ObjectModel;
 
 namespace DataStructures.Graphs
 {
@@ -11,7 +8,7 @@ namespace DataStructures.Graphs
 	/// Representa una gráfica modelada como conjunto de sus subgráficas completas maximales
 	/// </summary>
 	public class CliqueGraph<T>: IGraph<T>
-		where T : IComparable<T>
+		where T : IComparable<T>, IEquatable<T>
 	{
 
 
@@ -45,9 +42,11 @@ namespace DataStructures.Graphs
 		{
 			ISet<UnordererPair<T>> H = getPares(conj);
 
+
 			foreach (var clan in cliques)
 			{
-				H.ExceptWith(getPares(clan));
+				ISet<UnordererPair<T>> exc = getPares(clan);
+				H.ExceptWith(exc);
 			}
 			return H.Count == 0;
 		}
@@ -82,6 +81,23 @@ namespace DataStructures.Graphs
 
 		}
 
+		class PairComparer : IEqualityComparer<UnordererPair<T>>
+		{
+			#region IEqualityComparer implementation
+
+			bool IEqualityComparer<UnordererPair<T>>.Equals(UnordererPair<T> x, UnordererPair<T> y)
+			{
+				return ((IEquatable<UnordererPair<T>>)x).Equals(y);
+			}
+
+			int IEqualityComparer<UnordererPair<T>>.GetHashCode(UnordererPair<T> obj)
+			{
+				return obj.Item1.GetHashCode() + obj.Item2.GetHashCode();
+			}
+
+			#endregion
+			
+		}
 
 		/// <summary>
 		/// Return the subsets of cardinality 2 of a given collection
@@ -91,7 +107,7 @@ namespace DataStructures.Graphs
 		ISet<UnordererPair<T>> getPares(ICollection<T> conj)
 		{
 			T[] arr = new T[conj.Count];
-			ISet<UnordererPair<T>> ret = new HashSet<UnordererPair<T>>();
+			ISet<UnordererPair<T>> ret = new System.Collections.Generic.HashSet<UnordererPair<T>>(new PairComparer());
 			conj.CopyTo(arr, 0);
 			for (int i = 0; i < conj.Count; i++)
 			{
@@ -176,9 +192,9 @@ namespace DataStructures.Graphs
 
 		public bool AddVertex(T vertex)
 		{
-			Clique trivialClan = new Clique();
-			trivialClan.Add(vertex);
-			return cliques.Add(trivialClan);
+			bool ret = !_nodos.Contains(vertex);
+			_nodos.Add(vertex);
+			return ret;
 		}
 
 		public bool RemoveVertex(T vertex)
@@ -354,6 +370,7 @@ namespace DataStructures.Graphs
 	}
 
 	internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>>
+		where T:IEquatable<T>
 	{
 		public UnordererPair(T item0, T item1) : base(item0, item1)
 		{
@@ -361,12 +378,21 @@ namespace DataStructures.Graphs
 
 		#region IEquatable implementation
 
-		public bool Equals(UnordererPair<T> other)
+		bool IEquatable<UnordererPair<T>>.Equals(UnordererPair<T> other)
 		{
 			return 
-				(Item1.Equals(other.Item1) && Item2.Equals(other.Item2)) ||
-			(Item1.Equals(other.Item2) && Item2.Equals(other.Item1));
+			(Item1.Equals(other.Item1) && Item2.Equals(other.Item2)) ||
+			(Item1.Equals(other.Item2) && Item2.Equals(other.Item1));	
+		
 		}
+		/*
+		public override bool Equals(object obj)
+		{
+			if (obj is UnordererPair<T>)
+				return ((UnordererPair<T>)obj).Equals(this);
+			return base.Equals(obj);
+		}
+*/
 
 		#endregion
 	}
