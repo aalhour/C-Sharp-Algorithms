@@ -128,10 +128,38 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             foreach (var node in dijkstra.ShortestPathTo("D"))
                 pathToD = String.Format("{0}({1}) -> ", pathToD, node);
             pathToD = pathToD.TrimEnd(new char[] { ' ', '-', '>' });
-
+            
             Console.WriteLine("Shortest path from 'A' to 'D': " + pathToD + "\r\n");
 
+            Console.WriteLine("*********************************************\r\n");
+
+
+            /***************************************************************************************/
+
+
+            var dijkstraAllPairs = new DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph);
+
+            var vertices = graph.Vertices;
+
+            Console.WriteLine("Dijkstra All Pairs Shortest Paths: \r\n");
+
+            foreach (var source in vertices)
+            {
+                foreach (var destination in vertices)
+                {
+                    var shortestPath = string.Empty;
+                    foreach (var node in dijkstraAllPairs.ShortestPath(source, destination))
+                        shortestPath = String.Format("{0}({1}) -> ", shortestPath, node);
+
+                    shortestPath = shortestPath.TrimEnd(new char[] { ' ', '-', '>' });
+
+                    Console.WriteLine("Shortest path from '" + source + "' to '" + destination + "' is: " + shortestPath + "\r\n");
+                }
+            }
+            
             Console.ReadLine();
         }
+
     }
+
 }
