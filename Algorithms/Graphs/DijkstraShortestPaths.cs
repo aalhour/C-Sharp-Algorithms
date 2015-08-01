@@ -82,8 +82,10 @@ namespace Algorithms.Graphs
                 {
                     var adjacentIndex = _nodesToIndices[edge.Destination];
                     
-                    // calculate a new possible weighted path
-                    var delta = _distances[currentIndex] + edge.Weight;
+                    // calculate a new possible weighted path if the edge weight is less than infinity
+                    var delta = Infinity;
+                    if (edge.Weight < Infinity && (Infinity - edge.Weight) > _distances[currentIndex])  // Handles overflow
+                        delta = _distances[currentIndex] + edge.Weight;
 
                     // Relax the edge
                     // if check is true, a shorter path is found from current to adjacent
