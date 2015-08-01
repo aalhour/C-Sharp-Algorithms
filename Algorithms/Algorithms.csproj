@@ -31,6 +31,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphs\BellmanFordShortestPaths.cs" />
     <Compile Include="Graphs\CyclesDetector.cs" />
     <Compile Include="Graphs\DijkstraAllPairsShortestPaths.cs" />
     <Compile Include="Graphs\DijkstraShortestPaths.cs" />

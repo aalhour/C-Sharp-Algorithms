@@ -44,6 +44,7 @@
     <Compile Include="AlgorithmsTests\BinarySearchTreeSorterTest.cs" />
     <Compile Include="AlgorithmsTests\CatalanNumbersTest.cs" />
     <Compile Include="AlgorithmsTests\CountingSortTest.cs" />
+    <Compile Include="AlgorithmsTests\GraphsBellmanFordShortestPaths.cs" />
     <Compile Include="AlgorithmsTests\GraphsCyclesDetectorTests.cs" />
     <Compile Include="AlgorithmsTests\GraphsDijkstraShortestPathsTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsTopologicalSorterTest.cs" />
