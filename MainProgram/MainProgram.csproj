@@ -75,6 +75,7 @@
     <Compile Include="AlgorithmsTests\GraphsBreadthFirstPathsTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_DirectedDenseGraphTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_DirectedWeightedDenseGraphTest.cs" />
+    <Compile Include="DataStructuresTests\CliqueGraphTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
