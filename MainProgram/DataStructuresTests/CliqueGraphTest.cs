@@ -53,8 +53,10 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 		public static void DoTest()
 		{
+			compareGraph = new UndirectedDenseGraph<ComparableTuple>(numClusters * vertexPerCluster);
+			MakeGraph(compareGraph);
 
-			MakeGraph(testGraph);
+			testGraph = new CliqueGraph<ComparableTuple>(compareGraph);
 
 			IGraph<CliqueGraph<ComparableTuple>.Clique> newGraph = testGraph.buildDualGraph();
 
