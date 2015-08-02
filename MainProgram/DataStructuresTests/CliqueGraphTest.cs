@@ -58,6 +58,16 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
 			IGraph<CliqueGraph<ComparableTuple>.Clique> newGraph = testGraph.buildDualGraph();
 
+			foreach (var x in newGraph.Vertices)
+			{
+				foreach (var y in newGraph.Neighbours(x))
+				{
+					System.Diagnostics.Debug.WriteLine(string.Format("{0}-{1}", x, y));
+				}
+
+			}
+			//System.Diagnostics.Debug.Assert 
+
 		}
 
 	}

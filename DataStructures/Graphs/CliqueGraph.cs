@@ -10,8 +10,6 @@ namespace DataStructures.Graphs
 	public class CliqueGraph<T>: IGraph<T>
 		where T : IComparable<T>, IEquatable<T>
 	{
-
-
 		public class Clique : HashSet<T>, IComparable<Clique>
 		{
 			public Clique() : base()
@@ -30,14 +28,59 @@ namespace DataStructures.Graphs
 			}
 
 			#endregion
+
+			public override string ToString()
+			{
+				string ret = "{";
+				foreach (var x in this)
+				{
+					ret += x.ToString() + " ";
+				}
+				ret += "}";
+				return ret;
+			}
 		}
 
-		ICollection<T> _nodos = new HashSet<T>();
+		ICollection<T> _vertices = new HashSet<T>();
 
-		ISet<Clique> cliques = new HashSet<Clique>();
+		ISet<Clique> _cliques = new HashSet<Clique>();
 
 		public CliqueGraph()
 		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataStructures.Graphs.CliqueGraph`1"/> class.
+		/// Copies the model from another graph.
+		/// </summary>
+		/// <param name="graph">Graph.</param>
+		public CliqueGraph(IGraph<T> graph) : this(graph.Vertices)
+		{
+			foreach (var startVert in Vertices)
+			{
+				foreach (var endVert in graph.Neighbours(startVert))
+				{
+					if (!HasEdge(startVert, endVert))
+					{
+						// Add vortex
+						Clique newClan = new Clique();
+						newClan.Add(startVert);
+						newClan.Add(endVert);
+
+						ExpandToMaximal(graph, newClan);
+						_cliques.Add(newClan);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataStructures.Graphs.CliqueGraph`1"/> class.
+		/// </summary>
+		/// <param name="vertices">Initial vertices of the graph</param>
+		public CliqueGraph(IEnumerable<T> vertices) : this()
+		{
+			AddVertices(vertices);
 		}
 
 		#region Interno Técnico
@@ -49,15 +92,28 @@ namespace DataStructures.Graphs
 		/// <param name="conj">Conj.</param>
 		bool EsCompleto(ISet<T> conj)
 		{
-			ISet<UnordererPair<T>> H = getPares(conj);
+			ISet<UnordererPair<T>> H = getPairs(conj);
 
 
-			foreach (var clan in cliques)
+			foreach (var clan in _cliques)
 			{
-				ISet<UnordererPair<T>> exc = getPares(clan);
+				ISet<UnordererPair<T>> exc = getPairs(clan);
 				H.ExceptWith(exc);
 			}
 			return H.Count == 0;
+		}
+
+		static bool EsCompleto(IGraph<T> graph, ISet<T> conj)
+		{
+			foreach (var x in conj)
+			{
+				foreach (var y in conj)
+				{
+					if (!graph.HasEdge(x, y))
+						return false;
+				}
+			}
+			return true;
 		}
 
 		/// <summary>
@@ -80,14 +136,30 @@ namespace DataStructures.Graphs
 			}
 
 			// Destroy every no maximal elements of 
-			HashSet<Clique> clone = new HashSet<Clique>(cliques);
+			HashSet<Clique> clone = new HashSet<Clique>(_cliques);
 			clone.Remove(clan);
 			foreach (var c in clone)
 			{
 				if (clan.IsSupersetOf(c))
-					cliques.Remove(c);
+					_cliques.Remove(c);
 			}
 
+		}
+
+		static void ExpandToMaximal(IGraph<T> graph, Clique clan)
+		{
+			Clique tempo; // Temporal clique for checking maximality
+			// Expand NewClique to a maximal complete subgraph
+			foreach (var z in graph.Vertices)
+			{
+				if (!clan.Contains(z))
+				{
+					tempo = new Clique(clan);
+					tempo.Add(z);
+					if (EsCompleto(graph, tempo))
+						clan.Add(z);
+				}
+			}
 		}
 
 		class PairComparer : IEqualityComparer<UnordererPair<T>>
@@ -113,7 +185,7 @@ namespace DataStructures.Graphs
 		/// </summary>
 		/// <returns></returns>
 		/// <param name="conj"></param>
-		ISet<UnordererPair<T>> getPares(ICollection<T> conj)
+		ISet<UnordererPair<T>> getPairs(ICollection<T> conj)
 		{
 			T[] arr = new T[conj.Count];
 			ISet<UnordererPair<T>> ret = new System.Collections.Generic.HashSet<UnordererPair<T>>(new PairComparer());
@@ -137,10 +209,10 @@ namespace DataStructures.Graphs
 			if (HasEdge(firstVertex, secondVertex))
 				return false;
 			Clique NewClique = new Clique();  // The new clique that contains the edge (firstVertex, secondVertex)
-			cliques.Add(NewClique);
+			_cliques.Add(NewClique);
 
-			_nodos.Add(firstVertex);
-			_nodos.Add(secondVertex);
+			_vertices.Add(firstVertex);
+			_vertices.Add(secondVertex);
 
 			NewClique.Add(firstVertex);
 			NewClique.Add(secondVertex);
@@ -163,21 +235,21 @@ namespace DataStructures.Graphs
 			removing.Add(firstVertex);
 			removing.Add(secondVertex);
 
-			foreach (var clan in new HashSet<Clique>(cliques))  //Iterating over a clone of cliques
+			foreach (var clan in new HashSet<Clique>(_cliques))  //Iterating over a clone of cliques
 			{
 				if (clan.IsSupersetOf(removing))
 				{
 					// clan should be eliminated from cliques and replaced by maximal refinements
-					cliques.Remove(clan);
+					_cliques.Remove(clan);
 
 					splitting = new Clique(clan);
 					splitting.Remove(firstVertex);
-					cliques.Add(splitting);
+					_cliques.Add(splitting);
 					ExpandToMaximal(splitting);
 
 					splitting = new Clique(clan);
 					splitting.Remove(secondVertex);
-					cliques.Add(splitting);
+					_cliques.Add(splitting);
 					ExpandToMaximal(splitting);
 
 					ret = true;  // return true when finished
@@ -201,19 +273,19 @@ namespace DataStructures.Graphs
 
 		public bool AddVertex(T vertex)
 		{
-			bool ret = !_nodos.Contains(vertex);
-			_nodos.Add(vertex);
+			bool ret = !_vertices.Contains(vertex);
+			_vertices.Add(vertex);
 			return ret;
 		}
 
 		public bool RemoveVertex(T vertex)
 		{
 			// Remove vertex from set of vertices
-			if (!_nodos.Remove(vertex))
+			if (!_vertices.Remove(vertex))
 				return false;
 
 			// Make the cliques consistent
-			foreach (var clan in new HashSet<Clique> (cliques))
+			foreach (var clan in new HashSet<Clique> (_cliques))
 			{
 				if (clan.Remove(vertex))
 				{
@@ -221,7 +293,7 @@ namespace DataStructures.Graphs
 					// else make it maximal
 					if (clan.Count <= 0)
 					{
-						cliques.Remove(clan);
+						_cliques.Remove(clan);
 					}
 					else
 					{
@@ -238,7 +310,7 @@ namespace DataStructures.Graphs
 			edge.Add(firstVertex);
 			edge.Add(secondVertex);
 
-			foreach (var clan in cliques)
+			foreach (var clan in _cliques)
 			{
 				if (clan.IsSupersetOf(edge))
 					return true;
@@ -248,7 +320,7 @@ namespace DataStructures.Graphs
 
 		public bool HasVertex(T vertex)
 		{
-			return _nodos.Contains(vertex);
+			return _vertices.Contains(vertex);
 		}
 
 		public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
@@ -288,8 +360,8 @@ namespace DataStructures.Graphs
 
 		public void Clear()
 		{
-			_nodos.Clear();
-			cliques.Clear();
+			_vertices.Clear();
+			_cliques.Clear();
 		}
 
 		public bool IsDirected
@@ -312,7 +384,7 @@ namespace DataStructures.Graphs
 		{
 			get
 			{
-				return _nodos.Count;
+				return _vertices.Count;
 			}
 		}
 
@@ -332,7 +404,7 @@ namespace DataStructures.Graphs
 		{
 			get
 			{
-				return _nodos;
+				return _vertices;
 			}
 		}
 
@@ -340,7 +412,7 @@ namespace DataStructures.Graphs
 		{
 			get
 			{
-				return _nodos;
+				return _vertices;
 			}
 		}
 
@@ -351,7 +423,7 @@ namespace DataStructures.Graphs
 		public System.Collections.Generic.ICollection<T> WeakNeighbours(T nodo)
 		{
 			HashSet<T> ret = new HashSet<T>();
-			foreach (var c in cliques)
+			foreach (var c in _cliques)
 			{
 				if (c.Contains(nodo))
 					ret.UnionWith(c);
@@ -367,9 +439,9 @@ namespace DataStructures.Graphs
 		/// </summary>
 		/// <returns><c>true</c>, if completo was esed, <c>false</c> otherwise.</returns>
 		/// <param name="nods">Nods.</param>
-		public bool esCompleto(IEnumerable<T> nods)
+		public bool isComplete(IEnumerable<T> nods)
 		{
-			foreach (var x in cliques)
+			foreach (var x in _cliques)
 			{
 				if (x.IsSupersetOf(nods))
 					return true;
@@ -384,13 +456,13 @@ namespace DataStructures.Graphs
 		public IGraph<Clique> buildDualGraph()
 		{
 			IGraph<Clique> dualGraph = new UndirectedDenseGraph<Clique>((uint)VerticesCount);
-			foreach (var clan in cliques)
+			foreach (var clan in _cliques)
 			{
 				dualGraph.AddVertex(clan);
 			}
-			foreach (var clan0 in cliques)
+			foreach (var clan0 in _cliques)
 			{
-				foreach (var clan1 in cliques)
+				foreach (var clan1 in _cliques)
 				{
 					if (!clan0.Equals(clan1) && clan0.Overlaps(clan1))
 					{
