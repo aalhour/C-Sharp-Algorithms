@@ -416,6 +416,8 @@ where T : IComparable<T>, IEquatable<T>
                     }
                 }
             }
+
+            return returnList;
         }
 
         public int Degree(T vertex)
