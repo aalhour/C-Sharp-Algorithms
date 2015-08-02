@@ -12,7 +12,7 @@ namespace DataStructures.Graphs
 	{
 
 
-		class Clique : HashSet<T>
+		public class Clique : HashSet<T>, IComparable<Clique>
 		{
 			public Clique() : base()
 			{
@@ -21,6 +21,15 @@ namespace DataStructures.Graphs
 			public Clique(ISet<T> elementos) : base(elementos)
 			{
 			}
+
+			#region IComparable implementation
+
+			int IComparable<Clique>.CompareTo(Clique other)
+			{
+				throw new NotImplementedException();
+			}
+
+			#endregion
 		}
 
 		ICollection<T> _nodos = new HashSet<T>();
@@ -367,6 +376,31 @@ namespace DataStructures.Graphs
 			}
 			return false;
 		}
+
+		/// <summary>
+		/// Builds the graph of cliques of this graph
+		/// </summary>
+		/// <returns>The dual graph.</returns>
+		public IGraph<Clique> buildDualGraph()
+		{
+			IGraph<Clique> dualGraph = new UndirectedDenseGraph<Clique>((uint)VerticesCount);
+			foreach (var clan in cliques)
+			{
+				dualGraph.AddVertex(clan);
+			}
+			foreach (var clan0 in cliques)
+			{
+				foreach (var clan1 in cliques)
+				{
+					if (!clan0.Equals(clan1) && clan0.Overlaps(clan1))
+					{
+						dualGraph.AddEdge(clan0, clan1);
+					}
+				}
+			}
+			return dualGraph;
+		}
+
 	}
 
 	internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>>

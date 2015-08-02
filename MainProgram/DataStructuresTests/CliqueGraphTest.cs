@@ -1,5 +1,6 @@
 ﻿using System;
 using DataStructures.Graphs;
+using System.Collections.Generic;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
@@ -26,6 +27,16 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 				MakeCluster(gra, i);
 				System.Diagnostics.Debug.WriteLine(string.Format("Cluster {0} finished.", i));
 			}
+
+			for (int i = 0; i < numClusters; i++)
+			{
+				for (int j = 0; j < numClusters; j++)
+				{
+					gra.AddEdge(new ComparableTuple(i, 0), new ComparableTuple(j, 0));
+				}
+			}
+
+			System.Diagnostics.Debug.WriteLine(string.Format("Graph connected"));
 		}
 
 		static void MakeCluster(IGraph<ComparableTuple> gra, int i)
@@ -44,16 +55,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 		{
 
 			MakeGraph(testGraph);
-/*
-			CliqueGraph<int> gr = new CliqueGraph<int>();
-			gr.AddVertex(0);
-			gr.AddVertex(1);
-			gr.AddVertex(2);
 
-			gr.AddEdge(0, 1);
-			gr.AddEdge(0, 2);
-			gr.AddEdge(1, 2);
-*/
+			IGraph<CliqueGraph<ComparableTuple>.Clique> newGraph = testGraph.buildDualGraph();
+
 		}
 
 	}
@@ -96,7 +100,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			}
 		}
 			
-		
+
 	}
 }
 
