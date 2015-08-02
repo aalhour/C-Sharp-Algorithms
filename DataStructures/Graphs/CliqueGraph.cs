@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataStructures.Graphs;
+using System.Globalization;
 
 namespace DataStructures.Graphs
 {
@@ -42,6 +43,8 @@ where T : IComparable<T>, IEquatable<T>
             }
         }
 
+        #region Model
+
         /// <summary>
         /// Vertices of the graph.
         /// </summary>
@@ -51,6 +54,12 @@ where T : IComparable<T>, IEquatable<T>
         /// A set of cliques minimal with the hability of charaterize the graph.
         /// </summary>
         ISet<Clique> _cliques = new HashSet<Clique>();
+
+/// 
+
+        #endregion
+
+        #region Constructors
 
         public CliqueGraph()
         {
@@ -96,6 +105,8 @@ where T : IComparable<T>, IEquatable<T>
                 AddVertices(vertices);
             }
         }
+
+        #endregion
 
         #region Internal
 
@@ -545,7 +556,65 @@ where T : IComparable<T>, IEquatable<T>
 
         #endregion
 
+        #region Clique invariants
 
+        /// <summary>
+        /// Returns the list of maximal cliques
+        /// </summary>
+        /// <value>The get cliques.</value>
+        public IReadOnlyCollection<Clique> getCliques
+        {
+            get
+            {
+                // TODO: getCliques, this does not return all the maximal cliques; 
+                // only return enough of them..
+                return (IReadOnlyCollection<Clique>)_cliques;
+            }
+        }
+
+        /// <summary>
+        /// Returns the clique number of the current graph.
+        /// </summary>
+        /// <value>The clique number.</value>
+        public int cliqueNumber
+        {
+            get
+            {
+                return Pick<Clique>(getMaximumCliques).Count;
+            }
+        }
+
+        /// <summary>
+        /// Returns the collection of the maxium-sized cliques
+        /// </summary>
+        /// <value>The get maximum cliques.</value>
+        public IEnumerable<Clique> getMaximumCliques
+        {
+            get
+            {
+                int maxSize = 0;
+                ICollection<Clique> maxCliques = new HashSet<Clique>();
+
+                foreach (var clan in getCliques)
+                {
+                    if (clan.Count > maxSize)
+                    {
+                        maxCliques.Clear();
+                        maxSize = clan.Count;
+                    }
+
+                    if (clan.Count == maxSize)
+                    {
+                        maxCliques.Add(clan);
+                    }
+                }
+                return maxCliques;
+            }
+        }
+
+        #endregion
+
+        #region Clique methods
 
         /// <summary>
         /// Determines if a set of vertices is complete as a subgraph of another graph
@@ -612,12 +681,14 @@ where T : IComparable<T>, IEquatable<T>
             return returnPath;
         }
 
+        #endregion
+
         /// <summary>
         /// Picks any object in a ISet
         /// </summary>
         /// <param name="Set">Set.</param>
         /// <typeparam name="V">The 1st type parameter.</typeparam>
-        static V Pick<V>(ISet<V> Set)
+        static V Pick<V>(IEnumerable<V> Set)
         {
             IEnumerator<V> enumerator = ((IEnumerable<V>)Set).GetEnumerator();
             V ret = enumerator.Current;
