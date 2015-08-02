@@ -497,8 +497,24 @@ where T : IComparable<T>, IEquatable<T>
         {
             get
             {
-                throw new NotImplementedException();
+                return getEdges().Count;
             }
+        }
+
+        /// <summary>
+        /// Returns the list of edges.
+        /// </summary>
+        /// <returns></returns>
+        ICollection<UnordererPair<T>> getEdges() // TEST CliqueGraph.getEdges
+        {
+            ISet<UnordererPair<T>> H = new HashSet<UnordererPair<T>>();
+
+            foreach (var clan in _cliques)
+            {
+                ISet<UnordererPair<T>> union = getPairs(clan);
+                H.UnionWith(union);
+            }
+            return H;
         }
 
         /// <summary>
@@ -610,7 +626,7 @@ where T : IComparable<T>, IEquatable<T>
     }
 
     internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>>
-where T:IEquatable<T>
+        where T:IEquatable<T>
     {
         public UnordererPair(T item0, T item1) : base(item0, item1)
         {
