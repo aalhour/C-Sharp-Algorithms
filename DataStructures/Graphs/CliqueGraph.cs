@@ -397,14 +397,30 @@ where T : IComparable<T>, IEquatable<T>
             return _vertices.Contains(vertex);
         }
 
-        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
+        /// <summary>
+        /// Returns the neighbours doubly-linked list for the specified vertex.
+        /// </summary>
+        /// <param name="vertex">Vertex.</param>
+        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex) // TEST CliqueGraph.Neighbours
         {
-            throw new NotImplementedException();
+            DataStructures.Lists.DLinkedList<T> returnList = new DataStructures.Lists.DLinkedList<T>();
+
+            foreach (var c in _cliques)
+            {
+                if (c.Contains(vertex))
+                {
+                    foreach (var item in c)
+                    {
+                        if (!returnList.Contains(item))
+                            returnList.Append(item);
+                    }
+                }
+            }
         }
 
         public int Degree(T vertex)
         {
-            return WeakNeighbours(vertex).Count;
+            return Neighbours(vertex).Count;
         }
 
         public string ToReadable()
@@ -511,17 +527,6 @@ where T : IComparable<T>, IEquatable<T>
 
         #endregion
 
-        //TODO move to Neighbours
-        public System.Collections.Generic.ICollection<T> WeakNeighbours(T nodo)
-        {
-            HashSet<T> ret = new HashSet<T>();
-            foreach (var c in _cliques)
-            {
-                if (c.Contains(nodo))
-                    ret.UnionWith(c);
-            }
-            return ret;
-        }
 
 
         /// <summary>
