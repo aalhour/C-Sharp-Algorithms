@@ -464,13 +464,49 @@ namespace DataStructures.Graphs
 			{
 				foreach (var clan1 in _cliques)
 				{
-					if (!clan0.Equals(clan1) && clan0.Overlaps(clan1))
+					if (!clan0.Equals(clan1) && clan0.Overlaps(clan1)) // Equals = SetEquals here since cliques are maximal.
 					{
 						dualGraph.AddEdge(clan0, clan1);
 					}
 				}
 			}
 			return dualGraph;
+		}
+
+		/// <summary>
+		/// Given a path in a dual graph, it return a corresponding path in this graph
+		/// </summary>
+		/// <returns>An equivalent path of the clique path.</returns>
+		/// <param name="path">Path.</param>
+		public IEnumerable<T> ReturnPathFromCliquePath(IEnumerable<Clique> path)
+		{
+			IList<T> returnPath = new List<T>();
+			IList<Clique> listPath = new List<Clique>(path);
+			ISet<T> intersection;
+
+			// Pick any element of each intersection
+			// Intersection are not empty because 'path' should be a path in a dual graph.
+			for (int i = 0; i < listPath.Count - 1; i++)
+			{
+				intersection = new HashSet<T>(listPath[i]);
+				intersection.IntersectWith(listPath[i + 1]);
+				returnPath.Add(CliqueGraph<T>.Pick(intersection));
+			}
+
+			return returnPath;
+		}
+
+		/// <summary>
+		/// Picks any object in a ISet
+		/// </summary>
+		/// <param name="Set">Set.</param>
+		/// <typeparam name="V">The 1st type parameter.</typeparam>
+		static V Pick<V>(ISet<V> Set)
+		{
+			IEnumerator<V> enumerator = ((IEnumerable<V>)Set).GetEnumerator();
+			V ret = enumerator.Current;
+			enumerator.Dispose();
+			return V;
 		}
 
 	}
