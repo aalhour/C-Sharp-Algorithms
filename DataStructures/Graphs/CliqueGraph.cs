@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DataStructures.Graphs;
-using System.Globalization;
+using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
@@ -55,7 +55,7 @@ where T : IComparable<T>, IEquatable<T>
         /// </summary>
         ISet<Clique> _cliques = new HashSet<Clique>();
 
-/// 
+        /// 
 
         #endregion
 
@@ -665,7 +665,7 @@ where T : IComparable<T>, IEquatable<T>
         /// <param name="path">Path.</param>
         public IEnumerable<T> ReturnPathFromCliquePath(IEnumerable<Clique> path)
         {
-            IList<T> returnPath = new List<T>();
+            ArrayList<T> returnPath = new ArrayList<T>();
             IList<Clique> listPath = new List<Clique>(path);
             ISet<T> intersection;
 
