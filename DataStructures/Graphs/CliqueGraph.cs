@@ -55,8 +55,6 @@ where T : IComparable<T>, IEquatable<T>
         /// </summary>
         ISet<Clique> _cliques = new HashSet<Clique>();
 
-        /// 
-
         #endregion
 
         #region Constructors
