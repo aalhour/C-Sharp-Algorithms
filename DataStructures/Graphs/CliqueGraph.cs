@@ -410,7 +410,7 @@ where T : IComparable<T>, IEquatable<T>
         /// Returns the neighbours doubly-linked list for the specified vertex.
         /// </summary>
         /// <param name="vertex">Vertex.</param>
-        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex) // TEST CliqueGraph.Neighbours
+        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
         {
             DataStructures.Lists.DLinkedList<T> returnList = new DataStructures.Lists.DLinkedList<T>();
 
@@ -516,7 +516,7 @@ where T : IComparable<T>, IEquatable<T>
         /// Returns the list of edges.
         /// </summary>
         /// <returns></returns>
-        ICollection<UnordererPair<T>> getEdges() // TEST CliqueGraph.getEdges
+        ICollection<UnordererPair<T>> getEdges()
         {
             ISet<UnordererPair<T>> H = new HashSet<UnordererPair<T>>();
 
@@ -630,7 +630,7 @@ where T : IComparable<T>, IEquatable<T>
             get
             {
                 // TODO: getCliques, this does not return all the maximal cliques; 
-                // only return enough of them..
+                // only return enough of them.
                 return (IReadOnlyCollection<Clique>)_cliques;
             }
         }
