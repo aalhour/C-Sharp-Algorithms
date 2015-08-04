@@ -27,7 +27,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 MakeCluster(gra, i);
                 System.Diagnostics.Debug.WriteLine(string.Format("Cluster {0} finished.", i));
             }
-
+            /*
             for (int i = 0; i < numClusters; i++)
             {
                 for (int j = 0; j < numClusters; j++)
@@ -35,7 +35,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                     gra.AddEdge(new ComparableTuple(i, 0), new ComparableTuple(j, 0));
                 }
             }
-
+*/
             System.Diagnostics.Debug.WriteLine(string.Format("Graph connected"));
         }
 
@@ -57,7 +57,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             MakeGraph(compareGraph);
 
             testGraph = new CliqueGraph<ComparableTuple>(compareGraph);
+            ICollection<ComparableTuple> component = testGraph.getConnectedComponent(new ComparableTuple(0, 0));
 
+            testGraph.RemoveEdge(new ComparableTuple(0, 0), new ComparableTuple(1, 0));
 
             IGraph<CliqueGraph<ComparableTuple>.Clique> dualGraph = testGraph.buildDualGraph();
 
