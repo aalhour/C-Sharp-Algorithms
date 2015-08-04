@@ -552,6 +552,71 @@ where T : IComparable<T>, IEquatable<T>
             }
         }
 
+        /// <summary>
+        /// Gets the cloud of a collection of vetices.
+        /// A cloud of a collection is the union if the neighborhoods of its elements
+        /// </summary>
+        /// <returns>The cloud.</returns>
+        /// <param name="collection">Collection.</param>
+        public ISet<T> getCloud(ISet<T> collection)
+        {
+            getCloud(collection, new HashSet<Clique>(_cliques));
+            return collection;
+
+        }
+
+        /// <summary>
+        /// Gets the cloud of a collection of vetices.
+        /// A cloud of a collection is the union if the neighborhoods of its elements
+        /// </summary>
+        /// <returns>The cloud.</returns>
+        /// <param name="collection">Collection.</param>
+        /// <param name="useCliques">A set of cliques to use</param>
+        void getCloud(ISet<T> cloud, ICollection<Clique> useCliques)
+        {
+
+            foreach (var clan in new HashSet<Clique> (useCliques))
+            {
+                if (cloud.Overlaps(clan))
+                {
+                    cloud.UnionWith(clan);
+                    useCliques.Remove(clan);
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Returns the conext component of a collection
+        /// </summary>
+        /// <returns>The component.</returns>
+        /// <param name="collection">Collection.</param>
+        void getComponentCollection(ISet<T> collection)
+        {
+            int count = 0;
+            ICollection<Clique> UnusedCliques = new HashSet<Clique>(_cliques);
+            while (count < collection.Count)
+            {
+                count = collection.Count;
+                getCloud(collection, UnusedCliques);
+            }
+        }
+
+        /// <summary>
+        /// Returns the only connected component containing a given vertex.
+        /// </summary>
+        /// <returns>A collection containing the vertex of a connected component</returns>
+        /// <param name="vertex">Vertex.</param>
+        public ICollection<T> getConnectedComponent(T vertex)
+        {
+            if (!_vertices.Contains(vertex))
+                throw new Exception("vertex should be a vertex of this graph.");
+            HashSet<T> component = new HashSet<T>();
+            component.Add(vertex);
+            getComponentCollection(component);
+            return component;
+        }
+
         #endregion
 
         #region Clique invariants
