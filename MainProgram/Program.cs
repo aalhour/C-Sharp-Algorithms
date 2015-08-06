@@ -12,7 +12,19 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            GraphsBellmanFordShortestPaths.DoTest();
+            string input = "2-4+5*6-1";
+
+			var result = input.Split(new char[] { '-', '+', '*' }).ToList()
+				.Select<string, int>(item => Convert.ToInt32(item))
+				.ToList<int>();
+
+			var ops = new List<char>();
+
+			for(int i = 0; i < input.Length; i++) {
+				if(input[i] == '+' || input[i] == '-' || input[i] == '*') {
+					ops.Add (input [i]);
+				}
+			}
         }
     }
 }
