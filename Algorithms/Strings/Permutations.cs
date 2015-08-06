@@ -60,15 +60,9 @@ namespace Algorithms
 		/// </summary>
 		public static bool IsAnargram(string Source, string Other)
 		{
-			bool nullCheck = false;
 			int sourceCharSum = 0, otherCharSum = 0;
-			bool isSourceNull = string.IsNullOrEmpty (Source);
-			bool isOtherNull = string.IsNullOrEmpty (Other);
 
-			// Null values check
-			nullCheck |= (isSourceNull && isOtherNull) || (isSourceNull && !isOtherNull) || (!isSourceNull && isOtherNull);
-				
-			if (nullCheck == true)
+			if (string.IsNullOrEmpty (Source) || string.IsNullOrEmpty (Other))
 				return false;
 			else if (Source.Length != Other.Length)
 				return false;
