@@ -9,16 +9,17 @@ namespace DataStructures.Graphs
     /// Represents a unweighted underected graph, modeling with a set of its maximal complete subgraphs of it.
     /// Should be fast in clustered graphs
     /// </summary>
-    public class CliqueGraph<T>: IGraph<T>
-where T : IComparable<T>, IEquatable<T>
+    public class CliqueGraph<T> : IGraph<T> where T : IComparable<T>, IEquatable<T>
     {
         public class Clique : HashSet<T>, IComparable<Clique>
         {
-            public Clique() : base()
+            public Clique()
+                : base()
             {
             }
 
-            public Clique(ISet<T> elements) : base(elements)
+            public Clique(ISet<T> elements)
+                : base(elements)
             {
             }
 
@@ -68,7 +69,8 @@ where T : IComparable<T>, IEquatable<T>
         /// Copies the model from another graph.
         /// </summary>
         /// <param name="graph">Graph.</param>
-        public CliqueGraph(IGraph<T> graph) : this(graph.Vertices)
+        public CliqueGraph(IGraph<T> graph)
+            : this(graph.Vertices)
         {
             foreach (var startVert in Vertices)
             {
@@ -92,7 +94,8 @@ where T : IComparable<T>, IEquatable<T>
         /// Initializes a new instance of the <see cref="DataStructures.Graphs.CliqueGraph`1"/> class.
         /// </summary>
         /// <param name="vertices">Initial vertices of the graph</param>
-        public CliqueGraph(IEnumerable<T> vertices) : this()
+        public CliqueGraph(IEnumerable<T> vertices)
+            : this()
         {
             if (vertices == null)
             {
@@ -222,7 +225,7 @@ where T : IComparable<T>, IEquatable<T>
             }
 
             #endregion
-	
+
         }
 
         /// <summary>
@@ -317,7 +320,7 @@ where T : IComparable<T>, IEquatable<T>
         {
             if (collection == null)
                 throw new ArgumentException();
-	
+
             foreach (var vertex in collection)
             {
                 AddVertex(vertex);
@@ -357,7 +360,7 @@ where T : IComparable<T>, IEquatable<T>
                 return false;
 
             // Make the cliques consistent
-            foreach (var clan in new HashSet<Clique> (_cliques)) // clone _cliques and iterate
+            foreach (var clan in new HashSet<Clique>(_cliques)) // clone _cliques and iterate
             {
                 if (clan.Remove(vertex))
                 {
@@ -558,9 +561,9 @@ where T : IComparable<T>, IEquatable<T>
         /// </summary>
         /// <returns>The cloud.</returns>
         /// <param name="collection">Collection.</param>
-        public ISet<T> getCloud(ISet<T> collection)
+        public ISet<T> GetCloud(ISet<T> collection)
         {
-            getCloud(collection, new HashSet<Clique>(_cliques));
+            _getCloud(collection, new HashSet<Clique>(_cliques));
             return collection;
 
         }
@@ -572,10 +575,10 @@ where T : IComparable<T>, IEquatable<T>
         /// <returns>The cloud.</returns>
         /// <param name="collection">Collection.</param>
         /// <param name="useCliques">A set of cliques to use</param>
-        void getCloud(ISet<T> cloud, ICollection<Clique> useCliques)
+        private void _getCloud(ISet<T> cloud, ICollection<Clique> useCliques)
         {
 
-            foreach (var clan in new HashSet<Clique> (useCliques))
+            foreach (var clan in new HashSet<Clique>(useCliques))
             {
                 if (cloud.Overlaps(clan))
                 {
@@ -591,14 +594,14 @@ where T : IComparable<T>, IEquatable<T>
         /// </summary>
         /// <returns>The component.</returns>
         /// <param name="collection">Collection.</param>
-        void getComponentCollection(ISet<T> collection)
+        private void _getComponentCollection(ISet<T> collection)
         {
             int count = 0;
             ICollection<Clique> UnusedCliques = new HashSet<Clique>(_cliques);
             while (count < collection.Count)
             {
                 count = collection.Count;
-                getCloud(collection, UnusedCliques);
+                _getCloud(collection, UnusedCliques);
             }
         }
 
@@ -607,13 +610,13 @@ where T : IComparable<T>, IEquatable<T>
         /// </summary>
         /// <returns>A collection containing the vertex of a connected component</returns>
         /// <param name="vertex">Vertex.</param>
-        public ICollection<T> getConnectedComponent(T vertex)
+        public ICollection<T> GetConnectedComponent(T vertex)
         {
             if (!_vertices.Contains(vertex))
                 throw new Exception("vertex should be a vertex of this graph.");
             HashSet<T> component = new HashSet<T>();
             component.Add(vertex);
-            getComponentCollection(component);
+            _getComponentCollection(component);
             return component;
         }
 
@@ -688,7 +691,7 @@ where T : IComparable<T>, IEquatable<T>
         {
             if (vertices == null)
                 throw new ArgumentException();
-            
+
             foreach (var x in _cliques)
             {
                 if (x.IsSupersetOf(vertices))
@@ -761,10 +764,10 @@ where T : IComparable<T>, IEquatable<T>
 
     }
 
-    internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>>
-        where T:IEquatable<T>
+    internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>> where T : IEquatable<T>
     {
-        public UnordererPair(T item0, T item1) : base(item0, item1)
+        public UnordererPair(T item0, T item1)
+            : base(item0, item1)
         {
         }
 
@@ -772,7 +775,7 @@ where T : IComparable<T>, IEquatable<T>
 
         bool IEquatable<UnordererPair<T>>.Equals(UnordererPair<T> other)
         {
-            return 
+            return
                 (Item1.Equals(other.Item1) && Item2.Equals(other.Item2)) ||
             (Item1.Equals(other.Item2) && Item2.Equals(other.Item1));
 
