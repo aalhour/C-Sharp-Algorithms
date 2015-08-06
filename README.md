@@ -98,6 +98,9 @@ The third project is called MainProgram and it has all the tests for all the imp
  * **[Cycles Detector](Algorithms/Graphs/CyclesDetector.cs).** Detects if a given graph is cyclic. Supports directed and undirected graphs.
  * **[Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).** Calculates one topological sorting of a *DAG* (Directed Acyclic Graph). This class depends on the *CyclesDetector* static class.
 
+#### Strings:
+ * **[Permutations](Algorithms/Strings/Permutations.cs).** Algorithms for computing the list of permutations of a string and checking if two strings are anagrams of each other.
+
 #### Numeric:
  * **[Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).** A class that calculates the catalan numbers. A dynamic-programming solution.
 
