@@ -1,4 +1,4 @@
-# C# ALGORITHMS [![CodeHunt.io](https://img.shields.io/badge/vote-codehunt.io-02AFD1.svg)](http://codehunt.io/sub/c-algorithms/?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# C# ALGORITHMS
 
 ### Implementations of Data Structures and Algorithms in C#.
 
@@ -51,6 +51,7 @@ The third project is called MainProgram and it has all the tests for all the imp
  * **Undirected Graphs:**
   * **[Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).** An adjacency-list graph representation. Implemented using a Dictionary. The nodes are inserted as keys, and the neighbors of every node are implemented as a doubly-linked list of nodes. This class implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
   * **[Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).** An incidence-matrix graph representation. Implemented using a two dimensional boolean array. This class implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
+  * **[Clique Graphs](DataStructures/Graphs/CliqueGraph.cs).** An undirected unweighted clique graph implementation.
  
  * **Directed Graphs / Digraphs:** 
   * **[Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).** An adjacency-list digraph representation. Follows almost the same implementation details of the Undirected version, except for managing the directed edges. Implements the [IGraph\<T\>](DataStructures/Graphs/IGraph.cs) interface.
@@ -97,7 +98,6 @@ The third project is called MainProgram and it has all the tests for all the imp
  * **[Cycles Detector](Algorithms/Graphs/CyclesDetector.cs).** Detects if a given graph is cyclic. Supports directed and undirected graphs.
  * **[Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).** Calculates one topological sorting of a *DAG* (Directed Acyclic Graph). This class depends on the *CyclesDetector* static class.
 
-
 #### Numeric:
  * **[Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).** A class that calculates the catalan numbers. A dynamic-programming solution.
 
@@ -124,6 +124,11 @@ The third project is called MainProgram and it has all the tests for all the imp
      **                 /\   /\ /\
      */
     ```
+
+
+## Contributors
+  
+  * [Edgar Carballo Domínguez](https://github.com/karv).
 
 
 ## License
