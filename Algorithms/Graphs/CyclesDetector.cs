@@ -1,4 +1,8 @@
-﻿using System;
+﻿/***
+ * Detects if a given graph is cyclic. Supports directed and undirected graphs.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

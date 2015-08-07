@@ -1,4 +1,17 @@
-﻿using System;
+﻿/***
+ * The Directed Weighted Dense Graph Data Structure.
+ * 
+ * Definition:
+ * A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
+ * A directed graph is a graph where each edge follow one direction only between any two vertices.
+ * A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
+ * 
+ * An adjacency-matrix (two dimensional array of longs) weighted digraph representation. 
+ * Inherits and extends the Directed Dense verion (DirectedDenseGraph<T> class).
+ * Implements the IWeightedGraph<T> interface.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Common;
@@ -6,13 +19,7 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Directed Weighted Dense Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
-    /// A directed graph is a graph where each edge follow one direction only between any two vertices.
-    /// A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
+   
     /// 
     /// This class represents the graph as an adjacency-matrix (two dimensional integer array).
     /// </summary>

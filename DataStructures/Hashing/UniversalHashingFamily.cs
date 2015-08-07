@@ -1,4 +1,14 @@
-﻿using System;
+﻿/***
+ * Universal-Hashing Functions Family.
+ * 
+ * Implements a family class of simple universal-hashing functions. 
+ * Supports re-generation of functions. 
+ * It depends on the Common/PrimesList helper class. 
+ * 
+ * This class is used in the Cuckoo Hash Table implementation.
+ */
+
+using System;
 
 using DataStructures.Common;
 using DataStructures.Lists;

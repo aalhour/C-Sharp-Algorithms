@@ -1,4 +1,16 @@
-﻿using System;
+﻿/***
+ * The Directed Dense Graph Data Structure.
+ * 
+ * Definition:
+ * A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
+ * A directed graph is a graph where each edge follow one direction only between any two vertices.
+ * 
+ * An incidence-matrix digraph representation. Follows almost the same implementation 
+ * details of the Undirected version, except for managing the directed edges.
+ * Implements the IGraph<T> interface.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Common;
@@ -6,15 +18,6 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Directed Dense Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
-    /// A directed graph is a graph where each edge follow one direction only between any two vertices.
-    /// 
-    /// This class represents the graph as an incidence-matrix (two dimensional boolean array).
-    /// </summary>
     public class DirectedDenseGraph<T> : IGraph<T> where T : IComparable<T>
     {
         /// <summary>

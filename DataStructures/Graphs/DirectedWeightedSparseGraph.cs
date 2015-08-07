@@ -1,4 +1,17 @@
-﻿using System;
+﻿/***
+ * The Directed Sparse Graph Data Structure.
+ * 
+ * Definition:
+ * A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
+ * A directed graph is a graph where each edge follow one direction only between any two vertices.
+ * A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
+ * 
+ * An adjacency-list weighted digraph representation. Shares a good deal of implemention details 
+ * with the Directed Sparse version (DirectedSparseGraph<T>). Edges are instances of WeightedEdge<T> class. 
+ * Implements both interfaces: IGraph<T> and IWeightedGraph<T>.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 
@@ -7,16 +20,6 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Directed Sparse Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
-    /// A directed graph is a graph where each edge follow one direction only between any two vertices.
-    /// A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
-    /// 
-    /// This class represents the digraph as an adjacency-list (dictionary).
-    /// </summary>
     public class DirectedWeightedSparseGraph<T> : IGraph<T>, IWeightedGraph<T> where T : IComparable<T>
     {
         /// <summary>

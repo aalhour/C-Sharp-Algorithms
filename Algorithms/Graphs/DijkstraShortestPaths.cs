@@ -1,4 +1,9 @@
-﻿using System;
+﻿/***
+ * Computes Dijkstra's Shortest-Paths for Directed Weighted Graphs from a single-source to all destinations. 
+ * This class provides the same API as the BreadthFirstShortestPaths<T>.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

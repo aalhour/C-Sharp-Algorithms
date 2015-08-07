@@ -1,18 +1,19 @@
-﻿using System;
+﻿/***
+ * The Sparse Graph Data Structure.
+ * Definition: A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
+ * 
+ * An adjacency-list graph representation. Implemented using a Dictionary. The nodes are inserted as keys, 
+ * and the neighbors of every node are implemented as a doubly-linked list of nodes. 
+ * This class implements the IGraph<T> interface.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Sparse Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
-    /// 
-    /// This class represents the graph as an adjacency list (dictionary).
-    /// </summary>
     public class UndirectedSparseGraph<T> : IGraph<T> where T : IComparable<T>
     {
         /// <summary>
