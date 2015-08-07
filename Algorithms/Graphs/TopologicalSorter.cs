@@ -1,4 +1,9 @@
-﻿using System;
+﻿/***
+ * Computes one topological sorting of a DAG (Directed Acyclic Graph). 
+ * This class depends on the CyclesDetector static class.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/***
+ * Chained Hash Table.
+ * 
+ * A hash table that implements the Separate-Chaining scheme for resolving keys-collisions. It also implements auto-resizing (expansion and contraction).
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Common;

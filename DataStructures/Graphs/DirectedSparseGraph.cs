@@ -1,19 +1,21 @@
-﻿using System;
+﻿/***
+ * The Directed Sparse Graph Data Structure.
+ * 
+ * Definition:
+ * A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
+ * A directed graph is a graph where each edge follow one direction only between any two vertices.
+ * 
+ * An adjacency-list digraph (directed-graph) representation. 
+ * Implements the IGraph<T> interface.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Directed Sparse Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A sparse graph is a graph G = (V, E) in which |E| = O(|V|).
-    /// A directed graph is a graph where each edge follow one direction only between any two vertices.
-    /// 
-    /// This class represents the digraph as an adjacency list (dictionary).
-    /// </summary>
     public class DirectedSparseGraph<T> : IGraph<T> where T : IComparable<T>
     {
         /// <summary>

@@ -1,4 +1,10 @@
-﻿using System;
+﻿/***
+ * Computes the Catalan Numbers. A dynamic-programming solution.
+ * 
+ * Wikipedia: https://en.wikipedia.org/wiki/Catalan_number
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

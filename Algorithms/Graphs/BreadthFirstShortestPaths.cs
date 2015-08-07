@@ -1,4 +1,9 @@
-﻿using System;
+﻿/***
+ * Computes Shortest-Paths for Unweighted Graphs using the Breadth-First Search algorithm.
+ * It provides the capability to find shortest-paths from a single-source and multiple-sources, in addition to looking up reachable and unreachable nodes.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

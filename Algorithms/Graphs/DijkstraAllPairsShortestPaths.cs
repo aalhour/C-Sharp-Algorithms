@@ -1,4 +1,10 @@
-﻿using System;
+﻿/***
+ * Computes Dijktra's shortest paths for all pairs of vertices in a graph. 
+ * This is a wrapper class that applies single-source dijkstra shortest paths (DijkstraShortestPaths<TG, TV>) 
+ * to all vertices of a graph and saves the results in a dictionary index by the vertices.
+ */
+
+using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 

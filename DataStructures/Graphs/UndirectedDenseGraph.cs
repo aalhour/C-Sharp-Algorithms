@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***
+ * The Dense Graph Data Structure.
+ * 
+ * Definition: A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
+ * 
+ * An incidence-matrix (two dimensional boolean array) graph representation.
+ * This class implements the IGraph<T> interface.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Common;
@@ -6,14 +15,6 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    /// <summary>
-    /// The Dense Graph Data Structure.
-    /// 
-    /// Definition:
-    /// A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
-    /// 
-    /// This class represents the graph as an incidence-matrix (two dimensional boolean array).
-    /// </summary>
     public class UndirectedDenseGraph<T> : IGraph<T> where T : IComparable<T>
     {
         /// <summary>

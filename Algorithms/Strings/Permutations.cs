@@ -1,7 +1,11 @@
-﻿using System;
+﻿/***
+ * Algorithms for computing the list of permutations of a string and checking if two strings are anagrams of each other.
+ */
+
+using System;
 using System.Collections.Generic;
 
-namespace Algorithms
+namespace Algorithms.Strings
 {
 	public static class Permutations
 	{
