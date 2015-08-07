@@ -1,4 +1,11 @@
-﻿using System;
+﻿/***
+ * Cuckoo Hash Table.
+ * 
+ * A hash table that implements the Cuckoo Hashing algorithm for resolving keys-collisions. 
+ * This is a single-table implementation, the source behind this idea is the work of Mark Allen Weiss, 2014.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Common;

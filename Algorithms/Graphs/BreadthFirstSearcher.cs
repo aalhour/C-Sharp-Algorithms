@@ -1,4 +1,15 @@
-﻿using System;
+﻿/***
+ * Implements the the Breadth-First Search algorithm. 
+ * 
+ * Provides multiple functions for traversing graphs: 
+ *  1. PrintAll(), 
+ *  2. VisitAll(Action<T> forEachFunc), 
+ *  3. FindFirstMatch(Predicate<T> match). 
+ *  
+ * The VisitAll() applies a function to every graph node. The FindFirstMatch() function searches the graph for a predicate match.
+ */
+
+using System;
 using System.Collections.Generic;
 
 using DataStructures.Graphs;
