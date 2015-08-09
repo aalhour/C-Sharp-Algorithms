@@ -2,11 +2,11 @@
 
 ###Implementations of Data Structures and Algorithms in C#.
 
-## Description:
+## Description
 
 Originally started out as an interview-preparation project, May 2015.
 
-#### Project Hierarchy:
+**Project Hierarchy:**
 
 This is a C#.NET solution-project, and it contains three subprojects:
 
@@ -15,12 +15,14 @@ This is a C#.NET solution-project, and it contains three subprojects:
  3. [Main Program](MainProgram): Contains tests for the data structures and algorithms projects.
 
 
-## Requirements:
+## Requirements
  * C# 5.
  * .NET 4.5.
 
+Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and Visual Studio on Windows 7. All of the project compile successfully. All tests in the MainProgram project pass.
 
-## Data Structures:
+
+## Data Structures
 
 #### Lists:
  * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
