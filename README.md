@@ -1,4 +1,4 @@
-# C# ALGORITHMS
+# C# ALGORITHMS ![](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg)
 
 ###Implementations of Data Structures and Algorithms in C#.
 
