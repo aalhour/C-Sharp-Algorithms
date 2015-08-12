@@ -1,2 +1,5 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
+mono:
+   - 5.9.4
+   - 4.0.3
