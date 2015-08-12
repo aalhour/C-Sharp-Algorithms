@@ -7,7 +7,7 @@ namespace DataStructures.Lists
     /// The Stack (LIFO) Data Structure.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
-	public class Stack<T> : IEnumerable<T> where T : IComparable<T>
+    public class Stack<T> : IEnumerable<T> where T : IComparable<T>
     {
         /// <summary>
         /// Instance variables.
@@ -64,7 +64,7 @@ namespace DataStructures.Lists
             {
                 try
                 {
-					return _collection[_collection.Count - 1];
+                    return _collection[_collection.Count - 1];
                 }
                 catch (Exception)
                 {
@@ -80,7 +80,7 @@ namespace DataStructures.Lists
         /// <param name="dataItem">Element to be inserted.</param>
         public void Push(T dataItem)
         {
-			_collection.Add(dataItem);
+            _collection.Add(dataItem);
         }
 
 
@@ -91,9 +91,9 @@ namespace DataStructures.Lists
         {
             if (Count > 0)
             {
-				var top = Top;
-				_collection.RemoveAt(_collection.Count - 1);
-				return top;
+                var top = Top;
+                _collection.RemoveAt(_collection.Count - 1);
+                return top;
             }
             else
             {
@@ -121,19 +121,19 @@ namespace DataStructures.Lists
         }
 
 
-		/********************************************************************************/
+        /********************************************************************************/
 
 
-		public IEnumerator<T> GetEnumerator ()
-		{
-			for(int i = _collection.Count - 1; i >= 0; --i)
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = _collection.Count - 1; i >= 0; --i)
                 yield return _collection[i];
-		}
+        }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
-		{
-			return this.GetEnumerator ();
-		}
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
     }
 

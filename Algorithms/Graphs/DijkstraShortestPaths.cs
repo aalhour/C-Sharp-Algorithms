@@ -86,7 +86,7 @@ namespace Algorithms.Graphs
                 foreach (var edge in edges)
                 {
                     var adjacentIndex = _nodesToIndices[edge.Destination];
-                    
+
                     // calculate a new possible weighted path if the edge weight is less than infinity
                     var delta = Infinity;
                     if (edge.Weight < Infinity && (Infinity - edge.Weight) > _distances[currentIndex])  // Handles overflow

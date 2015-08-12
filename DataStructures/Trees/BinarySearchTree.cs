@@ -508,10 +508,10 @@ namespace DataStructures.Trees
         {
             if (collection == null)
                 throw new ArgumentNullException();
-                
-            if(collection.Length > 0)
+
+            if (collection.Length > 0)
             {
-                for(int i = 0; i < collection.Length; ++i)
+                for (int i = 0; i < collection.Length; ++i)
                 {
                     this.Insert(collection[i]);
                 }

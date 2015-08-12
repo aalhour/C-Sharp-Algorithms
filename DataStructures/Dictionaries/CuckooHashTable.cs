@@ -353,8 +353,8 @@ namespace DataStructures.Dictionaries
         {
             this._size = 0;
 
-            Parallel.ForEach(_collection, 
-                (item) =>  
+            Parallel.ForEach(_collection,
+                (item) =>
                 {
                     if (item != null && item.IsActive == true)
                     {

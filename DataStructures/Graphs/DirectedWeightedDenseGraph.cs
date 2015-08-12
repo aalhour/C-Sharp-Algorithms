@@ -19,7 +19,7 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-   
+
     /// 
     /// This class represents the graph as an adjacency-matrix (two dimensional integer array).
     /// </summary>

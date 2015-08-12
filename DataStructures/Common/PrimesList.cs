@@ -72,7 +72,7 @@ namespace DataStructures.Common
             {
                 // Split the line by commas and convert the collection to a list.
                 var numbersAsStrings = line.Split(',').ToList<string>();
-                
+
                 // defensive check against empty strings.
                 numbersAsStrings.RemoveAll(item => string.IsNullOrEmpty(item) == true);
 
@@ -194,7 +194,7 @@ namespace DataStructures.Common
             if (array == null)
                 array = new int[_primes.Count];
 
-            if(array.Length <= index)
+            if (array.Length <= index)
                 throw new ArgumentOutOfRangeException();
 
             int count = array.Length - index;
@@ -203,7 +203,7 @@ namespace DataStructures.Common
             if (count - _primes.Count > 0)
                 count = _primes.Count;
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 array[arrayIndex] = _primes[i];
                 arrayIndex++;

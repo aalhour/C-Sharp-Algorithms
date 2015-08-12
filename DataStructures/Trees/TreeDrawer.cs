@@ -50,7 +50,7 @@ namespace DataStructures.Trees
             //
             // Variables
             string nodeLabel;
-            
+
             List<string> leftLines, rightLines;
             leftLines = rightLines = new List<string>();
 

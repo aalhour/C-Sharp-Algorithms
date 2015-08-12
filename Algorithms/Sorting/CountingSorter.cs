@@ -39,13 +39,13 @@ namespace Algorithms.Sorting
             index = 0;
 
             // Sort the elements
-            for(int j = 0; j < keys.Length; ++j)
+            for (int j = 0; j < keys.Length; ++j)
             {
                 var val = keys[j];
 
-                if(val > 0)
+                if (val > 0)
                 {
-                    while(val-- > 0)
+                    while (val-- > 0)
                     {
                         array[index] = j;
                         index++;

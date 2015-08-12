@@ -29,7 +29,7 @@ namespace Algorithms.Graphs
         /// <returns>True if there is a cycle; otherwise, false.</returns>
         private static bool _isUndirectedCyclic<T>(IGraph<T> graph, T source, object parent, ref HashSet<T> visited) where T : IComparable<T>
         {
-            if(!visited.Contains(source))
+            if (!visited.Contains(source))
             {
                 // Mark the current node as visited
                 visited.Add(source);
@@ -46,7 +46,7 @@ namespace Algorithms.Graphs
                         return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -90,18 +90,18 @@ namespace Algorithms.Graphs
         /// <summary>
         /// Returns true if Graph has cycle.
         /// </summary>
-        public static bool IsCyclic<T> (IGraph<T> Graph) where T : IComparable<T>
+        public static bool IsCyclic<T>(IGraph<T> Graph) where T : IComparable<T>
         {
             if (Graph == null)
                 throw new ArgumentNullException();
 
             var visited = new HashSet<T>();
             var recursionStack = new HashSet<T>();
-            
-            if(Graph.IsDirected)
+
+            if (Graph.IsDirected)
             {
-                foreach(var vertex in Graph.Vertices)
-                    if(_isDirectedCyclic<T>(Graph, vertex, ref visited, ref recursionStack))
+                foreach (var vertex in Graph.Vertices)
+                    if (_isDirectedCyclic<T>(Graph, vertex, ref visited, ref recursionStack))
                         return true;
             }
             else

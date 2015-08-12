@@ -34,7 +34,7 @@ namespace DataStructures.Lists
 
         public SLinkedListNode<T> Next
         {
-            get { return this._next;  }
+            get { return this._next; }
             set { this._next = value; }
         }
 
@@ -45,8 +45,8 @@ namespace DataStructures.Lists
             return this.Data.CompareTo(other.Data);
         }
     }
-    
-    
+
+
     /// <summary>
     /// Singly Linked List Data Structure
     /// </summary>
@@ -58,12 +58,12 @@ namespace DataStructures.Lists
         private int _count;
         private SLinkedListNode<T> _firstNode { get; set; }
         private SLinkedListNode<T> _lastNode { get; set; }
-        
+
         public int Count
         {
             get { return _count; }
         }
-        
+
         public virtual SLinkedListNode<T> Head
         {
             get { return this._firstNode; }

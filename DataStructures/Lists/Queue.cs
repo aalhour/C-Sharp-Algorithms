@@ -6,34 +6,34 @@ namespace DataStructures.Lists
     /// <summary>
     /// The Queue (FIFO) Data Structure.
     /// </summary>
-	public class Queue<T> : IEnumerable<T> where T : IComparable<T>
+    public class Queue<T> : IEnumerable<T> where T : IComparable<T>
     {
         /// <summary>
         /// INSTANCE VARIABLE.
         /// </summary>
-		private int _size { get; set; }
-		private int _headPointer { get; set; }
-		private int _tailPointer { get; set; }
+        private int _size { get; set; }
+        private int _headPointer { get; set; }
+        private int _tailPointer { get; set; }
 
-		// The internal collection.
-		private object[] _collection { get; set; }
-		private const int _defaultCapacity = 8;
+        // The internal collection.
+        private object[] _collection { get; set; }
+        private const int _defaultCapacity = 8;
 
-		// This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
-		// Set the flag IsMaximumCapacityReached to false
-		bool DefaultMaxCapacityIsX64 = true;
-		bool IsMaximumCapacityReached = false;
+        // This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
+        // Set the flag IsMaximumCapacityReached to false
+        bool DefaultMaxCapacityIsX64 = true;
+        bool IsMaximumCapacityReached = false;
 
-		// The C# Maximum Array Length (before encountering overflow)
-		// Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-		public const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
-		public const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
+        // The C# Maximum Array Length (before encountering overflow)
+        // Reference: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
+        public const int MAXIMUM_ARRAY_LENGTH_x64 = 0X7FEFFFFF; //x64
+        public const int MAXIMUM_ARRAY_LENGTH_x86 = 0x8000000; //x86
 
-        
+
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-		public Queue() : this(_defaultCapacity) { }
+        public Queue() : this(_defaultCapacity) { }
 
         public Queue(int initialCapacity)
         {
@@ -42,72 +42,75 @@ namespace DataStructures.Lists
                 throw new ArgumentOutOfRangeException();
             }
 
-			_size = 0;
-			_headPointer = 0;
-			_tailPointer = 0;
-			_collection = new object[initialCapacity];
+            _size = 0;
+            _headPointer = 0;
+            _tailPointer = 0;
+            _collection = new object[initialCapacity];
         }
 
 
-		/// <summary>
-		/// Resize the internal array to a new size.
-		/// </summary>
-		private void _resize(int newSize)
-		{
-			if (newSize > _size && !IsMaximumCapacityReached)
-			{
-				int capacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
+        /// <summary>
+        /// Resize the internal array to a new size.
+        /// </summary>
+        private void _resize(int newSize)
+        {
+            if (newSize > _size && !IsMaximumCapacityReached)
+            {
+                int capacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
 
-				// Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
-				// Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-				int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
+                // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
+                // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
+                int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
 
-				// Handle the new proper size
-				if (capacity < newSize)
-					capacity = newSize;
+                // Handle the new proper size
+                if (capacity < newSize)
+                    capacity = newSize;
 
-				if (capacity >= maxCapacity)
-				{
-					capacity = maxCapacity - 1;
-					IsMaximumCapacityReached = true;
-				}
+                if (capacity >= maxCapacity)
+                {
+                    capacity = maxCapacity - 1;
+                    IsMaximumCapacityReached = true;
+                }
 
-				// Try resizing and handle overflow
-				try
-				{
-					//Array.Resize (ref _collection, newSize);
+                // Try resizing and handle overflow
+                try
+                {
+                    //Array.Resize (ref _collection, newSize);
 
-					var tempCollection = new object[newSize];
-					Array.Copy(_collection, _headPointer, tempCollection, 0, _size);
-					_collection = tempCollection;
-				}
-				catch (OutOfMemoryException)
-				{
-					if (DefaultMaxCapacityIsX64 == true) {
-						DefaultMaxCapacityIsX64 = false;
-						_resize (capacity);
-					} else {
-						throw;
-					}
-				}
-			}
-		}
+                    var tempCollection = new object[newSize];
+                    Array.Copy(_collection, _headPointer, tempCollection, 0, _size);
+                    _collection = tempCollection;
+                }
+                catch (OutOfMemoryException)
+                {
+                    if (DefaultMaxCapacityIsX64 == true)
+                    {
+                        DefaultMaxCapacityIsX64 = false;
+                        _resize(capacity);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
 
 
-		/// <summary>
-		/// Returns count of elements in queue
-		/// </summary>
-		public int Count 
-		{ 
-			get { return _size; } 
-		}
+        /// <summary>
+        /// Returns count of elements in queue
+        /// </summary>
+        public int Count
+        {
+            get { return _size; }
+        }
 
         /// <summary>
         /// Checks whether the queue is empty.
         /// </summary>
         public bool IsEmpty
         {
-			get { return _size == 0; }
+            get { return _size == 0; }
         }
 
         /// <summary>
@@ -117,10 +120,10 @@ namespace DataStructures.Lists
         {
             get
             {
-				if(IsEmpty)
+                if (IsEmpty)
                     throw new Exception("Queue is empty.");
 
-				return (T)_collection[_headPointer];
+                return (T)_collection[_headPointer];
             }
         }
 
@@ -130,23 +133,27 @@ namespace DataStructures.Lists
         /// <param name="dataItem">Element to be inserted.</param>
         public void Enqueue(T dataItem)
         {
-			if (_size == _collection.Length) {
-				try {
-					_resize (_collection.Length * 2);
-				} catch (OutOfMemoryException ex) {
-					throw ex;
-				}
-			}
+            if (_size == _collection.Length)
+            {
+                try
+                {
+                    _resize(_collection.Length * 2);
+                }
+                catch (OutOfMemoryException ex)
+                {
+                    throw ex;
+                }
+            }
 
-			// Enqueue item at tail and then increment tail
-			_collection[_tailPointer++] = dataItem;
+            // Enqueue item at tail and then increment tail
+            _collection[_tailPointer++] = dataItem;
 
-			// Wrap around
-			if (_tailPointer == _collection.Length)
-				_tailPointer = 0;
+            // Wrap around
+            if (_tailPointer == _collection.Length)
+                _tailPointer = 0;
 
-			// Increment size
-			_size++;
+            // Increment size
+            _size++;
         }
 
         /// <summary>
@@ -155,27 +162,27 @@ namespace DataStructures.Lists
         /// <return>The top element container.</return>
         public T Dequeue()
         {
-			if (IsEmpty)
-				throw new Exception("Queue is empty.");
-			
-			var topItem = _collection[_headPointer];
-			_collection [_headPointer] = null;
+            if (IsEmpty)
+                throw new Exception("Queue is empty.");
 
-			// Decrement the size
-			_size--;
+            var topItem = _collection[_headPointer];
+            _collection[_headPointer] = null;
 
-			// Increment the head pointer
-			_headPointer++;
+            // Decrement the size
+            _size--;
 
-			// Reset the pointer
-			if (_headPointer == _collection.Length)
-				_headPointer = 0;
+            // Increment the head pointer
+            _headPointer++;
 
-			// Shrink the internal collection
-			if (_size > 0 && _size <= _collection.Length / 4)
-				_resize ((_collection.Length / 3) * 2);
-			
-			return (T)topItem;
+            // Reset the pointer
+            if (_headPointer == _collection.Length)
+                _headPointer = 0;
+
+            // Shrink the internal collection
+            if (_size > 0 && _size <= _collection.Length / 4)
+                _resize((_collection.Length / 3) * 2);
+
+            return (T)topItem;
         }
 
         /// <summary>
@@ -184,15 +191,16 @@ namespace DataStructures.Lists
         /// <returns>System.Array.</returns>
         public T[] ToArray()
         {
-			var array = new T[_size];
+            var array = new T[_size];
 
-			int j = 0;
-			for (int i = 0; i < _size; ++i) {
-				array [j] = (T)_collection [_headPointer + i];
-				j++;
-			}
+            int j = 0;
+            for (int i = 0; i < _size; ++i)
+            {
+                array[j] = (T)_collection[_headPointer + i];
+                j++;
+            }
 
-			return array;
+            return array;
         }
 
         /// <summary>
@@ -200,29 +208,29 @@ namespace DataStructures.Lists
         /// </summary>
         public string ToHumanReadable()
         {
-			var array = ToArray ();
-			string listAsString = string.Empty;
+            var array = ToArray();
+            string listAsString = string.Empty;
 
-			int i = 0;
-			for (i = 0; i < Count; ++i)
-				listAsString = String.Format("{0}[{1}] => {2}\r\n", listAsString, i, array[i]);
+            int i = 0;
+            for (i = 0; i < Count; ++i)
+                listAsString = String.Format("{0}[{1}] => {2}\r\n", listAsString, i, array[i]);
 
-			return listAsString;
+            return listAsString;
         }
 
 
-		/********************************************************************************/
+        /********************************************************************************/
 
 
-		public IEnumerator<T> GetEnumerator ()
-		{
-			return _collection.GetEnumerator() as IEnumerator<T>;
-		}
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _collection.GetEnumerator() as IEnumerator<T>;
+        }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
-		{
-			return this.GetEnumerator ();
-		}
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
 
     }
 

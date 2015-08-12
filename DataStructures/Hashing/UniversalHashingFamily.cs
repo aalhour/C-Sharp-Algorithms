@@ -64,8 +64,8 @@ namespace DataStructures.Hashing
             Array.Clear(_firstMultipliersVector, 0, _firstMultipliersVector.Length);
             Array.Clear(_secondMultipliersVector, 0, _secondMultipliersVector.Length);
 
-	    int randomMin = 0;
-	    int randomMax = _primes.Count - 1;
+            int randomMin = 0;
+            int randomMax = _primes.Count - 1;
 
             for (int i = 0; i < _numberOfHashFunctions; i++)
             {
@@ -74,10 +74,10 @@ namespace DataStructures.Hashing
 
                 while (_primes[randomIndex] >= BIG_PRIME)
                     randomIndex = _randomizer.Next(randomMin, randomMax);
-                
+
                 _firstMultipliersVector[i] = _primes[randomIndex];
-		
-		// make sure the next prime we choose is different than the first one and less than the biggest-prime.
+
+                // make sure the next prime we choose is different than the first one and less than the biggest-prime.
                 randomIndex = _randomizer.Next(randomMin, randomMax);
 
                 while (_primes[randomIndex] >= BIG_PRIME || _primes[randomIndex] == _firstMultipliersVector[i])
@@ -116,10 +116,11 @@ namespace DataStructures.Hashing
 
             int prehash = 0;
             var characters = key.ToCharArray();
-	    int n = characters.Length;
-	    
-	    for (int i = 0; i < n; ++i) {
-	        prehash = prehash + (characters[i] ^ (n - 1));
+            int n = characters.Length;
+
+            for (int i = 0; i < n; ++i)
+            {
+                prehash = prehash + (characters[i] ^ (n - 1));
             }
 
             return UniversalHash(prehash, whichHashFunction);

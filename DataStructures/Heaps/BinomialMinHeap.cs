@@ -208,7 +208,7 @@ namespace DataStructures.Heaps
             var tempHeap = new BinomialMinHeap<T>();
             tempHeap._forest.Add(new BinomialNode<T>(heapKey));
             tempHeap._size = 1;
-            
+
             // Merge this with tempHeap
             Merge(tempHeap);
 

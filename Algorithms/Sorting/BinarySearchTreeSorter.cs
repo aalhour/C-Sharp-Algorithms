@@ -14,21 +14,21 @@ namespace Algorithms.Sorting
         /// <param name="collection"></param>
         public static void UnbalancedBSTSort<T>(this List<T> collection) where T : IComparable<T>
         {
-            if(collection.Count == 0)
+            if (collection.Count == 0)
                 return;
 
             Node<T> treeRoot = new Node<T>() { Value = collection[0] };
 
             // Get a handle on root.
-            for(int i = 1; i < collection.Count; ++i)
+            for (int i = 1; i < collection.Count; ++i)
             {
                 var currentNode = treeRoot;
                 var newNode = new Node<T>() { Value = collection[i] };
 
-                while(true)
+                while (true)
                 {
                     // Go left
-                    if(newNode.Value.IsLessThan<T>(currentNode.Value))
+                    if (newNode.Value.IsLessThan<T>(currentNode.Value))
                     {
                         if (currentNode.Left == null)
                         {

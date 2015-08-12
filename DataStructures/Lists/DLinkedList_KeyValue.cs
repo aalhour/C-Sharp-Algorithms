@@ -658,7 +658,7 @@ namespace DataStructures.Lists
         {
             if (IsEmpty() || index < 0 || index >= Count)
                 throw new IndexOutOfRangeException();
-            
+
             _setNodeByIndex(index, key, value);
         }
 

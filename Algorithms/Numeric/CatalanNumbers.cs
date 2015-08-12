@@ -16,7 +16,7 @@ namespace Algorithms.Numeric
         /// Internal cache.
         /// By default contains the first two catalan numbers for the ranks: 0, and 1.
         /// </summary>
-        private static Dictionary<uint, ulong> _catalanNumbers = new Dictionary<uint, ulong>() { {0, 1}, {1, 1} };
+        private static Dictionary<uint, ulong> _catalanNumbers = new Dictionary<uint, ulong>() { { 0, 1 }, { 1, 1 } };
 
         /// <summary>
         /// Helper function.
@@ -34,15 +34,15 @@ namespace Algorithms.Numeric
                 ulong firstPart = _recursiveHelper(i);
                 ulong secondPart = _recursiveHelper(lastRank - i);
 
-                if(!_catalanNumbers.ContainsKey(i)) _catalanNumbers.Add(i, firstPart);
+                if (!_catalanNumbers.ContainsKey(i)) _catalanNumbers.Add(i, firstPart);
                 if (!_catalanNumbers.ContainsKey(lastRank - i)) _catalanNumbers.Add(lastRank - i, secondPart);
-                
+
                 number = number + (firstPart * secondPart);
             }
 
             return number;
         }
-        
+
         /// <summary>
         /// Public API
         /// </summary>

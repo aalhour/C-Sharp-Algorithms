@@ -34,10 +34,11 @@ namespace Algorithms.Graphs
 
             // Initialize the all pairs dictionary
             _allPairsDjkstra = new Dictionary<TVertex, DijkstraShortestPaths<TGraph, TVertex>>();
-            
+
             var vertices = Graph.Vertices;
 
-            foreach(var vertex in vertices) {
+            foreach (var vertex in vertices)
+            {
                 var dijkstra = new DijkstraShortestPaths<TGraph, TVertex>(Graph, vertex);
                 _allPairsDjkstra.Add(vertex, dijkstra);
             }

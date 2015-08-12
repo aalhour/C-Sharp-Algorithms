@@ -25,7 +25,7 @@ namespace Algorithms.Graphs
             foreach (var adjacent in graph.Neighbours(source))
                 if (!visited.Contains(adjacent))
                     _topoSortHelper<T>(graph, adjacent, ref topoSortStack, ref visited);
-            
+
             topoSortStack.Push(source);
         }
 
@@ -44,8 +44,8 @@ namespace Algorithms.Graphs
             var visited = new HashSet<T>();
             var topoSortStack = new DataStructures.Lists.Stack<T>();
 
-            foreach(var vertex in Graph.Vertices)
-                if(!visited.Contains(vertex))
+            foreach (var vertex in Graph.Vertices)
+                if (!visited.Contains(vertex))
                     _topoSortHelper<T>(Graph, vertex, ref topoSortStack, ref visited);
 
             return topoSortStack;
