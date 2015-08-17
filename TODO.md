@@ -2,17 +2,33 @@
 
 ### New Data Structures:
 
+ * Skip Lists.
+ * Sorted Lists.
+ * Self-organizing Lists.
  * Tries.
+ * Radix Trees.
  * Suffix Trees.
- * B-Trees.
+ * Ternary Trees.
+ * K-anry Trees.
+ * B_Trees.
+ * B+_Trees
+ * B*_Trees.
+ * AA-Trees.
  * Red-Black Trees.
+ * Scapegoat Trees.
+ * Threaded Binary Tree.
+ * Weight-balanced Trees.
  * Treaps.
  * Fibonacci heaps.
  * Binomial-Max Heaps.
  * Disjoint Set.
  * Bit Arrays and Bit Sets.
  * van Emde Boas data structure.
- * Textbook open-addressing hash table with double hashing / re-hasing.
+ * Hash Tables / Maps:
+  * Hash Set.
+  * Multiset / Bag.
+  * Multimap / Multihash Table.
+  * A textbook implementation of open-addressing hash table with double hashing / re-hasing.
  * Undirected Weighted Graphs (Sparse & Dense implementations).
  * Multigraphs: Graphs with multiple edges. [@Wikipedia](https://en.wikipedia.org/wiki/Multigraph).
  * Mixed Graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Mixed_graph).
