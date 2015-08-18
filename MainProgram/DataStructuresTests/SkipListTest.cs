@@ -10,9 +10,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
         public static void DoTest()
         {
             var skipList = new SkipList<int>();
+            skipList.Add(20);
             skipList.Add(10);
             skipList.Add(5);
-            skipList.Add(20);
             skipList.Add(11);
             skipList.Add(1);
 
@@ -39,6 +39,65 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Console.Write("..... ");
             while (enumerator.MoveNext())
                 Console.Write("{0} -> ", enumerator.Current);
+
+            Console.WriteLine("\r\n===================================\r\n");
+
+            skipList.Clear();
+
+            for (int i = 100; i >= 50; --i)
+                skipList.Add(i);
+
+            for (int i = 0; i <= 35; ++i)
+                skipList.Add(i);
+
+            // Reload enumarator
+            enumerator = skipList.GetEnumerator();
+
+            Console.WriteLine(" [*] Skip-List elements:");
+            Console.Write("..... ");
+            while (enumerator.MoveNext())
+                Console.Write("{0} -> ", enumerator.Current);
+
+            Console.WriteLine("\r\nSkipList Count = {0}", skipList.Count);
+
+            Console.WriteLine("\r\n===================================\r\n");
+
+            for (int i = -15; i <= 0; ++i)
+                skipList.Add(i);
+
+            for (int i = -15; i >= -35; --i)
+                skipList.Add(i);
+
+            // Reload enumarator
+            enumerator = skipList.GetEnumerator();
+
+            Console.WriteLine(" [*] Skip-List elements:");
+            Console.Write("..... ");
+            while (enumerator.MoveNext())
+                Console.Write("{0} -> ", enumerator.Current);
+
+            Debug.Assert(skipList.Count == 124);
+
+            Console.WriteLine("\r\nSkipList Count = {0}", skipList.Count);
+
+            Console.WriteLine("\r\n===================================\r\n");
+
+            skipList.Clear();
+
+            for (int i = 100; i >= 0; --i)
+                skipList.Add(i);
+
+            // Reload enumarator
+            enumerator = skipList.GetEnumerator();
+
+            Console.WriteLine(" [*] Skip-List elements:");
+            Console.Write("..... ");
+            while (enumerator.MoveNext())
+                Console.Write("{0} -> ", enumerator.Current);
+
+            Debug.Assert(skipList.Count == 101);
+
+            Console.WriteLine("\r\nSkipList Count = {0}", skipList.Count);
 
             Console.WriteLine("\r\n===================================\r\n");
 

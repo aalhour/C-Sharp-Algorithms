@@ -9,16 +9,14 @@ namespace DataStructures.Lists
         /// </summary>
         private T _value;
         private SkipListNode<T>[] _forwards;
-        private const int _defaultLevel = 8;
 
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public SkipListNode(T value) : this(value, _defaultLevel) { }
-
         public SkipListNode(T value, int level)
         {
-            level = level <= 0 ? _defaultLevel : level;
+            if (level < 0)
+                throw new ArgumentOutOfRangeException("Invalid value for level.");
 
             Value = value;
             Forwards = new SkipListNode<T>[level];

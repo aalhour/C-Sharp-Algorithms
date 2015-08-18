@@ -293,7 +293,7 @@ namespace DataStructures.Lists
                 return false;
             }
 
-            result = _firstNode.Value;
+            result = _firstNode.Forwards[0].Value;
             return true;
         }
 
