@@ -55,6 +55,7 @@
     <Compile Include="DataStructuresTests\Graphs_DirectedSparseGraphTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_DirectedWeightedSparseGraphTest.cs" />
     <Compile Include="DataStructuresTests\HashTableSeparateChainingTest.cs" />
+    <Compile Include="DataStructuresTests\SkipListTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlgorithmsTests\InsertionSortTest.cs" />

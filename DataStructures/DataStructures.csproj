@@ -47,6 +47,8 @@
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />
     <Compile Include="Heaps\BinomialMinHeap.cs" />
+    <Compile Include="Lists\SkipList.cs" />
+    <Compile Include="Lists\SkipListNode.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
