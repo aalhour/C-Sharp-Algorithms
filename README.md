@@ -30,6 +30,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Array List](DataStructures/Lists/ArrayList.cs).
  * [Stack](DataStructures/Lists/Stack.cs).
  * [Queue](DataStructures/Lists/Queue.cs).
+ * [Skip List](DataStructures/Lists/SkipList.cs).
 
 ### Heaps:
  * [Binary-Min Heap](DataStructures/Heaps/BinaryMinHeap.cs).
