@@ -42,6 +42,7 @@
     <Compile Include="Sorting\CountingSorter.cs" />
     <Compile Include="Sorting\HeapSorter.cs" />
     <Compile Include="Sorting\InsertionSorter.cs" />
+    <Compile Include="Sorting\LSDRadixSorter.cs" />
     <Compile Include="Sorting\QuickSorter.cs" />
     <Compile Include="Sorting\MergeSorter.cs" />
     <Compile Include="Common\Comparers.cs" />

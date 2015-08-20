@@ -49,6 +49,7 @@
     <Compile Include="AlgorithmsTests\GraphsDijkstraShortestPathsTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsTopologicalSorterTest.cs" />
     <Compile Include="AlgorithmsTests\HeapSorterTest.cs" />
+    <Compile Include="AlgorithmsTests\LSDRadixSorterTest.cs" />
     <Compile Include="AlgorithmsTests\StringEditDistanceTest.cs" />
     <Compile Include="AlgorithmsTests\StringPermutationTests.cs" />
     <Compile Include="DataStructuresTests\AVLTreeTest.cs" />
