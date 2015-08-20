@@ -12,7 +12,7 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            SkipListTest.DoTest();
+            StringPermutationTests.DoTest();
         }
     }
 }

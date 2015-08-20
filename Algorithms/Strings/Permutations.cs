@@ -5,6 +5,8 @@
 using System;
 using System.Collections.Generic;
 
+using Algorithms.Sorting;
+
 namespace Algorithms.Strings
 {
     public static class Permutations
@@ -56,7 +58,7 @@ namespace Algorithms.Strings
         /// <summary>
         /// Computes the permutations of a string.
         /// </summary>
-        public static HashSet<string> Compute(string Source)
+        public static HashSet<string> ComputeDistinct(string Source)
         {
             return _permutations(Source);
         }
@@ -66,8 +68,6 @@ namespace Algorithms.Strings
         /// </summary>
         public static bool IsAnargram(string Source, string Other)
         {
-            int sourceCharSum = 0, otherCharSum = 0;
-
             if (string.IsNullOrEmpty(Source) || string.IsNullOrEmpty(Other))
                 return false;
             else if (Source.Length != Other.Length)
@@ -75,16 +75,24 @@ namespace Algorithms.Strings
             else if (Source == Other)
                 return true;
 
-            // Anagram check
-            // Calculate the characters sum of both Source and Other
-            for (int i = 0; i < Source.Length; ++i)
-            {
-                sourceCharSum += Source[i];
-                otherCharSum += Other[i];
-            }
+            // Begin the Anagram check
+            // Covnert strings to character arrays
+            // O(N) space complexity
+            var sourceCharArray = Source.ToCharArray();
+            var otherCharArray = Other.ToCharArray();
 
-            // true if sums match; otherwise, false.
-            return (sourceCharSum == otherCharSum);
+            // Sort both character arrays in place using heapsort
+            // O(N log N) operation
+            sourceCharArray.HeapSort<char>(Comparer<char>.Default);
+            otherCharArray.HeapSort<char>(Comparer<char>.Default);
+
+            // One pass scan
+            // O(N) operation
+            for (int i = 0; i < sourceCharArray.Length; ++i)
+                if (sourceCharArray[i] != otherCharArray[i])
+                    return false;
+
+            return true;
         }
     }
 }
