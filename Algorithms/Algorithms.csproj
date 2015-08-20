@@ -50,6 +50,8 @@
     <Compile Include="Graphs\BreadthFirstSearcher.cs" />
     <Compile Include="Graphs\DepthFirstSearcher.cs" />
     <Compile Include="Graphs\TopologicalSorter.cs" />
+    <Compile Include="Strings\EditDistance.cs" />
+    <Compile Include="Strings\EditDistanceCostsMap.cs" />
     <Compile Include="Strings\Permutations.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -62,7 +64,5 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Strings\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
