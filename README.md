@@ -96,7 +96,9 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).
 
 ### Strings:
- * [Permutations](Algorithms/Strings/Permutations.cs).
+ * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs).
+ * [Edit Distance](Algorithms/Strings/EditDistance.cs).
+  * Uses a generic custom class for passing costs: [EditDistanceCostsMap\<T\>](Algorithms/Strings/EditDistanceCostsMap.cs).
 
 ### Numeric:
  * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).
