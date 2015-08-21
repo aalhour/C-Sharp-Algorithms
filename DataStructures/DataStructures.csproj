@@ -51,7 +51,9 @@
     <Compile Include="Lists\SkipListNode.cs" />
     <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
     <Compile Include="Trees\AVLTree.cs" />
+    <Compile Include="Trees\AVLTreeNode.cs" />
     <Compile Include="Trees\BinarySearchTree.cs" />
+    <Compile Include="Trees\BinarySearchTreeNode.cs" />
     <Compile Include="Trees\IAVLTree.cs" />
     <Compile Include="Trees\IBinarySearchTree.cs" />
     <Compile Include="Heaps\IMaxHeap.cs" />
@@ -68,8 +70,6 @@
     <Compile Include="Heaps\KeyedPriorityQueue.cs" />
     <Compile Include="Heaps\MinPriorityQueue.cs" />
     <Compile Include="Common\Comparers.cs" />
-    <Compile Include="Trees\BinaryTree.cs" />
-    <Compile Include="Trees\IBinaryTree.cs" />
     <Compile Include="Trees\TreeDrawer.cs" />
     <Compile Include="Dictionaries\ChainedHashTable.cs" />
     <Compile Include="Lists\DLinkedList_KeyValue.cs" />
@@ -81,6 +81,8 @@
     <Compile Include="Graphs\DirectedWeightedDenseGraph.cs" />
     <Compile Include="Graphs\IWeightedGraph.cs" />
     <Compile Include="Graphs\CliqueGraph.cs" />
+    <Compile Include="Trees\TrieMap.cs" />
+    <Compile Include="Trees\TrieMapNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
