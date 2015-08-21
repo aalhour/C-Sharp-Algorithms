@@ -50,7 +50,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).
 
 ### Trees:
- * [Trie Map](DataStructures/Trees/TrieMap.cs).
+ * [Trie](DataStructures/Trees/Trie.cs), and [Trie Map](DataStructures/Trees/TrieMap.cs).
  * [AVL Tree](DataStructures/Trees/AVLTree.cs).
  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).
  * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).

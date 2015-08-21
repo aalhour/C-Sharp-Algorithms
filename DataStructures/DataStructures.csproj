@@ -81,8 +81,10 @@
     <Compile Include="Graphs\DirectedWeightedDenseGraph.cs" />
     <Compile Include="Graphs\IWeightedGraph.cs" />
     <Compile Include="Graphs\CliqueGraph.cs" />
+    <Compile Include="Trees\Trie.cs" />
     <Compile Include="Trees\TrieMap.cs" />
     <Compile Include="Trees\TrieMapNode.cs" />
+    <Compile Include="Trees\TrieNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

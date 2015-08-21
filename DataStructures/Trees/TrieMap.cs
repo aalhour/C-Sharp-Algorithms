@@ -1,4 +1,13 @@
-﻿using System;
+﻿/***
+ * Trie Map.
+ * 
+ * This is an implementation of a Trie where complete words (words that end with terminal nodes) have associated records of any type.
+ * This version of Trie uses the custom generic class TrieMapNode<TRecord> for its nodes.
+ * 
+ * This class implements the IDictionary and IEnumerable interfaces.
+ */
+
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,9 +17,10 @@ using DataStructures.Common;
 namespace DataStructures.Trees
 {
     /// <summary>
-    /// The Trie Data Structure (a.k.a Prefix Tree).
+    /// The Trie Map Data Structure (a.k.a Prefix Tree).
     /// </summary>
     /// <typeparam name="TRecord">The type of records attached to words</typeparam>
+    
     public class TrieMap<TRecord> : IDictionary<String, TRecord>, IEnumerable<KeyValuePair<String, TRecord>>
     {
         private int _count { get; set; }

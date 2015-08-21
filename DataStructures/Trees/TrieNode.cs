@@ -1,37 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataStructures.Trees
 {
-    public class TrieMapNode<TRecord> : IComparable<TrieMapNode<TRecord>>
+    /// <summary>
+    /// The Trie Node.
+    /// </summary>
+    public class TrieNode
     {
-        // Node key
+        /// <summary>
+        /// Instance variables.
+        /// </summary>
         public virtual char Key { get; set; }
-
-        // Associated record with this node
-        public virtual TRecord Record { get; set; }
-
-        // Is Terminal node flag
         public virtual bool IsTerminal { get; set; }
-
-        // Parent pointer
-        public virtual TrieMapNode<TRecord> Parent { get; set; }
-
-        // Dictionary of child-nodes
-        public virtual Dictionary<char, TrieMapNode<TRecord>> Children { get; set; }
-
+        public virtual TrieNode Parent { get; set; }
+        public virtual Dictionary<char, TrieNode> Children { get; set; }
 
         /// <summary>
         /// CONSTRUCTORS
         /// </summary>
-        public TrieMapNode(char key, TRecord record) : this(key, record, false) { }
+        public TrieNode(char key) : this(key, false) { }
 
-        public TrieMapNode(char key, TRecord record, bool isTerminal)
+        public TrieNode(char key, bool isTerminal)
         {
             Key = key;
-            Record = record;
             IsTerminal = isTerminal;
-            Children = new Dictionary<char, TrieMapNode<TRecord>>();
+            Children = new Dictionary<char, TrieNode>();
         }
 
         /// <summary>
@@ -62,10 +59,10 @@ namespace DataStructures.Trees
         /// Returns an enumerable list of key-value pairs of all the words that start 
         /// with the prefix that maps from the root node until this node.
         /// </summary>
-        public virtual IEnumerable<KeyValuePair<String, TRecord>> GetByPrefix()
+        public virtual IEnumerable<String> GetByPrefix()
         {
             if (IsTerminal)
-                yield return new KeyValuePair<String, TRecord>(Word, Record);
+                yield return Word;
 
             foreach (var childKeyVal in Children)
                 foreach(var terminalNode in childKeyVal.Value.GetByPrefix())
@@ -75,7 +72,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// Returns an enumerable collection of terminal child nodes.
         /// </summary>
-        public virtual IEnumerable<TrieMapNode<TRecord>> GetTerminalChildren()
+        public virtual IEnumerable<TrieNode> GetTerminalChildren()
         {
             foreach (var child in Children.Values) {
                 if(child.IsTerminal)
@@ -106,7 +103,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// IComparer interface implementation
         /// </summary>
-        public int CompareTo(TrieMapNode<TRecord> other)
+        public int CompareTo(TrieNode other)
         {
             if (other == null)
                 return -1;
@@ -124,5 +121,4 @@ namespace DataStructures.Trees
             Children = null;
         }
     }
-
 }
