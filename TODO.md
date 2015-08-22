@@ -7,12 +7,15 @@
   * Supports only unique elements.
  * Sorted Lists.
  * Self-organizing Lists.
- * Tries.
  * Radix Trees.
  * Suffix Trees.
  * Ternary Trees.
  * K-anry Trees.
- * B_Trees.
+ * R-tree.
+ * R*_tree
+ * R+_tree.
+ * (R) Hilbert tree.
+ * B-Trees.
  * B+_Trees
  * B*_Trees.
  * AA-Trees.
@@ -34,6 +37,9 @@
  * Undirected Weighted Graphs (Sparse & Dense implementations).
  * Multigraphs: Graphs with multiple edges. [@Wikipedia](https://en.wikipedia.org/wiki/Multigraph).
  * Mixed Graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Mixed_graph).
+ * (Probabilistic) Graphical Models:
+  * Bayesian Networks. [@Wikipedia](https://en.wikipedia.org/wiki/Bayesian_network), [@another link](https://en.wikipedia.org/wiki/Dynamic_Bayesian_network).
+  * Markov Network. [@Wikipedia](https://en.wikipedia.org/wiki/Markov_random_field).
 
 ### New Algorithms:
 
