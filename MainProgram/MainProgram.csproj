@@ -82,6 +82,7 @@
     <Compile Include="DataStructuresTests\Graphs_DirectedDenseGraphTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_DirectedWeightedDenseGraphTest.cs" />
     <Compile Include="DataStructuresTests\CliqueGraphTest.cs" />
+    <Compile Include="AlgorithmsTests\GraphsConnectedComponents.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

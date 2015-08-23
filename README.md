@@ -97,6 +97,9 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Cycles Detector](Algorithms/Graphs/CyclesDetector.cs).
  * [Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).
 
+**BFS Applications:**
+ * [Connected Components](Algorithms/Graphs/ConnectedComponents.cs).
+
 ### Strings:
  * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs).
  * [Edit Distance](Algorithms/Strings/EditDistance.cs).
