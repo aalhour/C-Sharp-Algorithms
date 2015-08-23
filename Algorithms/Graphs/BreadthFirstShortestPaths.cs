@@ -9,7 +9,6 @@ using System.Collections.Generic;
 
 using Algorithms.Common;
 using DataStructures.Graphs;
-using DataStructures.Lists;
 
 namespace Algorithms.Graphs
 {
@@ -113,21 +112,18 @@ namespace Algorithms.Graphs
         /// </summary>
         private void _breadthFirstSearch(IGraph<T> graph, T source)
         {
-            // Define helper variables.
-            var current = source;
-            var queue = new DataStructures.Lists.Queue<T>(_verticesCount);
-
             // Set distance to current to zero
-            _distances[_nodesToIndices[current]] = 0;
+            _distances[_nodesToIndices[source]] = 0;
 
             // Set current to visited: true.
-            _visited[_nodesToIndices[current]] = true;
+            _visited[_nodesToIndices[source]] = true;
 
-            queue.Enqueue(current);
+            var queue = new Queue<T>(_verticesCount);
+            queue.Enqueue(source);
 
-            while (!queue.IsEmpty)
+            while (queue.Count > 0)
             {
-                current = queue.Dequeue();
+                var current = queue.Dequeue();
                 int indexOfCurrent = _nodesToIndices[current];
 
                 foreach (var adjacent in graph.Neighbours(current))
@@ -152,7 +148,7 @@ namespace Algorithms.Graphs
         private void _breadthFirstSearch(IGraph<T> graph, IList<T> sources)
         {
             // Define helper variables.
-            var queue = new DataStructures.Lists.Queue<T>(_verticesCount);
+            var queue = new Queue<T>(_verticesCount);
 
             foreach (var source in sources)
             {
@@ -165,7 +161,7 @@ namespace Algorithms.Graphs
                 queue.Enqueue(source);
             }
 
-            while (!queue.IsEmpty)
+            while (queue.Count > 0)
             {
                 var current = queue.Dequeue();
                 int indexOfCurrent = _nodesToIndices[current];

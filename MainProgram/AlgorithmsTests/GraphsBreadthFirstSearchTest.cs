@@ -28,6 +28,11 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 			graph.AddEdge("c", "v");
 			graph.AddEdge("v", "f");
 
+            // Print the nodes in graph
+            Console.WriteLine(" [*] BFS PrintAll: ");
+            BreadthFirstSearcher.PrintAll(graph, "d");
+            Console.WriteLine ("\r\n");
+
 			string searchResult = null;
 			string startFromNode = "d";
 			Action<string> writeToConsole = (node) => Console.Write (String.Format ("({0}) ", node));

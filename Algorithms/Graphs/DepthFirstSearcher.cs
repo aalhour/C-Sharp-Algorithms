@@ -95,17 +95,17 @@ namespace Algorithms.Graphs
             {
                 var current = stack.Pop();
 
-                if (visited.Contains(current))
-                    continue;
+                if (!visited.Contains(current))
+                {
+                    // DFS VISIT NODE STEP
+                    Console.Write(String.Format("({0}) ", current));
+                    visited.Add(current);
 
-                // DFS VISIT NODE STEP
-                Console.WriteLine(String.Format("({0}) ", current));
-                visited.Add(current);
-
-                // Get the adjacent nodes of current
-                foreach (var adjacent in Graph.Neighbours(current))
-                    if (!visited.Contains(adjacent))
-                        stack.Push(adjacent);
+                    // Get the adjacent nodes of current
+                    foreach (var adjacent in Graph.Neighbours(current))
+                        if (!visited.Contains(adjacent))
+                            stack.Push(adjacent);
+                }
             }
 
         }
@@ -135,24 +135,24 @@ namespace Algorithms.Graphs
                 var current = stack.Pop();
 
                 // Skip loop if node was already visited
-                if (parents.ContainsKey(current))
-                    continue;
+                if (!parents.ContainsKey(current))
+                {
+                    // Save its parent into the dictionary
+                    // Mark it as visited
+                    parents.Add(current, currentParent);
 
-                // Save its parent into the dictionary
-                // Mark it as visited
-                parents.Add(current, currentParent);
+                    // DFS VISIT NODE STEP
+                    if (Match(current))
+                        return current;
 
-                // DFS VISIT NODE STEP
-                if (Match(current))
-                    return current;
+                    // Get currents adjacent nodes (might add already visited nodes).
+                    foreach (var adjacent in Graph.Neighbours(current))
+                        if (!parents.ContainsKey(adjacent))
+                            stack.Push(adjacent);
 
-                // Get currents adjacent nodes (might add already visited nodes).
-                foreach (var adjacent in Graph.Neighbours(current))
-                    if (!parents.ContainsKey(adjacent))
-                        stack.Push(adjacent);
-
-                // Mark current as the father of its adjacents. This helps keep track of tree-nodes.
-                currentParent = current;
+                    // Mark current as the father of its adjacents. This helps keep track of tree-nodes.
+                    currentParent = current;
+                }
             }//end-while
 
             throw new Exception("Item was not found!");
