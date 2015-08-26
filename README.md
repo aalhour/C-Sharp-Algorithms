@@ -4,7 +4,7 @@
 
 ## DESCRIPTION
 
-It originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors) to contribute furthermore to it (mention contributors link), the project took on a different meaning. So I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my research side-project under these topics.
+It originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors) to contribute furthermore to it, the project took on a different meaning. So I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my research side-project under these topics.
 
 #### Solution Hierarchy:
 
