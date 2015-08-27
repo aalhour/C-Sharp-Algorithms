@@ -14,22 +14,22 @@ This is a C#.NET solution-project, and it contains three subprojects:
  2. [Data Structures](DataStructures): A class library project. Contains the Data Structures implementations.
  3. [Main Program](MainProgram): Contains tests for the data structures and algorithms projects.
 
-#### Requirements
+#### Requirements:
  1. C# 5
  2. .NET 4.5
 
-Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and Visual Studio on Windows 7. All projects compile successfully. All tests under MainProgram project pass.
+Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and Visual Studio on Windows 7.
 
 
 ## DATA STRUCTURES
 
 #### Lists:
- * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
- * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
+ * [Skip List](DataStructures/Lists/SkipList.cs).
  * [Array List](DataStructures/Lists/ArrayList.cs).
  * [Stack](DataStructures/Lists/Stack.cs).
  * [Queue](DataStructures/Lists/Queue.cs).
- * [Skip List](DataStructures/Lists/SkipList.cs).
+ * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
+ * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
 
 #### Heaps:
  * [Binary-Min Heap](DataStructures/Heaps/BinaryMinHeap.cs).
@@ -94,6 +94,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
   + [Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).
  * BFS Applications:
   + [Connected Components](Algorithms/Graphs/ConnectedComponents.cs).
+  + [Bipartite Graphs Coloring](Algorithms/Graphs/BipartiteColoring.cs).
 
 #### Strings:
  * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs).

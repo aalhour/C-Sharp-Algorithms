@@ -55,6 +55,7 @@
     <Compile Include="Strings\EditDistanceCostsMap.cs" />
     <Compile Include="Strings\Permutations.cs" />
     <Compile Include="Graphs\ConnectedComponents.cs" />
+    <Compile Include="Graphs\BipartiteColoring.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
