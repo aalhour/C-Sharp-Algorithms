@@ -52,6 +52,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Trie](DataStructures/Trees/Trie.cs).
  * [Trie Map](DataStructures/Trees/TrieMap.cs).
  * [AVL Tree](DataStructures/Trees/AVLTree.cs).
+ * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs).
  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).
  * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).
  

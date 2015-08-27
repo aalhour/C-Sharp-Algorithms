@@ -19,7 +19,7 @@
  * B+_Trees
  * B*_Trees.
  * AA-Trees.
- * Red-Black Trees.
+ * TreeSet, and TreeMap.
  * Scapegoat Trees.
  * Threaded Binary Tree.
  * Weight-balanced Trees.

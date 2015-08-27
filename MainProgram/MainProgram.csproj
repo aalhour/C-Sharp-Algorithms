@@ -58,6 +58,7 @@
     <Compile Include="DataStructuresTests\Graphs_DirectedSparseGraphTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_DirectedWeightedSparseGraphTest.cs" />
     <Compile Include="DataStructuresTests\HashTableSeparateChainingTest.cs" />
+    <Compile Include="DataStructuresTests\RedBlackTreeTest.cs" />
     <Compile Include="DataStructuresTests\SkipListTest.cs" />
     <Compile Include="DataStructuresTests\TrieMapTest.cs" />
     <Compile Include="DataStructuresTests\TrieTest.cs" />
