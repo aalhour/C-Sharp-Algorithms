@@ -78,6 +78,22 @@ namespace DataStructures.Trees
         public AugmentedBinarySearchTree() : base() { }
 
         /// <summary>
+        /// Returns the height of the tree.
+        /// </summary>
+        /// <returns>Hight</returns>
+        public override int Height
+        {
+            get
+            {
+                if (IsEmpty)
+                    return 0;
+
+                var currentNode = this.Root;
+                return this._getTreeHeight(currentNode);
+            }
+        }
+
+        /// <summary>
         /// Returns the Subtrees size for a tree node if node exists; otherwise 0 (left and right nodes of leafs).
         /// This is used in the recursive function UpdateSubtreeSize.
         /// </summary>
@@ -178,19 +194,6 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// Returns the height of the tree.
-        /// </summary>
-        /// <returns>Hight</returns>
-        public override int Height()
-        {
-            if (IsEmpty())
-                return 0;
-
-            var currentNode = this.Root;
-            return this._getTreeHeight(currentNode);
-        }
-
-        /// <summary>
         /// Inserts an element to the tree
         /// </summary>
         /// <param name="item">Item to insert</param>
@@ -246,7 +249,7 @@ namespace DataStructures.Trees
         /// <param name="item">item to remove.</param>
         public override void Remove(T item)
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
@@ -263,7 +266,7 @@ namespace DataStructures.Trees
         /// </summary>
         public override void RemoveMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = (BSTRankedNode<T>)_findMinNode(this.Root);
@@ -279,7 +282,7 @@ namespace DataStructures.Trees
         /// </summary>
         public override void RemoveMax()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = (BSTRankedNode<T>)_findMaxNode(this.Root);

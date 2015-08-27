@@ -28,12 +28,12 @@ namespace DataStructures.Trees
         /// </summary>
         /// <returns></returns>
         protected int _count { get; set; }
-        private BSTNode<T> _root { get; set; }
+        protected virtual BSTNode<T> _root { get; set; }
 
         public virtual BSTNode<T> Root
         {
             get { return this._root; }
-            set { this._root = value; }
+            internal set { this._root = value; }
         }
 
         public BinarySearchTree()
@@ -331,18 +331,18 @@ namespace DataStructures.Trees
         /// Return the number of elements in this tree
         /// </summary>
         /// <returns></returns>
-        public virtual int Count()
+        public virtual int Count
         {
-            return _count;
+            get { return _count; }
         }
 
         /// <summary>
         /// Checks if tree is empty.
         /// </summary>
         /// <returns></returns>
-        public virtual bool IsEmpty()
+        public virtual bool IsEmpty
         {
-            return (_count == 0);
+            get { return (_count == 0); }
         }
 
         /// <summary>
@@ -350,13 +350,16 @@ namespace DataStructures.Trees
         /// Time-complexity: O(n), where n = number of nodes.
         /// </summary>
         /// <returns>Hight</returns>
-        public virtual int Height()
+        public virtual int Height
         {
-            if (IsEmpty())
-                return 0;
+            get
+            {
+                if (IsEmpty)
+                    return 0;
 
-            var currentNode = Root;
-            return _getTreeHeight(currentNode);
+                var currentNode = Root;
+                return _getTreeHeight(currentNode);
+            }
         }
 
         /// <summary>
@@ -411,7 +414,7 @@ namespace DataStructures.Trees
         /// <param name="item">item to remove.</param>
         public virtual void Remove(T item)
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = _findNode(Root, item);
@@ -427,7 +430,7 @@ namespace DataStructures.Trees
         /// </summary>
         public virtual void RemoveMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = _findMinNode(Root);
@@ -439,7 +442,7 @@ namespace DataStructures.Trees
         /// </summary>
         public virtual void RemoveMax()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = _findMaxNode(Root);
@@ -456,12 +459,20 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
+        /// Checks for the existence of an item
+        /// </summary>
+        public virtual bool Contains(T item)
+        {
+            return (_findNode(_root, item) != null);
+        }
+
+        /// <summary>
         /// Finds the minimum in tree 
         /// </summary>
         /// <returns>Min</returns>
         public virtual T FindMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             return _findMinNode(Root).Value;
@@ -501,7 +512,7 @@ namespace DataStructures.Trees
         /// <returns>Max</returns>
         public virtual T FindMax()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             return _findMaxNode(Root).Value;
@@ -514,7 +525,7 @@ namespace DataStructures.Trees
         /// <returns>Item.</returns>
         public virtual T Find(T item)
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             var node = _findNode(Root, item);
