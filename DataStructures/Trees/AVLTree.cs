@@ -13,7 +13,7 @@ namespace DataStructures.Trees
         public new AVLTreeNode<T> Root
         {
             get { return (AVLTreeNode<T>)base.Root; }
-            set { base.Root = value; }
+            internal set { base.Root = value; }
         }
 
         public AVLTree()
@@ -317,7 +317,7 @@ namespace DataStructures.Trees
         /// </summary>
         public override void Remove(T item)
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             // Get the node from the tree
@@ -354,7 +354,7 @@ namespace DataStructures.Trees
         /// </summary>
         public override void RemoveMin()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             // Get the node from the tree
@@ -374,7 +374,7 @@ namespace DataStructures.Trees
         /// </summary>
         public override void RemoveMax()
         {
-            if (IsEmpty())
+            if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
             // Get the node from the tree

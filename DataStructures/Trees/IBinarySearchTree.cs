@@ -5,13 +5,13 @@ namespace DataStructures.Trees
     public interface IBinarySearchTree<T> where T : System.IComparable<T>
     {
         /// Returns the number of elements in the Tree
-        int Count();
+        int Count { get; }
 
         // Checks if the tree is empty.
-        bool IsEmpty();
+        bool IsEmpty { get; }
 
         // Returns the height of the tree.
-        int Height();
+        int Height { get; }
 
         // Inserts an element to the tree
         void Insert(T item);
@@ -30,6 +30,9 @@ namespace DataStructures.Trees
 
         // Remove an element from tree
         void Remove(T item);
+
+        // Check for the existence of an item
+        bool Contains(T item);
 
         // Finds the minimum element.
         T FindMin();

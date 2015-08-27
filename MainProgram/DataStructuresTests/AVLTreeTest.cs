@@ -144,8 +144,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Insert(treeDataList);
             bsTree.Insert(treeDataList);
 
-            int avlTreeHeight = avlTree.Height();
-            int bsTreeHeight = bsTree.Height();
+            int avlTreeHeight = avlTree.Height;
+            int bsTreeHeight = bsTree.Height;
 
             Debug.Assert(avlTreeHeight < bsTreeHeight, "Wrong heights. AVL Tree must be shorted than BS Tree.");
 
