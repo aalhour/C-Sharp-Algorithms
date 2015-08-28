@@ -14,7 +14,7 @@ namespace DataStructures.Trees
         /// Extension method for BinarySearchTree<T>.
         /// Returns a visualized binary search tree text.
         /// </summary>
-        public static string DrawTree<T>(this BinarySearchTree<T> tree) where T : IComparable<T>
+        public static string DrawTree<T>(this IBinarySearchTree<T> tree) where T : IComparable<T>
         {
             int position, width;
             return String.Join("\n", _recursivelyDrawTree(tree.Root, out position, out width));
@@ -22,7 +22,7 @@ namespace DataStructures.Trees
 
 
         /// <summary>
-        /// Recusively draws the tree starting from node.
+        /// /// Recusively draws the tree starting from node.
         /// To construct a full tree representation concatenate the returned list of strings by '\n'.
         /// 
         /// Example:

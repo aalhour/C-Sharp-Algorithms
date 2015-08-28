@@ -65,17 +65,27 @@ namespace DataStructures.Trees
     public class AugmentedBinarySearchTree<T> : BinarySearchTree<T> where T : IComparable<T>
     {
         /// <summary>
-        /// TREE INSTANCE VARIABLES
+        /// Override the Root node accessors.
         /// </summary>
-
-        // Casted-root getter and setter
         public new BSTRankedNode<T> Root
         {
             get { return (BSTRankedNode<T>)base.Root; }
             set { base.Root = value; }
         }
 
+
+        /// <summary>
+        /// CONSTRUCTOR.
+        /// Allows duplicates by default.
+        /// </summary>
         public AugmentedBinarySearchTree() : base() { }
+
+        /// <summary>
+        /// CONSTRUCTOR.
+        /// If allowDuplictes is set to false, no duplicate items will be inserted.
+        /// </summary>
+        public AugmentedBinarySearchTree(bool allowDuplicates) : base(allowDuplicates) { }
+
 
         /// <summary>
         /// Returns the height of the tree.
@@ -201,9 +211,13 @@ namespace DataStructures.Trees
         {
             var newNode = new BSTRankedNode<T>(item);
 
-            // Insert node recursively starting from the root.
-            // Handles increasing the Count of elements
-            base._insertNode(newNode);
+            // Invoke the super BST insert node method.
+            // This insert node recursively starting from the root and checks for success status (related to allowDuplicates flag).
+            // The functions increments count on its own.
+            var success = base._insertNode(newNode);
+
+            if (success == false && _allowDuplicates == false)
+                throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
 
             // Update the subtree-size for the newNode's parent.
             _updateSubtreeSize(newNode.Parent);
@@ -218,12 +232,8 @@ namespace DataStructures.Trees
                 throw new ArgumentNullException();
 
             if (collection.Length > 0)
-            {
                 for (int i = 0; i < collection.Length; ++i)
-                {
                     this.Insert(collection[i]);
-                }
-            }
         }
 
         /// <summary>
@@ -235,12 +245,8 @@ namespace DataStructures.Trees
                 throw new ArgumentNullException();
 
             if (collection.Count > 0)
-            {
                 for (int i = 0; i < collection.Count; ++i)
-                {
                     this.Insert(collection[i]);
-                }
-            }
         }
 
         /// <summary>
