@@ -191,24 +191,20 @@ namespace DataStructures.Trees
         /// <returns>Height of node's longest subtree</returns>
         protected virtual int _getTreeHeight(BSTNode<T> node)
         {
-            if (node == null || node.IsLeafNode == true)
+            if (node == null)
                 return 0;
-
-            if (node.ChildrenCount == 2) // it has both a right child and a left child
-            {
+            // Is leaf node
+            else if (node.IsLeafNode)
+                return 1;
+            // Has two children
+            else if (node.ChildrenCount == 2)
                 return (1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild)));
-            }
+            // Has only left
             else if (node.HasLeftChild)
-            {
                 return (1 + _getTreeHeight(node.LeftChild));
-            }
-            else if (node.HasRightChild)
-            {
+            // Has only right
+            else
                 return (1 + _getTreeHeight(node.RightChild));
-            }
-
-            // return-functions-fix
-            return 0;
         }
 
         /// <summary>
