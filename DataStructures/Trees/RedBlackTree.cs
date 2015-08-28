@@ -31,12 +31,17 @@ namespace DataStructures.Trees
 
 
         /// <summary>
-        /// CONSTRUCTOR
+        /// CONSTRUCTOR.
+        /// Allows duplicates by default.
         /// </summary>
-        public RedBlackTree()
-            : base()
-        {
-        }
+        public RedBlackTree() : base() { }
+
+        /// <summary>
+        /// CONSTRUCTOR.
+        /// If allowDuplictes is set to false, no duplicate items will be inserted.
+        /// </summary>
+        public RedBlackTree(bool allowDuplicates) : base(allowDuplicates) { }
+
 
 
         /*************************************************************************************************/
@@ -121,7 +126,6 @@ namespace DataStructures.Trees
          * The following are methods for rotating the tree (left/right) and for adjusting the 
          * ... tree after inserting or removing nodes.
          */
-
 
         /// <summary>
         /// Rotates a node to the left in the Red-Black Tree.
@@ -450,6 +454,11 @@ namespace DataStructures.Trees
             return this._remove((RedBlackTreeNode<TKey>)nodeToDelete);
         }
 
+        /// <summary>
+        /// The internal remove helper.
+        /// Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
+        /// This is called from the overriden _remove(BSTNode nodeToDelete) helper.
+        /// </summary>
         protected bool _remove(RedBlackTreeNode<TKey> nodeToDelete)
         {
             if (nodeToDelete == null)
@@ -530,14 +539,20 @@ namespace DataStructures.Trees
         {
             var newNode = new RedBlackTreeNode<TKey>(item);
 
-            // Call BST insert node
-            base._insertNode(newNode);
+            // Invoke the super BST insert node method.
+            // This insert node recursively starting from the root and checks for success status (related to allowDuplicates flag).
+            // The functions increments count on its own.
+            var success = base._insertNode(newNode);
+
+            if (success == false && _allowDuplicates == false)
+                throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
 
             // Adjust Red-Black Tree rules
             if (!newNode.IsEqualTo(Root))
                 if (newNode.Parent.Color != RedBlackTreeColors.Black) // Case 0: Parent is not black and we have to restructure tree
                     _adjustTreeAfterInsertion(newNode);
 
+            // Always color root as black
             Root.Color = RedBlackTreeColors.Black;
         }
 
@@ -550,12 +565,8 @@ namespace DataStructures.Trees
                 throw new ArgumentNullException();
 
             if (collection.Length > 0)
-            {
                 for (int i = 0; i < collection.Length; ++i)
-                {
                     this.Insert(collection[i]);
-                }
-            }
         }
 
         /// <summary>
@@ -567,12 +578,8 @@ namespace DataStructures.Trees
                 throw new ArgumentNullException();
 
             if (collection.Count > 0)
-            {
                 for (int i = 0; i < collection.Count; ++i)
-                {
                     this.Insert(collection[i]);
-                }
-            }
         }
 
         /// <summary>
@@ -586,7 +593,7 @@ namespace DataStructures.Trees
             // Get the node from the tree
             var node = (RedBlackTreeNode<TKey>)base._findNode(Root, item);
 
-            // Invoke the BST remove node method.
+            // Invoke the internal remove node method.
             bool status = this._remove(node);
 
             if (status == false)
@@ -604,7 +611,7 @@ namespace DataStructures.Trees
             // Get the node from the tree
             var node = (RedBlackTreeNode<TKey>)base._findMinNode(Root);
 
-            // Invoke the BST remove node method.
+            // Invoke the internal remove node method.
             this._remove(node);
         }
 
@@ -619,7 +626,7 @@ namespace DataStructures.Trees
             // Get the node from the tree
             var node = (RedBlackTreeNode<TKey>)base._findMaxNode(Root);
 
-            // Invoke the BST remove node method.
+            // Invoke the internal remove node method.
             this._remove(node);
         }
 

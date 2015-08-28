@@ -28,6 +28,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <returns></returns>
         protected int _count { get; set; }
+        protected bool _allowDuplicates { get; set; }
         protected virtual BSTNode<T> _root { get; set; }
 
         public virtual BSTNode<T> Root
@@ -36,10 +37,27 @@ namespace DataStructures.Trees
             internal set { this._root = value; }
         }
 
+
+        /// <summary>
+        /// CONSTRUCTOR.
+        /// Allows duplicates by default.
+        /// </summary>
         public BinarySearchTree()
         {
-            Root = null;
             _count = 0;
+            _allowDuplicates = true;
+            Root = null;
+        }
+
+        /// <summary>
+        /// CONSTRUCTOR.
+        /// If allowDuplictes is set to false, no duplicate items will be inserted.
+        /// </summary>
+        public BinarySearchTree(bool allowDuplicates)
+        {
+            _count = 0;
+            _allowDuplicates = allowDuplicates;
+            Root = null;
         }
 
 
@@ -106,19 +124,25 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="currentNode">Current node to insert afters.</param>
         /// <param name="newNode">New node to be inserted.</param>
-        protected virtual void _insertNode(BSTNode<T> newNode)
+        protected virtual bool _insertNode(BSTNode<T> newNode)
         {
             // Handle empty trees
             if (this.Root == null)
             {
                 Root = newNode;
                 _count++;
-                return;
+                return true;
             }
             else
             {
                 if (newNode.Parent == null)
                     newNode.Parent = this.Root;
+
+                // Check for value equality and whether inserting duplicates is allowed
+                if (_allowDuplicates == false && newNode.Parent.Value.IsEqualTo(newNode.Value))
+                {
+                    return false;
+                }
 
                 // Go Left
                 if (newNode.Parent.Value.IsGreaterThan(newNode.Value)) // newNode < parent
@@ -126,13 +150,16 @@ namespace DataStructures.Trees
                     if (newNode.Parent.HasLeftChild == false)
                     {
                         newNode.Parent.LeftChild = newNode;
+
+                        // Increment count.
                         _count++;
-                        return;
+
+                        return true;
                     }
                     else
                     {
                         newNode.Parent = newNode.Parent.LeftChild;
-                        _insertNode(newNode);
+                        return _insertNode(newNode);
                     }
                 }
                 // Go Right
@@ -141,13 +168,16 @@ namespace DataStructures.Trees
                     if (newNode.Parent.HasRightChild == false)
                     {
                         newNode.Parent.RightChild = newNode;
+
+                        // Increment count.
                         _count++;
-                        return;
+
+                        return true;
                     }
                     else
                     {
                         newNode.Parent = newNode.Parent.RightChild;
-                        _insertNode(newNode);
+                        return _insertNode(newNode);
                     }
                 }
             }
@@ -161,24 +191,20 @@ namespace DataStructures.Trees
         /// <returns>Height of node's longest subtree</returns>
         protected virtual int _getTreeHeight(BSTNode<T> node)
         {
-            if (node == null || node.IsLeafNode == true)
+            if (node == null)
                 return 0;
-
-            if (node.ChildrenCount == 2) // it has both a right child and a left child
-            {
+            // Is leaf node
+            else if (node.IsLeafNode)
+                return 1;
+            // Has two children
+            else if (node.ChildrenCount == 2)
                 return (1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild)));
-            }
+            // Has only left
             else if (node.HasLeftChild)
-            {
                 return (1 + _getTreeHeight(node.LeftChild));
-            }
-            else if (node.HasRightChild)
-            {
+            // Has only right
+            else
                 return (1 + _getTreeHeight(node.RightChild));
-            }
-
-            // return-functions-fix
-            return 0;
         }
 
         /// <summary>
@@ -362,6 +388,11 @@ namespace DataStructures.Trees
             }
         }
 
+        public virtual bool AllowsDuplicates
+        {
+            get { return _allowDuplicates; }
+        }
+
         /// <summary>
         /// Inserts an element to the tree
         /// </summary>
@@ -370,8 +401,11 @@ namespace DataStructures.Trees
         {
             var newNode = new BSTNode<T>(item);
 
-            // Insert node recursively starting from the root.
-            _insertNode(newNode);
+            // Insert node recursively starting from the root. check for success status.
+            var success = _insertNode(newNode);
+
+            if (success == false && _allowDuplicates == false)
+                throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
         }
 
         /// <summary>
@@ -541,7 +575,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="searchPredicate">The search predicate</param>
         /// <returns>ArrayList<T> of elements.</returns>
-        public virtual List<T> FindAll(Predicate<T> searchPredicate)
+        public virtual IEnumerable<T> FindAll(Predicate<T> searchPredicate)
         {
             var list = new List<T>();
             _findAll(Root, searchPredicate, ref list);

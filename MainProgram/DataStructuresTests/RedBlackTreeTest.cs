@@ -10,7 +10,33 @@ namespace C_Sharp_Algorithms.DataStructuresTests
     {
         public static void DoTest()
         {
-            var redBlackTree = new RedBlackTree<int>();
+            // Test against the worst case of insertion
+            // Case: insert increasing numbers and check if it leads to a linked list
+            var redBlackTree = new RedBlackTree<int>(allowDuplicates: false);
+
+            redBlackTree.Insert(1);
+            redBlackTree.Insert(2);
+            redBlackTree.Insert(3);
+            redBlackTree.Insert(4);
+            redBlackTree.Insert(5);
+            redBlackTree.Insert(6);
+            redBlackTree.Insert(7);
+            redBlackTree.Insert(8);
+            redBlackTree.Insert(9);
+            redBlackTree.Insert(10);
+
+            Debug.Assert(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
+
+            Console.WriteLine("********************");
+            Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
+            Console.WriteLine("********************");
+            Console.WriteLine(redBlackTree.DrawTree());
+            Console.WriteLine("\r\n");
+
+
+            //
+            // Test against re-shuffled insertions (not like above order)
+            redBlackTree = new RedBlackTree<int>(allowDuplicates: false);
 
             redBlackTree.Insert(4);
             redBlackTree.Insert(5);
@@ -21,17 +47,37 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             redBlackTree.Insert(6);
             redBlackTree.Insert(0);
             redBlackTree.Insert(8);
-            redBlackTree.Insert(2);
             redBlackTree.Insert(10);
             redBlackTree.Insert(9);
 
+            //
+            // ASSERT INSERTING DUPLICATES WOULD BREAK
+            var insert_duplicate_passed = true;
+            try
+            {
+                // 2 already exists in tree
+                redBlackTree.Insert(2);
+                insert_duplicate_passed = true;
+            }
+            catch
+            {
+                insert_duplicate_passed = false;
+            }
+
+            Debug.Assert(insert_duplicate_passed == false, "Fail! The tree doesn't allow duplicates");
+
+
+            //
             // PRINT TREE
+            Console.WriteLine("********************");
             Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
+            Console.WriteLine("********************");
             Console.WriteLine(redBlackTree.DrawTree());
             Console.WriteLine("\r\n");
 
+
             // Assert count
-            Debug.Assert(redBlackTree.Count == 12);
+            Debug.Assert(redBlackTree.Count == 11);
 
             // Assert existence and nonexistence of some items
             Debug.Assert(redBlackTree.Contains(1) == true);
@@ -47,7 +93,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             redBlackTree.Remove(3);
 
             // Assert count
-            Debug.Assert(redBlackTree.Count == 9);
+            Debug.Assert(redBlackTree.Count == 8);
 
             // Assert nonexistence of previously existing items
             Debug.Assert(redBlackTree.Contains(1) == false);
@@ -58,14 +104,19 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             redBlackTree.Remove(redBlackTree.Root.Value);
 
             // Assert count
-            Debug.Assert(redBlackTree.Count == 8);
+            Debug.Assert(redBlackTree.Count == 7);
 
             // Assert nonexistence of old root's value
             Debug.Assert(redBlackTree.Contains(oldRootVal) == false);
 
+
+            //
             // PRINT TREE
+            Console.WriteLine("********************");
             Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
+            Console.WriteLine("********************");
             Console.WriteLine(redBlackTree.DrawTree());
+            Console.WriteLine("\r\n");
 
             Console.ReadLine();
         }//end-do-test
@@ -113,7 +164,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 }
             }
 
-            Console.WriteLine("*************************************");
+            Console.WriteLine("******************************************");
             Console.WriteLine(" [*] Assert that levels have different alternating colors:\r\n");
 
             var color = RedBlackTreeColors.Black;
@@ -131,7 +182,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 color = (color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black);
             }
 
-            Console.WriteLine("*************************************");
+            Console.WriteLine("******************************************\r\n");
         }//end-test-case
 
 
