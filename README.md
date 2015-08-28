@@ -18,6 +18,9 @@ This is a C#.NET solution-project, and it contains three subprojects:
  1. C# 5
  2. .NET 4.5
 
+#### A Note to Contributors:
+If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
+
 Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and Visual Studio on Windows 7.
 
 
