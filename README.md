@@ -64,6 +64,9 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
   + [Clique Graphs](DataStructures/Graphs/CliqueGraph.cs).
   + [Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).
   + [Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).
+ * Undirected Weighted Graphs:
+  + [Undirected Weighted Sparse Graph](DataStructures/Graphs/UndirectedWeightedSparseGraph.cs).
+  + [Undirected Weighted Dense Graph](DataStructures/Graphs/UndirectedWeightedDenseGraph.cs).
  * Directed Graphs:
   + [Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).
   + [Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs).

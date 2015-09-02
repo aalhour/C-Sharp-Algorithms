@@ -34,7 +34,7 @@
   * Multiset / Bag.
   * Multimap / Multihash Table.
   * A textbook implementation of open-addressing hash table with double hashing / re-hasing.
- * Undirected Weighted Graphs (Sparse & Dense implementations).
+ * ~~Undirected Weighted Graphs (Sparse & Dense implementations).~~
  * Multigraphs: Graphs with multiple edges. [@Wikipedia](https://en.wikipedia.org/wiki/Multigraph).
  * Mixed Graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Mixed_graph).
  * (Probabilistic) Graphical Models:

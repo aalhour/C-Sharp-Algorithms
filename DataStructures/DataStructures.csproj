@@ -43,6 +43,8 @@
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
     <Compile Include="Graphs\DirectedSparseGraph.cs" />
     <Compile Include="Graphs\DirectedWeightedSparseGraph.cs" />
+    <Compile Include="Graphs\UndirectedWeightedDenseGraph.cs" />
+    <Compile Include="Graphs\UndirectedWeightedSparseGraph.cs" />
     <Compile Include="Graphs\WeightedEdge.cs" />
     <Compile Include="Hashing\PrimeHashingFamily.cs" />
     <Compile Include="Hashing\UniversalHashingFamily.cs" />
