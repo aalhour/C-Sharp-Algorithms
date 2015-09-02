@@ -58,13 +58,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Debug.Assert(add_d_to_s_status == false, "Error! Added a duplicate edge.");
 
             var add_c_to_f_status = graph.AddEdge("c", "f", 12);
-            Debug.Assert(add_d_to_s_status == false, "Error! Added a duplicate edge.");
+            Debug.Assert(add_c_to_f_status == false, "Error! Added a duplicate edge.");
 
             var add_s_to_x_status = graph.AddEdge("s", "x", 123);
-            Debug.Assert(add_d_to_s_status == false, "Error! Added a duplicate edge.");
+            Debug.Assert(add_s_to_x_status == false, "Error! Added a duplicate edge.");
 
             var add_x_to_d_status = graph.AddEdge("x", "d", 34);
-            Debug.Assert(add_d_to_s_status == false, "Error! Added a duplicate edge.");
+            Debug.Assert(add_x_to_d_status == false, "Error! Added a duplicate edge.");
 
             // TEST DELETING EDGES
             graph.RemoveEdge("d", "c");
@@ -165,6 +165,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
 
             Console.ReadLine();
+
         }
+
     }
+
 }

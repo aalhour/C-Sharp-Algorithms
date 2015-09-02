@@ -50,16 +50,15 @@ namespace DataStructures.Graphs
         {
             WeightedEdge<T> edge = null;
 
-            try
-            {
-                edge = _adjacencyList[source].FindFirst(item => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            // Predicate
+            var sourceToDestinationPredicate = new Predicate<WeightedEdge<T>>((item) => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
 
-            // Could return a null object.
+            // Try to find a match
+            if(_adjacencyList.ContainsKey(source))
+                _adjacencyList[source].TryFindFirst(sourceToDestinationPredicate, out edge);
+            
+            // Return!
+            // Might return a null object.
             return edge;
         }
 
@@ -203,21 +202,16 @@ namespace DataStructures.Graphs
             else if (!HasVertex(source) || !HasVertex(destination))
                 return false;
 
-            // Try get edge
-            var edge = _tryGetEdge(source, destination);
+            foreach (var edge in _adjacencyList[source])
+            {
+                if (edge.Destination.IsEqualTo(destination))
+                {
+                    edge.Weight = weight;
+                    return true;
+                }
+            }
 
-            // Check existence of edge
-            if (edge == null)
-                return false;
-
-            // Remove the old edge
-            _adjacencyList[source].Remove(edge);
-
-            // Add the new weighted edge
-            edge.Weight = weight;
-            _adjacencyList[source].Append(edge);
-
-            return true;
+            return false;
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ using DataStructures.Lists;
 namespace DataStructures.Graphs
 {
 
-    /// 
+    /// <summary>
     /// This class represents the graph as an adjacency-matrix (two dimensional integer array).
     /// </summary>
     public class DirectedWeightedDenseGraph<T> : DirectedDenseGraph<T>, IWeightedGraph<T> where T : IComparable<T>
