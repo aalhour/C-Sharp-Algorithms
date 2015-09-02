@@ -179,8 +179,19 @@ namespace DataStructures.Lists
                 _headPointer = 0;
 
             // Shrink the internal collection
-            if (_size > 0 && _size <= _collection.Length / 4)
+            if (_size > 0 && _collection.Length > _defaultCapacity && _size <= _collection.Length / 4)
+            {
+                // Get head and tail
+                var head = _collection[_headPointer];
+                var tail = _collection[_tailPointer];
+
+                // Shrink
                 _resize((_collection.Length / 3) * 2);
+
+                // Update head and tail pointers
+                _headPointer = Array.IndexOf(_collection, head);
+                _tailPointer = Array.IndexOf(_collection, tail);
+            }
 
             return (T)topItem;
         }
