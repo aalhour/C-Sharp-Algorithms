@@ -454,6 +454,65 @@ namespace DataStructures.Lists
         }
 
         /// <summary>
+        /// Remove the specified dataItem.
+        /// </summary>
+        public virtual void RemoveFirstMatch(Predicate<T> match)
+        {
+            // Handle index out of bound errors
+            if (IsEmpty())
+                throw new IndexOutOfRangeException();
+
+            if (match(_firstNode.Data))
+            {
+                _firstNode = _firstNode.Next;
+
+                if (_firstNode != null)
+                    _firstNode.Previous = null;
+            }
+            else if (match(_lastNode.Data))
+            {
+                _lastNode = _lastNode.Previous;
+
+                if (_lastNode != null)
+                    _lastNode.Next = null;
+            }
+            else
+            {
+                // Remove
+                var currentNode = _firstNode;
+
+                // Get currentNode to reference the element at the index.
+                while (currentNode.Next != null)
+                {
+                    if (match(currentNode.Data))
+                        break;
+
+                    currentNode = currentNode.Next;
+                }//end-while
+
+                // If we reached the last node and item was not found
+                // Throw exception
+                if (!match(currentNode.Data))
+                    throw new Exception("Item was not found!");
+
+                // Remove element
+                DLinkedListNode<T> newPrevious = currentNode.Previous;
+                DLinkedListNode<T> newNext = currentNode.Next;
+
+                if (newPrevious != null)
+                    newPrevious.Next = newNext;
+
+                if (newNext != null)
+                    newNext.Previous = newPrevious;
+
+                currentNode = newPrevious;
+            }
+
+            // Decrement count.
+            _count--;
+        }
+
+        /// <summary>
         /// Removes the item at the specified index.
         /// </summary>
         /// <returns>True if removed successfully, false otherwise.</returns>
