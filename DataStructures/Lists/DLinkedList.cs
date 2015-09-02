@@ -556,6 +556,41 @@ namespace DataStructures.Lists
         }
 
         /// <summary>
+        /// Tries to find a match for the predicate. Returns true if found; otherwise false.
+        /// </summary>
+        public virtual bool TryFindFirst(Predicate<T> match, out T found)
+        {
+            // Initialize the output parameter
+            found = default(T);
+
+            if (IsEmpty())
+                return false;
+
+            var currentNode = _firstNode;
+            var list = new List<T>();
+
+            try
+            {
+                while (currentNode != null)
+                {
+                    if (match(currentNode.Data))
+                    {
+                        found = currentNode.Data;
+                        return true;
+                    }
+
+                    currentNode = currentNode.Next;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Find the first element that matches the predicate from all elements in list.
         /// </summary>
         public virtual T FindFirst(Predicate<T> match)
