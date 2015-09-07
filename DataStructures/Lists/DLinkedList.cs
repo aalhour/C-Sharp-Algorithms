@@ -85,7 +85,7 @@ namespace DataStructures.Lists
         /// <returns>Element</returns>
         protected virtual T _getElementAt(int index)
         {
-            if (IsEmpty())
+            if (IsEmpty() || index < 0 || index >= Count)
                 throw new IndexOutOfRangeException("List is empty.");
 
             if (index == 0)
@@ -96,7 +96,7 @@ namespace DataStructures.Lists
             {
                 return Last;
             }
-            else if (index > 0 && index < (Count - 1))
+            else
             {
                 DLinkedListNode<T> currentNode = null;
 
@@ -122,10 +122,6 @@ namespace DataStructures.Lists
 
                 return currentNode.Data;
             }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
         }
 
         /// <summary>
@@ -146,7 +142,7 @@ namespace DataStructures.Lists
             {
                 _lastNode.Data = value;
             }
-            else if (index > 0 && index < (Count - 1))
+            else
             {
                 DLinkedListNode<T> currentNode = null;
 
@@ -257,19 +253,23 @@ namespace DataStructures.Lists
         public virtual int IndexOf(T dataItem)
         {
             int i = 0;
+            bool found = false;
             var currentNode = _firstNode;
 
             // Get currentNode to reference the element at the index.
-            while (i <= _count)
+            while (i < Count)
             {
                 if (currentNode.Data.IsEqualTo(dataItem))
+                {
+                    found = true;
                     break;
+                }
 
                 currentNode = currentNode.Next;
                 i++;
             }//end-while
 
-            return (i == Count ? -1 : i);
+            return (found == true ? i : -1);
         }
 
         /// <summary>
@@ -327,6 +327,9 @@ namespace DataStructures.Lists
         /// <param name="index">Index.</param>
         public virtual void InsertAt(T dataItem, int index)
         {
+            if(index < 0 || index > Count)
+                throw new IndexOutOfRangeException();
+            
             if (index == 0)
             {
                 Prepend(dataItem);
@@ -335,30 +338,10 @@ namespace DataStructures.Lists
             {
                 Append(dataItem);
             }
-            else if (index > 0 && index < Count)
+            else
             {
                 DLinkedListNode<T> currentNode = null;
                 DLinkedListNode<T> newNode = new DLinkedListNode<T>(dataItem);
-
-                // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-                // If index > half then traverse it from the end (_lastNode reference)
-                // Otherwise, traverse it from the beginning (_firstNode refrence)
-                /*if (index > (Count / 2))
-                {
-                    currentNode = _lastNode;
-                    for (int i = (Count - 1); i > index - 1; --i)
-                    {
-                        currentNode = currentNode.Previous;
-                    }
-                }
-                else
-                {
-                    currentNode = this._firstNode;
-                    for (int i = 0; i < index - 1; ++i)
-                    {
-                        currentNode = currentNode.Next;
-                    }
-                }*/
 
                 currentNode = this._firstNode;
                 for (int i = 0; i < index - 1; ++i)
@@ -377,10 +360,6 @@ namespace DataStructures.Lists
 
                 // Increment the count
                 _count++;
-            }
-            else
-            {
-                throw new IndexOutOfRangeException();
             }
         }
 
