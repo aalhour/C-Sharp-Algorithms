@@ -260,7 +260,14 @@ namespace DataStructures.Graphs
         {
             get
             {
-                throw new NotImplementedException();
+                List<UnweightedEdge<T>> returnEdges = new List<UnweightedEdge<T>>();
+
+                foreach (var edge in getEdges())
+                {
+                    returnEdges.Add(new UnweightedEdge<T>(edge.Item1, edge.Item2));
+                    returnEdges.Add(new UnweightedEdge<T>(edge.Item2, edge.Item1));
+                }
+                return returnEdges;
             }
         }
 
@@ -269,7 +276,22 @@ namespace DataStructures.Graphs
         /// </summary>
         public IEnumerable<IEdge<T>> IncomingEdges(T vertex)
         {
-            throw new NotImplementedException();
+            List<UnweightedEdge<T>> incomingEdges = new List<UnweightedEdge<T>>();
+
+            foreach (var c in _cliques)
+            {
+                if (c.Contains(vertex))
+                {
+                    foreach (var item in c)
+                    {
+                        if (!incomingEdges.Exists(x => x.Source.Equals(item)))
+                            incomingEdges.Add(new UnweightedEdge<T>(item, vertex));
+                    }
+                }
+            }
+
+            return incomingEdges;
+
         }
 
         /// <summary>
@@ -277,7 +299,21 @@ namespace DataStructures.Graphs
         /// </summary>
         public IEnumerable<IEdge<T>> OutgoingEdges(T vertex)
         {
-            throw new NotImplementedException();
+            List<UnweightedEdge<T>> outgoingEdges = new List<UnweightedEdge<T>>();
+
+            foreach (var c in _cliques)
+            {
+                if (c.Contains(vertex))
+                {
+                    foreach (var item in c)
+                    {
+                        if (!outgoingEdges.Exists(x => x.Destination.Equals(item)))
+                            outgoingEdges.Add(new UnweightedEdge<T>(vertex, item));
+                    }
+                }
+            }
+
+            return outgoingEdges;
         }
 
         /// <summary>
