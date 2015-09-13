@@ -107,6 +107,103 @@ namespace DataStructures.Graphs
             }
         }
 
+
+        IEnumerable<IEdge<T>> IGraph<T>.Edges
+        {
+            get { return this.Edges; }
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
+        {
+            return this.IncomingEdges(vertex);
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
+        {
+            return this.OutgoingEdges(vertex);
+        }
+
+
+        /// <summary>
+        /// An enumerable collection of edges.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> Edges
+        {
+            get
+            {
+                var seen = new HashSet<KeyValuePair<T, T>>();
+
+                foreach (var vertex in _vertices)
+                {
+                    int source = _vertices.IndexOf(vertex);
+
+                    for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+                    {
+                        // Check existence of vertex
+                        if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                        {
+                            var neighbor = (T)_vertices[adjacent]; 
+
+                            var outgoingEdge = new KeyValuePair<T, T>((T)vertex, neighbor);
+                            var incomingEdge = new KeyValuePair<T, T>(neighbor, (T)vertex);
+
+                            if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
+                                continue;
+                            else
+                                seen.Add(outgoingEdge);
+                            
+                            yield return new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value);
+                        }
+                    }
+                }//end-foreach
+            }
+        }
+
+        /// <summary>
+        /// Get all incoming edges to a vertex
+        /// </summary>
+        public IEnumerable<UnweightedEdge<T>> IncomingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+
+            int source = _vertices.IndexOf(vertex);
+
+            for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+            {
+                if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                {
+                    yield return (new UnweightedEdge<T>(
+                        (T)_vertices[adjacent], // from
+                        vertex                  // to
+                    ));
+                }
+            }//end-for
+        }
+
+        /// <summary>
+        /// Get all outgoing edges from a vertex.
+        /// </summary>
+        public IEnumerable<UnweightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+            
+            int source = _vertices.IndexOf(vertex);
+
+            for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+            {
+                if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                {
+                    yield return (new UnweightedEdge<T>(
+                        vertex,                 // from
+                        (T)_vertices[adjacent]  // to
+                    ));
+                }
+            }//end-for
+        }
+
+
         /// <summary>
         /// Connects two vertices together.
         /// </summary>
@@ -259,12 +356,12 @@ namespace DataStructures.Graphs
         public virtual DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
         {
             var neighbours = new DLinkedList<T>();
-            int index = _vertices.IndexOf(vertex);
+            int source = _vertices.IndexOf(vertex);
 
-            if (index != -1)
-                for (int i = 0; i < _vertices.Count; ++i)
-                    if (_vertices[i] != null && _doesEdgeExist(index, i))
-                        neighbours.Append((T)_vertices[i]);
+            if (source != -1)
+                for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+                    if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                        neighbours.Append((T)_vertices[adjacent]);
 
             return neighbours;
         }

@@ -67,7 +67,7 @@ namespace Algorithms.Graphs
             int srcIndex = _nodesToIndices[source];
             _distances[srcIndex] = 0;
 
-            var edges = graph.Edges;
+            var edges = graph.Edges as IEnumerable<WeightedEdge<TVertex>>;
 
             // First pass
             // Calculate shortest paths and relax all edges.

@@ -79,9 +79,9 @@ namespace Algorithms.Graphs
             // Main loop
             while (!minPQ.IsEmpty)
             {
-                var current = minPQ.DequeueMin();               // get vertex with min weight
-                var currentIndex = _nodesToIndices[current];    // get its index
-                var edges = graph.OutgoingEdges(current);       // get its outgoing weighted edges
+                var current = minPQ.DequeueMin();                                               // get vertex with min weight
+                var currentIndex = _nodesToIndices[current];                                    // get its index
+                var edges = graph.OutgoingEdges(current) as IEnumerable<WeightedEdge<TVertex>>; // get its outgoing weighted edges
 
                 foreach (var edge in edges)
                 {

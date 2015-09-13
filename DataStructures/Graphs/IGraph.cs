@@ -33,6 +33,21 @@ namespace DataStructures.Graphs
         IEnumerable<T> Vertices { get; }
 
         /// <summary>
+        /// An enumerable collection of edges.
+        /// </summary>
+        IEnumerable<IEdge<T>> Edges { get; }
+
+        /// <summary>
+        /// Get all incoming edges from vertex
+        /// </summary>
+        IEnumerable<IEdge<T>> IncomingEdges(T vertex);
+
+        /// <summary>
+        /// Get all outgoing edges from vertex
+        /// </summary>
+        IEnumerable<IEdge<T>> OutgoingEdges(T vertex);
+
+        /// <summary>
         /// Connects two vertices together.
         /// </summary>
         bool AddEdge(T firstVertex, T secondVertex);

@@ -250,7 +250,35 @@ namespace DataStructures.Graphs
 
         #endregion
 
+
         #region IGraph implementation
+
+        /// <summary>
+        /// An enumerable collection of all graph edges.
+        /// </summary>
+        public IEnumerable<IEdge<T>> Edges
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        /// <summary>
+        /// Get all incoming edges to vertex.
+        /// </summary>
+        public IEnumerable<IEdge<T>> IncomingEdges(T vertex)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get all outgoing edges from a vertex.
+        /// </summary>
+        public IEnumerable<IEdge<T>> OutgoingEdges(T vertex)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Connects two vertices together.

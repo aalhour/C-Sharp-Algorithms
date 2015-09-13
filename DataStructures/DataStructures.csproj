@@ -88,6 +88,8 @@
     <Compile Include="Trees\TrieMap.cs" />
     <Compile Include="Trees\TrieMapNode.cs" />
     <Compile Include="Trees\TrieNode.cs" />
+    <Compile Include="Graphs\UnweightedEdge.cs" />
+    <Compile Include="Graphs\IEdge.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

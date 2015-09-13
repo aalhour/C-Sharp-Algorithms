@@ -92,6 +92,75 @@ namespace DataStructures.Graphs
             }
         }
 
+
+        IEnumerable<IEdge<T>> IGraph<T>.Edges
+        {
+            get { return this.Edges; }
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
+        {
+            return this.IncomingEdges(vertex);
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
+        {
+            return this.OutgoingEdges(vertex);
+        }
+
+
+        /// <summary>
+        /// An enumerable collection of all unweighted edges in Graph.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> Edges
+        {
+            get
+            {
+                var seen = new HashSet<KeyValuePair<T, T>>();
+
+                foreach (var vertex in _adjacencyList)
+                {
+                    foreach (var adjacent in vertex.Value)
+                    {
+                        var incomingEdge = new KeyValuePair<T, T>(adjacent, vertex.Key);
+                        var outgoingEdge = new KeyValuePair<T, T>(vertex.Key, adjacent);
+
+                        if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
+                            continue;
+                        else
+                            seen.Add(outgoingEdge);
+
+                        yield return (new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value));
+                    }
+                }//end-foreach
+            }
+        }
+
+        /// <summary>
+        /// Get all incoming unweighted edges to a vertex
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> IncomingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+
+            foreach(var adjacent in _adjacencyList[vertex])
+                yield return (new UnweightedEdge<T>(adjacent, vertex));
+        }
+
+        /// <summary>
+        /// Get all outgoing unweighted edges from a vertex.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+
+            foreach(var adjacent in _adjacencyList[vertex])
+                yield return (new UnweightedEdge<T>(vertex, adjacent));
+        }
+
+
         /// <summary>
         /// Connects two vertices together.
         /// </summary>

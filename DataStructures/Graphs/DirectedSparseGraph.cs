@@ -91,6 +91,73 @@ namespace DataStructures.Graphs
             }
         }
 
+
+        IEnumerable<IEdge<T>> IGraph<T>.Edges
+        {
+            get { return this.Edges; }
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
+        {
+            return this.IncomingEdges(vertex);
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
+        {
+            return this.OutgoingEdges(vertex);
+        }
+
+
+        /// <summary>
+        /// An enumerable collection of all directed unweighted edges in graph.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> Edges
+        {
+            get
+            {
+                foreach (var vertex in _adjacencyList)
+                    foreach (var adjacent in vertex.Value)
+                        yield return (new UnweightedEdge<T>(
+                            vertex.Key,   // from
+                            adjacent      // to
+                        ));
+            }
+        }
+
+        /// <summary>
+        /// Get all incoming directed unweighted edges to a vertex.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> IncomingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+            
+            foreach(var adjacent in _adjacencyList.Keys)
+            {
+                if (_adjacencyList[adjacent].Contains(vertex))
+                    yield return (new UnweightedEdge<T>(
+                        adjacent,   // from
+                        vertex      // to
+                    ));
+            }//end-foreach
+        }
+
+        /// <summary>
+        /// Get all outgoing directed unweighted edges from a vertex.
+        /// </summary>
+        public virtual IEnumerable<UnweightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+
+            foreach(var adjacent in _adjacencyList[vertex])
+                yield return (new UnweightedEdge<T>(
+                    vertex,     // from
+                    adjacent    // to
+                ));
+        }
+
+
         /// <summary>
         /// Connects two vertices together in the direction: first->second.
         /// </summary>

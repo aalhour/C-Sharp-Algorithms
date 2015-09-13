@@ -78,17 +78,64 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
-        /// An enumerable collection of edges.
+        /// An enumerable collection of all weighted directed edges in graph.
         /// </summary>
         public virtual IEnumerable<WeightedEdge<T>> Edges
         {
             get
             {
                 foreach (var vertex in _vertices)
-                    foreach (var edge in NeighboursMap((T)vertex))
-                        yield return (new WeightedEdge<T>((T)vertex, edge.Key, edge.Value));
+                    foreach (var outgoingEdge in OutgoingEdges((T)vertex))
+                        yield return outgoingEdge;
             }
         }
+
+        /// <summary>
+        /// Get all incoming unweighted edges to a vertex.
+        /// </summary>
+        public virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+            
+            int source = _vertices.IndexOf(vertex);
+
+            for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+            {
+                if (_vertices[adjacent] != null && _doesEdgeExist(adjacent, source))
+                {
+                    yield return (new WeightedEdge<T>(
+                        (T)_vertices[adjacent],             // from
+                        vertex,                             // to
+                        _getEdgeWeight(source, adjacent)    // weight
+                    ));
+                }
+            }//end-for
+        }
+
+        /// <summary>
+        /// Get all outgoing unweighted edges from a vertex.
+        /// </summary>
+        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        {
+            if (!HasVertex(vertex))
+                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+
+            int source = _vertices.IndexOf(vertex);
+
+            for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
+            {
+                if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
+                {
+                    yield return (new WeightedEdge<T>(
+                        vertex,                             // from
+                        (T)_vertices[adjacent],             // to
+                        _getEdgeWeight(source, adjacent)    // weight
+                    ));
+                }
+            }//end-for
+        }
+
 
         /// <summary>
         /// Obsolete. Another AddEdge function is implemented with a weight parameter.
@@ -265,37 +312,6 @@ namespace DataStructures.Graphs
                         neighbors.Add((T)_vertices[adjacent], _getEdgeWeight(source, adjacent));
 
             return neighbors;
-        }
-
-        /// <summary>
-        /// Get all outgoing weighted edges from vertex
-        /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
-        {
-            if (!HasVertex(vertex))
-                return null;
-
-            int source = _vertices.IndexOf(vertex);
-            var list = new DLinkedList<WeightedEdge<T>>();
-
-            // Check existence of vertex
-            if (source != -1)
-            {
-                for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
-                {
-                    if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
-                    {
-                        var edge = new WeightedEdge<T>(
-                                (T)_vertices[source],
-                                (T)_vertices[adjacent],
-                                _getEdgeWeight(source, adjacent));
-
-                        list.Append(edge);
-                    }
-                }
-            }
-
-            return list;
         }
 
         /// <summary>

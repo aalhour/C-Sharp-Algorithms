@@ -605,7 +605,6 @@ namespace DataStructures.Lists
                 return false;
 
             var currentNode = _firstNode;
-            var list = new List<T>();
 
             try
             {
@@ -637,7 +636,6 @@ namespace DataStructures.Lists
                 throw new Exception("List is empty.");
 
             var currentNode = _firstNode;
-            var list = new List<T>();
 
             while (currentNode != null)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Diagnostics;
 
 using DataStructures.Graphs;
@@ -26,8 +27,29 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             graph.AddEdge("c", "v");
             graph.AddEdge("v", "f");
 
+            var allEdges = graph.Edges.ToList();
+
             Debug.Assert(graph.VerticesCount == 8, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 10, "Wrong edges count.");
+            Debug.Assert(graph.EdgesCount == allEdges.Count, "Wrong edges count.");
+
+            Debug.Assert(graph.OutgoingEdges("a").ToList().Count == 2, "Wrong outgoing edges from 'a'.");
+            Debug.Assert(graph.OutgoingEdges("s").ToList().Count == 2, "Wrong outgoing edges from 's'.");
+            Debug.Assert(graph.OutgoingEdges("x").ToList().Count == 3, "Wrong outgoing edges from 'x'.");
+            Debug.Assert(graph.OutgoingEdges("d").ToList().Count == 3, "Wrong outgoing edges from 'd'.");
+            Debug.Assert(graph.OutgoingEdges("c").ToList().Count == 4, "Wrong outgoing edges from 'c'.");
+            Debug.Assert(graph.OutgoingEdges("v").ToList().Count == 2, "Wrong outgoing edges from 'v'.");
+            Debug.Assert(graph.OutgoingEdges("f").ToList().Count == 3, "Wrong outgoing edges from 'f'.");
+            Debug.Assert(graph.OutgoingEdges("z").ToList().Count == 1, "Wrong outgoing edges from 'z'.");
+
+            Debug.Assert(graph.IncomingEdges("a").ToList().Count == 2, "Wrong incoming edges from 'a'.");
+            Debug.Assert(graph.IncomingEdges("s").ToList().Count == 2, "Wrong incoming edges from 's'.");
+            Debug.Assert(graph.IncomingEdges("x").ToList().Count == 3, "Wrong incoming edges from 'x'.");
+            Debug.Assert(graph.IncomingEdges("d").ToList().Count == 3, "Wrong incoming edges from 'd'.");
+            Debug.Assert(graph.IncomingEdges("c").ToList().Count == 4, "Wrong incoming edges from 'c'.");
+            Debug.Assert(graph.IncomingEdges("v").ToList().Count == 2, "Wrong incoming edges from 'v'.");
+            Debug.Assert(graph.IncomingEdges("f").ToList().Count == 3, "Wrong incoming edges from 'f'.");
+            Debug.Assert(graph.IncomingEdges("z").ToList().Count == 1, "Wrong incoming edges from 'z'.");
 
             Console.WriteLine("[*] Undirected Sparse Graph:");
             Console.WriteLine("Graph nodes and edges:");
