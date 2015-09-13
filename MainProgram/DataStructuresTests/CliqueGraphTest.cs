@@ -73,7 +73,17 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 }
             }
 
-            // Test returnPath
+            // CliqueGraph.Edges test
+            foreach (var edge in testGraph.Edges)
+            {
+                //System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
+            }
+
+            foreach (var edge in testGraph.OutgoingEdges(new ComparableTuple (0,0)))
+            {
+                System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
+            }
+
 
         }
     }
@@ -103,7 +113,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
         static readonly int multiplier = CliqueGraphTest.numClusters;
 
-        public ComparableTuple(int item1, int item2) : base(item1, item2)
+        public ComparableTuple(int item1, int item2)
+            : base(item1, item2)
         {
 			
         }
