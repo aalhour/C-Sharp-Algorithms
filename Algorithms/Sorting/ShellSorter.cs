@@ -5,7 +5,7 @@ namespace Algorithms.Sorting
 {
     public static class ShellSorter
     {
-        public static void BubbleSort<T>(this IList<T> collection, Comparer<T> comparer = null)
+        public static void ShellSort<T>(this IList<T> collection, Comparer<T> comparer = null)
         {
             comparer = comparer ?? Comparer<T>.Default;
             collection.ShellSortAscending(comparer);
