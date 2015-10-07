@@ -85,6 +85,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs).
  * [Counting Sort](Algorithms/Sorting/CountingSorter.cs).
  * [LSD Radix Sort](Algorithms/Sorting/LSDRadixSorter.cs).
+ * [Selection Sort](Algorithms/Sorting/SelectionSorter.cs).
 
 #### Graphs:
  * Graph Search:
