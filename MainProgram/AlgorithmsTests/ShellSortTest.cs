@@ -18,7 +18,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             List<int> numbers = new List<int> { 54, 26, 93, 17, 77, 31, 44, 55, 20 };
             numbers.ShellSortAscending(Comparer<int>.Default);
 
-            Debug.Assert(numbers.SequenceEqual(numbers.OrderBy(i => i)), "Wrong SelectionSort ascending");
+            Debug.Assert(numbers.SequenceEqual(numbers.OrderBy(i => i)), "Wrong ShellSort ascending");
         }
 
         public static void DoTestDescending()
@@ -26,7 +26,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             List<int> numbers = new List<int> {84,69,76,86,94,91 };
             numbers.ShellSortDescending(Comparer<int>.Default);
 
-            Debug.Assert(numbers.SequenceEqual(numbers.OrderByDescending(i => i)), "Wrong SelectionSort descending");
+            Debug.Assert(numbers.SequenceEqual(numbers.OrderByDescending(i => i)), "Wrong ShellSort descending");
         }
     }
 }
