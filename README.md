@@ -89,6 +89,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Bubble Sort](Algorithms/Sorting/BubbleSorter.cs).
  * [Shell Sort](Algorithms/Sorting/ShellSorter.cs).
  * [Comb Sort](Algorithms/Sorting/CombSorter.cs).
+ * [Bucket Sort](Algorithms/Sorting/BucketSorter.cs).
 
 #### Graphs:
  * Graph Search:
