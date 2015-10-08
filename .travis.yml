@@ -1,5 +1,5 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
 script:
-	- xbuild /p:Configuration=Release C-Sharp-Algorithms.sln
-	- mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./AlgorithmsTests/bin/Release/MyProject.Tests.dll
+- xbuild /p:Configuration=Release C-Sharp-Algorithms.sln
+- mono ./packages/xunit.runners.*/tools/xunit.console.clr4.exe ./AlgorithmsTests/bin/Release/MyProject.Tests.dll
