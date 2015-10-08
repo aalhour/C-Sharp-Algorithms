@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgorithmsTests.Sorting
+namespace AlgorithmsTests.Sorting.ValuesProvider
 {
     public class SortingIntValuesProvider : SortingValuesProvider<int>
     {
