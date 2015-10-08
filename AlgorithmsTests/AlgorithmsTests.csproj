@@ -54,6 +54,7 @@
     <Compile Include="Sorting\BubbleSorterTests.cs" />
     <Compile Include="Sorting\BucketSorterTests.cs" />
     <Compile Include="Sorting\CombSorterTests.cs" />
+    <Compile Include="Sorting\CountingSorterTests.cs" />
     <Compile Include="Sorting\ValuesProvider\ISortingValuesProvider.cs" />
     <Compile Include="Sorting\AllSortTests.cs" />
     <Compile Include="Sorting\ValuesProvider\SortingStringValuesProvider.cs" />
