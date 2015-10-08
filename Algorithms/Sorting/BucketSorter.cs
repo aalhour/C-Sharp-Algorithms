@@ -8,7 +8,7 @@ namespace Algorithms.Sorting
     /// </summary>
     public static class BucketSorter
     {
-        public static void BucketSort<T>(this IList<int> collection)
+        public static void BucketSort(this IList<int> collection)
         {
             collection.BucketSortAscending();
         }
