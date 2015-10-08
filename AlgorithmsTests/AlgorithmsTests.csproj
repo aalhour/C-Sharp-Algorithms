@@ -60,6 +60,11 @@
     <Compile Include="Sorting\HeapSorterTests.cs" />
     <Compile Include="Sorting\InsertionSorterTests.cs" />
     <Compile Include="Sorting\MergeSorterTests.cs" />
+    <Compile Include="Sorting\OddEvenSorterTests.cs" />
+    <Compile Include="Sorting\PigeonHoleSorterTests.cs" />
+    <Compile Include="Sorting\QuickSorterTests.cs" />
+    <Compile Include="Sorting\SelectionSorterTests.cs" />
+    <Compile Include="Sorting\ShellSorterTests.cs" />
     <Compile Include="Sorting\ValuesProvider\ISortingValuesProvider.cs" />
     <Compile Include="Sorting\AllSortTests.cs" />
     <Compile Include="Sorting\ValuesProvider\SortingStringValuesProvider.cs" />
