@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AlgorithmsTests.Sorting
 {
-    public class SortingIntValuesProvider : ISortingValuesProvider
+    public class SortingIntValuesProvider : ISortingValuesProvider<int>
     {
         /// <summary>
         /// Initialise une nouvelle instance de la classe <see cref="T:System.Object"/>.
