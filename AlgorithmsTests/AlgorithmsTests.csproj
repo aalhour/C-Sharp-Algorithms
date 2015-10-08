@@ -55,6 +55,7 @@
     <Compile Include="Sorting\AllSortTests.cs" />
     <Compile Include="Sorting\SortingStringValuesProvider.cs" />
     <Compile Include="Sorting\SortingIntValuesProvider.cs" />
+    <Compile Include="Sorting\SortingValuesProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

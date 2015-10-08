@@ -42,7 +42,7 @@ namespace AlgorithmsTests.Sorting
             foreach (var sortAction in sortActions) {
                 this.SetUp();
                 sortAction.Invoke();
-                CollectionAssert.AreEqual(_sortingIntValuesProvider.ExpectedListSortedAscending, _sortingIntValuesProvider.ListsToSort,sortAction.ToString());
+                Assert.IsTrue(_sortingIntValuesProvider.IsListToSortSortedAscending());
             }
         }
 
@@ -68,7 +68,7 @@ namespace AlgorithmsTests.Sorting
             {
                 this.SetUp();
                 sortAction.Invoke();
-                CollectionAssert.AreEqual(this._sortingIntValuesProvider.ExpectedListSortedDescending, this._sortingIntValuesProvider.ListsToSort, sortAction.ToString());
+                Assert.IsTrue(_sortingIntValuesProvider.IsListToSortSortedDescending());
             }
         }
 
@@ -94,7 +94,7 @@ namespace AlgorithmsTests.Sorting
             {
                 this.SetUp();
                 sortAction.Invoke();
-                CollectionAssert.AreEqual(_sortingStringValuesProvider.ExpectedListSortedAscending, _sortingStringValuesProvider.ListsToSort, sortAction.ToString());
+                Assert.IsTrue(_sortingStringValuesProvider.IsListToSortSortedAscending());
             }
         }
 
@@ -118,7 +118,7 @@ namespace AlgorithmsTests.Sorting
             {
                 this.SetUp();
                 sortAction.Invoke();
-                CollectionAssert.AreEqual(this._sortingStringValuesProvider.ExpectedListSortedDescending, this._sortingStringValuesProvider.ListsToSort, sortAction.ToString());
+                Assert.IsTrue(_sortingStringValuesProvider.IsListToSortSortedDescending());
             }
         }
     }
