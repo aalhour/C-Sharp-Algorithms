@@ -4,9 +4,9 @@ namespace AlgorithmsTests.Sorting
 {
     public interface ISortingValuesProvider<T>
     {
-        List<List<T>> ExpectedListSortedDescending { get; }
+        List<List<T>> ExpectedListsSortedDescending { get; }
 
-        List<List<T>> ExpectedListSortedAscending { get; }
+        List<List<T>> ExpectedListsSortedAscending { get; }
 
         List<List<T>> ListsToSort { get; set; }
 

@@ -20,8 +20,8 @@ namespace AlgorithmsTests.Sorting
                 new List<int>{0,5,9,4,3,8,56,91,56,87,5,25,46,31},
                 new List<int>{100,59,91,4,33,9,516,1,516,87,205,25,6,31,45,20,197,203,9}
             };
-            base.ExpectedListSortedAscending = this.ListsToSort.Select(list => list.OrderBy(i => i).ToList()).ToList();
-            base.ExpectedListSortedDescending = this.ListsToSort.Select(list => list.OrderByDescending(i => i).ToList()).ToList();
+            base.ExpectedListsSortedAscending = this.ListsToSort.Select(list => list.OrderBy(i => i).ToList()).ToList();
+            base.ExpectedListsSortedDescending = this.ListsToSort.Select(list => list.OrderByDescending(i => i).ToList()).ToList();
         }
     }
 }

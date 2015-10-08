@@ -20,8 +20,8 @@ namespace AlgorithmsTests.Sorting
                 new List<string>{"qsdf","qqd","rt","fdf","abt","qsdqsd","fko","aqf","zuiver","unit","test","qsdqsd","","555"},
                 new List<string>{"ret","yaop","rbuiop","testing","algorithm","sorting","sort me","zergik","zf","daran:!edl","hey","hola","something","anotherone","unit","unit","test","algorithm"}
             };
-            base.ExpectedListSortedAscending = this.ListsToSort.Select(list => list.OrderBy(i => i).ToList()).ToList();
-            base.ExpectedListSortedDescending = this.ListsToSort.Select(list => list.OrderByDescending(i => i).ToList()).ToList();
+            base.ExpectedListsSortedAscending = this.ListsToSort.Select(list => list.OrderBy(i => i).ToList()).ToList();
+            base.ExpectedListsSortedDescending = this.ListsToSort.Select(list => list.OrderByDescending(i => i).ToList()).ToList();
         }
     }
 }
