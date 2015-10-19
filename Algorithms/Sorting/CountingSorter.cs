@@ -7,21 +7,20 @@ namespace Algorithms.Sorting
 {
     public static class CountingSorter
     {
-        public static void CountingSort(this int[] array)
+        public static void CountingSort(this IList<int> collection)
         {
-            if (array == null || array.Length == 0)
+            if (collection == null || collection.Count == 0)
                 return;
 
-            //
             // Get the maximum number in array.
             int maxK = 0;
             int index = 0;
             while (true)
             {
-                if (index >= array.Length)
+                if (index >= collection.Count)
                     break;
 
-                maxK = Math.Max(maxK, array[index] + 1);
+                maxK = Math.Max(maxK, collection[index] + 1);
                 index++;
             }
 
@@ -30,9 +29,9 @@ namespace Algorithms.Sorting
             keys.Populate(0); // populate it with zeros
 
             // Assign the keys
-            for (int i = 0; i < array.Length; ++i)
+            for (int i = 0; i < collection.Count; ++i)
             {
-                keys[array[i]] += 1;
+                keys[collection[i]] += 1;
             }
 
             // Reset index.
@@ -47,7 +46,7 @@ namespace Algorithms.Sorting
                 {
                     while (val-- > 0)
                     {
-                        array[index] = j;
+                        collection[index] = j;
                         index++;
                     }
                 }

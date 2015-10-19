@@ -1,4 +1,4 @@
-# C# ALGORITHMS [![](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/aalhour/C-Sharp-Algorithms)
+# C# ALGORITHMS [![Build Status](https://travis-ci.org/ZwoRmi/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/ZwoRmi/C-Sharp-Algorithms)
 
 #### Implementations of Data Structures and Algorithms in C#.
 
@@ -89,6 +89,11 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Bubble Sort](Algorithms/Sorting/BubbleSorter.cs).
  * [Shell Sort](Algorithms/Sorting/ShellSorter.cs).
  * [Comb Sort](Algorithms/Sorting/CombSorter.cs).
+ * [Bucket Sort](Algorithms/Sorting/BucketSorter.cs).
+ * [Cycle Sort](Algorithms/Sorting/CycleSorter.cs).
+ * [Gnome Sort](Algorithms/Sorting/GnomeSorter.cs).
+ * [OddEven Sort](Algorithms/Sorting/OddEvenSorter.cs).
+ * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs).
 
 #### Graphs:
  * Graph Search:
