@@ -76,3 +76,6 @@
  * [Youtube](https://www.youtube.com/playlist?list=PL8B24C31197EC371C)
 * [List of Algorithms, Wikipedia](https://en.wikipedia.org/wiki/List_of_algorithms).
 * [List of Data Structures, Wikipedia](https://en.wikipedia.org/wiki/List_of_data_structures).
+* GeeksForGeeks:
+ * [Algorithms](http://www.geeksforgeeks.org/fundamentals-of-algorithms/)
+ * [Data Structures](http://www.geeksforgeeks.org/data-structures/#AdvancedDataStructure)
