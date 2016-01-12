@@ -1,4 +1,4 @@
-# C# ALGORITHMS [![Build Status](https://travis-ci.org/ZwoRmi/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/ZwoRmi/C-Sharp-Algorithms)
+# C# ALGORITHMS [![Build Status](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/aalhour/C-Sharp-Algorithms)
 
 #### Implementations of Data Structures and Algorithms in C#.
 
@@ -17,6 +17,7 @@ This is a C#.NET solution-project, and it contains three subprojects:
 #### Requirements:
  1. C# 5
  2. .NET 4.5
+ 3. NUnit 
 
 #### A Note to Contributors:
 If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
@@ -78,22 +79,22 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
 ## ALGORITHMS
 
 #### Sorting:
- * [Insertion Sort](Algorithms/Sorting/InsertionSorter.cs).
- * [Quick Sort](Algorithms/Sorting/QuickSorter.cs).
- * [Merge Sort](Algorithms/Sorting/MergeSorter.cs).
- * [Heap Sort](Algorithms/Sorting/HeapSorter.cs).
- * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs).
- * [Counting Sort](Algorithms/Sorting/CountingSorter.cs).
- * [LSD Radix Sort](Algorithms/Sorting/LSDRadixSorter.cs).
- * [Selection Sort](Algorithms/Sorting/SelectionSorter.cs).
  * [Bubble Sort](Algorithms/Sorting/BubbleSorter.cs).
- * [Shell Sort](Algorithms/Sorting/ShellSorter.cs).
- * [Comb Sort](Algorithms/Sorting/CombSorter.cs).
  * [Bucket Sort](Algorithms/Sorting/BucketSorter.cs).
+ * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs).
+ * [Comb Sort](Algorithms/Sorting/CombSorter.cs).
+ * [Counting Sort](Algorithms/Sorting/CountingSorter.cs).
  * [Cycle Sort](Algorithms/Sorting/CycleSorter.cs).
  * [Gnome Sort](Algorithms/Sorting/GnomeSorter.cs).
+ * [Heap Sort](Algorithms/Sorting/HeapSorter.cs).
+ * [Insertion Sort](Algorithms/Sorting/InsertionSorter.cs).
+ * [LSD Radix Sort](Algorithms/Sorting/LSDRadixSorter.cs).
+ * [Merge Sort](Algorithms/Sorting/MergeSorter.cs).
+ * [Selection Sort](Algorithms/Sorting/SelectionSorter.cs).
+ * [Shell Sort](Algorithms/Sorting/ShellSorter.cs).
  * [OddEven Sort](Algorithms/Sorting/OddEvenSorter.cs).
  * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs).
+ * [Quick Sort](Algorithms/Sorting/QuickSorter.cs).
 
 #### Graphs:
  * Graph Search:
