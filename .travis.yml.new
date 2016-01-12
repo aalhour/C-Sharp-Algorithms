@@ -1,0 +1,8 @@
+language: csharp
+solution: C-Sharp-Algorithms.sln
+install:
+  - nuget restore C-Sharp-Algorithms.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release C-Sharp-Algorithms.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./MainProgram/bin/Release/C-Sharp-Algorithms.dll
