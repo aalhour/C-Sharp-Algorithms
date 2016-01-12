@@ -87,25 +87,6 @@
     <Compile Include="DataStructuresTests\CliqueGraphTest.cs" />
     <Compile Include="AlgorithmsTests\GraphsConnectedComponents.cs" />
     <Compile Include="AlgorithmsTests\GraphsBipartiteColoringTest.cs" />
-    <Compile Include="AlgorithmsTests\AllSortTests.cs" />
-    <Compile Include="AlgorithmsTests\BubbleSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\BucketSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\CombSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\CountingSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\CycleSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\GnomeSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\HeapSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\InsertionSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\MergeSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\OddEvenSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\PigeonHoleSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\QuickSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\SelectionSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\ShellSorterTests.cs" />
-    <Compile Include="AlgorithmsTests\ValuesProvider\ISortingValuesProvider.cs" />
-    <Compile Include="AlgorithmsTests\ValuesProvider\SortingIntValuesProvider.cs" />
-    <Compile Include="AlgorithmsTests\ValuesProvider\SortingStringValuesProvider.cs" />
-    <Compile Include="AlgorithmsTests\ValuesProvider\SortingValuesProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -129,7 +110,4 @@
   </Target>
   -->
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="AlgorithmsTests\ValuesProvider\" />
-  </ItemGroup>
 </Project>
