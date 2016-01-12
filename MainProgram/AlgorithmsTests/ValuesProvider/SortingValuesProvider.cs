@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgorithmsTests.Sorting.ValuesProvider
+namespace C_Sharp_Algorithms.AlgorithmsTests.Sorting.ValuesProvider
 {
     public abstract class SortingValuesProvider<T> : ISortingValuesProvider<T>
     {

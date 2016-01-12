@@ -1,7 +1,7 @@
 ﻿using Algorithms.Sorting;
 using NUnit.Framework;
 
-namespace AlgorithmsTests.Sorting
+namespace C_Sharp_Algorithms.AlgorithmsTests.Sorting
 {
     [TestFixture]
     public class QuickSorterTests

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AlgorithmsTests.Sorting.ValuesProvider
+namespace C_Sharp_Algorithms.AlgorithmsTests.Sorting.ValuesProvider
 {
     public interface ISortingValuesProvider<T>
     {

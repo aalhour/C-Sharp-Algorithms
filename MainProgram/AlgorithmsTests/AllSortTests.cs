@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Algorithms.Sorting;
-using AlgorithmsTests.Sorting.ValuesProvider;
+using C_Sharp_Algorithms.AlgorithmsTests.Sorting.ValuesProvider;
 using NUnit.Framework;
 
-namespace AlgorithmsTests.Sorting
+namespace C_Sharp_Algorithms.AlgorithmsTests.Sorting
 {
     [TestFixture]
     public class AllSortTests
