@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using Algorithms.Numeric;
+
 
 namespace C_Sharp_Algorithms.AlgorithmsTests
 {
@@ -26,7 +24,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 
             for (int i = 0; i < testNumbers.GetLength(0); i++)
             {
-                uint gcd = Algorithms.Numeric.GreatestCommonDivisor.FindGCD(testNumbers[i, 0], testNumbers[i, 1]);
+                uint gcd = GreatestCommonDivisor.FindGCD(testNumbers[i, 0], testNumbers[i, 1]);
 
                 if (Assert(testNumbers[i,0], testNumbers[i,1], gcd))
                 {
