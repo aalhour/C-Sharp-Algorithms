@@ -112,6 +112,10 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
   + [Connected Components](Algorithms/Graphs/ConnectedComponents.cs).
   + [Bipartite Graphs Coloring](Algorithms/Graphs/BipartiteColoring.cs).
 
+#### Trees:
+ * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs)
+   + Methods: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder.
+
 #### Strings:
  * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs).
  * [Edit Distance](Algorithms/Strings/EditDistance.cs).
