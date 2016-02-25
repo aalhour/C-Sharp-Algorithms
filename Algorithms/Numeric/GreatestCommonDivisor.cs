@@ -19,8 +19,6 @@ namespace Algorithms.Numeric
                 return a;
 
             uint _a = a, _b = b;
-
-            uint q = _a / _b;
             uint r = _a % _b;
 
             while(r != 0)
