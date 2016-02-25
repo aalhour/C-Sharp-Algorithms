@@ -57,9 +57,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             MakeGraph(compareGraph);
 
             testGraph = new CliqueGraph<ComparableTuple>(compareGraph);
-            ICollection<ComparableTuple> component = testGraph.GetConnectedComponent(new ComparableTuple(0, 0));
-
-            DataStructures.Lists.DLinkedList<ComparableTuple> neighbor = testGraph.Neighbours(new ComparableTuple(0, 0));
+            // ICollection<ComparableTuple> component = testGraph.GetConnectedComponent(new ComparableTuple(0, 0));
+            // DataStructures.Lists.DLinkedList<ComparableTuple> neighbor = testGraph.Neighbours(new ComparableTuple(0, 0));
 
             testGraph.RemoveEdge(new ComparableTuple(0, 0), new ComparableTuple(1, 0));
 

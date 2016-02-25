@@ -79,7 +79,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             {
                 BellmanFord = new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 status = graph.RemoveEdge("y", "t");
                 //Debug.Assert(status == true, "Error! Edge was not deleted.");
@@ -147,7 +147,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             {
                 BellmanFord = new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "b");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 status = graph.RemoveEdge("c", "a");
                 //Debug.Assert(status == true, "Error! Edge was not deleted.");
