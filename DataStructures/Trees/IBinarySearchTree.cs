@@ -76,24 +76,26 @@ namespace DataStructures.Trees
     /// </summary>
     /// <typeparam name="TKey">Type of items.</typeparam>
     /// <typeparam name="TValue">Type of records per node.</typeparam>
-    public interface IBinarySearchTree<TKey, TValue> : IDictionary<TKey, TValue> where TKey : System.IComparable<TKey>
+    public interface IBinarySearchTree<TKey, TValue> where TKey : System.IComparable<TKey>
     {
         int Count { get; }
         bool IsEmpty { get; }
         int Height { get; }
         bool AllowsDuplicates { get; }
         void Insert(TKey key, TValue value);
+        void Insert(KeyValuePair<TKey, TValue> keyValuePair);
         void Insert(KeyValuePair<TKey, TValue>[] collection);
-        void Insert(IEnumerable<KeyValuePair<TKey, TValue>> collection);
+        void Insert(List<KeyValuePair<TKey, TValue>> collection);
         void RemoveMin();
         void RemoveMax();
         void Remove(TKey item);
         bool Contains(TKey item);
-        TKey FindMin();
-        TKey FindMax();
-        TKey Find(TKey item);
+        KeyValuePair<TKey, TValue> FindMin();
+        KeyValuePair<TKey, TValue> FindMax();
+        KeyValuePair<TKey, TValue> Find(TKey item);
         IEnumerable<KeyValuePair<TKey, TValue>> FindAll(System.Predicate<TKey> searchPredicate);
-        IEnumerable<TValue> Sort();
+        KeyValuePair<TKey, TValue>[] ToArray();
+        List<KeyValuePair<TKey, TValue>> ToList();
         void Clear();
     }
 }

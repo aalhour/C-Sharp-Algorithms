@@ -52,15 +52,18 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).
  * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).
 
-#### Sorted Collections (Trees-Based):
+#### Sorted Collections (Tree-based):
  * [Sorted List](DataStructures/SortedCollections/SortedList.cs).
+ * [Sorted Dictionary](DataStructures/SortedCollections/SortedDictionary.cs)
 
 #### Trees:
  * [Trie](DataStructures/Trees/Trie.cs).
  * [Trie Map](DataStructures/Trees/TrieMap.cs).
  * [AVL Tree](DataStructures/Trees/AVLTree.cs).
  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs).
+  + [RBTree Map version](DataStructures/Trees/RedBlackTreeMap.cs). Supports key-value pairs nodes; indexes nodes by keys.
  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).
+  + [BSTree Map version](DataStructures/Trees/BinarySearchTreeMap.cs). Supports key-value pairs nodes; indexes nodes by keys.
  * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).
  
 #### Graphs:
