@@ -12,8 +12,8 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            // Binary Tree Walkers tests
-            BinaryTreeRecursiveWalkerTests.DoTest();
+            // SortedList tests
+            SortedListTests.DoTest();
         }
     }
 }

@@ -52,6 +52,9 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
  * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).
  * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).
 
+#### Sorted Collections (Trees-Based):
+ * [Sorted List](DataStructures/SortedCollections/SortedList.cs).
+
 #### Trees:
  * [Trie](DataStructures/Trees/Trie.cs).
  * [Trie Map](DataStructures/Trees/TrieMap.cs).
@@ -113,7 +116,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
   + [Bipartite Graphs Coloring](Algorithms/Graphs/BipartiteColoring.cs).
 
 #### Trees:
- * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs)
+ * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs).
    + Methods: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder.
 
 #### Strings:

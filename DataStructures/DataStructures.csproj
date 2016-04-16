@@ -90,6 +90,7 @@
     <Compile Include="Trees\TrieNode.cs" />
     <Compile Include="Graphs\UnweightedEdge.cs" />
     <Compile Include="Graphs\IEdge.cs" />
+    <Compile Include="SortedCollections\SortedList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -110,4 +111,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SortedCollections\" />
+  </ItemGroup>
 </Project>
