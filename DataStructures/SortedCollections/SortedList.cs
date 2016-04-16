@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 using DataStructures.Common;
@@ -29,12 +28,9 @@ namespace DataStructures.SortedCollections
         /// <summary>
         /// Returns true if list is empty; otherwise, false.
         /// </summary>
-        public bool Empty
+        public bool IsEmpty
         {
-            get
-            {
-                return this.Count == 0;
-            }
+            get { return this.Count == 0; }
         }
 
         /// <summary>
@@ -42,18 +38,12 @@ namespace DataStructures.SortedCollections
         /// </summary>
         public int Count
         {
-            get
-            {
-                return this._collection.Count;
-            }
+            get { return this._collection.Count; }
         }
 
         public bool IsReadOnly
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -96,6 +86,10 @@ namespace DataStructures.SortedCollections
         {
             get
             {
+                // In case list is empty
+                if (IsEmpty)
+                    throw new Exception("List is empty.");
+                
                 // Validate index range
                 if (index < 0 || index >= this.Count)
                     throw new IndexOutOfRangeException();
