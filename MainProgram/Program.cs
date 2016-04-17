@@ -12,8 +12,8 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            // SortedList tests
-            SortedListTests.DoTest();
+            // RedBlackTreeMap tests
+            BinarySearchTreeMapTests.DoTest();
         }
     }
 }

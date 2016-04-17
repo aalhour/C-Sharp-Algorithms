@@ -15,7 +15,7 @@
         public RedBlackTreeMapNode(TKey key, TValue value, int height, RedBlackTreeMapNode<TKey, TValue> parent, RedBlackTreeMapNode<TKey, TValue> left, RedBlackTreeMapNode<TKey, TValue> right)
         {
             Key = key;
-            Value = Value;
+            Value = value;
             Color = RedBlackTreeColors.Red;
             Parent = parent;
             LeftChild = left;

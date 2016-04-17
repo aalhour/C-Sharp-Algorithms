@@ -468,7 +468,7 @@ namespace DataStructures.Trees
             var node = _findNode(Root, key);
 
             if (node == null)
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException("Key doesn't exist in tree.");
 
             node.Value = newValue;
         }
@@ -482,11 +482,11 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findNode(Root, key);
-            bool status = _remove(node);
 
-            // If the element was found, remove it.
-            if (status == false)
-                throw new Exception("Item was not found.");
+            if (node == null)
+                throw new KeyNotFoundException("Key doesn't exist in tree.");
+            
+            _remove(node);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace DataStructures.Trees
             if (node != null)
                 return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
             else
-                throw new Exception("Item was not found.");
+                throw new KeyNotFoundException("Item was not found.");
         }
 
         /// <summary>

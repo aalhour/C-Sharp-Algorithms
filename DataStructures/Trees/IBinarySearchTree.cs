@@ -78,6 +78,7 @@ namespace DataStructures.Trees
     /// <typeparam name="TValue">Type of records per node.</typeparam>
     public interface IBinarySearchTree<TKey, TValue> where TKey : System.IComparable<TKey>
     {
+        BSTMapNode<TKey, TValue> Root { get; }
         int Count { get; }
         bool IsEmpty { get; }
         int Height { get; }

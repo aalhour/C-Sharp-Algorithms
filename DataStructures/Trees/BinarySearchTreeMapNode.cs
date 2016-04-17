@@ -13,11 +13,7 @@ namespace DataStructures.Trees
         private BSTMapNode<TKey, TValue> _left;
         private BSTMapNode<TKey, TValue> _right;
 
-        public BSTMapNode()
-        {
-            throw new NotSupportedException();
-        }
-
+        public BSTMapNode() { }
         public BSTMapNode(TKey key) : this(key, default(TValue), 0, null, null, null) { }
         public BSTMapNode(TKey key, TValue value) : this(key, value, 0, null, null, null) { }
         public BSTMapNode(TKey key, TValue value, int subTreeSize, BSTMapNode<TKey, TValue> parent, BSTMapNode<TKey, TValue> left, BSTMapNode<TKey, TValue> right)

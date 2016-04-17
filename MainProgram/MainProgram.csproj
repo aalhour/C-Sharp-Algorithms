@@ -90,6 +90,8 @@
     <Compile Include="AlgorithmsTests\GraphsBipartiteColoringTest.cs" />
     <Compile Include="AlgorithmsTests\BinaryTreeRecursiveWalkerTests.cs" />
     <Compile Include="DataStructuresTests\SortedListTests.cs" />
+    <Compile Include="DataStructuresTests\RedBlackTreeMapTests.cs" />
+    <Compile Include="DataStructuresTests\BinarySearchTreeMapTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
