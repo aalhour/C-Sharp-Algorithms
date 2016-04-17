@@ -92,6 +92,7 @@
     <Compile Include="DataStructuresTests\SortedListTests.cs" />
     <Compile Include="DataStructuresTests\RedBlackTreeMapTests.cs" />
     <Compile Include="DataStructuresTests\BinarySearchTreeMapTests.cs" />
+    <Compile Include="DataStructuresTests\SortedDictionaryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

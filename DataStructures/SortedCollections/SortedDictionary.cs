@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using DataStructures.Common;
 using DataStructures.Trees;
 
 namespace DataStructures.SortedCollections
@@ -53,75 +52,201 @@ namespace DataStructures.SortedCollections
         /// </summary>
         public bool ContainsKey(TKey key)
         {
-            throw new NotImplementedException();
+            return _collection.Contains(key);
         }
 
+        /// <summary>
+        /// Determines whether the current collection contains a specific key-value pair.
+        /// </summary>
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entry = _collection.Find(item.Key);
+                return entry.Value.Equals(item.Value);
+            }
+            catch(Exception)
+            {
+                return false;
+            }
         }
 
-        public void Add(TKey key, TValue value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(TKey key)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Try to get the value of a key or default(TValue). Returns true if key exists; otherwise, false.
+        /// </summary>
         public bool TryGetValue(TKey key, out TValue value)
         {
-            throw new NotImplementedException();
+            // Set value to the default value of type TValue
+            value = default(TValue);
+
+            try
+            {
+                // Assign the returned object to value
+                value = _collection.Find(key).Value;
+
+                // return Success.
+                return true;
+            }
+            catch(KeyNotFoundException)
+            {
+                // No entry was found with the specified key.
+                // return Failure.
+                return false;
+            }
         }
 
+        /// <summary>
+        /// Gets or sets the value at the specified key.
+        /// </summary>
         public TValue this[TKey index]
         {
             get
             {
-                throw new NotImplementedException();
+                // In case dictionary is empty
+                if (IsEmpty)
+                    throw new Exception("Dictionary is empty.");
+
+                try
+                {
+                    return _collection.Find(index).Value;
+                }
+                catch(KeyNotFoundException)
+                {
+                    // Mask the tree's exception with a new one.
+                    throw new KeyNotFoundException("Key doesn't exist in dictionary.");
+                }
             }
             set
             {
-                throw new NotImplementedException();
+                if (ContainsKey(index))
+                    _collection.Update(index, value);
+                else
+                    Add(index, value);
             }
         }
 
+        /// <summary>
+        /// Gets the collection of keys in the dictionary.
+        /// </summary>
         public ICollection<TKey> Keys
         {
             get
             {
-                throw new NotImplementedException();
+                var keys = new System.Collections.Generic.List<TKey>(Count);
+                var enumerator = _collection.GetInOrderEnumerator();
+
+                while (enumerator.MoveNext())
+                    keys.Add(enumerator.Current.Key);
+
+                return keys;
             }
         }
 
+        /// <summary>
+        /// Gets the collection of values in the dictionary.
+        /// </summary>
         public ICollection<TValue> Values
         {
             get
             {
-                throw new NotImplementedException();
+                var values = new System.Collections.Generic.List<TValue>(Count);
+                var enumerator = _collection.GetInOrderEnumerator();
+
+                while (enumerator.MoveNext())
+                    values.Add(enumerator.Current.Value);
+
+                return values;
             }
         }
 
-        public void Add(KeyValuePair<TKey, TValue> item)
+        /// <summary>
+        /// Add the specified key and value to the dictionary.
+        /// </summary>
+        public void Add(TKey key, TValue value)
         {
-            throw new NotImplementedException();
+            // Throw an duplicate key exception if an entry with the same key exists
+            try
+            {
+                _collection.Insert(key, value);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("An entry with the same key already exists in dictionary.");
+            }
         }
 
+        /// <summary>
+        /// Removes the item with specific Key from the dictionary.
+        /// </summary>
+        public bool Remove(TKey key)
+        {
+            try
+            {
+                // Try removing it and return Success
+                _collection.Remove(key);
+                return true;
+            }
+            catch(Exception)
+            {
+                // Item was not found. Return Failure.
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Add the key-value pair to the dictionary.
+        /// </summary>
+        public void Add(KeyValuePair<TKey, TValue> item)
+        {
+            Add(item.Key, item.Value);
+        }
+
+        /// <summary>
+        /// Removes the first occurrence of an item from the current collection Key and Value will be matched.
+        /// </summary>
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            if (IsEmpty)
+                return false;
+            
+            // Get the entry from collection
+            var entry = _collection.Find(item.Key);
+
+            // If the entry's value match the value of the specified item, remove it
+            if (entry.Value.Equals(item.Value))
+            {
+                _collection.Remove(item.Key);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Copies the key-value pairs to a given array starting from specified index.
+        /// </summary>
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+            if (array == null)
+                throw new ArgumentNullException();
+
+            var enumerator = _collection.GetInOrderEnumerator();
+
+            while (enumerator.MoveNext() && arrayIndex < array.Length)
+            {
+                array[arrayIndex] = enumerator.Current;
+                arrayIndex++;
+            }
+        }
+
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
         public void Clear()
         {
             _collection = new RedBlackTreeMap<TKey, TValue>(allowDuplicates: false);
-        }
-
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            throw new NotImplementedException();
         }
 
 
@@ -129,15 +254,16 @@ namespace DataStructures.SortedCollections
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _collection.GetInOrderEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         #endregion
     }
+
 }
 
