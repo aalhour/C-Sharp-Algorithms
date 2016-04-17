@@ -3,8 +3,7 @@
 ### New Data Structures:
 
  * Skip Lists.
-  * ~~Allows inserting duplicates.~~ Done.
-  * Supports only unique elements.
+  * Supports unique elements mode.
  * Sorted Lists.
  * Self-organizing Lists.
  * Radix Trees.
