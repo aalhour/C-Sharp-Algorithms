@@ -2,8 +2,7 @@
 
 ### New Data Structures:
 
- * Skip Lists.
-  * Supports unique elements mode.
+ * Bloom Filters.
  * Sorted Lists.
  * Self-organizing Lists.
  * Radix Trees.
@@ -33,7 +32,7 @@
   * Multiset / Bag.
   * Multimap / Multihash Table.
   * A textbook implementation of open-addressing hash table with double hashing / re-hasing.
- * ~~Undirected Weighted Graphs (Sparse & Dense implementations).~~
+ * HAMT (Hash Array Mapped Trie). See Phil Bagwell's work. [@Wikipedia](https://en.wikipedia.org/wiki/Hash_array_mapped_trie).
  * Multigraphs: Graphs with multiple edges. [@Wikipedia](https://en.wikipedia.org/wiki/Multigraph).
  * Mixed Graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Mixed_graph).
  * (Probabilistic) Graphical Models:
@@ -54,6 +53,12 @@
  * Graphs: Algorithms support for Undirected Weighted Graphs.
  * Graphs: Disjoint union of graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Graph_(mathematics)#Operations_on_graphs).
  * Graphs: Cartesian Product of graphs. [@Wikipedia](https://en.wikipedia.org/wiki/Cartesian_product_of_graphs).
+ * Compression Algorithms.
+ * Numerical Algorithms:
+  * Matrix Multiplication.
+  * Matrix-Vectors Operations.
+  * Big Integer representation.
+  * Approximation Algorithms.
  
 ### Bugfixing:
 
