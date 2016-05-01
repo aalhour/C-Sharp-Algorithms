@@ -22,8 +22,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
              **     4                   5
              **      \                 / \
              **       5       ===>    4   7
-             **        \ 
-             **         7 
+             **        \
+             **         7
              **
              ***************************************
              */
@@ -65,7 +65,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             // DOUBLE *right* rotation for node 5.
             //
             // The double rotation is achieved by:
-            // 1> Simple *left* rotation for node 2, and then 
+            // 1> Simple *left* rotation for node 2, and then
             // 2> Simple *right* rotation for node 5
             //
             /*************************************
@@ -92,7 +92,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             // DOUBLE *right* rotation for node 5.
             //
             // The double rotation is achieved by:
-            // 1> Simple *right* rotation for node 7, and then 
+            // 1> Simple *right* rotation for node 7, and then
             // 2> Simple *left* rotation for node 5
             //
             /**************************************************************************
@@ -119,7 +119,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             //
             /**************************************************************************
              ** UNBALANCED     ===>    TRANSITION (1st R)    ===>    BALANCED (2nd Rt)
-             **       null                                              .6.. 
+             **       null                                              .6..
              **      /   \                                             /    \
              **     2     6    ===>                      ===>         2      7
              **    / \   / \                                         / \    /
@@ -132,7 +132,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             // ASSERT CASE 5
             AssertCase_5(avlTree);
 
-            
+
             //
             // CLEAR THE TREE AND START OVER
             // Compare two binary trees with each other (height-wise) using bulk-inserts
@@ -152,31 +152,26 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             //
             // Draw the tree to the console.
-            Console.WriteLine(String.Format("************\r\n** BST TREE:\r\n************\r\n"));
+            Console.WriteLine("************\r\n** BST TREE:\r\n************\r\n");
             Console.WriteLine(bsTree.DrawTree());
 
             Console.WriteLine("\r\n\r\n");
 
-            Console.WriteLine(String.Format("************\r\n** AVL TREE:\r\n************\r\n"));
+            Console.WriteLine("************\r\n** AVL TREE:\r\n************\r\n");
             Console.WriteLine(avlTree.DrawTree());
 
             //
             // OUTPUT OF AVL TREE DRAWER
-            /*****
-             ** ************
-             ** ** AVL TREE:
-             ** ************
-             **                    ....15...
-             **                   /         \
-             **             ...9..      ..20.
-             **            /      \    /     \
-             **       ..5.      11   16    28
-             **      /    \    /  \ / \   /  \
-             **    1     7   9   12  19 25  30
-             **    /\   / \ / \ / \  /\ /\ / \
-             **  -1   7   8  10  13         39
-             **  /\   /\ /\  /\  /\         /\
-             *  
+            /**
+             **          .....15....
+             **         /           \
+             **      ...9...        .20
+             **     /       \      /   \
+             **    .5       11    16    28
+             **   /  \     /  \    \   / \
+             **  1    7   9   12   19 25 30
+             **  /   / \   \   \          \
+             ** -1  7   8  10  13         39
              */
 
 
@@ -184,24 +179,21 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             avlTree.Clear();
             avlTree.Insert(treeDataList);
 
-            Console.WriteLine(String.Format("************\r\n** AVL TREE:\r\n************\r\n"));
+            Console.WriteLine("************\r\n** AVL TREE:\r\n************\r\n");
             Console.WriteLine(avlTree.DrawTree());
 
             //
             // OUTPUT OF AVL TREE DRAWER
-            /*****
-             ** 
-             **           .......9......
-             **          /              \
-             **       .5       ....12...
-             **      /  \     /         \
-             **    1   7    11      .25.
-             **    /\ / \   /\     /    \
-             **  -1     8  10    15    30
-             **  /\    /\  /\    /\   / \
-             **                 13   28 39
-             **                 /\   /\ /\
-             **
+            /**
+             **     ....9...
+             **    /        \
+             **    5       .12.
+             **   / \     /    \
+             **  1   7   11    25
+             **  /   \   /    /  \
+             ** -1    8 10   15   30
+             **              /   / \
+             **             13  28 39
              */
 
             Console.ReadLine();
