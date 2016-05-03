@@ -49,11 +49,7 @@ namespace DataStructures.Common
             //add a space to the left if the string is an odd number
             int padRight = charactersToPad / 2;
 
-            StringBuilder resultBuilder = new StringBuilder(newWidth);
-            for (int i = 0; i < padLeft; i++) resultBuilder.Insert(i, fillerCharacter);
-            for (int i = 0; i < length; i++) resultBuilder.Insert(i + padLeft, text[i]);
-            for (int i = newWidth - padRight; i < newWidth; i++) resultBuilder.Insert(i, fillerCharacter);
-            return resultBuilder.ToString();
+            return new String(fillerCharacter, padLeft) + text + new String(fillerCharacter, padRight);
         }
 
         /// <summary>
