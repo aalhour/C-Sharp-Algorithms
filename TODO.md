@@ -70,10 +70,6 @@
    + [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/)
    + [Youtube](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb).
    + [CSAIL](http://courses.csail.mit.edu/6.006/fall11/notes.shtml).
- * MIT's Advanced Data Structures Course (6.851):
-   + [CSAIL](https://courses.csail.mit.edu/6.851/).
-   + [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/).
-   + [Youtube](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf).
  * MIT's Design and Analysis of Algorithms Course (6.046J):
    + 2012:
      * [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2012/).
@@ -82,6 +78,13 @@
      * [Stellar Site](http://stellar.mit.edu/S/course/6/sp15/6.046J/materials.html).
      * [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/).
      * [Youtube](https://www.youtube.com/playlist?list=PLUl4u3cNGP6317WaSNfmCvGym2ucw3oGp).
+ * MIT's Advanced Data Structures Course (6.851):
+   + [CSAIL](https://courses.csail.mit.edu/6.851/).
+   + [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/).
+   + [Youtube](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf).
+ * MIT's Advanced Algorithms Course (6.854):
+   + [CSAIL](http://people.csail.mit.edu/moitra/854.html).
+   + [YouTube](https://www.youtube.com/playlist?list=PL6ogFv-ieghdoGKGg2Bik3Gl1glBTEu8c).
  * [List of Algorithms, Wikipedia](https://en.wikipedia.org/wiki/List_of_algorithms).
  * [List of Data Structures, Wikipedia](https://en.wikipedia.org/wiki/List_of_data_structures).
  * GeeksForGeeks:
