@@ -38,6 +38,10 @@
  * (Probabilistic) Graphical Models:
   * Bayesian Networks. [@Wikipedia](https://en.wikipedia.org/wiki/Bayesian_network), [@another link](https://en.wikipedia.org/wiki/Dynamic_Bayesian_network).
   * Markov Network. [@Wikipedia](https://en.wikipedia.org/wiki/Markov_random_field).
+ * CRDT (Conflict-free Replicated Data Type):
+  * [CRDT on Wikipedia](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type).
+  * [Readings in CRDTs](http://christophermeiklejohn.com/crdt/2014/07/22/readings-in-crdts.html).
+  * [Eventually Consistent Data Structures](https://www.infoq.com/presentations/CRDT).
 
 ### New Algorithms:
 
