@@ -86,6 +86,7 @@
    + [CSAIL](https://courses.csail.mit.edu/6.851/).
    + [MIT OCW](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/).
    + [Youtube](https://www.youtube.com/playlist?list=PLUl4u3cNGP61hsJNdULdudlRL493b-XZf).
+   + Class Notes in one [PDF Document](http://courses.csail.mit.edu/6.851/spring14/scribe/2012scribes.pdf).
  * MIT's Advanced Algorithms Course (6.854):
    + [CSAIL](http://people.csail.mit.edu/moitra/854.html).
    + [YouTube](https://www.youtube.com/playlist?list=PL6ogFv-ieghdoGKGg2Bik3Gl1glBTEu8c).
