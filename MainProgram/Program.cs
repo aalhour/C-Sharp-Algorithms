@@ -12,8 +12,9 @@ namespace C_Sharp_Algorithms
     {
         public static void Main(string[] args)
         {
-            // OpenAddressingHashTableTest tests
-            OpenAddressingHashTableTest.DoTest();
+            DLinkedListTest.DoTest();
+            // SortedDictionaryTests tests
+            //SortedDictionaryTests.DoTest();
         }
     }
 }
