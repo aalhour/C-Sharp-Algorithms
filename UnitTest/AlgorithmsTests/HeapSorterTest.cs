@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DataStructures;
 using Algorithms.Sorting;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
     public static class HeapSorterTest
     {

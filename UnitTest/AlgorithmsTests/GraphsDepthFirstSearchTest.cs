@@ -4,7 +4,7 @@ using System.Diagnostics;
 using DataStructures.Graphs;
 using Algorithms.Graphs;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
 	public static class GraphsDepthFirstSearchTest
 	{

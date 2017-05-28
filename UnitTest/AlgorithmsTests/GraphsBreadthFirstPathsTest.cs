@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using DataStructures.Graphs;
 using Algorithms.Graphs;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
 	public static class GraphsBreadthFirstPathsTest
 	{

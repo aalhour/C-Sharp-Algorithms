@@ -3,11 +3,13 @@ using System.Diagnostics;
 
 using Algorithms.Graphs;
 using DataStructures.Graphs;
+using Xunit;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsBipartiteColoringTest
     {
+        [Fact]
         public static void DoTest()
         {
             // The graph
@@ -20,11 +22,9 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             bool initBipartiteStatus;
 
 
-            //
             // Prepare the graph for the first case of testing
             _initializeFirstCaseGraph(ref graph);
 
-            //
             // Test initializing the bipartite
             // This initialization must fail. The graph contains an odd cycle
             initBipartiteStatus = false;

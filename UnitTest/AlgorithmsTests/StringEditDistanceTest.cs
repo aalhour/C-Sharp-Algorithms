@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 using Algorithms.Strings;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
     public static class StringEditDistanceTest
     {

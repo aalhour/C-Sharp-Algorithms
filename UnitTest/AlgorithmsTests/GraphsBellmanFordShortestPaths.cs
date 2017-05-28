@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using Algorithms.Graphs;
 using DataStructures.Graphs;
 using DataStructures.Lists;
+using Xunit;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsBellmanFordShortestPaths
     {
+        [Fact]
         public static void DoTest()
         {
             string[] V;
@@ -25,42 +27,22 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 
             // Insert V
             graph.AddVertices(V);
-            Debug.Assert(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
+            Assert.True(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
 
             // Insert E
-            var status = graph.AddEdge("r", "s", -3); 
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("s", "t", 4);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("t", "x", -1);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("x", "y", 6);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("y", "z", -1);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("r", "t", 1);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("s", "x", 7);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("t", "y", 4);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("t", "z", 3);
-            Debug.Assert(status == true);
-
-            status = graph.AddEdge("x", "z", 2);
-            Debug.Assert(status == true);
+            Assert.True(graph.AddEdge("r", "s", -3));
+            Assert.True(graph.AddEdge("s", "t", 4));
+            Assert.True(graph.AddEdge("t", "x", -1));
+            Assert.True(graph.AddEdge("x", "y", 6));
+            Assert.True(graph.AddEdge("y", "z", -1));
+            Assert.True(graph.AddEdge("r", "t", 1));
+            Assert.True(graph.AddEdge("s", "x", 7));
+            Assert.True(graph.AddEdge("t", "y", 4));
+            Assert.True(graph.AddEdge("t", "z", 3));
+            Assert.True(graph.AddEdge("x", "z", 2));
 
             // NEGATIVE CYCLE (BACK-EDGE)
-            status = graph.AddEdge("y", "t", -7);
-            Debug.Assert(status == true);
+            Assert.True(graph.AddEdge("y", "t", -7));
 
 
             // Get E
@@ -79,9 +61,9 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             {
                 BellmanFord = new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
             }
-            catch(Exception)
+            catch (Exception)
             {
-                status = graph.RemoveEdge("y", "t");
+                Assert.True(graph.RemoveEdge("y", "t"));
                 //Debug.Assert(status == true, "Error! Edge was not deleted.");
 
                 BellmanFord = new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
@@ -123,16 +105,11 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             Debug.Assert(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
 
             // Insert new value for edges
-            status = graph.AddEdge("s", "a", 1);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("a", "b", 1);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("b", "c", 2);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("c", "a", -5);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("c", "d", 2);
-            Debug.Assert(status == true);
+            Assert.True(graph.AddEdge("s", "a", 1));
+            Assert.True(graph.AddEdge("a", "b", 1));
+            Assert.True(graph.AddEdge("b", "c", 2));
+            Assert.True(graph.AddEdge("c", "a", -5));
+            Assert.True(graph.AddEdge("c", "d", 2));
 
             Debug.Assert(graph.EdgesCount == 5, "Wrong Edges Count.");
 
@@ -149,7 +126,7 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             }
             catch (Exception)
             {
-                status = graph.RemoveEdge("c", "a");
+                Assert.True(graph.RemoveEdge("c", "a"));
                 //Debug.Assert(status == true, "Error! Edge was not deleted.");
 
                 BellmanFord = new BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "b");
@@ -159,8 +136,8 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
 
 
             /***************************************************************************************/
-            
-            
+
+
             // Clear the graph and insert new V and E to the instance
             graph.Clear();
 
@@ -171,20 +148,13 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
             Debug.Assert(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
 
             // Insert new value for edges
-            status = graph.AddEdge("A", "C", 7);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("B", "A", 19);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("B", "C", 11);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("C", "E", 5);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("C", "D", 15);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("D", "B", 4);
-            Debug.Assert(status == true);
-            status = graph.AddEdge("E", "D", 13);
-            Debug.Assert(status == true);
+            Assert.True(graph.AddEdge("A", "C", 7));
+            Assert.True(graph.AddEdge("B", "A", 19));
+            Assert.True(graph.AddEdge("B", "C", 11));
+            Assert.True(graph.AddEdge("C", "E", 5));
+            Assert.True(graph.AddEdge("C", "D", 15));
+            Assert.True(graph.AddEdge("D", "B", 4));
+            Assert.True(graph.AddEdge("E", "D", 13));
 
             Debug.Assert(graph.EdgesCount == 7, "Wrong Edges Count.");
 
@@ -235,5 +205,4 @@ namespace C_Sharp_Algorithms.AlgorithmsTests
         }
 
     }
-
 }

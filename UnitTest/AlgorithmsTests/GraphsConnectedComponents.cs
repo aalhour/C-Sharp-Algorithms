@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Algorithms.Graphs;
 using DataStructures.Graphs;
 
-namespace C_Sharp_Algorithms.AlgorithmsTests
+namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsConnectedComponents
     {
