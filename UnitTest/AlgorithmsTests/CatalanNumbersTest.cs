@@ -22,15 +22,6 @@ namespace UnitTest.AlgorithmsTests
 
                 Assert.True(list[(int)i] == list2[(int)i], "Wrong calculation.");
             }
-
-            // TODO: Remove.
-            // PRINT NUMBERS
-            for (uint i = 0; i < list.Count; ++i)
-            {
-                Console.Write(list[(int)i] + ", ");
-            }
-
-            Console.ReadLine();
         }
     }
 }
