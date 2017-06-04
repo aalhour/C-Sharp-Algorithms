@@ -1,34 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Diagnostics;
+﻿using DataStructures.Trees;
 using System.Collections.Generic;
-
-using DataStructures.Trees;
+using System.Linq;
+using Xunit;
 
 namespace C_Sharp_Algorithms
 {
     public static class BinarySearchTreeTest
     {
-        public static void DoTest()
-        {
-            var binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
-
-            //
-            // FIRST TEST TREE WITH DUPLICATES ELEMENTS
-            Assert_Tree_With_Duplicates_Elements(ref binarySearchTree);
-
-            // NEXT TEST TREE THAT DOES NOT ALLOW DUPLICATES
-            Assert_Tree_With_Unique_Elements(ref binarySearchTree);
-
-            // Wait
-            Console.ReadLine();
-        }
-
-
-        private static void Assert_Tree_With_Duplicates_Elements(ref AugmentedBinarySearchTree<int> binarySearchTree)
+        /// <summary>
+        /// FIRST TEST TREE WITH DUPLICATES ELEMENTS
+        /// </summary>
+        /// <param name="binarySearchTree"></param>
+        [Fact]
+        public static void AssertTreeWithDuplicatesElements()
         {
             // New tree which doesn't allow duplicates
-            binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            var binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
 
             int[] values = new int[21] { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
 
@@ -36,46 +23,46 @@ namespace C_Sharp_Algorithms
             binarySearchTree.Insert(values);
 
             // ASSERT COUNT = 20 (allows duplicates)
-            Debug.Assert(binarySearchTree.Count == 21);
+            Assert.Equal(binarySearchTree.Count, 21);
 
             // Test contains/find
-            Debug.Assert(binarySearchTree.Contains(10) == true, "Wrong element.");
+            Assert.True(binarySearchTree.Contains(10), "Wrong element.");
 
             // Test find all
             var list = binarySearchTree.FindAll(element => element > 15).ToList();
-            Debug.Assert(list.Count == 7, "Wrong FindAll result!");
+            Assert.True(list.Count == 7, "Wrong FindAll result!");
 
             // test sort
             List<int> sortedList = binarySearchTree.ToList();
             for (int i = 1; i < sortedList.Count; ++i)
-                Debug.Assert(sortedList[i - 1] <= sortedList[i], "BST sort is wrong!");
+                Assert.True(sortedList[i - 1] <= sortedList[i], "BST sort is wrong!");
 
             // ASSERT MIN ITEM
-            Debug.Assert(binarySearchTree.FindMin() == -1, "Min is wrong.");
+            Assert.True(binarySearchTree.FindMin() == -1, "Min is wrong.");
 
             // ASSERT MAX ITEM
-            Debug.Assert(binarySearchTree.FindMax() == 39, "Max is wrong.");
+            Assert.True(binarySearchTree.FindMax() == 39, "Max is wrong.");
 
             // Remove min & max
             binarySearchTree.RemoveMin();
             binarySearchTree.RemoveMax();
 
             // ASSERT MIN AFTER REMOVE-MIN
-            Debug.Assert(binarySearchTree.FindMin() == 1, "Min is wrong.");
+            Assert.True(binarySearchTree.FindMin() == 1, "Min is wrong.");
 
             // ASSERT MAX AFTER REMOVE MAX
-            Debug.Assert(binarySearchTree.FindMax() == 30, "Max is wrong.");
+            Assert.True(binarySearchTree.FindMax() == 30, "Max is wrong.");
 
             // Remove min twice
             binarySearchTree.RemoveMin();
             binarySearchTree.RemoveMin();
 
             // ASSERT MIN
-            Debug.Assert(binarySearchTree.FindMin() == 7, "Min is wrong.");
+            Assert.True(binarySearchTree.FindMin() == 7, "Min is wrong.");
 
             // 7 STILL EXISTS BECAUSE IT WAS DUPLICATED
             binarySearchTree.RemoveMin();
-            Debug.Assert(binarySearchTree.FindMin() == 7, "Min is wrong.");
+            Assert.True(binarySearchTree.FindMin() == 7, "Min is wrong.");
 
             // Remove max thrice
             binarySearchTree.RemoveMax();
@@ -83,7 +70,7 @@ namespace C_Sharp_Algorithms
             binarySearchTree.RemoveMax();
 
             // ASSERT MAX AFTER REMOVE-MAX 3 TIMES
-            Debug.Assert(binarySearchTree.FindMax() == 20, "Max is wrong.");
+            Assert.True(binarySearchTree.FindMax() == 20, "Max is wrong.");
 
             // Test removing an element with subtrees
             try
@@ -91,7 +78,7 @@ namespace C_Sharp_Algorithms
                 // doesn't exist!
                 binarySearchTree.Remove(1000);
             }
-            catch (Exception)
+            catch
             {
                 // does exist!
                 binarySearchTree.Remove(16);
@@ -99,18 +86,22 @@ namespace C_Sharp_Algorithms
 
             var enumerator = binarySearchTree.GetInOrderEnumerator();
             enumerator.MoveNext();
-            Debug.Assert(enumerator.Current == 7);
+            Assert.Equal(enumerator.Current, 7);
 
             enumerator.MoveNext();
             enumerator.MoveNext();
-            Debug.Assert(enumerator.Current == 8, "Wrong in-order enumeration.");
+            Assert.True(enumerator.Current == 8, "Wrong in-order enumeration.");
         }
 
-
-        private static void Assert_Tree_With_Unique_Elements(ref AugmentedBinarySearchTree<int> binarySearchTree)
+        /// <summary>
+        /// NEXT TEST TREE THAT DOES NOT ALLOW DUPLICATES
+        /// </summary>
+        /// <param name="binarySearchTree"></param>
+        [Fact]
+        public static void AssertTreeWithUniqueElements()
         {
             // New tree which doesn't allow duplicates
-            binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: false);
+            var binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: false);
 
             int[] values = new int[24] { 14, 15, 25, 5, 12, 1, 16, 20, 9, 9, 9, 7, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39, 39 };
 
@@ -119,15 +110,13 @@ namespace C_Sharp_Algorithms
             {
                 // Insert values with duplicates
                 binarySearchTree.Insert(values);
-                inserting_duplicates_passed = true;
             }
             catch
             {
                 inserting_duplicates_passed = false;
             }
 
-            Debug.Assert(inserting_duplicates_passed == false, "Fail! Tree doesn't allow duplicates");
-
+            Assert.False(inserting_duplicates_passed, "Fail! Tree doesn't allow duplicates");
 
             //
             // Reduce values array to an array of distinct values
@@ -146,10 +135,10 @@ namespace C_Sharp_Algorithms
                 inserting_duplicates_passed = false;
             }
 
-            Debug.Assert(inserting_unique_passed == true, "Fail! Inserting unique elements should pass!");
+            Assert.True(inserting_unique_passed, "Fail! Inserting unique elements should pass!");
 
             // ASSERT COUNT
-            Debug.Assert(binarySearchTree.Count == values.Length);
+            Assert.Equal(binarySearchTree.Count, values.Length);
         }
 
     }
