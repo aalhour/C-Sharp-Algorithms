@@ -3,11 +3,13 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using DataStructures.Heaps;
+using Xunit;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
     public static class BinomialHeapsTest
     {
+        [Fact]
         public static void DoTest()
         {
             int i = 37;
@@ -15,8 +17,6 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             BinomialMinHeap<int> firstHeap = new BinomialMinHeap<int>();
             BinomialMinHeap<int> secondHeap = new BinomialMinHeap<int>();
             BinomialMinHeap<int> thirdHeap = new BinomialMinHeap<int>();
-
-            Console.WriteLine("Begin Test.");
 
             for (i = 37; i != 0; i = (i + 37) % numberOfItems)
             {
@@ -32,14 +32,10 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             for (i = 1; i <= thirdHeap.Count; i++)
             {
                 var min = thirdHeap.ExtractMin();
-                Debug.Assert(min == i, "WRONG MIN");
+                Assert.True(min == i, "WRONG MIN");
             }
 
-            Debug.Assert(secondHeap.IsEmpty, "SECOND HEAP SHOULD BE EMPTY");
-
-            Console.WriteLine("END OF TEST");
-
-            Console.ReadLine();
+            Assert.True(secondHeap.IsEmpty, "SECOND HEAP SHOULD BE EMPTY");
         }
     }
 }
