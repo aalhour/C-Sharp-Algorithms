@@ -61,6 +61,7 @@
     <Compile Include="DataStructuresTests\Graphs_UndirectedWeightedDenseGraphTest.cs" />
     <Compile Include="DataStructuresTests\Graphs_UndirectedWeightedSparseGraphTest.cs" />
     <Compile Include="DataStructuresTests\HashTableSeparateChainingTest.cs" />
+    <Compile Include="DataStructuresTests\OpenAddressingHashTableTest.cs" />
     <Compile Include="DataStructuresTests\RedBlackTreeTest.cs" />
     <Compile Include="DataStructuresTests\SkipListTest.cs" />
     <Compile Include="DataStructuresTests\TrieMapTest.cs" />
