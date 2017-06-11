@@ -68,12 +68,12 @@ namespace DataStructures.Dictionaries
         //private HashFunction _functionInUse;
 
         /* Functions you need: all need to be based on which function you are using (set constant value for the object)
-         *  -constructor
-         *  -insert
-         *  -delete
-         *  -find
-         *  -expand
-         *  -contract
+         *  -constructor--DONE
+         *  -insert--DONE
+         *  -delete --might not need this for this hash table
+         *  -find--DONE
+         *  -expand--only if full, then rehash
+         *  -contract--only if load factor is less than 4
          * 
          */
         /// <summary>
@@ -94,54 +94,131 @@ namespace DataStructures.Dictionaries
             }
         }
 
-        private int _double_hash(TKey key)
+        private void _expand()
         {
-            //container will never be full due to a check in insert
-
-            //initial hash value
-            int hash_value = Convert.ToInt32(key) % _size;
-            //slot already occupied
-            //clean up duplicate code later
-            if (_table[hash_value].value != -1)
+            //will hold contents of _table to copy over
+            OAHashEntry<TKey>[] temp = new OAHashEntry<TKey>[_size];
+            temp = _table;
+            //double the size and rehash
+            _size *= 2;
+            OAHashEntry<TKey>[] exp = new OAHashEntry<TKey>[_size];
+            for (int i = 0; i < exp.Length; i++)
             {
-                //second hash value, offset
-                int offset = 1 + (Convert.ToInt32(key) % (_size - 2)); //FOR TESTING: size 13 - 2 == 11
-                hash_value = hash_value + offset;
+                //initialize each slot
+                exp[i] = new OAHashEntry<TKey>(); 
+            }
 
-                //checks if out of bounds- if so, wrap around
-                if (hash_value > _size)
+            _inTable = 0;
+            _table = exp;
+            //rehash over the newly sized table
+            for (int i = 0; i < temp.Length; i++)
+            {
+                //this should rehash since the size is now doubled so the hashing will be different
+                //inserts the key into _table
+                insert(exp[i].key);
+            }
+        }
+
+        //might not be needed for double hashing
+        private void _contract()
+        {
+            //will hold contents of _table to copy over
+            OAHashEntry<TKey>[] temp = new OAHashEntry<TKey>[_size];
+            temp = _table;
+            //shrink the size and rehash
+            _size /= 2;
+            OAHashEntry<TKey>[] con = new OAHashEntry<TKey>[_size];
+            for (int i = 0; i < con.Length; i++)
+            {
+                //initialize each slot
+                con[i] = new OAHashEntry<TKey>();
+            }
+
+            _inTable = 0;
+            _table = con;
+
+            //rehash over the newly sized table
+            for (int i = 0; i < _table.Length; i++)
+            {
+                if (_table[i].value != -1)
                 {
-                    int wrap = hash_value - _size;
-                    hash_value = wrap;
+                    insert(con[i].key);
+                }
+            }
+        }
+
+        private int _double_hash(TKey key, int i)
+        {
+            int hash_value;
+            int second_hash_value;
+            int slot;
+
+            //calculates first hash value
+            hash_value = Convert.ToInt32(key) % _size;
+            //calculate second hash value
+            second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 2)); //FOR TESTING: size 13 - 2 == 11
+            //slot index based on first hash value, second hash value as an offset based on a counter
+            slot = (hash_value + (i * second_hash_value)) % _size;
+
+            //make sure it is not out of bounds
+            if (slot > _size)
+            {
+                int wrap = slot - _size;
+                slot = wrap;
+            }
+
+            return slot;
+        }
+
+        public void insert(TKey key)
+        {
+            int i = 0;
+
+            do
+            {
+                //calculate index
+                int index = _double_hash(key, i);
+                if (_table[index].value == -1)
+                {
+                    //set value and key
+                    _table[index].key = key;
+                    _table[index].value = index;
+                    //increment how many items are in the table
+                    _inTable++;
+                    break;
+                }
+                else
+                {
+                    i++;
                 }
 
-                //keep checking if slot is already taken until open stop
-                while (_table[hash_value].value != -1)
-                {
-                    //add the offset again
-                    hash_value += offset;
-                    //checks if out of bounds- if so, wrap around
-                    if (hash_value > _size)
-                    {
-                        int wrap = hash_value - _size;
-                        hash_value = wrap;
-                    }
-                };
-            }
-            return hash_value;
-        }
-        public int insert(TKey key)
-        {
-            //calculate index
-            int index = _double_hash(key);
-            //set value and key
-            _table[index].key = key;
-            _table[index].value = index;
-            //increment how many items are in the table
-            _inTable++;
+            } while (i != _size);
 
-            //only for testing purposes
-            return index;
+            //every slot is in the table is occupied
+            if (i == _size)
+            {
+                //expand and rehash
+                _expand();
+            }
+        }
+
+        public int search(TKey key)
+        {
+            int i = 0;
+
+            do
+            {
+                //calculate index
+                int index = _double_hash(key, i);
+                if (IComparable.Equals(_table[index].key, key))
+                {
+                    return index;
+                }
+                i++;
+
+            } while (i < _size);
+
+            return -1;
         }
     }
 }
