@@ -8,7 +8,7 @@
  *      
  * Author: Samuel Kenney
  * Created: 6/7/2017
- * Last Modified: 6/7/2017
+ * Last Modified: 6/11/2017
  * 
  */
 
@@ -35,10 +35,6 @@ namespace DataStructures.Dictionaries
         /// <typeparam name="TValue"></typeparam>
         private class OAHashEntry<TKeyEntry>
         {
-            /* You need:
-             *  - a key
-             *  - a value
-             */
             public TKey key { get; set; }
             public int value { get; set; }
             public OAHashEntry()
@@ -47,15 +43,7 @@ namespace DataStructures.Dictionaries
                 value = -1;
             }
         }
-        /* You need:
-         *  -size: from user
-         *  -defaut size
-         *  -load factor
-         *  -how many are in your table
-         *  -collection of entries
-         *  -which hash function you are using: enum and const value
-         *      >double hashing function
-         */
+
         private int _size { get; set; }
         private double _loadFactor { get; set; }
         private int _inTable { get; set; }
@@ -67,15 +55,6 @@ namespace DataStructures.Dictionaries
         //private string _funct;
         //private HashFunction _functionInUse;
 
-        /* Functions you need: all need to be based on which function you are using (set constant value for the object)
-         *  -constructor--DONE
-         *  -insert--DONE
-         *  -delete --might not need this for this hash table
-         *  -find--DONE
-         *  -expand--only if full, then rehash
-         *  -contract--only if load factor is less than 4
-         * 
-         */
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
@@ -115,35 +94,7 @@ namespace DataStructures.Dictionaries
             {
                 //this should rehash since the size is now doubled so the hashing will be different
                 //inserts the key into _table
-                insert(exp[i].key);
-            }
-        }
-
-        //might not be needed for double hashing
-        private void _contract()
-        {
-            //will hold contents of _table to copy over
-            OAHashEntry<TKey>[] temp = new OAHashEntry<TKey>[_size];
-            temp = _table;
-            //shrink the size and rehash
-            _size /= 2;
-            OAHashEntry<TKey>[] con = new OAHashEntry<TKey>[_size];
-            for (int i = 0; i < con.Length; i++)
-            {
-                //initialize each slot
-                con[i] = new OAHashEntry<TKey>();
-            }
-
-            _inTable = 0;
-            _table = con;
-
-            //rehash over the newly sized table
-            for (int i = 0; i < _table.Length; i++)
-            {
-                if (_table[i].value != -1)
-                {
-                    insert(con[i].key);
-                }
+                insert(temp[i].key);
             }
         }
 
@@ -156,7 +107,7 @@ namespace DataStructures.Dictionaries
             //calculates first hash value
             hash_value = Convert.ToInt32(key) % _size;
             //calculate second hash value
-            second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 2)); //FOR TESTING: size 13 - 2 == 11
+            second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 1));
             //slot index based on first hash value, second hash value as an offset based on a counter
             slot = (hash_value + (i * second_hash_value)) % _size;
 
@@ -173,6 +124,12 @@ namespace DataStructures.Dictionaries
         public void insert(TKey key)
         {
             int i = 0;
+
+            //makes sure there are no duplicate keys
+            if (contains(key))
+            {
+                return;
+            }
 
             do
             {
@@ -195,13 +152,14 @@ namespace DataStructures.Dictionaries
             } while (i != _size);
 
             //every slot is in the table is occupied
-            if (i == _size)
+            if (_inTable == _size)
             {
                 //expand and rehash
                 _expand();
             }
         }
 
+        //finds the key
         public int search(TKey key)
         {
             int i = 0;
@@ -219,6 +177,15 @@ namespace DataStructures.Dictionaries
             } while (i < _size);
 
             return -1;
+        }
+        //returns if the key is in the table
+        public bool contains(TKey key)
+        {
+            if (search(key) != -1)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
