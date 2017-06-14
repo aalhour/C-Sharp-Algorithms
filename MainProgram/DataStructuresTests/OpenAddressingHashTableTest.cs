@@ -15,13 +15,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
         {
             var OAtable = new OpenAddressingHashTable<int>(7);
 
-            //testing insert
+            //testing insert for int
             OAtable.insert(79);
             OAtable.insert(72);
             OAtable.insert(98);
             OAtable.insert(14);
 
-            //test search
+            //test search for int
             int two = OAtable.search(79);
             int three = OAtable.search(72);
             int zero = OAtable.search(98);
@@ -65,6 +65,87 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Debug.Assert(eight == 8);
             Debug.Assert(ten == 10);
             Debug.Assert(five_expand == 5);
+
+            var OAtableString = new OpenAddressingHashTable<string>(7);
+
+            //testing insert for string
+            OAtableString.insert("foo");
+            OAtableString.insert("bar");
+            OAtableString.insert("insert");
+            OAtableString.insert("string");
+
+            //test search for string
+            int string_two = OAtableString.search("foo");
+            int string_one = OAtableString.search("bar");
+            int string_three = OAtableString.search("insert");
+            int string_five = OAtableString.search("string");
+
+            Debug.Assert(string_two == 2);
+            Debug.Assert(string_one == 1);
+            Debug.Assert(string_three == 3);
+            Debug.Assert(string_five == 5);
+
+            var OAtableChar = new OpenAddressingHashTable<char>(70);
+
+            //test insert for char
+            OAtableChar.insert('h');
+            OAtableChar.insert('e');
+            OAtableChar.insert('l'); 
+            OAtableChar.insert('l'); 
+            OAtableChar.insert('o');
+            OAtableChar.insert('_'); 
+            OAtableChar.insert('w'); 
+            OAtableChar.insert('o');
+            OAtableChar.insert('r');
+            OAtableChar.insert('l');
+            OAtableChar.insert('d'); 
+
+            //test search for char
+            int char_threefour = OAtableChar.search('h');
+            int char_threeone = OAtableChar.search('e');
+            int char_threeeight = OAtableChar.search('l');
+            //l is duplicate
+            int char_fourone = OAtableChar.search('o');
+            int char_twofive = OAtableChar.search('_');
+            int char_fournine = OAtableChar.search('w');
+            //o is duplicate
+            int char_fourfour = OAtableChar.search('r');
+            //l is duplicate
+            int char_thirty = OAtableChar.search('d');
+
+            Debug.Assert(char_threefour == 34);
+            Debug.Assert(char_threeone == 31);
+            Debug.Assert(char_threeeight == 38);
+            //l is duplicate
+            Debug.Assert(char_fourone == 41);
+            Debug.Assert(char_twofive == 25);
+            Debug.Assert(char_fournine == 49);
+            //o is duplicate
+            Debug.Assert(char_fourfour == 44);
+            //l is duplicate
+            Debug.Assert(char_thirty == 30);
+
+            var OAtablefloat = new OpenAddressingHashTable<float>(7);
+
+            //testing insert for float
+            OAtablefloat.insert(79.7f);
+            OAtablefloat.insert(72.3f);
+            OAtablefloat.insert(98.9f);
+            OAtablefloat.insert(14.6f);
+
+            //test search for float
+            int three_float = OAtablefloat.search(79.7f);
+            int two_float = OAtablefloat.search(72.3f);
+            int one_float = OAtablefloat.search(98.9f);
+            int five_float = OAtablefloat.search(14.6f);
+            int nil_float = OAtablefloat.search(223.0f);
+
+            Debug.Assert(three_float == 3);
+            Debug.Assert(two_float == 2);
+            Debug.Assert(one_float == 1);
+            Debug.Assert(five_float == 5);
+            Debug.Assert(nil_float == -1);
+
         }
     }
 }

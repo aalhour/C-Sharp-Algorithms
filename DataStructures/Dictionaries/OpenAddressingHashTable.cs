@@ -14,10 +14,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 using DataStructures.Common;
 using DataStructures.Hashing;
 using System.Threading.Tasks;
+
 namespace DataStructures.Dictionaries
 {
     /// <summary>
@@ -100,23 +102,55 @@ namespace DataStructures.Dictionaries
 
         private int _double_hash(TKey key, int i)
         {
-            int hash_value;
-            int second_hash_value;
-            int slot;
+            int hash_value = 0;
+            int second_hash_value = 0;
+            int slot = 0;
 
-            //calculates first hash value
-            hash_value = Convert.ToInt32(key) % _size;
-            //calculate second hash value
-            second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 1));
-            //slot index based on first hash value, second hash value as an offset based on a counter
-            slot = (hash_value + (i * second_hash_value)) % _size;
-
-            //make sure it is not out of bounds
-            if (slot > _size)
+            //grabs hash value for a string
+            if (typeof(TKey) == typeof(string))
             {
-                int wrap = slot - _size;
-                slot = wrap;
+                //https://stackoverflow.com/questions/4092393/value-of-type-t-cannot-be-converted-to
+                TKey newTkeyString = (TKey)(object)key;
+                string newTkeyString2 = (string)(object)newTkeyString;
+
+                //https://stackoverflow.com/questions/400733/how-to-get-ascii-value-of-string-in-c-sharp
+                byte[] asciiBytes = Encoding.ASCII.GetBytes(newTkeyString2);
+
+                int string_value = 0;
+                foreach (byte bite in asciiBytes)
+                {
+                    string_value += (int)bite;
+                }
+
+                //calculates first hash values
+                hash_value = Convert.ToInt32(string_value) % _size;
+                //calculate second hash value
+                second_hash_value = 1 + (Convert.ToInt32(string_value) % (_size - 1));
             }
+            //grabs a hash value for a char
+            else if (typeof(TKey) == typeof(char))
+            {
+                //https://stackoverflow.com/questions/4092393/value-of-type-t-cannot-be-converted-to
+                TKey newTkeyChar = (TKey)(object)key;
+                char newTkeyChar2 = (char)(object)newTkeyChar;
+
+                int char_value = (int)newTkeyChar2;
+
+                //calculates first hash values
+                hash_value = Convert.ToInt32(char_value) % _size;
+                //calculate second hash value
+                second_hash_value = 1 + (Convert.ToInt32(char_value) % (_size - 1));
+            }
+            else
+            {
+                //calculates first hash values
+                hash_value = Convert.ToInt32(key) % _size;
+                //calculate second hash value
+                second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 1));
+            }
+
+            //slot index based on first hash value, second hash value as an offset based on a counter, will also guarentee that the slot will be within the range 0 to size
+            slot = (hash_value + (i * second_hash_value)) % _size;
 
             return slot;
         }
