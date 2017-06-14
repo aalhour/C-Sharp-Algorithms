@@ -1,4 +1,18 @@
-﻿using System;
+﻿/***
+ * Open Addressing Hash Table
+ * 
+ * Testing of Open Addressing Hash Table using
+ *      - Linear Probing (coming soon)
+ *      - Quadratic Probing (coming soon)
+ *      - Double Hashing
+ *      
+ * Author: Samuel Kenney
+ * Created: 6/7/2017
+ * Last Modified: 6/13/2017
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

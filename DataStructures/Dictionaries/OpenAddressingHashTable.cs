@@ -2,13 +2,13 @@
  * Open Addressing Hash Table
  * 
  * Implementation of Open Addressing Hash Table using
- *      - Linear Probing
- *      - Quadratic Probing
+ *      - Linear Probing (coming soon)
+ *      - Quadratic Probing (coming soon)
  *      - Double Hashing
  *      
  * Author: Samuel Kenney
  * Created: 6/7/2017
- * Last Modified: 6/11/2017
+ * Last Modified: 6/13/2017
  * 
  */
 
