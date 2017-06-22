@@ -66,32 +66,28 @@ namespace Algorithms.Strings
         /// <summary>
         /// Determines if the Other string is an anargram of the Source string.
         /// </summary>
-        public static bool IsAnargram(string Source, string Other)
+        public static bool IsAnargram(string source, string other)
         {
-            if (string.IsNullOrEmpty(Source) || string.IsNullOrEmpty(Other))
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(other))
                 return false;
-            else if (Source.Length != Other.Length)
+            else if (source.Length != other.Length)
                 return false;
-            else if (Source == Other)
+            else if (source.Equals(other, StringComparison.Ordinal))
                 return true;
 
-            // Begin the Anagram check
-            // Covnert strings to character arrays
-            // O(N) space complexity
-            var sourceCharArray = Source.ToCharArray();
-            var otherCharArray = Other.ToCharArray();
-
-            // Sort both character arrays in place using heapsort
-            // O(N log N) operation
-            sourceCharArray.HeapSort<char>(Comparer<char>.Default);
-            otherCharArray.HeapSort<char>(Comparer<char>.Default);
-
-            // One pass scan
-            // O(N) operation
-            for (int i = 0; i < sourceCharArray.Length; ++i)
-                if (sourceCharArray[i] != otherCharArray[i])
-                    return false;
-
+            int len = source.Length;
+            // Hash set which will contains all the characters present in input souce.
+            var hashSetSourceChars = new HashSet<char>();
+            for (int i = 0; i < len; i++)
+            {
+                hashSetSourceChars.Add(source[i]);
+            }
+            for (int i = 0; i < len; i++)
+            {
+                // Inputs are not Anargram if characers from *other are not present in *source.
+                if (!hashSetSourceChars.Contains(other[i])) return false;
+                //if (!hashSetOther.Contains(source[i])) return false;
+            }
             return true;
         }
     }
