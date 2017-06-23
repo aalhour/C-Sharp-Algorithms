@@ -9,8 +9,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 	{
 		public static void DoTest ()
 		{
-			int index = 0;
-			SLinkedList<int> listOfNumbers1 = new SLinkedList<int>();
+		    var listOfNumbers1 = new SLinkedList<int>();
 
 			listOfNumbers1.Append(10);
 			listOfNumbers1.Append(124);
@@ -52,7 +51,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 			Console.WriteLine(listOfNumbers1.ToReadable());
 			Console.WriteLine("Count: " + listOfNumbers1.Count + "\r\n");
 
-			index = 0;
+			var index = 0;
 			Console.WriteLine("Get At " + index + ": " + listOfNumbers1.GetAt(index));
 
 			index = (listOfNumbers1.Count / 2) + 1;

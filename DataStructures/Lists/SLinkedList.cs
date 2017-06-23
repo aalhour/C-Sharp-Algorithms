@@ -11,9 +11,6 @@ namespace DataStructures.Lists
     /// <typeparam name="T"></typeparam>
     public class SLinkedListNode<T> : IComparable<SLinkedListNode<T>> where T : IComparable<T>
     {
-        private T _data;
-        private SLinkedListNode<T> _next;
-
         public SLinkedListNode()
         {
             Next = null;
@@ -26,17 +23,9 @@ namespace DataStructures.Lists
             Data = dataItem;
         }
 
-        public T Data
-        {
-            get { return this._data; }
-            set { this._data = value; }
-        }
+        public T Data { get; set; }
 
-        public SLinkedListNode<T> Next
-        {
-            get { return this._next; }
-            set { this._next = value; }
-        }
+        public SLinkedListNode<T> Next { get; set; }
 
         public int CompareTo(SLinkedListNode<T> other)
         {
@@ -59,15 +48,9 @@ namespace DataStructures.Lists
         private SLinkedListNode<T> _firstNode { get; set; }
         private SLinkedListNode<T> _lastNode { get; set; }
 
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
-        public virtual SLinkedListNode<T> Head
-        {
-            get { return this._firstNode; }
-        }
+        public virtual SLinkedListNode<T> Head => this._firstNode;
 
         /// <summary>
         /// CONSTRUCTOR
@@ -91,13 +74,7 @@ namespace DataStructures.Lists
         /// <summary>
         /// Getter function that returns the first element
         /// </summary>
-        public T First
-        {
-            get
-            {
-                return (_firstNode == null ? default(T) : _firstNode.Data);
-            }
-        }
+        public T First => (_firstNode == null ? default(T) : _firstNode.Data);
 
         /// <summary>
         /// Getter function that returns the last element
@@ -110,7 +87,7 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (_lastNode == null)
+                if (_lastNode == null)
                 {
                     var currentNode = _firstNode;
                     while (currentNode.Next != null)
@@ -120,10 +97,7 @@ namespace DataStructures.Lists
                     _lastNode = currentNode;
                     return currentNode.Data;
                 }
-                else
-                {
-                    return _lastNode.Data;
-                }
+                return _lastNode.Data;
             }
         }
 
@@ -133,7 +107,7 @@ namespace DataStructures.Lists
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Prepend(T dataItem)
         {
-            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
+            var newNode = new SLinkedListNode<T>(dataItem);
 
             if (_firstNode == null)
             {
@@ -156,7 +130,7 @@ namespace DataStructures.Lists
         /// <param name="dataItem">The data value to be inserted to the list.</param>
         public void Append(T dataItem)
         {
-            SLinkedListNode<T> newNode = new SLinkedListNode<T>(dataItem);
+            var newNode = new SLinkedListNode<T>(dataItem);
 
             if (_firstNode == null)
             {
@@ -195,7 +169,7 @@ namespace DataStructures.Lists
                 var currentNode = _firstNode;
                 var newNode = new SLinkedListNode<T>(dataItem);
 
-                for (int i = 1; i < index; ++i)
+                for (var i = 1; i < index; ++i)
                 {
                     currentNode = currentNode.Next;
                 }
@@ -245,7 +219,7 @@ namespace DataStructures.Lists
             }
             else
             {
-                int i = 0;
+                var i = 0;
                 var currentNode = _firstNode;
                 while (currentNode.Next != null)
                 {
@@ -285,11 +259,11 @@ namespace DataStructures.Lists
             {
                 return First;
             }
-            else if (index == (Count - 1))
+            if (index == (Count - 1))
             {
                 return Last;
             }
-            else if (index > 0 && index < (Count - 1))
+            if (index > 0 && index < (Count - 1))
             {
                 var currentNode = _firstNode;
                 for (int i = 0; i < index; ++i)
@@ -298,10 +272,7 @@ namespace DataStructures.Lists
                 }
                 return currentNode.Data;
             }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
+            throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -320,13 +291,13 @@ namespace DataStructures.Lists
             {
                 return newList;
             }
-            else if (index < 0 || index > Count)
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }
 
             // Move the currentNode reference to the specified index
-            for (int i = 0; i < index; ++i)
+            for (var i = 0; i < index; ++i)
             {
                 currentNode = currentNode.Next;
             }
@@ -375,10 +346,10 @@ namespace DataStructures.Lists
         /// <returns></returns>
         public T[] ToArray()
         {
-            T[] array = new T[Count];
+            var array = new T[Count];
 
             var currentNode = _firstNode;
-            for (int i = 0; i < Count; ++i)
+            for (var i = 0; i < Count; ++i)
             {
                 if (currentNode != null)
                 {
@@ -400,7 +371,7 @@ namespace DataStructures.Lists
         /// <returns>System.List of elements</returns>
         public List<T> ToList()
         {
-            List<T> list = new List<T>();
+            var list = new List<T>();
 
             var currentNode = _firstNode;
             for (int i = 0; i < Count; ++i)
@@ -464,21 +435,15 @@ namespace DataStructures.Lists
                 this._current = list.Head;
             }
 
-            public T Current
-            {
-                get { return this._current.Data; }
-            }
+            public T Current => _current.Data;
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object System.Collections.IEnumerator.Current => Current;
 
             public bool MoveNext()
             {
                 _current = _current.Next;
 
-                return (this._current != null);
+                return (_current != null);
             }
 
             public void Reset()

@@ -13,17 +13,17 @@ namespace C_Sharp_Algorithms.DataStructuresTests
         {
             var sortedDict = new DataStructures.SortedCollections.SortedDictionary<string, int>();
 
-            string[] keys = new string[13] {
+            var keys = new [] {
                 "A", "B", "C", "D", "E", "ABC", "Ahmad", "Bic", 
                 "Carter", "Konstantinos", "Olympos", "Tareq", "Ziad"
             };
 
-            int[] values = new int[13] { 26, 27, 28, 29, 30, 40, 10, 11, 12, 13, 14, 15, 16};
+            var values = new [] { 26, 27, 28, 29, 30, 40, 10, 11, 12, 13, 14, 15, 16};
 
 
             //
             // Test Add
-            for (int i = 0; i < 13; ++i)
+            for (var i = 0; i < 13; ++i)
             {
                 // insert
                 sortedDict.Add(keys[i], values[i]);
@@ -63,16 +63,14 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             //
             // Test TryGetValue for existing items
-            int existingItemKeyValue;
-            var tryGetStatus = sortedDict.TryGetValue("Ziad", out existingItemKeyValue);
+            var tryGetStatus = sortedDict.TryGetValue("Ziad", out int existingItemKeyValue);
             Debug.Assert(tryGetStatus == true, "Expected the TryGet returned status to be true.");
             Debug.Assert(existingItemKeyValue == 16, "Expected Ziad to be set to 16.");
 
 
             //
             // Test TryGetValue for non-existing items
-            int nonExistingItemKeyValue;
-            tryGetStatus = sortedDict.TryGetValue("SomeNonExistentKey", out nonExistingItemKeyValue);
+            tryGetStatus = sortedDict.TryGetValue("SomeNonExistentKey", out int _);
             Debug.Assert(tryGetStatus == false, "Expected the TryGet returned status to be false.");
             Debug.Assert(existingItemKeyValue == 16, "Expected the returned value for a non-existent key to be 0.");
 
@@ -81,7 +79,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             // Test Remove
             var previousCount = sortedDict.Count;
             var removeStatus = sortedDict.Remove("Ziad");
-            Debug.Assert(removeStatus == true, "Expected removeStatus to be true.");
+            Debug.Assert(removeStatus, "Expected removeStatus to be true.");
             Debug.Assert(sortedDict.ContainsKey("Ziad") == false, "Expected Ziad to be removed.");
             Debug.Assert(sortedDict.Count == previousCount - 1, "Expected Count to decrease after Remove operation.");
 
@@ -93,7 +91,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             // Prepare the sort testing data
             var keyValuePairsList = new List<KeyValuePair<string, int>>(sortedDict.Count);
-            for (int i = 0; i < sortedDict.Count; ++i)
+            for (var i = 0; i < sortedDict.Count; ++i)
             {
                 if(keys[i] == "Ziad") // deleted previously from sortedDictionary
                     continue;
@@ -103,7 +101,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             keyValuePairsList.OrderBy(item => item.Key);
 
             // begin sorting test
-            for (int i = 0; i < sortedDict.Count; i++)
+            for (var i = 0; i < sortedDict.Count; i++)
                 Debug.Assert(array[i].Key == keyValuePairsList[i].Key && array[i].Value == keyValuePairsList[i].Value, "Unmatched order of items!");
 
 
