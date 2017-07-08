@@ -1,18 +1,4 @@
-﻿/***
- * Open Addressing Hash Table
- * 
- * Implementation of Open Addressing Hash Table using
- *      - Linear Probing (coming soon)
- *      - Quadratic Probing (coming soon)
- *      - Double Hashing
- *      
- * Author: Samuel Kenney
- * Created: 6/7/2017
- * Last Modified: 6/13/2017
- * 
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,8 +12,8 @@ namespace DataStructures.Dictionaries
     /// Open Addressing Data Structure
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TValue">will always be an integer since it maps to an index</typeparam>
-    public class OpenAddressingHashTable<TKey>
+    /// <typeparam name="TValue"></typeparam>
+    public class OpenAddressingHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
 
         /// <summary>
@@ -35,58 +21,57 @@ namespace DataStructures.Dictionaries
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>
-        private class OAHashEntry<TKeyEntry>
+        private class OAHashEntry<TKey, TValue> where TKey : IComparable<TKey>
         {
             public TKey key { get; set; }
-            public int value { get; set; }
-            public OAHashEntry()
+            public TValue value { get; set; }
+            public bool occupied { get; set; }
+            public OAHashEntry(TKey Key, TValue Value, bool occp)
             {
-                key = default(TKey);
-                value = -1;
+                key = Key;
+                value = Value;
+                occupied = occp;
             }
         }
 
         private int _size { get; set; }
         private double _loadFactor { get; set; }
         private int _inTable { get; set; }
-        private OAHashEntry<TKey>[] _table { get; set; }
+        private OAHashEntry<TKey, TValue>[] _table { get; set; }
+        public ICollection<TKey> Keys { get; set;}
+        public ICollection<TValue> Values { get; set; }
 
-
-        //---------------for multiple types of hashing-----------------------
-        //public enum HashFunction { Linear, Quadratic, Double};
-        //private string _funct;
-        //private HashFunction _functionInUse;
 
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
         /// 
-        public OpenAddressingHashTable(int size) //need to introduce a way for multiple hash functions later
+        public OpenAddressingHashTable(int size)
         {
             _size = size;
             _loadFactor = 0.40;
             _inTable = 0;
-            _table = new OAHashEntry<TKey>[_size];
+            _table = new OAHashEntry<TKey, TValue>[_size];
             //initialize all values to -1
             for (int i = 0; i < _table.Length; i++)
             {
                 //initialize each slot
-                _table[i] = new OAHashEntry<TKey>();
+                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
             }
         }
 
         private void _expand()
         {
             //will hold contents of _table to copy over
-            OAHashEntry<TKey>[] temp = new OAHashEntry<TKey>[_size];
+            OAHashEntry<TKey, TValue>[] temp = new OAHashEntry<TKey, TValue>[_size];
             temp = _table;
             //double the size and rehash
             _size *= 2;
-            OAHashEntry<TKey>[] exp = new OAHashEntry<TKey>[_size];
+            OAHashEntry<TKey, TValue>[] exp = new OAHashEntry<TKey, TValue>[_size];
             for (int i = 0; i < exp.Length; i++)
             {
                 //initialize each slot
-                exp[i] = new OAHashEntry<TKey>(); 
+                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
             }
 
             _inTable = 0;
@@ -96,8 +81,33 @@ namespace DataStructures.Dictionaries
             {
                 //this should rehash since the size is now doubled so the hashing will be different
                 //inserts the key into _table
-                insert(temp[i].key);
+                Add(temp[i].key, temp[i].value);
             }
+        }
+
+        private void _rehash()
+        {
+            //will hold contents of _table to copy over
+            OAHashEntry<TKey, TValue>[] temp = new OAHashEntry<TKey, TValue>[_size];
+            temp = _table;
+
+            OAHashEntry<TKey, TValue>[] rehash = new OAHashEntry<TKey, TValue>[_size];
+            for (int i = 0; i < rehash.Length; i++)
+            {
+                //initialize each slot
+                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+            }
+
+            _inTable = 0;
+            _table = rehash;
+            //rehash over the newly sized table
+            for (int i = 0; i < temp.Length; i++)
+            {
+                //this should rehash since the size is now doubled so the hashing will be different
+                //inserts the key into _table
+                Add(temp[i].key, temp[i].value);
+            }
+
         }
 
         private int _double_hash(TKey key, int i)
@@ -155,12 +165,12 @@ namespace DataStructures.Dictionaries
             return slot;
         }
 
-        public void insert(TKey key)
+        public void Add(TKey key, TValue value)
         {
             int i = 0;
 
             //makes sure there are no duplicate keys
-            if (contains(key))
+            if (ContainsKey(key))
             {
                 return;
             }
@@ -169,11 +179,16 @@ namespace DataStructures.Dictionaries
             {
                 //calculate index
                 int index = _double_hash(key, i);
-                if (_table[index].value == -1)
+
+
+                if (_table[index].occupied == false)
                 {
+                    var newEntry = new OAHashEntry<TKey, TValue>(key, value, true);
+                    Keys.Add(key);
+                    Values.Add(value);
+
                     //set value and key
-                    _table[index].key = key;
-                    _table[index].value = index;
+                    _table[index] = newEntry;
                     //increment how many items are in the table
                     _inTable++;
                     break;
@@ -191,6 +206,57 @@ namespace DataStructures.Dictionaries
                 //expand and rehash
                 _expand();
             }
+        }
+
+        public void Add(KeyValuePair<TKey, TValue> item)
+        {
+            Add(item.Key, item.Value);
+        }
+
+        //returns value
+        public TValue this[TKey key]
+        {
+            get{
+                int index = search(key);
+
+                if (index != -1)
+                {
+                    return _table[index].value;
+                }
+
+                throw new KeyNotFoundException();
+            }
+            set {
+
+                if (ContainsKey(key) == true)
+                {
+
+                    int index = search(key);
+
+                    _table[index].value = value;
+
+                    throw new KeyNotFoundException();
+
+                }
+                throw new KeyNotFoundException();
+            }
+        }
+
+        //Tries to get the value of key which might not be in the dictionary.
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            int index = search(key);
+
+            if (index != -1)
+            {
+                value = _table[index].value;
+
+                return true;
+            }
+
+            //not found
+            value = default(TValue);
+            return false;
         }
 
         //finds the key
@@ -212,14 +278,41 @@ namespace DataStructures.Dictionaries
 
             return -1;
         }
+
         //returns if the key is in the table
-        public bool contains(TKey key)
+        public bool ContainsKey(TKey key)
         {
             if (search(key) != -1)
             {
                 return true;
             }
             return false;
+        }
+
+        public bool Remove(TKey key){
+
+            if (ContainsKey(key))
+            {
+                //find position and reset values
+                int index = search(key);
+                _table[index].key = default(TKey);
+                _table[index].value = default(TValue);
+                _table[index].occupied = false;
+
+                Keys.Remove(_table[index].key);
+                Values.Remove(_table[index].value);
+
+                //number of items in the table decreases
+                _inTable--;
+                //rehash table --necessary for Open Addressing since keys could have different positions due to this key
+                _rehash();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
