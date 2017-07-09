@@ -1,46 +1,47 @@
-﻿using System;
-using System.Diagnostics;
+﻿using DataStructures.Lists;
+using Xunit;
 
-using DataStructures.Lists;
-
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
-	public static class StackTest
-	{
-		public static void DoTest ()
-		{
-			int top;
-			Stack<int> stack = new Stack<int>();
+    public static class StackTest
+    {
+        [Fact]
+        public static void DoTest()
+        {
+            int top;
+            Stack<int> stack = new Stack<int>();
 
-			stack.Push(1);
-			stack.Push(2);
-			stack.Push(3);
-			stack.Push(4);
-			stack.Push(5);
-			stack.Push(6);
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            stack.Push(4);
+            stack.Push(5);
+            stack.Push(6);
 
-			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+            // Wrong top value.
+            Assert.Equal(6, stack.Top);
 
-			Debug.Assert (stack.Top == 6, "Wrong top value.");
+            var array = stack.ToArray();
 
-			var array = stack.ToArray();
-			Debug.Assert (array.Length == stack.Count, "Wrong size!");
+            // Wrong size!
+            Assert.Equal(array.Length, stack.Count);
 
-			top = stack.Pop();
-			Debug.Assert (stack.Top == 5, "Wrong top value.");
+            top = stack.Pop();
 
-			Console.WriteLine("Old 2nd-last: " + top);
-			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+            // Wrong top value.
+            Assert.Equal(5, stack.Top);
 
-			stack.Pop();
-			stack.Pop();
-			Debug.Assert (stack.Top == 3, "Wrong top value.");
+            stack.Pop();
+            stack.Pop();
 
-			Console.WriteLine("Stack:\r\n" + stack.ToHumanReadable());
+            // Wrong top value.
+            Assert.Equal(3, stack.Top);
 
-			var array2 = stack.ToArray();
-			Debug.Assert (array2.Length == stack.Count, "Wrong size!");
-		}
-	}
+            var array2 = stack.ToArray();
+
+            // Wrong size!
+            Assert.Equal(array2.Length, stack.Count);
+        }
+    }
 }
 
