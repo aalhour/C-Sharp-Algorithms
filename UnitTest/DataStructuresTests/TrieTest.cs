@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using DataStructures.Trees;
+using Xunit;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.AlgorithmsTests.DataStructuresTests
 {
     public static class TrieTest
     {
+        [Fact]
         public static void DoTest()
         {
             var trie = new Trie();
@@ -28,7 +30,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             trie.Add(word_howToProp);
 
             // Count of words = 4
-            Debug.Assert(trie.Count == 4);
+            Assert.Equal(4, trie.Count);
 
             // Insert some dictionary words
             var prefix_act = "act";
@@ -47,38 +49,36 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             trie.Add(word_actor);
 
             // Count of words = 9
-            Debug.Assert(trie.Count == 9);
-
-
+            Assert.Equal(9, trie.Count);
 
             //
             // ASSERT THE WORDS IN TRIE.
 
             // Search for a word that doesn't exist
-            Debug.Assert(false == trie.ContainsWord(prefix_howTo));
+            Assert.False(trie.ContainsWord(prefix_howTo));
 
             // Search for prefix
-            Debug.Assert(true == trie.ContainsPrefix(prefix_howTo));
+            Assert.True(trie.ContainsPrefix(prefix_howTo));
 
             // Search for a prefix using a word
-            Debug.Assert(true == trie.ContainsPrefix(word_howToSand));
+            Assert.True(trie.ContainsPrefix(word_howToSand));
 
             // Get all words that start with the how-to prefix
             var someHowToWords = trie.SearchByPrefix(prefix_howTo).ToList();
-            Debug.Assert(someHowToWords.Count == listOfHow.Count);
+            Assert.Equal(someHowToWords.Count, listOfHow.Count);
 
             // Assert there are only two words under the prefix "acti" -> active, & acting
             var someActiWords = trie.SearchByPrefix("acti").ToList<string>();
-            Debug.Assert(someActiWords.Count == 2);
-            Debug.Assert(someActiWords.Contains(word_acting));
-            Debug.Assert(someActiWords.Contains(word_active));
+            Assert.True(someActiWords.Count == 2);
+            Assert.True(someActiWords.Contains(word_acting));
+            Assert.True(someActiWords.Contains(word_active));
 
             // Assert that "acto" is not a word
-            Debug.Assert(trie.ContainsWord("acto") == false);
+            Assert.False(trie.ContainsWord("acto"));
 
             // Check the existance of other words
-            Debug.Assert(trie.ContainsWord(word_actress) == true);
-            Debug.Assert(trie.ContainsWord(word_howToProp) == true);
+            Assert.True(trie.ContainsWord(word_actress));
+            Assert.True(trie.ContainsWord(word_howToProp));
 
 
 
@@ -99,8 +99,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 removing_acto_fails = true;
             }
 
-            Debug.Assert(removing_acto_fails == true);
-            Debug.Assert(trie.Count == 9);
+            Assert.True(removing_acto_fails);
+            Assert.True(trie.Count == 9);
 
             // Removing a word should work
             var removing_acting_passes = false;
@@ -116,12 +116,12 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 removing_acting_passes = false;
             }
 
-            Debug.Assert(removing_acting_passes == true);
-            Debug.Assert(trie.Count == 8);
+            Assert.True(removing_acting_passes);
+            Assert.True(trie.Count == 8);
 
             someActiWords = trie.SearchByPrefix("acti").ToList<string>();
-            Debug.Assert(someActiWords.Count == 1);
-            Debug.Assert(someActiWords.Contains(word_active));
+            Assert.True(someActiWords.Count == 1);
+            Assert.True(someActiWords.Contains(word_active));
 
 
 
@@ -134,16 +134,11 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 allWords.Add(enumerator.Current);
 
             // Assert size
-            Debug.Assert(allWords.Count == trie.Count);
+            Assert.True(allWords.Count == trie.Count);
 
             // Assert each element
             foreach (var word in allWords)
                 Debug.Assert(listOfActWords.Contains(word) || listOfHow.Contains(word));
-
-
-            Console.WriteLine("Testing is finished.");
-
-            Console.ReadLine();
         }
     }
 }
