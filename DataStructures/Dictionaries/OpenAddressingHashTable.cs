@@ -38,9 +38,8 @@ namespace DataStructures.Dictionaries
         private double _loadFactor { get; set; }
         private int _inTable { get; set; }
         private OAHashEntry<TKey, TValue>[] _table { get; set; }
-        public ICollection<TKey> Keys { get; set;}
-        public ICollection<TValue> Values { get; set; }
-
+        private List<TKey> _keys { get; set; }
+        private List<TValue> _values { get; set; }
 
         /// <summary>
         /// CONSTRUCTOR
@@ -52,6 +51,9 @@ namespace DataStructures.Dictionaries
             _loadFactor = 0.40;
             _inTable = 0;
             _table = new OAHashEntry<TKey, TValue>[_size];
+            _keys = new List<TKey>();
+            _values = new List<TValue>();
+
             //initialize all values to -1
             for (int i = 0; i < _table.Length; i++)
             {
@@ -71,7 +73,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < exp.Length; i++)
             {
                 //initialize each slot
-                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                exp[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
             }
 
             _inTable = 0;
@@ -95,7 +97,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < rehash.Length; i++)
             {
                 //initialize each slot
-                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                rehash[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
             }
 
             _inTable = 0;
@@ -184,8 +186,8 @@ namespace DataStructures.Dictionaries
                 if (_table[index].occupied == false)
                 {
                     var newEntry = new OAHashEntry<TKey, TValue>(key, value, true);
-                    Keys.Add(key);
-                    Values.Add(value);
+                    _keys.Add(key);
+                    _values.Add(value);
 
                     //set value and key
                     _table[index] = newEntry;
@@ -242,6 +244,55 @@ namespace DataStructures.Dictionaries
             }
         }
 
+
+        //removes key-value pair from the table
+        public bool Remove(TKey key)
+        {
+
+            if (ContainsKey(key))
+            {
+                //find position and reset values
+                int index = search(key);
+                _keys.Clear();
+                _values.Clear();
+
+                _table[index].key = default(TKey);
+                _table[index].value = default(TValue);
+                _table[index].occupied = false;
+
+                //number of items in the table decreases
+                _inTable--;
+                //rehash table --necessary for Open Addressing since keys could have different positions due to this key
+                _rehash();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //removes key-value pair from the table
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            return Remove(item.Key);
+        }
+
+        //clears table of all values
+        public void Clear()
+        {
+            _keys.Clear();
+            _values.Clear();
+            for (int i = 0; i < _table.Length; i++)
+            {
+                _table[i].key = default(TKey);
+                _table[i].value = default(TValue);
+                _table[i].occupied = false;
+            }
+            _inTable = 0;
+        }
+
         //Tries to get the value of key which might not be in the dictionary.
         public bool TryGetValue(TKey key, out TValue value)
         {
@@ -259,7 +310,7 @@ namespace DataStructures.Dictionaries
             return false;
         }
 
-        //finds the key
+        //finds the key and returns index in the table
         public int search(TKey key)
         {
             int i = 0;
@@ -279,7 +330,7 @@ namespace DataStructures.Dictionaries
             return -1;
         }
 
-        //returns if the key is in the table
+        //returns true if the key is in the table
         public bool ContainsKey(TKey key)
         {
             if (search(key) != -1)
@@ -289,30 +340,58 @@ namespace DataStructures.Dictionaries
             return false;
         }
 
-        public bool Remove(TKey key){
-
-            if (ContainsKey(key))
+        //returns true if the key is in the table
+        public bool Contains(KeyValuePair<TKey, TValue> item)
+        {
+            if (ContainsKey(item.Key))
             {
-                //find position and reset values
-                int index = search(key);
-                _table[index].key = default(TKey);
-                _table[index].value = default(TValue);
-                _table[index].occupied = false;
-
-                Keys.Remove(_table[index].key);
-                Values.Remove(_table[index].value);
-
-                //number of items in the table decreases
-                _inTable--;
-                //rehash table --necessary for Open Addressing since keys could have different positions due to this key
-                _rehash();
-
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
+        }
+
+        //returns the number of items in the table
+        public int Count
+        {
+            get { return _inTable;}
+        }
+
+        //returns bool depending on whether or not the table is read only
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        //returns a list of keys in the table
+        public ICollection<TKey> Keys
+        {
+            get { return _keys; }
+        }
+
+        //returns a list of values in the table
+        public ICollection<TValue> Values
+        {
+            get { return _values; }
+        }
+
+        //----------------------------------------------------------------------
+        //-----------------------NOT IMPLEMENTED YET----------------------------
+        //----------------------------------------------------------------------
+
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }

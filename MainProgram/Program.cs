@@ -13,7 +13,7 @@ namespace C_Sharp_Algorithms
         public static void Main(string[] args)
         {
             // OpenAddressingHashTableTest tests
-            //OpenAddressingHashTableTest.DoTest();
+            OpenAddressingHashTableTest.DoTest();
         }
     }
 }
