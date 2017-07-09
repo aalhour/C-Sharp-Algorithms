@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.Collections.Generic;
 
 using DataStructures.Trees;
+using Xunit;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class TrieMapTest
     {
+        [Fact]
         public static void DoTest()
         {
             var trieMap = new TrieMap<int>();
@@ -21,7 +23,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             var word_howToOmelet = prefix_howTo + " an omelet";
             var word_howToProp = prefix_howTo + " a proposal";
             var listOfHow = new List<string>() { word_howToSand, word_howToRobot, word_howToOmelet, word_howToProp };
-            
+
             trieMap.Add(word_howToOmelet, 7);
             trieMap.Add(word_howToSand, 11);
             trieMap.Add(word_howToRobot, 15);
@@ -45,51 +47,45 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             trieMap.Add(word_acting, 34);
             trieMap.Add(word_acts, 81);
             trieMap.Add(word_actor, 32);
-            
+
             // Count of words = 9
-            Debug.Assert(trieMap.Count == 9);
-
-
+            Assert.Equal(9, trieMap.Count);
 
             //
             // ASSERT THE WORDS IN TRIE.
 
             // Search for a word that doesn't exist
-            Debug.Assert(false == trieMap.ContainsWord(prefix_howTo));
+            Assert.False(trieMap.ContainsWord(prefix_howTo));
 
             // Search for prefix
-            Debug.Assert(true == trieMap.ContainsPrefix(prefix_howTo));
+            Assert.True(trieMap.ContainsPrefix(prefix_howTo));
 
             // Search for a prefix using a word
-            Debug.Assert(true == trieMap.ContainsPrefix(word_howToSand));
+            Assert.True(trieMap.ContainsPrefix(word_howToSand));
 
             // Get all words that start with the how-to prefix
             var someHowToWords = trieMap.SearchByPrefix(prefix_howTo).ToList();
-            Debug.Assert(someHowToWords.Count == listOfHow.Count);
+            Assert.Equal(someHowToWords.Count, listOfHow.Count);
 
             // Assert there are only two words under the prefix "acti" -> active, & acting
             var someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList<string>();
-            Debug.Assert(someActiWords.Count == 2);
-            Debug.Assert(someActiWords.Contains(word_acting));
-            Debug.Assert(someActiWords.Contains(word_active));
+            Assert.Equal(2, someActiWords.Count);
+            Assert.True(someActiWords.Contains(word_acting));
+            Assert.True(someActiWords.Contains(word_active));
 
             // Assert that "acto" is not a word
-            Debug.Assert(trieMap.ContainsWord("acto") == false);
-
-
+            Assert.False(trieMap.ContainsWord("acto"));
 
             //
             // TEST GETTING VALUES ASSOCIATED TO WORDS
 
             int actressRecord;
             trieMap.SearchByWord(word_actress, out actressRecord);
-            Debug.Assert(actressRecord == 82);
+            Assert.Equal(82, actressRecord);
 
             int howToProposeRequests;
             trieMap.SearchByWord(word_howToProp, out howToProposeRequests);
-            Debug.Assert(howToProposeRequests == 19);
-
-
+            Assert.Equal(19, howToProposeRequests);
 
             //
             // TEST DELETING SOMETHINGS
@@ -108,8 +104,8 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 removing_acto_fails = true;
             }
 
-            Debug.Assert(removing_acto_fails == true);
-            Debug.Assert(trieMap.Count == 9);
+            Assert.True(removing_acto_fails);
+            Assert.Equal(9, trieMap.Count);
 
             // Removing a word should work
             var removing_acting_passes = false;
@@ -125,14 +121,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 removing_acting_passes = false;
             }
 
-            Debug.Assert(removing_acting_passes == true);
-            Debug.Assert(trieMap.Count == 8);
+            Assert.True(removing_acting_passes);
+            Assert.Equal(8, trieMap.Count);
 
             someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList<string>();
-            Debug.Assert(someActiWords.Count == 1);
-            Debug.Assert(someActiWords.Contains(word_active));
+            Assert.Equal(1, someActiWords.Count);
+            Assert.True(someActiWords.Contains(word_active));
 
-            
             //
             // TEST ENUMERATOR
 
@@ -142,16 +137,11 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 allWords.Add(enumerator.Current.Key);
 
             // Assert size
-            Debug.Assert(allWords.Count == trieMap.Count);
+            Assert.Equal(allWords.Count, trieMap.Count);
 
             // Assert each element
             foreach (var word in allWords)
-                Debug.Assert(listOfActWords.Contains(word) || listOfHow.Contains(word));
-
-
-            Console.WriteLine("Testing is finished.");
-
-            Console.ReadLine();
+                Assert.True(listOfActWords.Contains(word) || listOfHow.Contains(word));
         }
     }
 }
