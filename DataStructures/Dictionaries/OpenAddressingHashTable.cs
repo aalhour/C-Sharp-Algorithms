@@ -62,6 +62,7 @@ namespace DataStructures.Dictionaries
             }
         }
 
+        //doubles the size of the table
         private void _expand()
         {
             //will hold contents of _table to copy over
@@ -87,6 +88,7 @@ namespace DataStructures.Dictionaries
             }
         }
 
+        //rehashes table
         private void _rehash()
         {
             //will hold contents of _table to copy over

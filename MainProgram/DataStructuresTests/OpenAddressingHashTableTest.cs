@@ -201,6 +201,34 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             count = OAtable_2.Count();
             Debug.Assert(count == 0);
 
+            //test KeyValuePair<> for Add, Remove, and Contains
+            var OAtable_3 = new OpenAddressingHashTable<int, int>(7);
+            var item = new KeyValuePair<int, int>(79, 10);
+            OAtable_3.Add(item);
+            var item1 = new KeyValuePair<int, int>(72, 11);
+            OAtable_3.Add(item1);
+            var item2 = new KeyValuePair<int, int>(98, 12);
+            OAtable_3.Add(item2);
+            var item3 = new KeyValuePair<int, int>(14, 13);
+            OAtable_3.Add(item3);
+            var item4 = new KeyValuePair<int, int>(200, 50);
+
+            var ten_3 = OAtable_3[79];
+            Debug.Assert(ten == 10);
+            var eleven = OAtable_3[72];
+            Debug.Assert(eleven == 11);
+            var twelve = OAtable_3[98];
+            Debug.Assert(twelve == 12);
+            var thirteen = OAtable_3[14];
+            Debug.Assert(thirteen == 13);
+
+            Debug.Assert(OAtable_3.Contains(item2));
+            Debug.Assert(!OAtable_3.Contains(item4));
+
+            OAtable_3.Remove(item1);
+            count = OAtable_3.Count();
+            Debug.Assert(count == 3);
+            
 
         }
     }
