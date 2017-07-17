@@ -4,7 +4,7 @@ using System.Diagnostics;
 using DataStructures.Lists;
 using Xunit;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class QueueTest
     {
@@ -21,24 +21,24 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             queue.Enqueue("fff");
             queue.Enqueue("ggg");
             queue.Enqueue("hhh");
-            Assert.Equal(queue.Count, 8);
+            Assert.Equal(8, queue.Count);
 
             var array = queue.ToArray();
             // fails if wrong size
-            Assert.Equal(array.Length, 8);
+            Assert.Equal(8, array.Length);
 
             queue.Dequeue();
             queue.Dequeue();
             top = queue.Dequeue();
-            Assert.Equal(top, "ccc");
+            Assert.Equal("ccc", top);
 
             queue.Dequeue();
             queue.Dequeue();
-            Assert.Equal(queue.Top, "fff");
+            Assert.Equal("fff", queue.Top);
 
             var array2 = queue.ToArray();
             // fails if wrong size
-            Assert.Equal(array2.Length, 3);
+            Assert.Equal(3, array2.Length);
         }
     }
 }
