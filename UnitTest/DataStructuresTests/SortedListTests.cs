@@ -1,19 +1,19 @@
-﻿using System;
-using System.Diagnostics;
+﻿using DataStructures.SortedCollections;
+using System;
+using Xunit;
 
-using DataStructures.SortedCollections;
-
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class SortedListTests
-	{
+    {
+        [Fact]
         public static void DoTest()
-		{
+        {
             // New empty sorted list
             var sortedList = new SortedList<int>();
 
             // Expeted outcome
-            var expectedSort = new int[15] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35};
+            var expectedSort = new int[15] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35 };
 
             // Insert items in arbitrary-order
             sortedList.Add(35);
@@ -41,13 +41,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             //
             // Begin comparison
             // Compare length and count
-            Debug.Assert(sortedList.Count == expectedSort.Length, "Wrong number of items.");
+            Assert.Equal(sortedList.Count, expectedSort.Length);
 
             //
             // Compare sort order
             while (enumerator.MoveNext() && (index < expectedSort.Length))
             {
-                Debug.Assert(enumerator.Current != expectedSort[index], "Wrong sorting order.");
+                Assert.Equal(enumerator.Current, expectedSort[index]);
                 index++;
             }
 
@@ -56,23 +56,23 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             index = 0;
             while (index < sortedList.Count && index < expectedSort.Length)
             {
-                Debug.Assert(sortedList[index] == expectedSort[index], "Wrong sorting order.");
+                Assert.Equal(sortedList[index], expectedSort[index]);
                 index++;
             }
 
             //
             // Assert removal of items correctly
-            Debug.Assert(true == sortedList.Contains(10), "Expected 10 to exist in sortedList.");
+            Assert.True(sortedList.Contains(10), "Expected 10 to exist in sortedList.");
             var remove10Status = sortedList.Remove(10);
-            Debug.Assert(true == remove10Status, "Expected 10 to be removed successfully.");
-            Debug.Assert(false == sortedList.Contains(10), "Expected 10 to be removed from sortedList.");
+            Assert.True(remove10Status, "Expected 10 to be removed successfully.");
+            Assert.False(sortedList.Contains(10), "Expected 10 to be removed from sortedList.");
 
             //
             // Assert non-removal of non-existing items
-            Debug.Assert(false == sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
+            Assert.False(sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
             var remove999999999Status = sortedList.Remove(999999999);
-            Debug.Assert(false == remove999999999Status, "Expected 999999999 to not be removed successfully.");
-            Debug.Assert(false == sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
+            Assert.False(remove999999999Status, "Expected 999999999 to not be removed successfully.");
+            Assert.False(sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
 
             //
             // Assert throws exception
@@ -82,17 +82,17 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             {
                 sortedList.RemoveAt(sortedList.Count * 2);  // illegal index
             }
-            catch(IndexOutOfRangeException)
+            catch (IndexOutOfRangeException)
             {
                 threwException = true;
             }
 
-            Debug.Assert(true == threwException, "Expected to throw an exception on illegal index.");
+            Assert.True(threwException, "Expected to throw an exception on illegal index.");
 
             //
             // Assert indexOf returns correct information
-            Debug.Assert(0 == sortedList.IndexOf(1), "Expected 1 to be the smallest number and hence at index 0.");
-            Debug.Assert(-1 == sortedList.IndexOf(987654321), "Expected 987654321 not to be in sortedList.");
+            Assert.True(0 == sortedList.IndexOf(1), "Expected 1 to be the smallest number and hence at index 0.");
+            Assert.True(-1 == sortedList.IndexOf(987654321), "Expected 987654321 not to be in sortedList.");
 
             //
             // Assert correct sort after updating on index
@@ -110,15 +110,16 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             enumerator = sortedList.GetEnumerator();
 
             // Compare length and count
-            Debug.Assert(sortedList.Count == newExpectedSort.Length, "Wrong number of items.");
+            Assert.True(sortedList.Count == newExpectedSort.Length, "Wrong number of items.");
 
             // Compare sort order
             while (enumerator.MoveNext() && (index < newExpectedSort.Length))
             {
-                Debug.Assert(enumerator.Current != newExpectedSort[index], "Wrong sorting order.");
+                // TODO: Verify
+                Assert.True(enumerator.Current == newExpectedSort[index], "Wrong sorting order.");
                 index++;
             }
-		}
-	}
+        }
+    }
 }
 
