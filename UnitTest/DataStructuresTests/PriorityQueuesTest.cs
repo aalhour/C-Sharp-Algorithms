@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DataStructures.Heaps;
+using System;
 using System.Diagnostics;
+using Xunit;
 
-using DataStructures.Heaps;
-
-namespace C_Sharp_Algorithms
+namespace UnitTest.DataStructuresTests
 {
-	public static class PriorityQueuesTest
+    public static class PriorityQueuesTest
 	{
         internal class Process : IComparable<Process>
         {
@@ -29,7 +29,7 @@ namespace C_Sharp_Algorithms
             }
         }
 
-
+        [Fact]
 		public static void DoTest ()
 		{
 			//
@@ -63,32 +63,32 @@ namespace C_Sharp_Algorithms
 
             var process1 = new Process(
                 id: 432654, 
-                action: new Action(() => System.Console.Write("I am Process #1.\r\n1 + 1 = " + (1 + 1))), 
+                action: new Action(() => Console.Write("I am Process #1.\r\n1 + 1 = " + (1 + 1))), 
                 desc: "Process 1");
 
             var process2 = new Process(
                 id: 123456,
-                action: new Action(() => System.Console.Write("Hello, World! I am Process #2")),
+                action: new Action(() => Console.Write("Hello, World! I am Process #2")),
                 desc: "Process 2");
 
             var process3 = new Process(
                 id: 345098,
-                action: new Action(() => System.Console.Write("I am Process #3")),
+                action: new Action(() => Console.Write("I am Process #3")),
                 desc: "Process 3");
 
             var process4 = new Process(
                 id: 109875,
-                action: new Action(() => System.Console.Write("I am Process #4")),
+                action: new Action(() => Console.Write("I am Process #4")),
                 desc: "Process 4");
 
             var process5 = new Process(
                 id: 13579,
-                action: new Action(() => System.Console.Write("I am Process #5")),
+                action: new Action(() => Console.Write("I am Process #5")),
                 desc: "Process 5");
 
             var process6 = new Process(
                 id: 24680,
-                action: new Action(() => System.Console.Write("I am Process #6")),
+                action: new Action(() => Console.Write("I am Process #6")),
                 desc: "Process 6");
 
             sysProcesses.Enqueue(process1, 1);
@@ -99,22 +99,22 @@ namespace C_Sharp_Algorithms
             sysProcesses.Enqueue(process6, 6);
 
             var leastPriorityProcess = sysProcesses.PeekAtMinPriority();
-            Debug.Assert(leastPriorityProcess.Id == process1.Id, "Wrong process!");
+            Assert.True(leastPriorityProcess.Id == process1.Id, "Wrong process!");
 
             sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
-            Debug.Assert(leastPriorityProcess.Id == process5.Id, "Wrong process!");
+            Assert.True(leastPriorityProcess.Id == process5.Id, "Wrong process!");
 
             sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
-            Debug.Assert(leastPriorityProcess.Id == process3.Id, "Wrong process!");
+            Assert.True(leastPriorityProcess.Id == process3.Id, "Wrong process!");
 
             sysProcesses.DequeueMin();
 
             leastPriorityProcess = sysProcesses.PeekAtMinPriority();
-            Debug.Assert(leastPriorityProcess.Id == process6.Id, "Wrong process!");
+            Assert.True(leastPriorityProcess.Id == process6.Id, "Wrong process!");
 
             leastPriorityProcess.Action();
 		}
