@@ -1,13 +1,12 @@
-﻿using System;
-using System.Diagnostics;
+﻿using DataStructures.Dictionaries;
 using System.Collections.Generic;
+using Xunit;
 
-using DataStructures.Dictionaries;
-
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class HashTableSeparateChainingTest
     {
+        [Fact]
         public static void DoTest()
         {
             var studentsMarks = new ChainedHashTable<string, int>();
@@ -40,43 +39,43 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             //
             // TEST FETCH KEY-VALUE
             var mark = studentsMarks["Ahmad"];
-            Debug.Assert(mark == 924);
+            Assert.True(mark == 924);
 
             mark = studentsMarks["Konstantinos"];
-            Debug.Assert(mark == 124);
+            Assert.True(mark == 124);
 
             mark = studentsMarks["Bic"];
-            Debug.Assert(mark == 224);
+            Assert.True(mark == 224);
 
             mark = studentsMarks["Z"];
-            Debug.Assert(mark == 324);
+            Assert.True(mark == 324);
 
             mark = studentsMarks["Ioanna"];
-            Debug.Assert(mark == 424);
+            Assert.True(mark == 424);
 
             mark = studentsMarks["Mark Zuckerberg"];
-            Debug.Assert(mark == 524);
+            Assert.True(mark == 524);
 
             mark = studentsMarks["Semsem"];
-            Debug.Assert(mark == 624);
+            Assert.True(mark == 624);
 
             mark = studentsMarks["Sa3eeed"];
-            Debug.Assert(mark == 724);
+            Assert.True(mark == 724);
 
             mark = studentsMarks["Sameer"];
-            Debug.Assert(mark == 824);
+            Assert.True(mark == 824);
 
             mark = studentsMarks["Zeyad"];
-            Debug.Assert(mark == 999);
+            Assert.True(mark == 999);
 
             mark = studentsMarks["Mahmoood 3eed"];
-            Debug.Assert(mark == 111);
+            Assert.True(mark == 111);
 
             mark = studentsMarks["Mahmoood Abu 3eed"];
-            Debug.Assert(mark == 222);
+            Assert.True(mark == 222);
 
             mark = studentsMarks["EISA"];
-            Debug.Assert(mark == 333);
+            Assert.True(mark == 333);
 
             //
             // TEST DELETE BY KEYS
@@ -100,12 +99,12 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             studentsMarks.Remove("Test77777777");
             studentsMarks.Remove("Test888888888");
 
-            Debug.Assert(studentsMarks.Count == 3);
+            Assert.True(studentsMarks.Count == 3);
 
             KeyValuePair<string, int>[] array = new KeyValuePair<string, int>[studentsMarks.Count];
             studentsMarks.CopyTo(array, 0);
 
-            Debug.Assert(array.Length == studentsMarks.Count);
+            Assert.True(array.Length == studentsMarks.Count);
         }
     }
 }
