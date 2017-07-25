@@ -6,7 +6,7 @@ using DataStructures.Graphs;
 
 namespace C_Sharp_Algorithms
 {
-    public static class Graphs_UndirectedDenseGraphTests
+    public static class GraphsUndirectedDenseGraphTests
     {
         public static void DoTest()
         {

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 using DataStructures.Graphs;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
-    public static class Graphs_UndirectedWeightedDenseGraphTest
+    public static class GraphsUndirectedWeightedDenseGraphTest
     {
         public static void DoTest()
         {

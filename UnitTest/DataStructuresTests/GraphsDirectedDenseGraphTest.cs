@@ -6,30 +6,30 @@ using DataStructures.Graphs;
 
 namespace C_Sharp_Algorithms.DataStructuresTests
 {
-    public static class Graphs_DirectedWeightedDenseGraphTest
+    public static class GraphsDirectedDenseGraphTest
     {
         public static void DoTest()
         {
-            var graph = new DirectedWeightedDenseGraph<string>();
+            var graph = new DirectedDenseGraph<string>();
 
             var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
 
             graph.AddVertices(verticesSet1);
 
-            graph.AddEdge("a", "s", 1);
-            graph.AddEdge("a", "z", 2);
-            graph.AddEdge("s", "x", 3);
-            graph.AddEdge("x", "d", 1);
-            graph.AddEdge("x", "c", 2);
-            graph.AddEdge("x", "a", 3);
-            graph.AddEdge("d", "f", 1);
-            graph.AddEdge("d", "c", 2);
-            graph.AddEdge("d", "s", 3);
-            graph.AddEdge("c", "f", 1);
-            graph.AddEdge("c", "v", 2);
-            graph.AddEdge("c", "d", 3);
-            graph.AddEdge("v", "f", 1);
-            graph.AddEdge("f", "c", 2);
+            graph.AddEdge("a", "s");
+            graph.AddEdge("a", "z");
+            graph.AddEdge("s", "x");
+            graph.AddEdge("x", "d");
+            graph.AddEdge("x", "c");
+            graph.AddEdge("x", "a");
+            graph.AddEdge("d", "f");
+            graph.AddEdge("d", "c");
+            graph.AddEdge("d", "s");
+            graph.AddEdge("c", "f");
+            graph.AddEdge("c", "v");
+            graph.AddEdge("c", "d");
+            graph.AddEdge("v", "f");
+            graph.AddEdge("f", "c");
 
             var allEdges = graph.Edges.ToList();
 
@@ -55,23 +55,9 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Debug.Assert(graph.IncomingEdges("f").ToList().Count == 3, "Wrong incoming edges from 'f'.");
             Debug.Assert(graph.IncomingEdges("z").ToList().Count == 1, "Wrong incoming edges from 'z'.");
 
-            Console.WriteLine("[*] Directed Weighted Dense Graph:");
+            Console.WriteLine("[*] Directed Dense Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
-
-            var f_to_c = graph.HasEdge("f", "c");
-            var f_to_c_weight = graph.GetEdgeWeight("f", "c");
-            Debug.Assert(f_to_c == true, "Edge f->c doesn't exist.");
-            Debug.Assert(f_to_c_weight == 2, "Edge f->c must have a weight of 2.");
-            Console.WriteLine("Is there an edge from f to c? " + f_to_c + ". If yes it's weight is: " + f_to_c_weight + ".");
-
-            var d_to_s = graph.HasEdge("d", "s");
-            var d_to_s_weight = graph.GetEdgeWeight("d", "s");
-            Debug.Assert(d_to_s == true, "Edge d->s doesn't exist.");
-            Debug.Assert(d_to_s_weight == 3, "Edge d->s must have a weight of 3.");
-            Console.WriteLine("Is there an edge from d to d? " + d_to_s + ". If yes it's weight is: " + d_to_s_weight + ".");
-
-            Console.WriteLine();
 
             graph.RemoveEdge("d", "c");
             graph.RemoveEdge("c", "v");
@@ -90,13 +76,13 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             Console.WriteLine(graph.ToReadable() + "\r\n");
 
             graph.AddVertex("x");
-            graph.AddEdge("s", "x", 3);
-            graph.AddEdge("x", "d", 1);
-            graph.AddEdge("x", "c", 2);
-            graph.AddEdge("x", "a", 3);
-            graph.AddEdge("d", "c", 2);
-            graph.AddEdge("c", "v", 2);
-            graph.AddEdge("a", "z", 2);
+            graph.AddEdge("s", "x");
+            graph.AddEdge("x", "d");
+            graph.AddEdge("x", "c");
+            graph.AddEdge("x", "a");
+            graph.AddEdge("d", "c");
+            graph.AddEdge("c", "v");
+            graph.AddEdge("a", "z");
             Console.WriteLine("Re-added the deleted vertices and edges to the graph.");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 
@@ -130,8 +116,6 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             /********************************************************************/
 
 
-            Console.WriteLine("***************************************************\r\n");
-
             graph.Clear();
             Console.WriteLine("Cleared the graph from all vertices and edges.\r\n");
 
@@ -139,19 +123,19 @@ namespace C_Sharp_Algorithms.DataStructuresTests
 
             graph.AddVertices(verticesSet2);
 
-            graph.AddEdge("a", "b", 1);
-            graph.AddEdge("a", "d", 2);
-            graph.AddEdge("b", "e", 3);
-            graph.AddEdge("d", "b", 1);
-            graph.AddEdge("d", "e", 2);
-            graph.AddEdge("e", "c", 3);
-            graph.AddEdge("c", "f", 1);
-            graph.AddEdge("f", "f", 1);
+            graph.AddEdge("a", "b");
+            graph.AddEdge("a", "d");
+            graph.AddEdge("b", "e");
+            graph.AddEdge("d", "b");
+            graph.AddEdge("d", "e");
+            graph.AddEdge("e", "c");
+            graph.AddEdge("c", "f");
+            graph.AddEdge("f", "f");
 
             Debug.Assert(graph.VerticesCount == 6, "Wrong vertices count.");
             Debug.Assert(graph.EdgesCount == 8, "Wrong edges count.");
 
-            Console.WriteLine("[*] NEW Directed Weighted Dense Graph:");
+            Console.WriteLine("[*] NEW Directed Dense Graph:");
             Console.WriteLine("Graph nodes and edges:");
             Console.WriteLine(graph.ToReadable() + "\r\n");
 
