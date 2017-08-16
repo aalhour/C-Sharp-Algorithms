@@ -51,6 +51,7 @@ Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and V
 #### Hash Tables:
   * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).
   * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).
+  * [Open-Addressing Hash Table](DataStructures/Dictionaries/OpenAddressingHashTable.cs).
 
 #### Sorted Collections (Tree-based):
   * [Sorted List](DataStructures/SortedCollections/SortedList.cs).
