@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dictionaries\CuckooHashTable.cs" />
+    <Compile Include="Dictionaries\OpenAddressingHashTable.cs" />
     <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
     <Compile Include="Graphs\DirectedSparseGraph.cs" />
     <Compile Include="Graphs\DirectedWeightedSparseGraph.cs" />
@@ -116,7 +117,5 @@
     </Content>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="SortedCollections\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
