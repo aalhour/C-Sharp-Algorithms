@@ -1,13 +1,13 @@
-﻿using System;
-using System.Diagnostics;
+﻿using DataStructures.Trees;
+using System;
 using System.Collections.Generic;
+using Xunit;
 
-using DataStructures.Trees;
-
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class RedBlackTreeTest
     {
+        [Fact]
         public static void DoTest()
         {
             // Test against the worst case of insertion
@@ -25,13 +25,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             redBlackTree.Insert(9);
             redBlackTree.Insert(10);
 
-            Debug.Assert(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
-
-            Console.WriteLine("********************");
-            Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
-            Console.WriteLine("********************");
-            Console.WriteLine(redBlackTree.DrawTree());
-            Console.WriteLine("\r\n");
+            Assert.True(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
 
 
             //
@@ -64,28 +58,19 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 insert_duplicate_passed = false;
             }
 
-            Debug.Assert(insert_duplicate_passed == false, "Fail! The tree doesn't allow duplicates");
-
-
-            //
-            // PRINT TREE
-            Console.WriteLine("********************");
-            Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
-            Console.WriteLine("********************");
-            Console.WriteLine(redBlackTree.DrawTree());
-            Console.WriteLine("\r\n");
+            Assert.True(insert_duplicate_passed == false, "Fail! The tree doesn't allow duplicates");
 
 
             // Assert count
-            Debug.Assert(redBlackTree.Count == 11);
+            Assert.True(redBlackTree.Count == 11);
 
             // Assert existence and nonexistence of some items
-            Debug.Assert(redBlackTree.Contains(1) == true);
-            Debug.Assert(redBlackTree.Contains(3) == true);
-            Debug.Assert(redBlackTree.Contains(999) == false);
+            Assert.True(redBlackTree.Contains(1));
+            Assert.True(redBlackTree.Contains(3));
+            Assert.False(redBlackTree.Contains(999));
 
             // ASSERT THAT EACH LEVEL HAS A DIFFERENT COLOR
-            Asset_Levels_Different_Colors(redBlackTree);
+            AssetLevelsDifferentColors(redBlackTree);
 
             // Do some deletions
             redBlackTree.Remove(7);
@@ -93,39 +78,29 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             redBlackTree.Remove(3);
 
             // Assert count
-            Debug.Assert(redBlackTree.Count == 8);
+            Assert.True(redBlackTree.Count == 8);
 
             // Assert nonexistence of previously existing items
-            Debug.Assert(redBlackTree.Contains(1) == false);
-            Debug.Assert(redBlackTree.Contains(3) == false);
+            Assert.False(redBlackTree.Contains(1));
+            Assert.False(redBlackTree.Contains(3));
 
             // Remove root value
             var oldRootVal = redBlackTree.Root.Value;
             redBlackTree.Remove(redBlackTree.Root.Value);
 
             // Assert count
-            Debug.Assert(redBlackTree.Count == 7);
+            Assert.True(redBlackTree.Count == 7);
 
             // Assert nonexistence of old root's value
-            Debug.Assert(redBlackTree.Contains(oldRootVal) == false);
+            Assert.False(redBlackTree.Contains(oldRootVal));
 
-
-            //
-            // PRINT TREE
-            Console.WriteLine("********************");
-            Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
-            Console.WriteLine("********************");
-            Console.WriteLine(redBlackTree.DrawTree());
-            Console.WriteLine("\r\n");
-
-            Console.ReadLine();
         }//end-do-test
 
 
         /// <summary>
         /// Testing helper to assert that all items at every level of the tree has the same color and each level has different color than the other levels
         /// </summary>
-        private static void Asset_Levels_Different_Colors(RedBlackTree<int> redBlackTree)
+        private static void AssetLevelsDifferentColors(RedBlackTree<int> redBlackTree)
         {
             var root = redBlackTree.Root;
 
@@ -163,26 +138,16 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                     nodesInNextLevel = 0;
                 }
             }
-
-            Console.WriteLine("******************************************");
-            Console.WriteLine(" [*] Assert that levels have different alternating colors:\r\n");
-
             var color = RedBlackTreeColors.Black;
             for (int i = 0; i < levels.Count; ++i)
             {
-                for(int j = 0; j < levels[i].Count; ++j)
+                for (int j = 0; j < levels[i].Count; ++j)
                 {
-                    Debug.Assert(levels[i][j].Color == color);
-
-                    //if (levels[i][j].Color != color)
-                    Console.WriteLine(" [-] Level: {0}. Node Value: {1}. Node color: {2}. Expected color: {3}.", i, levels[i][j].Value, levels[i][j].Color, color.ToString());
+                    // TODO: [2,1] == red?
+                    Assert.True(levels[i][j].Color == color);
                 }
-
-                Console.WriteLine();
                 color = (color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black);
             }
-
-            Console.WriteLine("******************************************\r\n");
         }//end-test-case
 
 
