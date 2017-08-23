@@ -2,11 +2,13 @@
 using System.Diagnostics;
 
 using DataStructures.Dictionaries;
+using Xunit;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class CuckooHashTableTest
     {
+        [Fact]
         public static void DoTest()
         {
             var cuckooTable = new CuckooHashTable<string, int>();
@@ -20,25 +22,25 @@ namespace C_Sharp_Algorithms.DataStructuresTests
             cuckooTable.Add("Sameeros", 16);
 
             var Ahmad = cuckooTable["Ahmad"];
-            Debug.Assert(Ahmad == 10);
+            Assert.True(Ahmad == 10);
 
             var Oliver = cuckooTable["Oliver"];
-            Debug.Assert(Oliver == 11);
+            Assert.True(Oliver == 11);
 
             var Konstantinos = cuckooTable["Konstantinos"];
-            Debug.Assert(Konstantinos == 12);
+            Assert.True(Konstantinos == 12);
 
             var Olympos = cuckooTable["Olympos"];
-            Debug.Assert(Olympos == 13);
+            Assert.True(Olympos == 13);
 
             var Bic = cuckooTable["Bic"];
-            Debug.Assert(Bic == 14);
+            Assert.True(Bic == 14);
 
             var Carter = cuckooTable["Carter"];
-            Debug.Assert(Carter == 15);
+            Assert.True(Carter == 15);
 
             var Sameeros = cuckooTable["Sameeros"];
-            Debug.Assert(Sameeros == 16);
+            Assert.True(Sameeros == 16);
 
             cuckooTable.Clear();
         }
