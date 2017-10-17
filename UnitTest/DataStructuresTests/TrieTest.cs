@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using DataStructures.Trees;
 using Xunit;
 
-namespace UnitTest.AlgorithmsTests.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class TrieTest
     {

@@ -100,6 +100,7 @@ namespace DataStructures.Lists
         {
             get
             {
+                // TODO:
                 throw new NotImplementedException();
             }
         }

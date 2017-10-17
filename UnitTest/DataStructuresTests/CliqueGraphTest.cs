@@ -2,7 +2,7 @@
 using DataStructures.Graphs;
 using System.Collections.Generic;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class CliqueGraphTest
     {
@@ -78,7 +78,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 //System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
             }
 
-            foreach (var edge in testGraph.OutgoingEdges(new ComparableTuple (0,0)))
+            foreach (var edge in testGraph.OutgoingEdges(new ComparableTuple(0, 0)))
             {
                 System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
             }
@@ -87,7 +87,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
         }
     }
 
-    class ComparableTuple  : Tuple<int, int>, IComparable<ComparableTuple>, IEquatable<ComparableTuple>
+    class ComparableTuple : Tuple<int, int>, IComparable<ComparableTuple>, IEquatable<ComparableTuple>
     {
         #region IComparable implementation
 
@@ -115,7 +115,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
         public ComparableTuple(int item1, int item2)
             : base(item1, item2)
         {
-			
+
         }
 
         int ToInt
@@ -125,7 +125,7 @@ namespace C_Sharp_Algorithms.DataStructuresTests
                 return Item1 * multiplier + Item2;
             }
         }
-			
+
 
     }
 }
