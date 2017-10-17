@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Algorithms.Sorting;
 using System.Collections.Generic;
-
-using DataStructures;
-using Algorithms.Sorting;
+using System.Linq;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-	public static class QuickSortTest
-	{
-		public static void DoTest ()
-		{
-			List<long> list = new List<long> () { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
-			list.QuickSort ();
-		}
-	}
+    public static class QuickSortTest
+    {
+        [Fact]
+        public static void DoTest()
+        {
+            var list = new List<long>() { 23, 42, 4, 16, 8, 15, 3, 9, 55, 0, 34, 12, 2, 46, 25 };
+            list.QuickSort();
+            long[] sortedList = { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 };
+            Assert.True(list.SequenceEqual(sortedList));
+        }
+    }
 }
 
