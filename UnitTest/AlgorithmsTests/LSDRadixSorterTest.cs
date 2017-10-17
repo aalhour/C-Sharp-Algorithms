@@ -1,13 +1,12 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Algorithms.Sorting;
 using System.Collections.Generic;
-
-using Algorithms.Sorting;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
     public static class LSDRadixSorterTest
     {
+        [Fact]
         public static void DoTest()
         {
             //
@@ -18,16 +17,16 @@ namespace UnitTest.AlgorithmsTests
             var number2 = "000999888777111222333777666555";
 
             name1 = (name1.LSDRadixSort()).Trim();
-            Debug.Assert(name1 == ".AAMadhhlmorru");
+            Assert.True(name1 == ".AAMadhhlmorru");
 
             name2 = (name2.LSDRadixSort()).Trim();
-            Debug.Assert(name2 == ".AHJMaacfhnnnooprrst");
+            Assert.True(name2 == ".AHJMaacfhnnnooprrst");
 
             number1 = number1.LSDRadixSort();
-            Debug.Assert(number1 == "0123456789");
+            Assert.True(number1 == "0123456789");
 
             number2 = number2.LSDRadixSort();
-            Debug.Assert(number2 == "000111222333555666777777888999");
+            Assert.True(number2 == "000111222333555666777777888999");
 
             //
             // Sort a list of strings of the same length
@@ -38,7 +37,7 @@ namespace UnitTest.AlgorithmsTests
 
             for (int i = 0; i < toBeSorted.Count; ++i)
             {
-                Debug.Assert(toBeSorted[i] == alreadySorted[i]);
+                Assert.True(toBeSorted[i] == alreadySorted[i]);
             }
 
         }
