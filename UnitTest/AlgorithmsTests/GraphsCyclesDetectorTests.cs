@@ -1,15 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
-using Algorithms.Graphs;
+﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
-using DataStructures.Lists;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsCyclesDetectorTests
     {
+        [Fact]
         public static void DoTest()
         {
             string[] V;
@@ -39,20 +36,9 @@ namespace UnitTest.AlgorithmsTests
             DigraphWithCycles.AddEdge("y", "z");
             DigraphWithCycles.AddEdge("z", "r");
             DigraphWithCycles.AddEdge("z", "s");
-            
+
             var isCyclic = CyclesDetector.IsCyclic<string>(DigraphWithCycles);
-            Debug.Assert(isCyclic == true, "Wrong status! The graph has cycles.");
-
-            // PRINT THE GRAPH
-            Console.WriteLine("[*] Directed Graph:");
-            Console.WriteLine(DigraphWithCycles.ToReadable() + "\r\n");
-            Console.WriteLine("Was the previous graph cyclic? " + isCyclic);
-
-            Console.WriteLine("\r\n*********************************************\r\n");
-
-
-            /***************************************************************************************/
-
+            Assert.True(isCyclic == true, "Wrong status! The graph has cycles.");
 
             CyclicGraph = new UndirectedSparseGraph<string>();
 
@@ -60,7 +46,7 @@ namespace UnitTest.AlgorithmsTests
 
             // Insert new values of V
             CyclicGraph.AddVertices(V);
-            
+
             // Insert new value for edges
             CyclicGraph.AddEdge("A", "C");
             CyclicGraph.AddEdge("B", "A");
@@ -71,18 +57,7 @@ namespace UnitTest.AlgorithmsTests
             CyclicGraph.AddEdge("E", "D");
 
             isCyclic = CyclesDetector.IsCyclic<string>(CyclicGraph);
-            Debug.Assert(isCyclic == true, "Wrong status! The graph has cycles.");
-
-            // PRINT THE GRAPH
-            Console.WriteLine("[*] Undirected Graph:");
-            Console.WriteLine(CyclicGraph.ToReadable() + "\r\n");
-            Console.WriteLine("Was the previous graph cyclic? " + isCyclic);
-
-            Console.WriteLine("\r\n*********************************************\r\n");
-
-
-            /***************************************************************************************/
-
+            Assert.True(isCyclic == true, "Wrong status! The graph has cycles.");
 
             DAG = new DirectedSparseGraph<string>();
 
@@ -100,14 +75,7 @@ namespace UnitTest.AlgorithmsTests
             DAG.AddEdge("E", "X");
 
             isCyclic = CyclesDetector.IsCyclic<string>(DAG);
-            Debug.Assert(isCyclic == false, "Wrong status! The graph has no cycles.");
-
-            // PRINT THE GRAPH
-            Console.WriteLine("[*] DAG (Directed Asyclic Graph):");
-            Console.WriteLine(DAG.ToReadable() + "\r\n");
-            Console.WriteLine("Was the previous graph cyclic? " + isCyclic);
-
-            Console.ReadLine();
+            Assert.True(isCyclic == false, "Wrong status! The graph has no cycles.");
         }
 
     }
