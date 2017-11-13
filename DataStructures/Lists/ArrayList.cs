@@ -27,7 +27,7 @@ namespace DataStructures.Lists
         private readonly T[] _emptyArray = new T[0];
 
         // The default capacity to resize to, when a minimum is lower than 5.
-        private const int _defaultCapacity = 8;
+        private const int DefaultCapacity = 8;
 
         // The internal array of elements.
         // NOT A PROPERTY.
@@ -72,25 +72,25 @@ namespace DataStructures.Lists
             // If the length of the inner collection is less than the minCapacity
             // ... and if the maximum capacity wasn't reached yet, 
             // ... then maximize the inner collection.
-            if (_collection.Length < minCapacity && IsMaximumCapacityReached == false)
+            if (_collection.Length >= minCapacity || IsMaximumCapacityReached != false)
+                return;
+
+            var newCapacity = (_collection.Length == 0 ? DefaultCapacity : _collection.Length * 2);
+
+            // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
+            // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
+            var maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
+
+            if (newCapacity < minCapacity)
+                newCapacity = minCapacity;
+
+            if (newCapacity >= maxCapacity)
             {
-                int newCapacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
-
-                // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
-                // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-                int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
-
-                if (newCapacity < minCapacity)
-                    newCapacity = minCapacity;
-
-                if (newCapacity >= maxCapacity)
-                {
-                    newCapacity = maxCapacity - 1;
-                    IsMaximumCapacityReached = true;
-                }
-
-                this._resizeCapacity(newCapacity);
+                newCapacity = maxCapacity - 1;
+                IsMaximumCapacityReached = true;
             }
+
+            this._resizeCapacity(newCapacity);
         }
 
 
@@ -100,22 +100,22 @@ namespace DataStructures.Lists
         /// <param name="newCapacity">New capacity.</param>
         private void _resizeCapacity(int newCapacity)
         {
-            if (newCapacity != _collection.Length && newCapacity > _size)
-            {
-                try
-                {
-                    Array.Resize<T>(ref _collection, newCapacity);
-                }
-                catch (OutOfMemoryException)
-                {
-                    if (DefaultMaxCapacityIsX64 == true)
-                    {
-                        DefaultMaxCapacityIsX64 = false;
-                        _ensureCapacity(newCapacity);
-                    }
+            if (newCapacity == _collection.Length || newCapacity <= _size)
+                return;
 
+            try
+            {
+                Array.Resize<T>(ref _collection, newCapacity);
+            }
+            catch (OutOfMemoryException)
+            {
+                if (DefaultMaxCapacityIsX64 != true)
                     throw;
-                }
+
+                DefaultMaxCapacityIsX64 = false;
+                _ensureCapacity(newCapacity);
+
+                throw;
             }
         }
 
@@ -124,35 +124,20 @@ namespace DataStructures.Lists
         /// Gets the the number of elements in list.
         /// </summary>
         /// <value>Int.</value>
-        public int Count
-        {
-            get
-            {
-                return _size;
-            }
-        }
+        public int Count => _size;
 
 
         /// <summary>
         /// Returns the capacity of list, which is the total number of slots.
         /// </summary>
-        public int Capacity
-        {
-            get { return _collection.Length; }
-        }
+        public int Capacity => _collection.Length;
 
 
         /// <summary>
         /// Determines whether this list is empty.
         /// </summary>
         /// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (Count == 0);
-            }
-        }
+        public bool IsEmpty => (Count == 0);
 
 
         /// <summary>
@@ -167,10 +152,8 @@ namespace DataStructures.Lists
                 {
                     throw new IndexOutOfRangeException("List is empty.");
                 }
-                else
-                {
-                    return _collection[0];
-                }
+
+                return _collection[0];
             }
         }
 
@@ -187,10 +170,8 @@ namespace DataStructures.Lists
                 {
                     throw new IndexOutOfRangeException("List is empty.");
                 }
-                else
-                {
-                    return _collection[Count - 1];
-                }
+
+                return _collection[Count - 1];
             }
         }
 
@@ -330,13 +311,11 @@ namespace DataStructures.Lists
         {
             int index = IndexOf(dataItem);
 
-            if (index >= 0)
-            {
-                RemoveAt(index);
-                return true;
-            }
+            if (index < 0)
+                return false;
 
-            return false;
+            RemoveAt(index);
+            return true;
         }
 
 
@@ -474,11 +453,11 @@ namespace DataStructures.Lists
         public bool Contains(T dataItem)
         {
             // Null-value check
-            if ((Object)dataItem == null)
+            if ((object)dataItem == null)
             {
                 for (int i = 0; i < _size; ++i)
                 {
-                    if ((Object)_collection[i] == null) return true;
+                    if ((object)_collection[i] == null) return true;
                 }
             }
             else
@@ -697,10 +676,10 @@ namespace DataStructures.Lists
                 throw new ArgumentNullException();
             }
 
-            ArrayList<T> matchedElements = new ArrayList<T>();
+            var matchedElements = new ArrayList<T>();
 
             // Begin searching, and add the matched elements to the new list.
-            for (int i = 0; i < _size; ++i)
+            for (var i = 0; i < _size; ++i)
             {
                 if (searchMatch(_collection[i]))
                 {
@@ -751,7 +730,7 @@ namespace DataStructures.Lists
         /// <returns>Array.</returns>
         public T[] ToArray()
         {
-            T[] newArray = new T[Count];
+            var newArray = new T[Count];
 
             if (Count > 0)
             {
@@ -770,12 +749,10 @@ namespace DataStructures.Lists
         {
             var newList = new List<T>(this.Count);
 
-            if (this.Count > 0)
+            if (this.Count <= 0) return newList;
+            for (int i = 0; i < this.Count; ++i)
             {
-                for (int i = 0; i < this.Count; ++i)
-                {
-                    newList.Add(_collection[i]);
-                }
+                newList.Add(_collection[i]);
             }
 
             return newList;
@@ -796,12 +773,12 @@ namespace DataStructures.Lists
 
             for (i = 0; i < Count; ++i)
             {
-                listAsString = String.Format("{0}{1}[{2}] => {3}\r\n", listAsString, preLineIndent, i, _collection[i]);
+                listAsString = $"{listAsString}{preLineIndent}[{i}] => {_collection[i]}\r\n";
             }
 
             if (addHeader == true)
             {
-                listAsString = String.Format("ArrayList of count: {0}.\r\n(\r\n{1})", Count, listAsString);
+                listAsString = $"ArrayList of count: {Count}.\r\n(\r\n{listAsString})";
             }
 
             return listAsString;
@@ -813,7 +790,7 @@ namespace DataStructures.Lists
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < Count; i++)
+            for (var i = 0; i < Count; i++)
             {
                 yield return _collection[i];
             }
