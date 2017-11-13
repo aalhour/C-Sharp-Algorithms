@@ -7,10 +7,8 @@
  */
 
 using System;
-
+using System.Linq;
 using DataStructures.Common;
-using DataStructures.Lists;
-using DataStructures.Hashing;
 
 namespace DataStructures.Hashing
 {
@@ -19,10 +17,10 @@ namespace DataStructures.Hashing
     /// </summary>
     public class PrimeHashingFamily
     {
-        private Random _randomizer { get; set; }
-        private int _numberOfHashFunctions { get; set; }
-        private int[] _multipliersVector { get; set; }
-        private static readonly PrimesList _primes = PrimesList.Instance;
+        private Random Randomizer { get; set; }
+        private int NumberOfHashFunctions { get; set; }
+        private int[] MultipliersVector { get; set; }
+        private static readonly PrimesList Primes = PrimesList.Instance;
 
         /// <summary>
         /// Initializes the family with a specified number of hash functions.
@@ -32,9 +30,9 @@ namespace DataStructures.Hashing
             if (numberOfHashFunctions <= 0)
                 throw new ArgumentOutOfRangeException("Number of hash functions should be greater than zero.");
 
-            _randomizer = new Random();
-            _numberOfHashFunctions = numberOfHashFunctions;
-            _multipliersVector = new int[_numberOfHashFunctions];
+            Randomizer = new Random();
+            NumberOfHashFunctions = numberOfHashFunctions;
+            MultipliersVector = new int[NumberOfHashFunctions];
 
             GenerateNewFunctions();
         }
@@ -42,10 +40,7 @@ namespace DataStructures.Hashing
         /// <summary>
         /// Returns number of member hash functions.
         /// </summary>
-        public int NumberOfFunctions
-        {
-            get { return _numberOfHashFunctions; }
-        }
+        public int NumberOfFunctions => NumberOfHashFunctions;
 
         /// <summary>
         /// Generates new hash functions with new randomized multipliers.
@@ -53,12 +48,12 @@ namespace DataStructures.Hashing
         public void GenerateNewFunctions()
         {
             // Clear the multipliers vectors
-            Array.Clear(_multipliersVector, 0, _multipliersVector.Length);
+            Array.Clear(MultipliersVector, 0, MultipliersVector.Length);
 
-            for (int i = 0; i < _numberOfHashFunctions; i++)
+            for (int i = 0; i < NumberOfHashFunctions; i++)
             {
-                var randomIndex = _randomizer.Next(0, _primes.Count - 1);
-                _multipliersVector[i] = _primes[randomIndex];
+                var randomIndex = Randomizer.Next(0, Primes.Count - 1);
+                MultipliersVector[i] = Primes[randomIndex];
             }
         }
 
@@ -70,11 +65,11 @@ namespace DataStructures.Hashing
         /// <returns></returns>
         public int Hash(int preHashedKey, int whichHashFunction)
         {
-            if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
+            if (whichHashFunction <= 0 || whichHashFunction > NumberOfHashFunctions)
                 throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
             int preHashValue = 0;
-            int multiplier = _multipliersVector[whichHashFunction - 1];
+            int multiplier = MultipliersVector[whichHashFunction - 1];
             var characters = preHashedKey.ToString().ToCharArray();
 
             return (multiplier * preHashValue);
@@ -91,13 +86,9 @@ namespace DataStructures.Hashing
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentException("Key is either an empty string or null.");
 
-            int preHashValue = 0;
             var characters = key.ToCharArray();
 
-            foreach (var character in characters)
-            {
-                preHashValue += Convert.ToInt32(Char.GetNumericValue(character));
-            }
+            int preHashValue = characters.Sum(character => Convert.ToInt32(Char.GetNumericValue(character)));
 
             return Hash(preHashValue, whichHashFunction);
         }

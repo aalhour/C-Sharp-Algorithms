@@ -5,17 +5,15 @@ using DataStructures.Common;
 
 namespace DataStructures.Lists
 {
+    /// <inheritdoc />
     /// <summary>
     /// The Doubly-Linked List Node class.
     /// </summary>
-    /// <typeparam name="T">Type</typeparam>
-    public class DLinkedListNode<TKey, TValue> : IComparable<DLinkedListNode<TKey, TValue>> where TKey : IComparable<TKey>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public class DLinkedListNode<TKey, TValue> 
+        : IComparable<DLinkedListNode<TKey, TValue>> where TKey : IComparable<TKey>
     {
-        private TKey _key;
-        private TValue _value;
-        private DLinkedListNode<TKey, TValue> _next;
-        private DLinkedListNode<TKey, TValue> _previous;
-
         public DLinkedListNode() : this(default(TKey), default(TValue)) { }
         public DLinkedListNode(TKey key, TValue value) : this(key, value, null, null) { }
         public DLinkedListNode(TKey key, TValue value, DLinkedListNode<TKey, TValue> next, DLinkedListNode<TKey, TValue> previous)
@@ -26,29 +24,13 @@ namespace DataStructures.Lists
             Previous = previous;
         }
 
-        public virtual TKey Key
-        {
-            get { return this._key; }
-            set { this._key = value; }
-        }
+        public virtual TKey Key { get; set; }
 
-        public virtual TValue Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
+        public virtual TValue Value { get; set; }
 
-        public virtual DLinkedListNode<TKey, TValue> Next
-        {
-            get { return this._next; }
-            set { this._next = value; }
-        }
+        public virtual DLinkedListNode<TKey, TValue> Next { get; set; }
 
-        public virtual DLinkedListNode<TKey, TValue> Previous
-        {
-            get { return this._previous; }
-            set { this._previous = value; }
-        }
+        public virtual DLinkedListNode<TKey, TValue> Previous { get; set; }
 
         public int CompareTo(DLinkedListNode<TKey, TValue> other)
         {
@@ -62,42 +44,37 @@ namespace DataStructures.Lists
     /// <summary>
     /// Doubly-Linked List Data Structure.
     /// </summary>
-    /// <typeparam name="T">Type</typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     public class DLinkedList<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
         /// Instance variables.
         /// </summary>
         private int _count;
-        private DLinkedListNode<TKey, TValue> _firstNode { get; set; }
-        private DLinkedListNode<TKey, TValue> _lastNode { get; set; }
+        private DLinkedListNode<TKey, TValue> FirstNode { get; set; }
+        private DLinkedListNode<TKey, TValue> LastNode { get; set; }
 
-        public virtual DLinkedListNode<TKey, TValue> Head
-        {
-            get { return this._firstNode; }
-        }
+        public virtual DLinkedListNode<TKey, TValue> Head => this.FirstNode;
 
-        public virtual int Count
-        {
-            get { return this._count; }
-        }
+        public virtual int Count => _count;
 
 
         /// <summary>
         /// Gets the element at the specified index
         /// </summary>
-        protected virtual DLinkedListNode<TKey, TValue> _getNodeByIndex(int index)
+        protected virtual DLinkedListNode<TKey, TValue> GetNodeByIndex(int index)
         {
             if (IsEmpty())
                 throw new IndexOutOfRangeException("List is empty.");
 
             if (index == 0)
             {
-                return _firstNode;
+                return FirstNode;
             }
             else if (index == (Count - 1))
             {
-                return _lastNode;
+                return LastNode;
             }
             else if (index > 0 && index < (Count - 1))
             {
@@ -108,7 +85,7 @@ namespace DataStructures.Lists
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this._lastNode;
+                    currentNode = this.LastNode;
                     for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -116,7 +93,7 @@ namespace DataStructures.Lists
                 }
                 else
                 {
-                    currentNode = this._firstNode;
+                    currentNode = this.FirstNode;
                     for (int i = 0; i < index; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -136,17 +113,17 @@ namespace DataStructures.Lists
         /// </summary>
         protected virtual DLinkedListNode<TKey, TValue> _getNodeByKey(TKey key)
         {
-            if (key.IsEqualTo(_firstNode.Key))
+            if (key.IsEqualTo(FirstNode.Key))
             {
-                return _firstNode;
+                return FirstNode;
             }
-            else if (key.IsEqualTo(_lastNode.Key))
+            else if (key.IsEqualTo(LastNode.Key))
             {
-                return _lastNode;
+                return LastNode;
             }
             else
             {
-                var currentNode = this._firstNode;
+                var currentNode = this.FirstNode;
                 while (currentNode != null)
                 {
                     if (key.IsEqualTo(currentNode.Key))
@@ -172,11 +149,11 @@ namespace DataStructures.Lists
 
             if (index == 0)
             {
-                _firstNode.Value = value;
+                FirstNode.Value = value;
             }
             else if (index == (Count - 1))
             {
-                _lastNode.Value = value;
+                LastNode.Value = value;
             }
             else if (index > 0 && index < (Count - 1))
             {
@@ -187,7 +164,7 @@ namespace DataStructures.Lists
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this._lastNode;
+                    currentNode = this.LastNode;
                     for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -195,7 +172,7 @@ namespace DataStructures.Lists
                 }
                 else
                 {
-                    currentNode = this._firstNode;
+                    currentNode = this.FirstNode;
                     for (int i = 0; i < index; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -214,17 +191,17 @@ namespace DataStructures.Lists
             if (IsEmpty())
                 throw new IndexOutOfRangeException("List is empty.");
 
-            if (key.IsEqualTo(_firstNode.Key))
+            if (key.IsEqualTo(FirstNode.Key))
             {
-                _firstNode.Value = value;
+                FirstNode.Value = value;
             }
-            else if (key.IsEqualTo(_lastNode.Key))
+            else if (key.IsEqualTo(LastNode.Key))
             {
-                _lastNode.Value = value;
+                LastNode.Value = value;
             }
             else
             {
-                var currentNode = this._firstNode;
+                var currentNode = this.FirstNode;
                 while (currentNode != null)
                 {
                     if (currentNode.Key.IsEqualTo(key))
@@ -250,13 +227,13 @@ namespace DataStructures.Lists
 
             if (index == 0)
             {
-                _firstNode.Key = key;
-                _firstNode.Value = value;
+                FirstNode.Key = key;
+                FirstNode.Value = value;
             }
             else if (index == (Count - 1))
             {
-                _lastNode.Key = key;
-                _lastNode.Value = value;
+                LastNode.Key = key;
+                LastNode.Value = value;
             }
             else if (index > 0 && index < (Count - 1))
             {
@@ -267,7 +244,7 @@ namespace DataStructures.Lists
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = this._lastNode;
+                    currentNode = this.LastNode;
                     for (int i = (Count - 1); i > index; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -275,7 +252,7 @@ namespace DataStructures.Lists
                 }
                 else
                 {
-                    currentNode = this._firstNode;
+                    currentNode = this.FirstNode;
                     for (int i = 0; i < index; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -294,8 +271,8 @@ namespace DataStructures.Lists
         public DLinkedList()
         {
             _count = 0;
-            _firstNode = null;
-            _lastNode = null;
+            FirstNode = null;
+            LastNode = null;
         }
 
         /// <summary>
@@ -320,7 +297,7 @@ namespace DataStructures.Lists
                 }
                 else
                 {
-                    return new KeyValuePair<TKey, TValue>(_firstNode.Key, _firstNode.Value);
+                    return new KeyValuePair<TKey, TValue>(FirstNode.Key, FirstNode.Value);
                 }
             }
         }
@@ -336,17 +313,17 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (_lastNode == null)
+                else if (LastNode == null)
                 {
-                    var currentNode = _firstNode;
+                    var currentNode = FirstNode;
                     while (currentNode.Next != null)
                     {
                         currentNode = currentNode.Next;
                     }
-                    _lastNode = currentNode;
+                    LastNode = currentNode;
                 }
 
-                return new KeyValuePair<TKey, TValue>(_lastNode.Key, _lastNode.Value);
+                return new KeyValuePair<TKey, TValue>(LastNode.Key, LastNode.Value);
             }
         }
 
@@ -359,7 +336,7 @@ namespace DataStructures.Lists
             {
                 List<TKey> list = new List<TKey>(Count);
 
-                var currentNode = _firstNode;
+                var currentNode = FirstNode;
                 for (int i = 0; i < Count; ++i)
                 {
                     if (currentNode != null)
@@ -386,7 +363,7 @@ namespace DataStructures.Lists
             {
                 List<TValue> list = new List<TValue>(Count);
 
-                var currentNode = _firstNode;
+                var currentNode = FirstNode;
                 for (int i = 0; i < Count; ++i)
                 {
                     if (currentNode != null)
@@ -411,16 +388,16 @@ namespace DataStructures.Lists
         {
             var newNode = new DLinkedListNode<TKey, TValue>(key, value);
 
-            if (_firstNode == null)
+            if (FirstNode == null)
             {
-                _firstNode = _lastNode = newNode;
+                FirstNode = LastNode = newNode;
             }
             else
             {
-                var currentNode = _firstNode;
+                var currentNode = FirstNode;
                 newNode.Next = currentNode;
                 currentNode.Previous = newNode;
-                _firstNode = newNode;
+                FirstNode = newNode;
             }
 
             // Increment the count.
@@ -434,16 +411,16 @@ namespace DataStructures.Lists
         {
             var newNode = new DLinkedListNode<TKey, TValue>(key, value);
 
-            if (_firstNode == null)
+            if (FirstNode == null)
             {
-                _firstNode = _lastNode = newNode;
+                FirstNode = LastNode = newNode;
             }
             else
             {
-                var currentNode = _lastNode;
+                var currentNode = LastNode;
                 currentNode.Next = newNode;
                 newNode.Previous = currentNode;
-                _lastNode = newNode;
+                LastNode = newNode;
             }
 
             // Increment the count.
@@ -473,7 +450,7 @@ namespace DataStructures.Lists
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
                 if (index > (Count / 2))
                 {
-                    currentNode = _lastNode;
+                    currentNode = LastNode;
                     for (int i = (Count - 1); i > index - 1; --i)
                     {
                         currentNode = currentNode.Previous;
@@ -481,7 +458,7 @@ namespace DataStructures.Lists
                 }
                 else
                 {
-                    currentNode = this._firstNode;
+                    currentNode = this.FirstNode;
                     for (int i = 0; i < index - 1; ++i)
                     {
                         currentNode = currentNode.Next;
@@ -522,20 +499,20 @@ namespace DataStructures.Lists
             // Remove
             if (index == 0)
             {
-                _firstNode = _firstNode.Next;
+                FirstNode = FirstNode.Next;
 
-                if (_firstNode != null)
-                    _firstNode.Previous = null;
+                if (FirstNode != null)
+                    FirstNode.Previous = null;
 
                 // Decrement count.
                 _count--;
             }
             else if (index == Count - 1)
             {
-                _lastNode = _lastNode.Previous;
+                LastNode = LastNode.Previous;
 
-                if (_lastNode != null)
-                    _lastNode.Next = null;
+                if (LastNode != null)
+                    LastNode.Next = null;
 
                 // Decrement count.
                 _count--;
@@ -543,7 +520,7 @@ namespace DataStructures.Lists
             else
             {
                 int i = 0;
-                var currentNode = _firstNode;
+                var currentNode = FirstNode;
 
                 // Get currentNode to reference the element at the index.
                 while (i < index)
@@ -574,29 +551,29 @@ namespace DataStructures.Lists
         public virtual void RemoveBy(TKey key)
         {
             // Remove
-            if (key.IsEqualTo(_firstNode.Key))
+            if (key.IsEqualTo(FirstNode.Key))
             {
-                _firstNode = _firstNode.Next;
+                FirstNode = FirstNode.Next;
 
-                if (_firstNode != null)
-                    _firstNode.Previous = null;
+                if (FirstNode != null)
+                    FirstNode.Previous = null;
 
                 // Decrement count.
                 _count--;
             }
-            else if (key.IsEqualTo(_lastNode.Key))
+            else if (key.IsEqualTo(LastNode.Key))
             {
-                _lastNode = _lastNode.Previous;
+                LastNode = LastNode.Previous;
 
-                if (_lastNode != null)
-                    _lastNode.Next = null;
+                if (LastNode != null)
+                    LastNode.Next = null;
 
                 // Decrement count.
                 _count--;
             }
             else
             {
-                var currentNode = _firstNode;
+                var currentNode = FirstNode;
 
                 // Get currentNode to reference the element at the index.
                 while (currentNode != null)
@@ -668,7 +645,7 @@ namespace DataStructures.Lists
         public virtual void Clear()
         {
             _count = 0;
-            _firstNode = _lastNode = null;
+            FirstNode = LastNode = null;
         }
 
         /// <summary>
@@ -697,7 +674,7 @@ namespace DataStructures.Lists
             if (IsEmpty())
                 throw new Exception("List is empty.");
 
-            var currentNode = _firstNode;
+            var currentNode = FirstNode;
             while (currentNode != null)
             {
                 if (currentNode.Key.IsEqualTo(key))
@@ -722,7 +699,7 @@ namespace DataStructures.Lists
             if (IsEmpty())
                 throw new Exception("List is empty.");
 
-            var currentNode = _firstNode;
+            var currentNode = FirstNode;
             var list = new List<KeyValuePair<TKey, TValue>>();
 
             while (currentNode != null)
@@ -762,7 +739,7 @@ namespace DataStructures.Lists
             // Otherwise, traverse it from the beginning (_firstNode refrence)
             if (index > (Count / 2))
             {
-                currentNode = this._lastNode;
+                currentNode = this.LastNode;
                 for (int i = (Count - 1); i > index; --i)
                 {
                     currentNode = currentNode.Previous;
@@ -770,7 +747,7 @@ namespace DataStructures.Lists
             }
             else
             {
-                currentNode = this._firstNode;
+                currentNode = this.FirstNode;
                 for (int i = 0; i < index; ++i)
                 {
                     currentNode = currentNode.Next;
@@ -796,7 +773,7 @@ namespace DataStructures.Lists
             if (IsEmpty())
                 return;
 
-            var currentNode = _firstNode;
+            var currentNode = FirstNode;
             while (currentNode != null)
             {
                 var nextNode = currentNode.Next;
@@ -824,7 +801,7 @@ namespace DataStructures.Lists
         {
             string listAsString = string.Empty;
             int i = 0;
-            var currentNode = _firstNode;
+            var currentNode = FirstNode;
 
             while (currentNode != null)
             {

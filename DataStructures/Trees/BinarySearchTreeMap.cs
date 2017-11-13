@@ -145,7 +145,7 @@ namespace DataStructures.Trees
 
         /// <summary>
         /// Replaces the node's value from it's parent node object with the newValue.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         protected virtual void _replaceNodeInParent(BSTMapNode<TKey, TValue> node, BSTMapNode<TKey, TValue> newNode = null)
         {
@@ -225,7 +225,7 @@ namespace DataStructures.Trees
 
         /// <summary>
         /// Returns the min-node in a subtree.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         protected virtual BSTMapNode<TKey, TValue> _findMinNode(BSTMapNode<TKey, TValue> node)
         {
@@ -242,7 +242,7 @@ namespace DataStructures.Trees
 
         /// <summary>
         /// Returns the max-node in a subtree.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         protected virtual BSTMapNode<TKey, TValue> _findMaxNode(BSTMapNode<TKey, TValue> node)
         {

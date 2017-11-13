@@ -5,6 +5,7 @@ using DataStructures;
 
 namespace DataStructures.Trees
 {
+    /// <inheritdoc />
     /// <summary>
     /// AVL Tree Data Structure.
     /// </summary>
@@ -15,8 +16,8 @@ namespace DataStructures.Trees
         /// </summary>
         public new AVLTreeNode<T> Root
         {
-            get { return (AVLTreeNode<T>)base.Root; }
-            internal set { base.Root = value; }
+            get => (AVLTreeNode<T>)base.Root;
+            internal set => base.Root = value;
         }
 
         /// <summary>
@@ -177,7 +178,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// Rebalances the tree around a node.
         /// </summary>
-        private void _rebalanceSubtreeTreeAt(AVLTreeNode<T> currentNode)
+        private void RebalanceSubtreeTreeAt(AVLTreeNode<T> currentNode)
         {
             if (currentNode == null)
                 return;
@@ -233,7 +234,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// Rebalances the whole tree around a node.
         /// </summary>
-        private void _rebalanceTreeAt(AVLTreeNode<T> node)
+        private void RebalanceTreeAt(AVLTreeNode<T> node)
         {
             var currentNode = node;
             while (currentNode != null)
@@ -274,6 +275,7 @@ namespace DataStructures.Trees
             }
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Inserts an item to the tree.
         /// </summary>
@@ -285,15 +287,16 @@ namespace DataStructures.Trees
             // Invoke the super BST insert node method.
             // This insert node recursively starting from the root and checks for success status (related to allowDuplicates flag).
             // The functions increments count on its own.
-            var success = base._insertNode(newNode);
+            var success = base.InsertNode(newNode);
 
-            if (success == false && _allowDuplicates == false)
+            if (success == false && AllowDuplicates == false)
                 throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
 
             // Rebalance the tree
-            _rebalanceTreeAt(newNode);
+            RebalanceTreeAt(newNode);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Inserts an array of elements to the tree.
         /// </summary>
@@ -332,14 +335,14 @@ namespace DataStructures.Trees
             var node = (AVLTreeNode<T>)base._findNode(Root, item);
 
             // Invoke the BST remove node method.
-            bool status = base._remove(node);
+            bool status = base.Remove(node);
 
             if (status == true)
             {
                 // Rebalance the tree
                 // node.parent is actually the old parent of the node,
                 // which is the first potentially out-of-balance node.
-                _rebalanceTreeAt(node);
+                RebalanceTreeAt(node);
             }
             else
             {
@@ -353,7 +356,7 @@ namespace DataStructures.Trees
             //var parent = node.Parent;
             //while(parent != null)
             //{
-            //    _rebalanceSubtreeTreeAt(node.Parent);
+            //    RebalanceSubtreeTreeAt(node.Parent);
             //}
         }
 
@@ -369,12 +372,12 @@ namespace DataStructures.Trees
             var node = (AVLTreeNode<T>)base._findMinNode(Root);
 
             // Invoke the BST remove node method.
-            base._remove(node);
+            base.Remove(node);
 
             // Rebalance the tree
             // node.parent is actually the old parent of the node,
             // which is the first potentially out-of-balance node.
-            _rebalanceTreeAt(node);
+            RebalanceTreeAt(node);
         }
 
         /// <summary>
@@ -389,12 +392,12 @@ namespace DataStructures.Trees
             var node = (AVLTreeNode<T>)base._findMaxNode(Root);
 
             // Invoke the BST remove node method.
-            base._remove(node);
+            base.Remove(node);
 
             // Rebalance the tree
             // node.parent is actually the old parent of the node,
             // which is the first potentially out-of-balance node.
-            _rebalanceTreeAt(node);
+            RebalanceTreeAt(node);
         }
 
     }

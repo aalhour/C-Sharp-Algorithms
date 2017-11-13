@@ -449,7 +449,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// Remove node helpers.
         /// </summary>
-        protected override bool _remove(BSTNode<TKey> nodeToDelete)
+        protected override bool Remove(BSTNode<TKey> nodeToDelete)
         {
             return this._remove((RedBlackTreeNode<TKey>)nodeToDelete);
         }
@@ -457,7 +457,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// The internal remove helper.
         /// Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
-        /// This is called from the overriden _remove(BSTNode nodeToDelete) helper.
+        /// This is called from the overriden Remove(BSTNode nodeToDelete) helper.
         /// </summary>
         protected bool _remove(RedBlackTreeNode<TKey> nodeToDelete)
         {
@@ -542,9 +542,9 @@ namespace DataStructures.Trees
             // Invoke the super BST insert node method.
             // This insert node recursively starting from the root and checks for success status (related to allowDuplicates flag).
             // The functions increments count on its own.
-            var success = base._insertNode(newNode);
+            var success = base.InsertNode(newNode);
 
-            if (success == false && _allowDuplicates == false)
+            if (success == false && AllowDuplicates == false)
                 throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
 
             // Adjust Red-Black Tree rules

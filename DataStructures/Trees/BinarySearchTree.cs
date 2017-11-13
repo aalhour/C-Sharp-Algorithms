@@ -28,13 +28,13 @@ namespace DataStructures.Trees
         /// </summary>
         /// <returns></returns>
         protected int _count { get; set; }
-        protected bool _allowDuplicates { get; set; }
+        protected bool AllowDuplicates { get; set; }
         protected virtual BSTNode<T> _root { get; set; }
 
         public virtual BSTNode<T> Root
         {
-            get { return this._root; }
-            internal set { this._root = value; }
+            get => this._root;
+            internal set => this._root = value;
         }
 
 
@@ -45,7 +45,7 @@ namespace DataStructures.Trees
         public BinarySearchTree()
         {
             _count = 0;
-            _allowDuplicates = true;
+            AllowDuplicates = true;
             Root = null;
         }
 
@@ -56,18 +56,18 @@ namespace DataStructures.Trees
         public BinarySearchTree(bool allowDuplicates)
         {
             _count = 0;
-            _allowDuplicates = allowDuplicates;
+            AllowDuplicates = allowDuplicates;
             Root = null;
         }
 
 
         /// <summary>
         /// Replaces the node's value from it's parent node object with the newValue.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         /// <param name="node">BST node.</param>
         /// <param name="newNode">New value.</param>
-        protected virtual void _replaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
+        protected virtual void ReplaceNodeInParent(BSTNode<T> node, BSTNode<T> newNode = null)
         {
             if (node.Parent != null)
             {
@@ -86,7 +86,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="node">Node.</param>
         /// <returns>>True if removed successfully; false if node wasn't found.</returns>
-        protected virtual bool _remove(BSTNode<T> node)
+        protected virtual bool Remove(BSTNode<T> node)
         {
             if (node == null)
                 return false;
@@ -97,22 +97,22 @@ namespace DataStructures.Trees
             {
                 var successor = node.RightChild;
                 node.Value = successor.Value;
-                return (true && _remove(successor));
+                return (true && Remove(successor));
             }
             else if (node.HasLeftChild) // if the node has only a LEFT child
             {
-                _replaceNodeInParent(node, node.LeftChild);
+                ReplaceNodeInParent(node, node.LeftChild);
                 _count--;
 
             }
             else if (node.HasRightChild) // if the node has only a RIGHT child
             {
-                _replaceNodeInParent(node, node.RightChild);
+                ReplaceNodeInParent(node, node.RightChild);
                 _count--;
             }
             else //this node has no children
             {
-                _replaceNodeInParent(node, null);
+                ReplaceNodeInParent(node, null);
                 _count--;
             }
 
@@ -124,7 +124,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="currentNode">Current node to insert afters.</param>
         /// <param name="newNode">New node to be inserted.</param>
-        protected virtual bool _insertNode(BSTNode<T> newNode)
+        protected virtual bool InsertNode(BSTNode<T> newNode)
         {
             // Handle empty trees
             if (this.Root == null)
@@ -139,7 +139,7 @@ namespace DataStructures.Trees
                     newNode.Parent = this.Root;
 
                 // Check for value equality and whether inserting duplicates is allowed
-                if (_allowDuplicates == false && newNode.Parent.Value.IsEqualTo(newNode.Value))
+                if (AllowDuplicates == false && newNode.Parent.Value.IsEqualTo(newNode.Value))
                 {
                     return false;
                 }
@@ -159,7 +159,7 @@ namespace DataStructures.Trees
                     else
                     {
                         newNode.Parent = newNode.Parent.LeftChild;
-                        return _insertNode(newNode);
+                        return InsertNode(newNode);
                     }
                 }
                 // Go Right
@@ -177,7 +177,7 @@ namespace DataStructures.Trees
                     else
                     {
                         newNode.Parent = newNode.Parent.RightChild;
-                        return _insertNode(newNode);
+                        return InsertNode(newNode);
                     }
                 }
             }
@@ -189,7 +189,7 @@ namespace DataStructures.Trees
         /// </summary>
         /// <param name="node">Node</param>
         /// <returns>Height of node's longest subtree</returns>
-        protected virtual int _getTreeHeight(BSTNode<T> node)
+        protected virtual int GetTreeHeight(BSTNode<T> node)
         {
             if (node == null)
                 return 0;
@@ -198,13 +198,13 @@ namespace DataStructures.Trees
                 return 1;
             // Has two children
             else if (node.ChildrenCount == 2)
-                return (1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild)));
+                return (1 + Math.Max(GetTreeHeight(node.LeftChild), GetTreeHeight(node.RightChild)));
             // Has only left
             else if (node.HasLeftChild)
-                return (1 + _getTreeHeight(node.LeftChild));
+                return (1 + GetTreeHeight(node.LeftChild));
             // Has only right
             else
-                return (1 + _getTreeHeight(node.RightChild));
+                return (1 + GetTreeHeight(node.RightChild));
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace DataStructures.Trees
 
         /// <summary>
         /// Returns the min-node in a subtree.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         /// <returns>The minimum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
@@ -256,7 +256,7 @@ namespace DataStructures.Trees
 
         /// <summary>
         /// Returns the max-node in a subtree.
-        /// Used in the recusive _remove function.
+        /// Used in the recusive Remove function.
         /// </summary>
         /// <returns>The maximum-valued tree node.</returns>
         /// <param name="node">The tree node with subtree(s).</param>
@@ -384,13 +384,13 @@ namespace DataStructures.Trees
                     return 0;
 
                 var currentNode = Root;
-                return _getTreeHeight(currentNode);
+                return GetTreeHeight(currentNode);
             }
         }
 
         public virtual bool AllowsDuplicates
         {
-            get { return _allowDuplicates; }
+            get { return AllowDuplicates; }
         }
 
         /// <summary>
@@ -402,9 +402,9 @@ namespace DataStructures.Trees
             var newNode = new BSTNode<T>(item);
 
             // Insert node recursively starting from the root. check for success status.
-            var success = _insertNode(newNode);
+            var success = InsertNode(newNode);
 
-            if (success == false && _allowDuplicates == false)
+            if (success == false && AllowDuplicates == false)
                 throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
         }
 
@@ -452,7 +452,7 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findNode(Root, item);
-            bool status = _remove(node);
+            bool status = Remove(node);
 
             // If the element was found, remove it.
             if (status == false)
@@ -468,7 +468,7 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findMinNode(Root);
-            _remove(node);
+            Remove(node);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace DataStructures.Trees
                 throw new Exception("Tree is empty.");
 
             var node = _findMaxNode(Root);
-            _remove(node);
+            Remove(node);
         }
 
         /// <summary>
@@ -790,15 +790,9 @@ namespace DataStructures.Trees
                 }
             }
 
-            public T Current
-            {
-                get { return current.Value; }
-            }
+            public T Current => current.Value;
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object IEnumerator.Current => Current;
 
             public void Dispose()
             {

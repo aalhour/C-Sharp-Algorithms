@@ -1,62 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-
-using DataStructures.Common;
 
 namespace DataStructures.Trees
 {
-    /// <summary>
-    /// Binary Search Tree node.
-    /// This node extends the vanilla BSTNode class and adds an extra field to it for augmentation.
-    /// The BST now augments the subtree-sizes on insert, delete and get-height.
-    /// </summary>
-
-    public class BSTRankedNode<T> : BSTNode<T> where T : IComparable<T>
-    {
-        private int _subtreeSize = 0;
-
-        public BSTRankedNode() : this(default(T), 0, null, null, null) { }
-        public BSTRankedNode(T value) : this(value, 0, null, null, null) { }
-        public BSTRankedNode(T value, int subtreeSize, BSTRankedNode<T> parent, BSTRankedNode<T> left, BSTRankedNode<T> right)
-        {
-            base.Value = value;
-            SubtreeSize = subtreeSize;
-            Parent = parent;
-            LeftChild = left;
-            RightChild = right;
-        }
-
-        // Size of subtrees
-        public virtual int SubtreeSize
-        {
-            get { return this._subtreeSize; }
-            set { this._subtreeSize = value; }
-        }
-
-        public new BSTRankedNode<T> Parent
-        {
-            get { return (BSTRankedNode<T>)base.Parent; }
-            set { base.Parent = value; }
-        }
-
-        public new BSTRankedNode<T> LeftChild
-        {
-            get { return (BSTRankedNode<T>)base.LeftChild; }
-            set { base.LeftChild = value; }
-        }
-
-        public new BSTRankedNode<T> RightChild
-        {
-            get { return (BSTRankedNode<T>)base.RightChild; }
-            set { base.RightChild = value; }
-        }
-    }
-
-
     /******************************************************************************/
-
-
+    /// <inheritdoc />
     /// <summary>
     /// Binary Search Tree Data Structure.
     /// This is teh augmented version of BST. It is augmented to keep track of the nodes subtrees-sizes.
@@ -69,17 +17,19 @@ namespace DataStructures.Trees
         /// </summary>
         public new BSTRankedNode<T> Root
         {
-            get { return (BSTRankedNode<T>)base.Root; }
-            set { base.Root = value; }
+            get => (BSTRankedNode<T>)base.Root;
+            set => base.Root = value;
         }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// CONSTRUCTOR.
         /// Allows duplicates by default.
         /// </summary>
         public AugmentedBinarySearchTree() : base() { }
 
+        /// <inheritdoc />
         /// <summary>
         /// CONSTRUCTOR.
         /// If allowDuplictes is set to false, no duplicate items will be inserted.
@@ -87,6 +37,7 @@ namespace DataStructures.Trees
         public AugmentedBinarySearchTree(bool allowDuplicates) : base(allowDuplicates) { }
 
 
+        /// <inheritdoc />
         /// <summary>
         /// Returns the height of the tree.
         /// </summary>
@@ -152,20 +103,20 @@ namespace DataStructures.Trees
             }
             else if (node.HasLeftChild) // if the node has only a LEFT child
             {
-                base._replaceNodeInParent(node, node.LeftChild);
+                base.ReplaceNodeInParent(node, node.LeftChild);
                 _updateSubtreeSize(parent);
                 _count--;
 
             }
             else if (node.HasRightChild) // if the node has only a RIGHT child
             {
-                base._replaceNodeInParent(node, node.RightChild);
+                base.ReplaceNodeInParent(node, node.RightChild);
                 _updateSubtreeSize(parent);
                 _count--;
             }
             else //this node has no children
             {
-                base._replaceNodeInParent(node, null);
+                base.ReplaceNodeInParent(node, null);
                 _updateSubtreeSize(parent);
                 _count--;
             }
@@ -203,6 +154,7 @@ namespace DataStructures.Trees
             return 0;
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Inserts an element to the tree
         /// </summary>
@@ -214,15 +166,16 @@ namespace DataStructures.Trees
             // Invoke the super BST insert node method.
             // This insert node recursively starting from the root and checks for success status (related to allowDuplicates flag).
             // The functions increments count on its own.
-            var success = base._insertNode(newNode);
+            var success = base.InsertNode(newNode);
 
-            if (success == false && _allowDuplicates == false)
+            if (success == false && AllowDuplicates == false)
                 throw new InvalidOperationException("Tree does not allow inserting duplicate elements.");
 
             // Update the subtree-size for the newNode's parent.
             _updateSubtreeSize(newNode.Parent);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Inserts an array of elements to the tree.
         /// </summary>
@@ -236,6 +189,7 @@ namespace DataStructures.Trees
                     this.Insert(collection[i]);
         }
 
+        /// <inheritdoc />
         /// <summary>
         /// Inserts a list of elements to the tree.
         /// </summary>

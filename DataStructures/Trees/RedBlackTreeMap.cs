@@ -447,7 +447,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// The internal remove helper.
         /// Separated from the overriden version to avoid casting the objects from BSTMapNode to RedBlackTreeMapNode.
-        /// This is called from the overriden _remove(BSTMapNode nodeToDelete) helper.
+        /// This is called from the overriden Remove(BSTMapNode nodeToDelete) helper.
         /// </summary>
         protected bool _remove(RedBlackTreeMapNode<TKey, TValue> nodeToDelete)
         {

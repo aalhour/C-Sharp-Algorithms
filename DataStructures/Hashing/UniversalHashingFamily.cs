@@ -11,8 +11,6 @@
 using System;
 
 using DataStructures.Common;
-using DataStructures.Lists;
-using DataStructures.Hashing;
 
 namespace DataStructures.Hashing
 {
@@ -25,11 +23,11 @@ namespace DataStructures.Hashing
         // In decimal = 2,146,435,069;
         private const int BIG_PRIME = 0x7FEFFFFD;
 
-        private Random _randomizer { get; set; }
-        private int _numberOfHashFunctions { get; set; }
-        private int[] _firstMultipliersVector { get; set; }
-        private int[] _secondMultipliersVector { get; set; }
-        private static readonly PrimesList _primes = PrimesList.Instance;
+        private Random Randomizer { get; set; }
+        private int NumberOfHashFunctions { get; set; }
+        private int[] FirstMultipliersVector { get; set; }
+        private int[] SecondMultipliersVector { get; set; }
+        private static readonly PrimesList Primes = PrimesList.Instance;
 
         /// <summary>
         /// Initializes the family with a specified number of hash functions.
@@ -39,10 +37,10 @@ namespace DataStructures.Hashing
             if (numberOfHashFunctions <= 0)
                 throw new ArgumentOutOfRangeException("Number of hash functions should be greater than zero.");
 
-            _randomizer = new Random();
-            _numberOfHashFunctions = numberOfHashFunctions;
-            _firstMultipliersVector = new int[_numberOfHashFunctions];
-            _secondMultipliersVector = new int[_numberOfHashFunctions];
+            Randomizer = new Random();
+            NumberOfHashFunctions = numberOfHashFunctions;
+            FirstMultipliersVector = new int[NumberOfHashFunctions];
+            SecondMultipliersVector = new int[NumberOfHashFunctions];
 
             GenerateNewFunctions();
         }
@@ -50,10 +48,7 @@ namespace DataStructures.Hashing
         /// <summary>
         /// Returns number of member hash functions.
         /// </summary>
-        public int NumberOfFunctions
-        {
-            get { return _numberOfHashFunctions; }
-        }
+        public int NumberOfFunctions => NumberOfHashFunctions;
 
         /// <summary>
         /// Generates new hash functions with new randomized multipliers.
@@ -61,29 +56,29 @@ namespace DataStructures.Hashing
         public void GenerateNewFunctions()
         {
             // Clear the multipliers vectors
-            Array.Clear(_firstMultipliersVector, 0, _firstMultipliersVector.Length);
-            Array.Clear(_secondMultipliersVector, 0, _secondMultipliersVector.Length);
+            Array.Clear(FirstMultipliersVector, 0, FirstMultipliersVector.Length);
+            Array.Clear(SecondMultipliersVector, 0, SecondMultipliersVector.Length);
 
             int randomMin = 0;
-            int randomMax = _primes.Count - 1;
+            int randomMax = Primes.Count - 1;
 
-            for (int i = 0; i < _numberOfHashFunctions; i++)
+            for (int i = 0; i < NumberOfHashFunctions; i++)
             {
                 // Get only the primes that are smaller than the biggest-chosen prime.
-                int randomIndex = _randomizer.Next(randomMin, randomMax);
+                int randomIndex = Randomizer.Next(randomMin, randomMax);
 
-                while (_primes[randomIndex] >= BIG_PRIME)
-                    randomIndex = _randomizer.Next(randomMin, randomMax);
+                while (Primes[randomIndex] >= BIG_PRIME)
+                    randomIndex = Randomizer.Next(randomMin, randomMax);
 
-                _firstMultipliersVector[i] = _primes[randomIndex];
+                FirstMultipliersVector[i] = Primes[randomIndex];
 
                 // make sure the next prime we choose is different than the first one and less than the biggest-prime.
-                randomIndex = _randomizer.Next(randomMin, randomMax);
+                randomIndex = Randomizer.Next(randomMin, randomMax);
 
-                while (_primes[randomIndex] >= BIG_PRIME || _primes[randomIndex] == _firstMultipliersVector[i])
-                    randomIndex = _randomizer.Next(randomMin, randomMax);
+                while (Primes[randomIndex] >= BIG_PRIME || Primes[randomIndex] == FirstMultipliersVector[i])
+                    randomIndex = Randomizer.Next(randomMin, randomMax);
 
-                _secondMultipliersVector[i] = _primes[randomIndex];
+                SecondMultipliersVector[i] = Primes[randomIndex];
             }
         }
 
@@ -95,11 +90,11 @@ namespace DataStructures.Hashing
         /// <returns></returns>
         public int UniversalHash(int preHashedKey, int whichHashFunction)
         {
-            if (whichHashFunction <= 0 || whichHashFunction > _numberOfHashFunctions)
+            if (whichHashFunction <= 0 || whichHashFunction > NumberOfHashFunctions)
                 throw new ArgumentOutOfRangeException("WhichHashFunction parameter should be greater than zero or equal to the number of Hash Functions.");
 
-            int a = _firstMultipliersVector[whichHashFunction - 1];
-            int b = _secondMultipliersVector[whichHashFunction - 1];
+            int a = FirstMultipliersVector[whichHashFunction - 1];
+            int b = SecondMultipliersVector[whichHashFunction - 1];
 
             return ((a * preHashedKey) + b) % BIG_PRIME;
         }

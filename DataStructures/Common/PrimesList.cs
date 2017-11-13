@@ -24,7 +24,7 @@ namespace DataStructures.Common
         //
         // INSTANCE VARIABLES
         private static string _primesDocPath = string.Empty;
-        private readonly static List<int> _primes = new List<int>();
+        private static readonly List<int> Primes = new List<int>();
 
         // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
         // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
@@ -51,7 +51,7 @@ namespace DataStructures.Common
                         if (_instance == null)
                         {
                             _instance = new PrimesList();
-                            _initializeData();
+                            InitializeData();
                         }
                     }
                 }
@@ -63,10 +63,10 @@ namespace DataStructures.Common
         /// <summary>
         /// Initializes the primes document path and list.
         /// </summary>
-        private static void _initializeData()
+        private static void InitializeData()
         {
             _primesDocPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data/PrimesDocument_10K.csv");
-            string[] lines = File.ReadAllLines(_primesDocPath);
+            var lines = File.ReadAllLines(_primesDocPath);
 
             foreach (var line in lines)
             {
@@ -80,7 +80,7 @@ namespace DataStructures.Common
                 {
                     // cast them into integers and add them to the primes list
                     var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
-                    _primes.AddRange(numbers);
+                    Primes.AddRange(numbers);
                 }
             }
         }
@@ -88,10 +88,7 @@ namespace DataStructures.Common
         /// <summary>
         /// Return count of primes.
         /// </summary>
-        public int Count
-        {
-            get { return _primes.Count; }
-        }
+        public int Count => Primes.Count;
 
         /// <summary>
         /// Returns prime number at the specified index.
@@ -100,10 +97,10 @@ namespace DataStructures.Common
         {
             get
             {
-                if (index < 0 || index >= _primes.Count)
+                if (index < 0 || index >= Primes.Count)
                     throw new ArgumentOutOfRangeException();
 
-                return _primes[index];
+                return Primes[index];
             }
         }
 
@@ -138,10 +135,10 @@ namespace DataStructures.Common
             if (number < 0)
                 throw new ArgumentException("Number should be greater than or equal to 0.");
 
-            for (int i = 0; i < _primes.Count; i++)
+            for (int i = 0; i < Primes.Count; i++)
             {
-                if (_primes[i] >= number)
-                    return _primes[i];
+                if (i >= number)
+                    return i;
             }
 
             // Outside of our predefined table. Compute the prime the hard way. 
@@ -162,10 +159,10 @@ namespace DataStructures.Common
             if (number < 0)
                 throw new ArgumentException("Number should be greater than or equal to 0.");
 
-            for (int i = 0; i < _primes.Count; i++)
+            for (int i = 0; i < Primes.Count; i++)
             {
-                if (_primes[i] >= number)
-                    return _primes[i];
+                if (Primes[i] >= number)
+                    return Primes[i];
             }
 
             // Outside of our predefined table. Compute the prime the hard way. 
@@ -183,7 +180,7 @@ namespace DataStructures.Common
         /// </summary>
         public List<int> GetAll
         {
-            get { return _primes; }
+            get { return Primes; }
         }
 
         /// <summary>
@@ -192,7 +189,7 @@ namespace DataStructures.Common
         public void CopyTo(int[] array, int index = 0)
         {
             if (array == null)
-                array = new int[_primes.Count];
+                array = new int[Primes.Count];
 
             if (array.Length <= index)
                 throw new ArgumentOutOfRangeException();
@@ -200,12 +197,12 @@ namespace DataStructures.Common
             int count = array.Length - index;
             int arrayIndex = index;
 
-            if (count - _primes.Count > 0)
-                count = _primes.Count;
+            if (count - Primes.Count > 0)
+                count = Primes.Count;
 
             for (int i = 0; i < count; i++)
             {
-                array[arrayIndex] = _primes[i];
+                array[arrayIndex] = Primes[i];
                 arrayIndex++;
             }
         }
