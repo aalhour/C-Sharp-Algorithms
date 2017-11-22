@@ -97,7 +97,10 @@
   </Target>
   -->
   <ItemGroup>
-    <None Include="Data\PrimesDocument_10K.csv">
+    <PackageReference Include="xunit" Version="2.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Data\PrimesDocument_10K.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
