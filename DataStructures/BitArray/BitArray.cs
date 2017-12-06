@@ -138,16 +138,20 @@ namespace DataStructures.BitArray
 		 * */
 		public BitArray (int N)
 		{
-			if (N >= 1) {
+			if (N >= 1) 
+			{
 				
 				field = new bool[N];
 
 				// fills up the field with zero-bits.
-				for (int i = 0; i < N; i++) {
+				for (int i = 0; i < N; i++) 
+				{
 					field [i] = false;
 				}
 
-			} else { // error case
+			} 
+			else 
+			{ // error case
 
 				throw new Exception ("BitArray: N must been greater or equal to 1");
 
@@ -167,24 +171,30 @@ namespace DataStructures.BitArray
 		{
 
 			// precondition I
-			if (sequence.Length > 0) {
+			if (sequence.Length > 0) 
+			{
 
 
 				// precondition II
-				if (Match (sequence)) {
+				if (Match (sequence)) 
+				{
 
 
 					field = new bool[sequence.Length];
 					Compile (sequence);
 
-				} else { // error case II
+				} 
+				else 
+				{ // error case II
 
 					throw new Exception ("BitArray: the sequence may only " +
 					"be allowed contains onese or zeros.");
 
 				}
 
-			} else { // error case I
+			} 
+			else 
+			{ // error case I
 
 				throw new Exception ("BitArray: sequence must been greater or equal as 1");
 
@@ -219,18 +229,22 @@ namespace DataStructures.BitArray
 			sequence = sequence.Trim ();
 
 			// precondition I
-			if (sequence.Length <= field.Length) {
+			if (sequence.Length <= field.Length) 
+			{
 
 				// precondition II
-				if (Match (sequence)) {
+				if (Match (sequence)) 
+				{
 
 
 					// for appropriate scaling
-					if (sequence.Length < field.Length) {
+					if (sequence.Length < field.Length) 
+					{
 
 						difference = field.Length - sequence.Length;
 
-						for (int i = 0; i < difference; i++) {
+						for (int i = 0; i < difference; i++) 
+						{
 							tmp += '0';
 						}
 
@@ -240,13 +254,16 @@ namespace DataStructures.BitArray
 					}
 
 					// actual compile procedure. 
-					for (int i = 0; i < sequence.Length; i++) {
+					for (int i = 0; i < sequence.Length; i++) 
+					{
 
-						if (sequence [i] == '1') {
+						if (sequence [i] == '1') 
+						{
 
 							field [i] = true;
 
-						} else {
+						} else 
+						{
 
 							field [i] = false;
 
@@ -254,14 +271,18 @@ namespace DataStructures.BitArray
 
 					}
 
-				} else { // error case II
+				} 
+				else 
+				{ // error case II
 
 					throw new Exception ("Compile: the sequence may only " +
 					"be allowed contains onese or zeros.");
 
 				}
 
-			} else { // error case I
+			} 
+			else 
+			{ // error case I
 
 				throw new Exception ("Compile: not equal length!");
 
@@ -282,20 +303,24 @@ namespace DataStructures.BitArray
 			string tmp = "";
 
 			// precondition I
-			if (number > 0) {
+			if (number > 0) 
+			{
 
 				// converts to binary representation
 				binaryNumber = Convert.ToString (number, 2);
 
 				// precondition II
-				if (binaryNumber.Length <= field.Length) {
+				if (binaryNumber.Length <= field.Length) 
+				{
 
 					// for appropriate scaling
-					if (binaryNumber.Length < field.Length) {
+					if (binaryNumber.Length < field.Length) 
+					{
 
 						difference = field.Length - binaryNumber.Length;
 
-						for (int i = 0; i < difference; i++) {
+						for (int i = 0; i < difference; i++) 
+						{
 							tmp += '0';
 						}
 
@@ -305,13 +330,17 @@ namespace DataStructures.BitArray
 					}
 
 					// actual compile procedure. 
-					for (int i = 0; i < binaryNumber.Length; i++) {
+					for (int i = 0; i < binaryNumber.Length; i++) 
+					{
 
-						if (binaryNumber [i] == '1') {
+						if (binaryNumber [i] == '1') 
+						{
 
 							field [i] = true;
 
-						} else {
+						} 
+						else 
+						{
 
 							field [i] = false;
 
@@ -319,13 +348,17 @@ namespace DataStructures.BitArray
 
 					}
 
-				} else { // error case II
+				} 
+				else 
+				{ // error case II
 
 					throw new Exception ("Compile: not apt length!");
 
 				}
 
-			} else { // error case I
+			} 
+			else 
+			{ // error case I
 
 				throw new Exception ("Compile: only positive numbers > 0");
 			}
@@ -346,20 +379,24 @@ namespace DataStructures.BitArray
 			string tmp = "";
 
 			// precondition I
-			if (number > 0) {
+			if (number > 0) 
+			{
 
 				// converts to binary representation
 				binaryNumber = Convert.ToString (number, 2);
 
 				// precondition II
-				if (binaryNumber.Length <= field.Length) {
+				if (binaryNumber.Length <= field.Length) 
+				{
 
 					// for appropriate scaling
-					if (binaryNumber.Length < field.Length) {
+					if (binaryNumber.Length < field.Length) 
+					{
 
 						difference = field.Length - binaryNumber.Length;
 
-						for (int i = 0; i < difference; i++) {
+						for (int i = 0; i < difference; i++) 
+						{
 							tmp += '0';
 						}
 
@@ -369,13 +406,16 @@ namespace DataStructures.BitArray
 					}
 
 					// actual compile procedure. 
-					for (int i = 0; i < binaryNumber.Length; i++) {
+					for (int i = 0; i < binaryNumber.Length; i++) 
+					{
 
-						if (binaryNumber [i] == '1') {
+						if (binaryNumber [i] == '1') 
+						{
 
 							field [i] = true;
 
-						} else {
+						} else 
+						{
 
 							field [i] = false;
 
@@ -383,13 +423,17 @@ namespace DataStructures.BitArray
 
 					}
 
-				} else { // error case II
+				} 
+				else 
+				{ // error case II
 
 					throw new Exception ("Compile: not apt length!");
 
 				}
 
-			} else { // error case I
+			} 
+			else 
+			{ // error case I
 
 				throw new Exception ("Compile: only positive numbers > 0");
 			}
@@ -408,12 +452,16 @@ namespace DataStructures.BitArray
 			string ans = "";
 
 			// creates return-string
-			for (int i = 0; i < field.Length; i++) {
+			for (int i = 0; i < field.Length; i++) 
+			{
 
-				if (field [i]) {
+				if (field [i]) 
+				{
 
 					ans += "1";
-				} else {
+				} 
+				else 
+				{
 
 					ans += "0";
 				}
@@ -428,8 +476,10 @@ namespace DataStructures.BitArray
 		 * Property
 		 * Length: returns the length of the current bit array.
 		 * */
-		public int Length {
-			get {
+		public int Length 
+		{
+			get 
+			{
 				return field.Length;
 			}
 		}
@@ -451,26 +501,32 @@ namespace DataStructures.BitArray
 			string tmp = "";
 
 			// for scaling of same length.
-			if (one.Length != two.Length) {
+			if (one.Length != two.Length) 
+			{
 
-				if (one.Length > two.Length) { // one is greater
+				if (one.Length > two.Length) 
+				{ // one is greater
 
 					difference = one.Length - two.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
 					tmp += two.ToString ();
 					sequence2 = tmp;
 
-				} else { // two is greater
+				} 
+				else 
+				{ // two is greater
 
 					difference = two.Length - one.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
@@ -484,17 +540,22 @@ namespace DataStructures.BitArray
 
 			ans = new BitArray (one.Length);
 
-			for (int i = 0; i < one.Length; i++) {
+			for (int i = 0; i < one.Length; i++) 
+			{
 
-				switch (sequence1 [i]) {
+				switch (sequence1 [i]) 
+				{
 
 				case '0':
 					result += '0';
 					break;
 				case '1':
-					if (sequence2 [i] == '1') {
+					if (sequence2 [i] == '1') 
+					{
 						result += '1';
-					} else {
+					} 
+					else 
+					{
 						result += '0';
 					}
 					break;
@@ -528,26 +589,32 @@ namespace DataStructures.BitArray
 			string tmp = "";
 
 			// for scaling of same length.
-			if (one.Length != two.Length) {
+			if (one.Length != two.Length) 
+			{
 
-				if (one.Length > two.Length) { // one is greater
+				if (one.Length > two.Length) 
+				{ // one is greater
 
 					difference = one.Length - two.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
 					tmp += two.ToString ();
 					sequence2 = tmp;
 
-				} else { // two is greater
+				} 
+				else 
+				{ // two is greater
 
 					difference = two.Length - one.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
@@ -561,14 +628,18 @@ namespace DataStructures.BitArray
 
 			ans = new BitArray (one.Length);
 
-			for (int i = 0; i < one.Length; i++) {
+			for (int i = 0; i < one.Length; i++) 
+			{
 
 				switch (sequence1 [i]) {
 
 				case '0':
-					if (sequence2 [i] == '1') {
+					if (sequence2 [i] == '1') 
+					{
 						result += '1';
-					} else {
+					} 
+					else 
+					{
 						result += '0';
 					}
 					break;
@@ -600,10 +671,13 @@ namespace DataStructures.BitArray
 			string sequence = one.ToString ();
 			string result = "";
 
-			foreach (char ch in sequence) {
-				if (ch == '1') {
+			foreach (char ch in sequence) 
+			{
+				if (ch == '1') 
+				{
 					result += '0';
-				} else {
+				} else 
+				{
 					result += '1';
 				}
 			}
@@ -628,7 +702,8 @@ namespace DataStructures.BitArray
 			BitArray ans = new BitArray (other.Length + n);
 
 			// actual shifting process
-			for (int i = 0; i < other.Length; i++) {
+			for (int i = 0; i < other.Length; i++) 
+			{
 
 				ans [i] = other [i];
 
@@ -657,24 +732,29 @@ namespace DataStructures.BitArray
 			// for scaling of same length.
 			if (one.Length != two.Length) {
 
-				if (one.Length > two.Length) { // one is greater
+				if (one.Length > two.Length) 
+				{ // one is greater
 
 					difference = one.Length - two.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
 					tmp += two.ToString ();
 					sequence2 = tmp;
 
-				} else { // two is greater
+				} 
+				else 
+				{ // two is greater
 
 					difference = two.Length - one.Length;
 
 					// fills up with 0's
-					for (int i = 0; i < difference; i++) {
+					for (int i = 0; i < difference; i++) 
+					{
 						tmp += '0';
 					}
 
@@ -688,22 +768,30 @@ namespace DataStructures.BitArray
 
 			ans = new BitArray (one.Length);
 
-			for (int i = 0; i < one.Length; i++) {
+			for (int i = 0; i < one.Length; i++) 
+			{
 
-				switch (sequence1 [i]) {
+				switch (sequence1 [i]) 
+				{
 
 				case '0':
-					if (sequence2 [i] == '1') {
+					if (sequence2 [i] == '1') 
+					{
 						result += '1';
-					} else {
+					} 
+					else 
+					{
 						result += '0';
 					}
 					break;
 
 				case '1':
-					if (sequence2 [i] == '0') {
+					if (sequence2 [i] == '0') 
+					{
 						result += '1';
-					} else {
+					} 
+					else 
+					{
 						result += '0';
 					}
 					break;
@@ -731,7 +819,8 @@ namespace DataStructures.BitArray
 			BitArray ans = new BitArray (other.Length - n);
 
 			// actual shifting process.
-			for (int i = 0; i < other.Length - n; i++) {
+			for (int i = 0; i < other.Length - n; i++) 
+			{
 
 				ans [i] = other [i];
 			}
@@ -750,17 +839,22 @@ namespace DataStructures.BitArray
 		{
 			bool status = true;
 
-			if (one.Length == two.Length) {
+			if (one.Length == two.Length) 
+			{
 
-				for (int i = 0; i < one.Length; i++) {
+				for (int i = 0; i < one.Length; i++) 
+				{
 
-					if (one [i] != two [i]) {
+					if (one [i] != two [i]) 
+					{
 						status = false;
 					}
 
 				}
 
-			} else {
+			} 
+			else 
+			{
 
 				throw new Exception ("== : inputs haven't same length!");
 
@@ -789,14 +883,17 @@ namespace DataStructures.BitArray
 		 * Indexer
 		 * for selecting the individual bits.
 		 * */
-		public bool this [int offset] {
+		public bool this [int offset] 
+		{
 
-			get {
+			get 
+			{
 
 				return field [offset];
 			}
 
-			set {
+			set 
+			{
 				
 				field [offset] = value;
 			}
@@ -813,8 +910,10 @@ namespace DataStructures.BitArray
 			int counter = 0;
 
 			// counting one-bits.
-			foreach (bool bit in field) {
-				if (bit) {
+			foreach (bool bit in field) 
+			{
+				if (bit) 
+				{
 					counter++;
 				}
 			}
@@ -832,8 +931,10 @@ namespace DataStructures.BitArray
 			int counter = 0;
 
 			// counting zero-bits
-			foreach (bool bit in field) {
-				if (!bit) {
+			foreach (bool bit in field) 
+			{
+				if (!bit) 
+				{
 					counter++;
 				}
 			}
@@ -869,7 +970,8 @@ namespace DataStructures.BitArray
 		public long ToInt64 ()
 		{
 			// Precondition
-			if (field.Length > 64) {
+			if (field.Length > 64) 
+			{
 				throw new Exception ("ToInt: field is too long.");
 			}
 
@@ -887,7 +989,8 @@ namespace DataStructures.BitArray
 		public int ToInt32 ()
 		{
 			// Precondition
-			if (field.Length > 32) {
+			if (field.Length > 32) 
+			{
 				throw new Exception ("ToInt: field is too long.");
 			}
 
@@ -904,7 +1007,8 @@ namespace DataStructures.BitArray
 		 * */
 		public void ResetField ()
 		{
-			for (int i = 0; i < field.Length; i++) {
+			for (int i = 0; i < field.Length; i++) 
+			{
 				field [i] = false;
 			}
 		}
@@ -918,7 +1022,8 @@ namespace DataStructures.BitArray
 		 **/
 		public void SetAll (bool flag)
 		{
-			for (int i = 0; i < field.Length; i++) {
+			for (int i = 0; i < field.Length; i++) 
+			{
 				field [i] = flag;
 			}
 		}
@@ -940,11 +1045,14 @@ namespace DataStructures.BitArray
 			BitArray otherBitArray = (BitArray)other;
 			long valueOther = otherBitArray.ToInt64 ();
 
-			if (valueThis > valueOther) {
+			if (valueThis > valueOther) 
+			{
 
 				status = 1;
 
-			} else if (valueOther > valueThis) {
+			} 
+			else if (valueOther > valueThis) 
+			{
 
 				status = -1;
 
@@ -967,17 +1075,22 @@ namespace DataStructures.BitArray
 
 			BitArray otherBitArray = (BitArray)other;
 
-			if (Length == otherBitArray.Length) {
+			if (Length == otherBitArray.Length) 
+			{
 
-				for (int i = 0; i < Length; i++) {
+				for (int i = 0; i < Length; i++) 
+				{
 
-					if (field [i] != otherBitArray [i]) {
+					if (field [i] != otherBitArray [i]) 
+					{
 						status = false;
 					}
 
 				}
 
-			} else {
+			} 
+			else 
+			{
 
 				throw new Exception ("== : inputs haven't same length!");
 
@@ -1007,7 +1120,8 @@ namespace DataStructures.BitArray
 		{
 			BitArray theClone = new BitArray (Length);
 
-			for (int i = 0; i < Length; i++) {
+			for (int i = 0; i < Length; i++) 
+			{
 				theClone [i] = field [i];
 			}
 
@@ -1019,12 +1133,19 @@ namespace DataStructures.BitArray
 		 * returns the current bit of the bit-field.
 		 * */
 		public object Current {
+			
 			get {
-				try {
+				
+				try 
+				{
 					return field [position];
-				} catch (IndexOutOfRangeException) {
+				} 
+
+				catch (IndexOutOfRangeException) 
+				{
 					throw new InvalidOperationException ();
 				}
+
 			}
 		}
 
@@ -1035,10 +1156,13 @@ namespace DataStructures.BitArray
 		 * */
 		public bool MoveNext ()
 		{
-			if (position + 1 < field.Length) {
+			if (position + 1 < field.Length) 
+			{
 				position++;
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}
@@ -1077,9 +1201,11 @@ namespace DataStructures.BitArray
 		{
 			bool status = true;
 
-			foreach (char ch in sequence) {
+			foreach (char ch in sequence) 
+			{
 
-				if (ch != '0' && ch != '1') {
+				if (ch != '0' && ch != '1') 
+				{
 
 					status = false;
 				}

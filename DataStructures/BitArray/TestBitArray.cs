@@ -357,10 +357,14 @@ namespace DataStructures.BitArray
 			int counterOnes = 0;
 			int counterZeros = 0;
 
-			foreach (bool bit in testObj1) {
-				if (bit) {
+			foreach (bool bit in testObj1) 
+			{
+				if (bit) 
+				{
 					counterOnes++;
-				} else {
+				} 
+				else 
+				{
 					counterZeros++;
 				}
 			}
