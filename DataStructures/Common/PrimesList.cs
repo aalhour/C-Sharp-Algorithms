@@ -65,7 +65,7 @@ namespace DataStructures.Common
         /// </summary>
         private static void _initializeData()
         {
-            _primesDocPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Data/PrimesDocument_10K.csv");
+            _primesDocPath = Path.Combine(Path.GetDirectoryName(typeof(PrimesList).GetTypeInfo().Assembly.Location), @"Data/PrimesDocument_10K.csv");
             string[] lines = File.ReadAllLines(_primesDocPath);
 
             foreach (var line in lines)

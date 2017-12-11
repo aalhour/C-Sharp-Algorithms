@@ -19,7 +19,7 @@ namespace Algorithms.Strings
         public EditDistanceCostsMap(TCost insertionCost, TCost deletionCost, TCost substitutionCost)
         {
             if (false == default(TCost).IsNumber())
-                throw new ApplicationException("Invalid cost type TCost. Please choose TCost to be a number.");
+                throw new InvalidOperationException("Invalid cost type TCost. Please choose TCost to be a number.");
 
             DeletionCost = deletionCost;
             InsertionCost = insertionCost;

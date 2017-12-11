@@ -75,7 +75,7 @@ namespace Algorithms.Sorting
             {
                 for (int i = 0; i < collection.Count; ++i)
                     if (collection[i] == null || collection[i].Length != stringFixedWidth)
-                        throw new ApplicationException("Not all strings have the same width");
+                        throw new InvalidOperationException("Not all strings have the same width");
             }
 
             // extend ASCII alphabet size
