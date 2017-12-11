@@ -1,5 +1,6 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
 install:
+  - nuget
   - nuget restore C-Sharp-Algorithms.sln
-  - nuget restore UnitTest/UnitTest.csproj
+  - nuget update C-Sharp-Algorithms.sln
