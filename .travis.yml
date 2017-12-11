@@ -6,5 +6,3 @@ install:
   - nuget restore DataStructures/DataStructures.csproj
   - nuget restore Algorithms/Algorithms.csproj
   - nuget restore UnitTest/UnitTest.csproj
-  - nuget install xunit -Version 2.3.1
-  - nuget install xunit.runners -Version 2.3.1
