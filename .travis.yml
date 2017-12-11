@@ -2,5 +2,4 @@ language: csharp
 solution: C-Sharp-Algorithms.sln
 install:
   - nuget restore C-Sharp-Algorithms.sln
-  - nuget install NUnit -Version 2.6.2
-  - nuget install NUnit.Runners -Version 2.6.4
+  - nuget restore UnitTest/UnitTest.csproj
