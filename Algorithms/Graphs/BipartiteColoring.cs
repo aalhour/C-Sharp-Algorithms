@@ -58,7 +58,7 @@ namespace Algorithms.Graphs
             if (Graph == null)
                 throw new ArgumentNullException();
             else if (Graph.VerticesCount < 2)
-                throw new ApplicationException("Graph contains less elements than required.");
+                throw new InvalidOperationException("Graph contains less elements than required.");
 
             // Init data members
             _initializeDataMembers(Graph);
@@ -78,7 +78,7 @@ namespace Algorithms.Graphs
 
                     // Stop discovery of graph when bipartiteness doesn't hold 
                     if (!_isBipartite)
-                        throw new ApplicationException("Graph contains an odd cycle.");
+                        throw new InvalidOperationException("Graph contains an odd cycle.");
                 }
             }
         }
@@ -178,7 +178,7 @@ namespace Algorithms.Graphs
             if (!_isBipartite)
                 throw new InvalidOperationException("Graph is not bipartite.");
             else if (!_nodesToIndices.ContainsKey(vertex))
-                throw new ApplicationException("Vertex doesn't belong to graph.");
+                throw new InvalidOperationException("Vertex doesn't belong to graph.");
 
             return _nodesColors[_nodesToIndices[vertex]];
         }

@@ -75,7 +75,7 @@ namespace DataStructures.Trees
             }
 
             if (current.IsTerminal)
-                throw new ApplicationException("Word already exists in Trie.");
+                throw new InvalidOperationException("Word already exists in Trie.");
 
             ++_count;
             current.IsTerminal = true;
@@ -88,7 +88,7 @@ namespace DataStructures.Trees
         public void UpdateWord(string word, TRecord newRecord)
         {
             if (string.IsNullOrEmpty(word))
-                throw new ApplicationException("Word is either null or empty.");
+                throw new InvalidOperationException("Word is either null or empty.");
 
             var current = _root;
 
@@ -146,7 +146,7 @@ namespace DataStructures.Trees
         public bool ContainsPrefix(string prefix)
         {
             if (string.IsNullOrEmpty(prefix))
-                throw new ApplicationException("Prefix is either null or empty.");
+                throw new InvalidOperationException("Prefix is either null or empty.");
 
             var current = _root;
 
@@ -167,7 +167,7 @@ namespace DataStructures.Trees
         public bool SearchByWord(string word, out TRecord record)
         {
             if (string.IsNullOrEmpty(word))
-                throw new ApplicationException("Word is either null or empty.");
+                throw new InvalidOperationException("Word is either null or empty.");
 
             record = default(TRecord);
             var current = _root;
@@ -193,7 +193,7 @@ namespace DataStructures.Trees
         public IEnumerable<KeyValuePair<String, TRecord>> SearchByPrefix(string prefix)
         {
             if (string.IsNullOrEmpty(prefix))
-                throw new ApplicationException("Prefix is either null or empty.");
+                throw new InvalidOperationException("Prefix is either null or empty.");
 
             var current = _root;
 

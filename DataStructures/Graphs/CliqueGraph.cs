@@ -6,7 +6,7 @@ using DataStructures.Lists;
 namespace DataStructures.Graphs
 {
     /// <summary>
-    /// Represents a unweighted underected graph, modeling with a set of its maximal complete subgraphs of it.
+    /// Represents an unweighted undirected graph, modeling with a set of its maximal complete subgraphs of it.
     /// Should be fast in clustered graphs
     /// </summary>
     public class CliqueGraph<T> : IGraph<T> where T : IComparable<T>, IEquatable<T>
