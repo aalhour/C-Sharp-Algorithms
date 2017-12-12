@@ -66,6 +66,7 @@ namespace UnitTest.DataStructuresTests
             /****************************************************************************************/
 
             var stringsIterators = listOfStrings.GetEnumerator();
+            stringsIterators.MoveNext();
             Assert.True(stringsIterators.Current == listOfStrings[0], "Wrong enumeration.");
             if (stringsIterators.MoveNext() == true)
             {
