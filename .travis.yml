@@ -1,8 +1,6 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
-mono: latest
+dotnet: 2.0
+mono: none
 install:
-  - nuget restore C-Sharp-Algorithms.sln
-  - nuget restore DataStructures/DataStructures.csproj
-  - nuget restore Algorithms/Algorithms.csproj
-  - nuget restore UnitTest/UnitTest.csproj
+  - dotnet restore
