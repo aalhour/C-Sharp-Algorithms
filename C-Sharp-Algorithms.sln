@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructures", "DataStruc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Algorithms\Algorithms.csproj", "{7CE43796-3845-4F4D-9A8D-C09B8552F42E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{2C60C7D1-3FAD-44B7-903B-0B89D84647A2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{78061D74-A872-4D4B-AF06-92EAC2EDF185}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{7CE43796-3845-4F4D-9A8D-C09B8552F42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CE43796-3845-4F4D-9A8D-C09B8552F42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CE43796-3845-4F4D-9A8D-C09B8552F42E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C60C7D1-3FAD-44B7-903B-0B89D84647A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C60C7D1-3FAD-44B7-903B-0B89D84647A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C60C7D1-3FAD-44B7-903B-0B89D84647A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C60C7D1-3FAD-44B7-903B-0B89D84647A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78061D74-A872-4D4B-AF06-92EAC2EDF185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78061D74-A872-4D4B-AF06-92EAC2EDF185}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78061D74-A872-4D4B-AF06-92EAC2EDF185}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78061D74-A872-4D4B-AF06-92EAC2EDF185}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
