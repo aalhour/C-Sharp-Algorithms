@@ -1,6 +1,7 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
-dotnet: latest
+dotnet: 2.0.3
 mono: none
+dist: trusty
 script:
   - dotnet restore
