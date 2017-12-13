@@ -1,6 +1,6 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
-dotnet: 2.0
+dotnet: 1.1.5
 mono: none
 install:
   - dotnet restore
