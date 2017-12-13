@@ -12,17 +12,17 @@ This is a C#.NET solution-project, and it contains three subprojects:
 
   1. [Algorithms](Algorithms): A class library project. Contains the Algorithms implementations.
   2. [Data Structures](DataStructures): A class library project. Contains the Data Structures implementations.
-  3. [Main Program](MainProgram): Contains tests for the data structures and algorithms projects.
+  3. [UnitTest](UnitTest): Unit-testing project for the Algorithms and Data Structures.
+  4. ~[Main Program](MainProgram): Contains tests for the data structures and algorithms projects.~ **DEPRECATED**
 
 #### Requirements:
-  1. C# 5
-  2. .NET 4.5
-  3. NUnit 
+  1. .NET Core >= 2.0
+  2. XUnit
 
 #### A Note to Contributors:
 If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
 
-Note: The projects where tested on Xamarin Studio (MonoDevelop) on OSX 10, and Visual Studio on Windows 7.
+Note: The projects where tested with Visual Studio Community using .NET Core 2.0.3 on OSX 10.
 
 
 ## DATA STRUCTURES
