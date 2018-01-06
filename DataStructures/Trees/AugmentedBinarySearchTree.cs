@@ -146,7 +146,7 @@ namespace DataStructures.Trees
 
             if (node.ChildrenCount == 2) // if both children are present
             {
-                var successor = node.RightChild;
+                var successor = _findNextLarger(node);
                 node.Value = successor.Value;
                 return (true && _remove(successor));
             }
