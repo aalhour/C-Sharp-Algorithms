@@ -1,6 +1,4 @@
 ﻿using DataStructures.Lists;
-using System;
-using System.Diagnostics;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests

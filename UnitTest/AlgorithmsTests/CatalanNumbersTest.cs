@@ -1,7 +1,5 @@
 ﻿using Algorithms.Numeric;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests

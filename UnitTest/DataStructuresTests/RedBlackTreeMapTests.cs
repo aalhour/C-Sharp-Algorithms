@@ -1,7 +1,6 @@
 ﻿using DataStructures.Trees;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests

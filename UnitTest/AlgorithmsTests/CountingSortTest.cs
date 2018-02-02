@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-using Algorithms.Sorting;
+﻿using Algorithms.Sorting;
 using Xunit;
 using System.Linq;
 

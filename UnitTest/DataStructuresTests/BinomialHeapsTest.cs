@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
-using DataStructures.Heaps;
+﻿using DataStructures.Heaps;
 using Xunit;
 
 namespace C_Sharp_Algorithms.DataStructuresTests

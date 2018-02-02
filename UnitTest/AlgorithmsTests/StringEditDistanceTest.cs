@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-using Algorithms.Strings;
+﻿using Algorithms.Strings;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
-
 using DataStructures.Trees;
 using Xunit;
 

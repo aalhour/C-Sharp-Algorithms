@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-
 using Algorithms.Common;
 using DataStructures.Graphs;
-using DataStructures.Heaps;
 
 namespace Algorithms.Graphs
 {

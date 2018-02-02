@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Algorithms.Common;
-
 namespace Algorithms.Sorting
 {
     /// <summary>
