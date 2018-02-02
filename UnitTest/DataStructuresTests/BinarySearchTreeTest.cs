@@ -22,8 +22,8 @@ namespace C_Sharp_Algorithms
             // Insert values with duplicates
             binarySearchTree.Insert(values);
 
-            // ASSERT COUNT = 20 (allows duplicates)
-            Assert.Equal(binarySearchTree.Count, 21);
+            // ASSERT COUNT = 21 (allows duplicates)
+            Assert.Equal(21, binarySearchTree.Count);
 
             // Test contains/find
             Assert.True(binarySearchTree.Contains(10), "Wrong element.");
@@ -86,7 +86,7 @@ namespace C_Sharp_Algorithms
 
             var enumerator = binarySearchTree.GetInOrderEnumerator();
             enumerator.MoveNext();
-            Assert.Equal(enumerator.Current, 7);
+            Assert.Equal(7, enumerator.Current);
 
             enumerator.MoveNext();
             enumerator.MoveNext();
