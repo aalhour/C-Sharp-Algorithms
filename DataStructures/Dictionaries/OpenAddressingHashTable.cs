@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-using DataStructures.Common;
-using DataStructures.Hashing;
-using System.Threading.Tasks;
-
 namespace DataStructures.Dictionaries
 {
     /// <summary>

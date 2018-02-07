@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using DataStructures.Lists;
 using Algorithms.Sorting;
 using Xunit;
-using System.Linq;
 
 namespace UnitTest.AlgorithmsTests
 {

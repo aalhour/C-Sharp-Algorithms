@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using DataStructures.Common;
-using DataStructures.Lists;
 
 namespace DataStructures.Dictionaries
 {

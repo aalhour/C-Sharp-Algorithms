@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DataStructures.Trees;
-using Algorithms.Common;
-
-namespace Algorithms.Trees
+﻿namespace Algorithms.Trees
 {
     /// <summary>
     /// Simple Iterative Tree Traversal and Search Algorithms.

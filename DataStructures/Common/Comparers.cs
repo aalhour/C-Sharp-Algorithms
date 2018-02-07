@@ -1,6 +1,4 @@
 ﻿using System;
-
-using DataStructures.Lists;
 using DataStructures.Trees;
 
 namespace DataStructures.Common

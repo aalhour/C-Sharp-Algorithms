@@ -8,8 +8,6 @@
 
 using System;
 using System.Collections.Generic;
-
-using DataStructures.Lists;
 using DataStructures.Common;
 
 namespace DataStructures.Lists

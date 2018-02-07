@@ -1,6 +1,5 @@
 ﻿using System;
 using DataStructures.Graphs;
-using System.Collections.Generic;
 
 namespace UnitTest.DataStructuresTests
 {

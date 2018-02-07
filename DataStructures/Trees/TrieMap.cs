@@ -12,8 +12,6 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
-using DataStructures.Common;
-
 namespace DataStructures.Trees
 {
     /// <summary>

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
 using Algorithms.Graphs;
 using DataStructures.Graphs;
-using DataStructures.Lists;
 
 namespace UnitTest.AlgorithmsTests
 {

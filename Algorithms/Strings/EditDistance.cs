@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using Algorithms.Common;
 
 namespace Algorithms.Strings
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DataStructures.Graphs;
 using DataStructures.Lists;
 
 namespace DataStructures.Graphs

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using DataStructures;
+﻿using System.Collections.Generic;
 using Algorithms.Sorting;
 using Xunit;
 

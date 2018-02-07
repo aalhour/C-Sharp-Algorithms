@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 
-using Algorithms.Sorting;
-
 namespace Algorithms.Strings
 {
     public static class Permutations
