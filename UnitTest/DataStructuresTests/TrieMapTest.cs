@@ -68,8 +68,8 @@ namespace UnitTest.DataStructuresTests
             // Assert there are only two words under the prefix "acti" -> active, & acting
             var someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList<string>();
             Assert.Equal(2, someActiWords.Count);
-            Assert.True(someActiWords.Contains(word_acting));
-            Assert.True(someActiWords.Contains(word_active));
+            Assert.Contains(word_acting, someActiWords);
+            Assert.Contains(word_active, someActiWords);
 
             // Assert that "acto" is not a word
             Assert.False(trieMap.ContainsWord("acto"));
@@ -123,8 +123,8 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(8, trieMap.Count);
 
             someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList<string>();
-            Assert.Equal(1, someActiWords.Count);
-            Assert.True(someActiWords.Contains(word_active));
+            Assert.Single(someActiWords);
+            Assert.Contains(word_active, someActiWords);
 
             //
             // TEST ENUMERATOR

@@ -68,8 +68,8 @@ namespace UnitTest.DataStructuresTests
             // Assert there are only two words under the prefix "acti" -> active, & acting
             var someActiWords = trie.SearchByPrefix("acti").ToList<string>();
             Assert.True(someActiWords.Count == 2);
-            Assert.True(someActiWords.Contains(word_acting));
-            Assert.True(someActiWords.Contains(word_active));
+            Assert.Contains(word_acting, someActiWords);
+            Assert.Contains(word_active, someActiWords);
 
             // Assert that "acto" is not a word
             Assert.False(trie.ContainsWord("acto"));
@@ -119,7 +119,7 @@ namespace UnitTest.DataStructuresTests
 
             someActiWords = trie.SearchByPrefix("acti").ToList<string>();
             Assert.True(someActiWords.Count == 1);
-            Assert.True(someActiWords.Contains(word_active));
+            Assert.Contains(word_active, someActiWords);
 
 
 
