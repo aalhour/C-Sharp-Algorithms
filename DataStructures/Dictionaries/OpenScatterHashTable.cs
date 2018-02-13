@@ -13,7 +13,7 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Hash Table Cell.
         /// </summary>
-        private class HashTableEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class HashTableEntry
         {
             public TKey Key { get; set; }
             public TValue Value { get; set; }
@@ -34,18 +34,15 @@ namespace DataStructures.Dictionaries
             public bool IsDeleted { get { return this.Status == EntryStatus.Deleted; } }
         }
 
-
-
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private int _size;
-        private decimal _loadFactor;
-        private HashTableEntry<TKey, TValue>[] _hashTableStore;
+        private int _size = 0;
+        private HashTableEntry[] _hashTableStore;
 
         // Initialization-related
         private const int _defaultCapacity = 7;
-        private static readonly HashTableEntry<TKey, TValue>[] _emptyArray = new HashTableEntry<TKey, TValue>[_defaultCapacity];
+        private static readonly HashTableEntry[] _emptyArray = new HashTableEntry[_defaultCapacity];
 
         // Helper collections.
         private List<TKey> _keysCollection { get; set; }
@@ -120,7 +117,7 @@ namespace DataStructures.Dictionaries
                 int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
 
                 // Try to expand the size
-                HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
+                var newKeysMap = new HashTableEntry[newCapacity];
 
                 if (_size > 0)
                 {
@@ -144,21 +141,14 @@ namespace DataStructures.Dictionaries
                     newCapacity = MAX_PRIME_ARRAY_LENGTH;
 
                 // Try to expand the size
-                try
-                {
-                    HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
+                var newKeysMap = new HashTableEntry[newCapacity];
 
-                    if (_size > 0)
-                    {
-                        // REHASH
-                    }
-
-                    _hashTableStore = newKeysMap;
-                }
-                catch (OutOfMemoryException)
+                if (_size > 0)
                 {
-                    throw;
+                    // REHASH
                 }
+
+                _hashTableStore = newKeysMap;
             }
         }
 

@@ -15,9 +15,7 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// Open Addressing Entry
         /// </summary>
-        /// <typeparam name="TKey"></typeparam>
-        /// <typeparam name="TValue"></typeparam>
-        private class OAHashEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class OAHashEntry
         {
             public TKey key { get; set; }
             public TValue value { get; set; }
@@ -33,7 +31,7 @@ namespace DataStructures.Dictionaries
         private int _size { get; set; }
         private double _loadFactor { get; set; }
         private int _inTable { get; set; }
-        private OAHashEntry<TKey, TValue>[] _table { get; set; }
+        private OAHashEntry[] _table { get; set; }
         private List<TKey> _keys { get; set; }
         private List<TValue> _values { get; set; }
 
@@ -46,7 +44,7 @@ namespace DataStructures.Dictionaries
             _size = size;
             _loadFactor = 0.40;
             _inTable = 0;
-            _table = new OAHashEntry<TKey, TValue>[_size];
+            _table = new OAHashEntry[_size];
             _keys = new List<TKey>();
             _values = new List<TValue>();
 
@@ -54,7 +52,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < _table.Length; i++)
             {
                 //initialize each slot
-                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                _table[i] = new OAHashEntry(default(TKey), default(TValue), false);
             }
         }
 
@@ -62,15 +60,15 @@ namespace DataStructures.Dictionaries
         private void _expand()
         {
             //will hold contents of _table to copy over
-            OAHashEntry<TKey, TValue>[] temp = new OAHashEntry<TKey, TValue>[_size];
+            var temp = new OAHashEntry[_size];
             temp = _table;
             //double the size and rehash
             _size *= 2;
-            OAHashEntry<TKey, TValue>[] exp = new OAHashEntry<TKey, TValue>[_size];
+            var exp = new OAHashEntry[_size];
             for (int i = 0; i < exp.Length; i++)
             {
                 //initialize each slot
-                exp[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                exp[i] = new OAHashEntry(default(TKey), default(TValue), false);
             }
 
             _inTable = 0;
@@ -88,14 +86,14 @@ namespace DataStructures.Dictionaries
         private void _rehash()
         {
             //will hold contents of _table to copy over
-            OAHashEntry<TKey, TValue>[] temp = new OAHashEntry<TKey, TValue>[_size];
+            var temp = new OAHashEntry[_size];
             temp = _table;
 
-            OAHashEntry<TKey, TValue>[] rehash = new OAHashEntry<TKey, TValue>[_size];
+            var rehash = new OAHashEntry[_size];
             for (int i = 0; i < rehash.Length; i++)
             {
                 //initialize each slot
-                rehash[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                rehash[i] = new OAHashEntry(default(TKey), default(TValue), false);
             }
 
             _inTable = 0;
@@ -183,7 +181,7 @@ namespace DataStructures.Dictionaries
 
                 if (_table[index].occupied == false)
                 {
-                    var newEntry = new OAHashEntry<TKey, TValue>(key, value, true);
+                    var newEntry = new OAHashEntry(key, value, true);
                     _keys.Add(key);
                     _values.Add(value);
 
@@ -217,7 +215,7 @@ namespace DataStructures.Dictionaries
         public TValue this[TKey key]
         {
             get{
-                int index = search(key);
+                int index = Search(key);
 
                 if (index != -1)
                 {
@@ -228,10 +226,10 @@ namespace DataStructures.Dictionaries
             }
             set {
 
-                if (ContainsKey(key) == true)
+                if (ContainsKey(key))
                 {
 
-                    int index = search(key);
+                    int index = Search(key);
 
                     _table[index].value = value;
 
@@ -250,7 +248,7 @@ namespace DataStructures.Dictionaries
             if (ContainsKey(key))
             {
                 //find position and reset values
-                int index = search(key);
+                int index = Search(key);
                 _keys.Clear();
                 _values.Clear();
 
@@ -294,7 +292,7 @@ namespace DataStructures.Dictionaries
         //Tries to get the value of key which might not be in the dictionary.
         public bool TryGetValue(TKey key, out TValue value)
         {
-            int index = search(key);
+            int index = Search(key);
 
             if (index != -1)
             {
@@ -309,7 +307,7 @@ namespace DataStructures.Dictionaries
         }
 
         //finds the key and returns index in the table
-        public int search(TKey key)
+        public int Search(TKey key)
         {
             int i = 0;
 
@@ -331,7 +329,7 @@ namespace DataStructures.Dictionaries
         //returns true if the key is in the table
         public bool ContainsKey(TKey key)
         {
-            if (search(key) != -1)
+            if (Search(key) != -1)
             {
                 return true;
             }

@@ -22,13 +22,11 @@ namespace DataStructures.Dictionaries
         /// <summary>
         /// THE CUCKOO HASH TABLE ENTERY
         /// </summary>
-        private class CHashEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class CHashEntry
         {
-            public TKey Key { get; set; }
+            public TKey Key { get; }
             public TValue Value { get; set; }
             public bool IsActive { get; set; }
-
-            public CHashEntry() : this(default(TKey), default(TValue), false) { }
 
             public CHashEntry(TKey key, TValue value, bool isActive)
             {
@@ -53,7 +51,7 @@ namespace DataStructures.Dictionaries
 
         private int _size { get; set; }
         private int _numberOfRehashes { get; set; }
-        private CHashEntry<TKey, TValue>[] _collection { get; set; }
+        private CHashEntry[] _collection { get; set; }
         private UniversalHashingFamily _universalHashingFamily { get; set; }
         private EqualityComparer<TKey> _equalityComparer = EqualityComparer<TKey>.Default;
 
@@ -70,7 +68,7 @@ namespace DataStructures.Dictionaries
             _size = 0;
             _numberOfRehashes = 0;
             _randomizer = new Random();
-            _collection = new CHashEntry<TKey, TValue>[DEFAULT_CAPACITY];
+            _collection = new CHashEntry[DEFAULT_CAPACITY];
             _universalHashingFamily = new UniversalHashingFamily(NUMBER_OF_HASH_FUNCTIONS);
         }
 
@@ -121,7 +119,7 @@ namespace DataStructures.Dictionaries
 
             try
             {
-                this._collection = new CHashEntry<TKey, TValue>[newCapacity];
+                this._collection = new CHashEntry[newCapacity];
 
                 // Reset size
                 _size = 0;
@@ -192,7 +190,7 @@ namespace DataStructures.Dictionaries
         private void _insertHelper(TKey key, TValue value)
         {
             int COUNT_LIMIT = 100;
-            var newEntry = new CHashEntry<TKey, TValue>(key, value, isActive: true);
+            var newEntry = new CHashEntry(key, value, isActive: true);
 
             while (true)
             {
@@ -283,7 +281,7 @@ namespace DataStructures.Dictionaries
             }
             set
             {
-                if (ContainsKey(key) == true)
+                if (ContainsKey(key))
                     Update(key, value);
 
                 throw new KeyNotFoundException();
@@ -356,7 +354,7 @@ namespace DataStructures.Dictionaries
             Parallel.ForEach(_collection,
                 (item) =>
                 {
-                    if (item != null && item.IsActive == true)
+                    if (item != null && item.IsActive)
                     {
                         item.IsActive = false;
                     }

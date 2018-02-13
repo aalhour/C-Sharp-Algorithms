@@ -80,7 +80,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of all weighted directed edges in graph.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> Edges
+        public new virtual IEnumerable<WeightedEdge<T>> Edges
         {
             get
             {
@@ -93,7 +93,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get all incoming unweighted edges to a vertex.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
+        public new virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
@@ -116,7 +116,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get all outgoing unweighted edges from a vertex.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        public new virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
