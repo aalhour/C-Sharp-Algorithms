@@ -141,6 +141,7 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
   * [Edgar Carballo Domínguez](https://github.com/karv).
   * [Lucas Lemaire](https://github.com/ZwoRmi).
   * [Samuel Kenney](https://github.com/samuelkenney).
+  * [Ivandro Ismael Gomes Jao](https://github.com/ivandrofly)
 
 
 ## LICENSE
