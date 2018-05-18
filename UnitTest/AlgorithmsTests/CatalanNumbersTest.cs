@@ -1,5 +1,5 @@
-﻿using Algorithms.Numeric;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Algorithms.Numeric;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests

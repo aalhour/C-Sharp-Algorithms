@@ -1,8 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Algorithms.Graphs;
+﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests
@@ -70,20 +70,26 @@ namespace UnitTest.AlgorithmsTests
             //Debug.Assert(graph.HasEdge("y", "t") == false, "Wrong, edge y-t must have been deleted.");
 
             Debug.Assert(BellmanFord.HasPathTo("r") == false);
-            Debug.Assert(BellmanFord.HasPathTo("z") == true);
+            Debug.Assert(BellmanFord.HasPathTo("z"));
 
             // Get shortest path to Z
             var pathToZ = string.Empty;
             foreach (var node in BellmanFord.ShortestPathTo("z"))
-                pathToZ = String.Format("{0}({1}) -> ", pathToZ, node);
-            pathToZ = pathToZ.TrimEnd(new char[] { ' ', '-', '>' });
+            {
+                pathToZ = string.Format("{0}({1}) -> ", pathToZ, node);
+            }
+
+            pathToZ = pathToZ.TrimEnd(' ', '-', '>');
 
             Console.WriteLine("Shortest path to node 'z': " + pathToZ + "\r\n");
 
             var pathToY = string.Empty;
             foreach (var node in BellmanFord.ShortestPathTo("y"))
-                pathToY = String.Format("{0}({1}) -> ", pathToY, node);
-            pathToY = pathToY.TrimEnd(new char[] { ' ', '-', '>' });
+            {
+                pathToY = string.Format("{0}({1}) -> ", pathToY, node);
+            }
+
+            pathToY = pathToY.TrimEnd(' ', '-', '>');
 
             Console.WriteLine("Shortest path to node 'y': " + pathToY + "\r\n");
 
@@ -96,7 +102,7 @@ namespace UnitTest.AlgorithmsTests
             // Clear the graph and insert new V and E to the instance
             graph.Clear();
 
-            V = new string[] { "s", "a", "b", "c", "d" };
+            V = new[] { "s", "a", "b", "c", "d" };
 
             // Insert new values of V
             graph.AddVertices(V);
@@ -139,7 +145,7 @@ namespace UnitTest.AlgorithmsTests
             // Clear the graph and insert new V and E to the instance
             graph.Clear();
 
-            V = new string[] { "A", "B", "C", "D", "E" };
+            V = new[] { "A", "B", "C", "D", "E" };
 
             // Insert new values of V
             graph.AddVertices(V);
@@ -168,8 +174,11 @@ namespace UnitTest.AlgorithmsTests
 
             var pathToD = string.Empty;
             foreach (var node in BellmanFord.ShortestPathTo("D"))
-                pathToD = String.Format("{0}({1}) -> ", pathToD, node);
-            pathToD = pathToD.TrimEnd(new char[] { ' ', '-', '>' });
+            {
+                pathToD = string.Format("{0}({1}) -> ", pathToD, node);
+            }
+
+            pathToD = pathToD.TrimEnd(' ', '-', '>');
 
             Console.WriteLine("Shortest path from 'A' to 'D': " + pathToD + "\r\n");
 
@@ -201,6 +210,5 @@ namespace UnitTest.AlgorithmsTests
 
             Console.ReadLine();
         }
-
     }
 }

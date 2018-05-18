@@ -1,13 +1,12 @@
 ﻿using System;
-
 using Algorithms.Numeric;
-
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
     public static class GreatestCommonDivisorTest
     {
-
+        [Fact]
         public static void DoTest()
         {
             uint[,] testNumbers = new uint[8, 2]
@@ -26,14 +25,15 @@ namespace UnitTest.AlgorithmsTests
             {
                 uint gcd = GreatestCommonDivisor.FindGCD(testNumbers[i, 0], testNumbers[i, 1]);
 
-                if (Assert(testNumbers[i,0], testNumbers[i,1], gcd))
-                {
-                    Console.WriteLine("{0,5}-{1,-5}: with gcd: {2,-5} : Success", testNumbers[i, 0], testNumbers[i, 1], gcd);
-                }
-                else
-                {
-                    Console.WriteLine("{0,5}-{1,-5}: with gcd: {2,-5} : Error", testNumbers[i, 0], testNumbers[i, 1], gcd);
-                }
+                Xunit.Assert.True(Assert(testNumbers[i, 0], testNumbers[i, 1], gcd));
+                //if (Assert(testNumbers[i,0], testNumbers[i,1], gcd))
+                //{
+                //    Console.WriteLine("{0,5}-{1,-5}: with gcd: {2,-5} : Success", testNumbers[i, 0], testNumbers[i, 1], gcd);
+                //}
+                //else
+                //{
+                //    Console.WriteLine("{0,5}-{1,-5}: with gcd: {2,-5} : Error", testNumbers[i, 0], testNumbers[i, 1], gcd);
+                //}
             }
         }
 
@@ -57,16 +57,16 @@ namespace UnitTest.AlgorithmsTests
 
             uint _gcd = gcdCandidate * q;
 
-            while(_gcd < a && _gcd < b)
+            while (_gcd < a && _gcd < b)
             {
                 if (a % _gcd == 0 && b % _gcd == 0)
                     return false;
-                
+
                 _gcd *= ++q;
             }
 
-            return a > b ? 
-                ((a % b == 0) && (b == gcdCandidate)) || ((a % b != 0) && (b != gcdCandidate)) : 
+            return a > b ?
+                ((a % b == 0) && (b == gcdCandidate)) || ((a % b != 0) && (b != gcdCandidate)) :
                 ((b % a == 0) && (a == gcdCandidate)) || ((b % a != 0) && (a != gcdCandidate));
         }
 

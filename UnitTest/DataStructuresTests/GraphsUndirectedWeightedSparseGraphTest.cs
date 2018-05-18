@@ -12,7 +12,7 @@ namespace UnitTest.DataStructuresTests
         {
             var graph = new UndirectedWeightedSparseGraph<string>();
 
-            var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
+            var verticesSet1 = new[] { "a", "z", "s", "x", "d", "c", "f", "v" };
 
             graph.AddVertices(verticesSet1);
 
@@ -56,14 +56,15 @@ namespace UnitTest.DataStructuresTests
             // ASSERT RANDOMLY SELECTED EDGES
             var f_to_c = graph.HasEdge("f", "c");
             var f_to_c_weight = graph.GetEdgeWeight("f", "c");
-            Assert.True(f_to_c == true, "Edge f->c doesn't exist.");
+            Assert.True(f_to_c, "Edge f->c doesn't exist.");
             Assert.True(f_to_c_weight == 1, "Edge f->c must have a weight of 2.");
-            Console.WriteLine("Is there an edge from f to c? " + f_to_c + ". If yes it's weight is: " + f_to_c_weight + ".");
+            Console.WriteLine("Is there an edge from f to c? " + f_to_c + ". If yes it's weight is: " + f_to_c_weight +
+                              ".");
 
             // ASSERT RANDOMLY SELECTED EDGES
             var d_to_s = graph.HasEdge("d", "s");
             var d_to_s_weight = graph.GetEdgeWeight("d", "s");
-            Assert.True(d_to_s == true, "Edge d->s doesn't exist.");
+            Assert.True(d_to_s, "Edge d->s doesn't exist.");
             Assert.True(d_to_s_weight == 3, "Edge d->s must have a weight of 3.");
 
             // TRY ADDING DUPLICATE EDGES BUT WITH DIFFERENT WEIGHTS
@@ -98,7 +99,8 @@ namespace UnitTest.DataStructuresTests
 
             // TEST DELETING VERTICES
             graph.RemoveVertex("x");
-            Assert.True(graph.HasEdge("x", "a") == false, "Error! The edge x->a was deleted because vertex x was deleted.");
+            Assert.True(graph.HasEdge("x", "a") == false,
+                "Error! The edge x->a was deleted because vertex x was deleted.");
 
             // ASSERT VERTICES AND EDGES COUNT
             Assert.True(graph.VerticesCount == 7, "Wrong vertices count.");
@@ -115,31 +117,44 @@ namespace UnitTest.DataStructuresTests
 
             // BFS from A
             // Walk the graph using BFS from A:
-            var bfsWalk = graph.BreadthFirstWalk("a");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in bfsWalk) Console.Write(String.Format("({0})", node));
+            var bfsWalk = graph.BreadthFirstWalk("a"); // output: (s) (a) (x) (z) (d) (c) (f) (v)
+            foreach (var node in bfsWalk)
+            {
+                Console.Write("({0})", node);
+            }
 
             // DFS from A
             // Walk the graph using DFS from A:
-            var dfsWalk = graph.DepthFirstWalk("a");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
+            var dfsWalk = graph.DepthFirstWalk("a"); // output: (s) (a) (x) (z) (d) (c) (f) (v)
+            foreach (var node in dfsWalk)
+            {
+                Console.Write("({0})", node);
+            }
 
             // BFS from F
             // Walk the graph using BFS from F:
-            bfsWalk = graph.BreadthFirstWalk("f");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in bfsWalk) Console.Write(String.Format("({0})", node));
+            bfsWalk = graph.BreadthFirstWalk("f"); // output: (s) (a) (x) (z) (d) (c) (f) (v)
+            foreach (var node in bfsWalk)
+            {
+                Console.Write("({0})", node);
+            }
+
             Console.WriteLine("\r\n");
 
             // DFS from F
             // Walk the graph using DFS from F:
-            dfsWalk = graph.DepthFirstWalk("f");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
+            dfsWalk = graph.DepthFirstWalk("f"); // output: (s) (a) (x) (z) (d) (c) (f) (v)
+            foreach (var node in dfsWalk)
+            {
+                Console.Write("({0})", node);
+            }
 
             /********************************************************************/
 
             graph.Clear();
             // "Cleared the graph from all vertices and edges.\r\n"
 
-            var verticesSet2 = new string[] { "a", "b", "c", "d", "e", "f" };
+            var verticesSet2 = new[] { "a", "b", "c", "d", "e", "f" };
 
             graph.AddVertices(verticesSet2);
 
@@ -158,7 +173,5 @@ namespace UnitTest.DataStructuresTests
             // Walk the graph using DFS:
             Assert.True(graph.DepthFirstWalk().SequenceEqual(new[] { "a", "d", "e", "c", "f", "b" }));
         }
-
     }
-
 }

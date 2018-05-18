@@ -1,6 +1,6 @@
-﻿using DataStructures.Trees;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DataStructures.Trees;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests
@@ -12,7 +12,7 @@ namespace UnitTest.DataStructuresTests
         {
             // Test against the worst case of insertion
             // Case: insert increasing numbers and check if it leads to a linked list
-            var redBlackTree = new RedBlackTree<int>(allowDuplicates: false);
+            var redBlackTree = new RedBlackTree<int>(false);
 
             redBlackTree.Insert(1);
             redBlackTree.Insert(2);
@@ -30,7 +30,7 @@ namespace UnitTest.DataStructuresTests
 
             //
             // Test against re-shuffled insertions (not like above order)
-            redBlackTree = new RedBlackTree<int>(allowDuplicates: false);
+            redBlackTree = new RedBlackTree<int>(false);
 
             redBlackTree.Insert(4);
             redBlackTree.Insert(5);
@@ -46,19 +46,19 @@ namespace UnitTest.DataStructuresTests
 
             //
             // ASSERT INSERTING DUPLICATES WOULD BREAK
-            var insert_duplicate_passed = true;
+            bool insertDuplicatePassed;
             try
             {
                 // 2 already exists in tree
                 redBlackTree.Insert(2);
-                insert_duplicate_passed = true;
+                insertDuplicatePassed = true;
             }
             catch
             {
-                insert_duplicate_passed = false;
+                insertDuplicatePassed = false;
             }
 
-            Assert.True(insert_duplicate_passed == false, "Fail! The tree doesn't allow duplicates");
+            Assert.True(insertDuplicatePassed == false, "Fail! The tree doesn't allow duplicates");
 
 
             // Assert count
@@ -104,16 +104,18 @@ namespace UnitTest.DataStructuresTests
         {
             var root = redBlackTree.Root;
 
-            int height = GetMaxHeight(root);
+            var height = GetMaxHeight(root);
             var levels = new List<List<RedBlackTreeNode<int>>>();
 
             // Initialize the list
-            for (int i = 0; i < height; ++i)
+            for (var i = 0; i < height; ++i)
+            {
                 levels.Add(new List<RedBlackTreeNode<int>>());
+            }
 
-            int levelsIndex = 0;
-            int nodesInNextLevel = 0;
-            int nodesInCurrentLevel = 1;
+            var levelsIndex = 0;
+            var nodesInNextLevel = 0;
+            var nodesInCurrentLevel = 1;
 
             var queue = new Queue<RedBlackTreeNode<int>>();
             queue.Enqueue(root);
@@ -139,14 +141,14 @@ namespace UnitTest.DataStructuresTests
                 }
             }
             var color = RedBlackTreeColors.Black;
-            for (int i = 0; i < levels.Count; ++i)
+            for (var i = 0; i < levels.Count; ++i)
             {
-                for (int j = 0; j < levels[i].Count; ++j)
+                for (var j = 0; j < levels[i].Count; ++j)
                 {
                     // TODO: [2,1] == red?
                     Assert.True(levels[i][j].Color == color);
                 }
-                color = (color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black);
+                color = color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black;
             }
         }//end-test-case
 
@@ -157,9 +159,11 @@ namespace UnitTest.DataStructuresTests
         private static int GetMaxHeight(RedBlackTreeNode<int> tree)
         {
             if (tree == null)
+            {
                 return 0;
-            else
-                return 1 + Math.Max(GetMaxHeight(tree.LeftChild), GetMaxHeight(tree.RightChild));
+            }
+
+            return 1 + Math.Max(GetMaxHeight(tree.LeftChild), GetMaxHeight(tree.RightChild));
         }
     }
 

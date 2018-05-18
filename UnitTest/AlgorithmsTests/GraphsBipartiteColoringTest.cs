@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Algorithms.Graphs;
+﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
 using Xunit;
 
@@ -25,8 +24,6 @@ namespace UnitTest.AlgorithmsTests
 
             // Test initializing the bipartite
             // This initialization must fail. The graph contains an odd cycle
-            initBipartiteStatus = false;
-            bipartiteGraph = null;
 
             try
             {
@@ -38,7 +35,7 @@ namespace UnitTest.AlgorithmsTests
                 initBipartiteStatus = false;
             }
 
-            Debug.Assert(initBipartiteStatus == false, "Graph should not be bipartite.");
+            Assert.True(initBipartiteStatus == false, "Graph should not be bipartite.");
 
 
             /************************************************************/
@@ -52,7 +49,6 @@ namespace UnitTest.AlgorithmsTests
             // Test initializing the bipartite
             // This initialization must fail. The graph contains an odd cycle
             bipartiteGraph = null;
-            initBipartiteStatus = false;
 
             try
             {
@@ -64,12 +60,11 @@ namespace UnitTest.AlgorithmsTests
                 initBipartiteStatus = false;
             }
 
-            Debug.Assert(initBipartiteStatus == false, "Graph should not be bipartite.");
+            Assert.True(initBipartiteStatus == false, "Graph should not be bipartite.");
 
 
             //
             // Remove Odd Cycle and try to initialize again.
-            initBipartiteStatus = true;
             graph.RemoveEdge("c", "v");
             graph.RemoveEdge("f", "b");
 
@@ -85,13 +80,13 @@ namespace UnitTest.AlgorithmsTests
                 initBipartiteStatus = false;
             }
 
-            Debug.Assert(initBipartiteStatus == true, "Graph should be bipartite.");
+            Assert.True(initBipartiteStatus, "Graph should be bipartite.");
 
-            Debug.Assert(bipartiteGraph.ColorOf("a") == BipartiteColor.Red);
-            Debug.Assert(bipartiteGraph.ColorOf("s") == BipartiteColor.Blue);
-            Debug.Assert(bipartiteGraph.ColorOf("b") == BipartiteColor.Red);
-            Debug.Assert(bipartiteGraph.ColorOf("f") == BipartiteColor.Red);
-            Debug.Assert(bipartiteGraph.ColorOf("z") == BipartiteColor.Blue);
+            Assert.True(bipartiteGraph.ColorOf("a") == BipartiteColor.Red);
+            Assert.True(bipartiteGraph.ColorOf("s") == BipartiteColor.Blue);
+            Assert.True(bipartiteGraph.ColorOf("b") == BipartiteColor.Red);
+            Assert.True(bipartiteGraph.ColorOf("f") == BipartiteColor.Red);
+            Assert.True(bipartiteGraph.ColorOf("z") == BipartiteColor.Blue);
         }
 
 
@@ -104,15 +99,14 @@ namespace UnitTest.AlgorithmsTests
 
             //
             // Add vertices
-            var verticesSet = new string[] { "a", "b", "c" };
-            graph.AddVertices (verticesSet);
+            var verticesSet = new[] {"a", "b", "c"};
+            graph.AddVertices(verticesSet);
 
             // 
             // Add Edges
             graph.AddEdge("a", "b");
             graph.AddEdge("b", "c");
             graph.AddEdge("c", "a");
-
         }
 
 
@@ -125,8 +119,8 @@ namespace UnitTest.AlgorithmsTests
 
             //
             // Add vertices
-            var verticesSet = new string[] { "a", "b", "c", "d", "e", "f", "s", "v", "x", "y", "z" };
-            graph.AddVertices (verticesSet);
+            var verticesSet = new[] {"a", "b", "c", "d", "e", "f", "s", "v", "x", "y", "z"};
+            graph.AddVertices(verticesSet);
 
             //
             // Add edges
@@ -151,8 +145,5 @@ namespace UnitTest.AlgorithmsTests
             // Connected Component #4
             graph.AddEdge("y", "z");
         }
-
     }
-
 }
-
