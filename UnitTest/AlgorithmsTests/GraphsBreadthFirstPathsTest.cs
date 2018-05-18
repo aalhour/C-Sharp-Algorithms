@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DataStructures.Graphs;
 using Algorithms.Graphs;
 using Xunit;
+using System.Diagnostics;
 
 namespace UnitTest.AlgorithmsTests
 {
