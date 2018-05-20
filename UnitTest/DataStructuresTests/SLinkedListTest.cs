@@ -8,7 +8,6 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void DoTest()
         {
-            int index = 0;
             SLinkedList<int> listOfNumbers1 = new SLinkedList<int>();
 
             listOfNumbers1.Append(10);
@@ -35,8 +34,6 @@ namespace UnitTest.DataStructuresTests
             listOfNumbers1.InsertAt(444, listOfNumbers1.Count);
             listOfNumbers1.InsertAt(555, listOfNumbers1.Count);
             listOfNumbers1.InsertAt(222, 2);
-            
-            index = (listOfNumbers1.Count - 1);
 
             var arrayVersion = listOfNumbers1.ToArray();
             Assert.True(arrayVersion.Length == listOfNumbers1.Count);
