@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Collections.Generic;
+
 using Algorithms.Graphs;
 using DataStructures.Graphs;
+using DataStructures.Lists;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsTopologicalSorterTest
     {
+        [Fact]
         public static void DoTest()
         {
             var V01 = new string[] { "A", "B", "C", "D", "E", "X" };
@@ -23,24 +29,16 @@ namespace UnitTest.AlgorithmsTests
             DAG01.AddEdge("E", "X");
 
             // PRINT THE GRAPH
-            Console.WriteLine("[*] DAG (Directed Asyclic Graph):");
-            Console.WriteLine(DAG01.ToReadable() + "\r\n");
+            // [*] DAG (Directed Asyclic Graph):
 
             // CALCULATE THE TOPOLOGICAL SORT
             var topologicalSort01 = TopologicalSorter.Sort<string>(DAG01);
-            
+
             var output01 = string.Empty;
-            foreach(var node in topologicalSort01)
+            foreach (var node in topologicalSort01)
+            {
                 output01 = String.Format("{0}({1}) ", output01, node);
-
-            // PRINT THE TOPOLOGICAL SORT
-            Console.WriteLine("Was the previous graph cyclic? " + output01);
-
-            Console.WriteLine("\r\n*********************************************\r\n");
-
-
-            /**************************************************************************/
-
+            }
 
             var V02 = new int[] { 7, 5, 3, 11, 8, 2, 9, 10 };
             var DAG02 = new DirectedSparseGraph<int>();
@@ -58,24 +56,17 @@ namespace UnitTest.AlgorithmsTests
             DAG02.AddEdge(11, 9);
             DAG02.AddEdge(11, 10);
             DAG02.AddEdge(8, 9);
-            
-            // PRINT THE GRAPH
-            Console.WriteLine("[*] DAG (Directed Asyclic Graph):");
-            Console.WriteLine(DAG02.ToReadable() + "\r\n");
 
+            // PRINT THE GRAPH
+            // [*] DAG (Directed Asyclic Graph):
             // CALCULATE THE TOPOLOGICAL SORT
             var topologicalSort02 = TopologicalSorter.Sort<int>(DAG02);
 
             var output02 = string.Empty;
             foreach (var node in topologicalSort02)
+            {
                 output02 = String.Format("{0}({1}) ", output02, node);
-
-            // PRINT THE TOPOLOGICAL SORT
-            Console.WriteLine("Was the previous graph cyclic? " + output02);
-
-            Console.WriteLine("\r\n*********************************************\r\n");
-
-            Console.ReadLine();
+            }
         }
 
     }

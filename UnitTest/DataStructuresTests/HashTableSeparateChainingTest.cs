@@ -1,5 +1,5 @@
-﻿using DataStructures.Dictionaries;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DataStructures.Dictionaries;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests
@@ -9,32 +9,34 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void DoTest()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
+            var studentsMarks = new ChainedHashTable<string, int>
+            {
+                {"Konstantinos", 124},
+                {"Bic", 224},
+                {"Z", 324},
+                {"Ioanna", 424},
+                {"Mark Zuckerberg", 524},
+                {"Semsem", 624},
+                {"Sa3eeed", 724},
+                {"Sameer", 824},
+                {"Ahmad", 924},
+                {"Zeyad", 999},
+                {"Mahmoood 3eed", 111},
+                {"Mahmoood Abu 3eed", 222},
+                {"EISA", 333},
+                {"Test1", 3210},
+                {"Test11", 3210},
+                {"Test222", 3210},
+                {"Test3333", 3210},
+                {"Test44444", 3210},
+                {"Test555555", 3210},
+                {"Test6666666", 3210},
+                {"Test77777777", 3210},
+                {"Test888888888", 3210}
+            };
 
             //
             // TEST ADD KEY-VALUE PAIRS
-            studentsMarks.Add("Konstantinos", 124);
-            studentsMarks.Add("Bic", 224);
-            studentsMarks.Add("Z", 324);
-            studentsMarks.Add("Ioanna", 424);
-            studentsMarks.Add("Mark Zuckerberg", 524);
-            studentsMarks.Add("Semsem", 624);
-            studentsMarks.Add("Sa3eeed", 724);
-            studentsMarks.Add("Sameer", 824);
-            studentsMarks.Add("Ahmad", 924);
-            studentsMarks.Add("Zeyad", 999);
-            studentsMarks.Add("Mahmoood 3eed", 111);
-            studentsMarks.Add("Mahmoood Abu 3eed", 222);
-            studentsMarks.Add("EISA", 333);
-            studentsMarks.Add("Test1", 3210);
-            studentsMarks.Add("Test11", 3210);
-            studentsMarks.Add("Test222", 3210);
-            studentsMarks.Add("Test3333", 3210);
-            studentsMarks.Add("Test44444", 3210);
-            studentsMarks.Add("Test555555", 3210);
-            studentsMarks.Add("Test6666666", 3210);
-            studentsMarks.Add("Test77777777", 3210);
-            studentsMarks.Add("Test888888888", 3210);
 
             //
             // TEST FETCH KEY-VALUE

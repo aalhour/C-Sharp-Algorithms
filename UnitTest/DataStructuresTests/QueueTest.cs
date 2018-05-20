@@ -8,8 +8,7 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void DoTest()
         {
-            string top;
-            Queue<string> queue = new Queue<string>();
+            var queue = new Queue<string>();
             queue.Enqueue("aaa");
             queue.Enqueue("bbb");
             queue.Enqueue("ccc");
@@ -26,7 +25,7 @@ namespace UnitTest.DataStructuresTests
 
             queue.Dequeue();
             queue.Dequeue();
-            top = queue.Dequeue();
+            var top = queue.Dequeue();
             Assert.Equal("ccc", top);
 
             queue.Dequeue();

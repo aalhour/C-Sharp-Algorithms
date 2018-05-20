@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Diagnostics;
-using Algorithms.Graphs;
+﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
+using System.Diagnostics;
+using System.Linq;
 
 namespace UnitTest.AlgorithmsTests
 {

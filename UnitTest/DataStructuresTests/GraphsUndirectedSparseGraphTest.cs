@@ -11,7 +11,7 @@ namespace UnitTest.DataStructuresTests
         {
             var graph = new UndirectedSparseGraph<string>();
 
-            var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
+            var verticesSet1 = new[] { "a", "z", "s", "x", "d", "c", "f", "v" };
 
             graph.AddVertices(verticesSet1);
 
@@ -69,9 +69,9 @@ namespace UnitTest.DataStructuresTests
             graph.AddEdge("c", "v");
             graph.AddEdge("a", "z");
 
-            Assert.True(graph.BreadthFirstWalk("s").SequenceEqual(new string[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
+            Assert.True(graph.BreadthFirstWalk("s").SequenceEqual(new[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
 
-            graph.AddVertices(new string[] { "a", "b", "c", "d", "e", "f" });
+            graph.AddVertices(new[] { "a", "b", "c", "d", "e", "f" });
 
             graph.AddEdge("a", "b");
             graph.AddEdge("a", "d");
@@ -85,7 +85,7 @@ namespace UnitTest.DataStructuresTests
             Assert.True(graph.VerticesCount == 10, "Wrong vertices count.");
             Assert.True(graph.EdgesCount == 17, "Wrong edges count.");
 
-            Assert.True(graph.DepthFirstWalk().SequenceEqual(new string[] { "a", "d", "e", "c", "v", "f", "x", "s", "b", "z" }));
+            Assert.True(graph.DepthFirstWalk().SequenceEqual(new[] { "a", "d", "e", "c", "v", "f", "x", "s", "b", "z" }));
         }
     }
 }
