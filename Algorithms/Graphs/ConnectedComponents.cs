@@ -56,9 +56,9 @@ namespace Algorithms.Graphs
             // Validate the graph parameter
             if (Graph == null)
                 throw new ArgumentNullException();
-            else if (Graph.IsDirected == true)
+            if (Graph.IsDirected == true)
                 throw new NotSupportedException("Directed Graphs are not supported.");
-            else if(Graph.VerticesCount == 0)
+            if(Graph.VerticesCount == 0)
                 return components;
 
             // Get connected components using BFS

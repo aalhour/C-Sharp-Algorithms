@@ -303,8 +303,7 @@ namespace DataStructures.Trees
                 TRecord record;
                 if (SearchByWord(key, out record))
                     return record;
-                else
-                    throw new KeyNotFoundException();
+                throw new KeyNotFoundException();
             }
             set
             {

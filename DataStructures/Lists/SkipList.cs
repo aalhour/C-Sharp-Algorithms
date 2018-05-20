@@ -230,11 +230,9 @@ namespace DataStructures.Lists
                 result = current.Value;
                 return true;
             }
-            else
-            {
-                result = default(T);
-                return false;
-            }
+
+            result = default(T);
+            return false;
         }
 
         /// <summary>
@@ -338,7 +336,7 @@ namespace DataStructures.Lists
             // Validate the array and arrayIndex
             if (array == null)
                 throw new ArgumentNullException();
-            else if (array.Length == 0 || arrayIndex >= array.Length || arrayIndex < 0)
+            if (array.Length == 0 || arrayIndex >= array.Length || arrayIndex < 0)
                 throw new IndexOutOfRangeException();
 
             // Get enumerator

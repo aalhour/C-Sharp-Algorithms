@@ -127,8 +127,7 @@ namespace DataStructures.Graphs
 
                         if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
                             continue;
-                        else
-                            seen.Add(outgoingEdge);
+                        seen.Add(outgoingEdge);
 
                         yield return (new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value));
                     }
@@ -168,7 +167,7 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-            else if (_doesEdgeExist(firstVertex, secondVertex))
+            if (_doesEdgeExist(firstVertex, secondVertex))
                 return false;
 
             _adjacencyList[firstVertex].Append(secondVertex);
@@ -187,7 +186,7 @@ namespace DataStructures.Graphs
         {
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
-            else if (!_doesEdgeExist(firstVertex, secondVertex))
+            if (!_doesEdgeExist(firstVertex, secondVertex))
                 return false;
 
             _adjacencyList[firstVertex].Remove(secondVertex);
@@ -337,7 +336,7 @@ namespace DataStructures.Graphs
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
             var visited = new HashSet<T>();
@@ -381,7 +380,7 @@ namespace DataStructures.Graphs
         {
             if (VerticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
 

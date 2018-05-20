@@ -95,11 +95,13 @@ namespace DataStructures.Lists
             {
                 return _firstNode;
             }
-            else if (index == (Count - 1))
+
+            if (index == (Count - 1))
             {
                 return _lastNode;
             }
-            else if (index > 0 && index < (Count - 1))
+
+            if (index > 0 && index < (Count - 1))
             {
                 DLinkedListNode<TKey, TValue> currentNode = null;
 
@@ -125,10 +127,8 @@ namespace DataStructures.Lists
 
                 return currentNode;
             }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
+
+            throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -140,26 +140,25 @@ namespace DataStructures.Lists
             {
                 return _firstNode;
             }
-            else if (key.IsEqualTo(_lastNode.Key))
+
+            if (key.IsEqualTo(_lastNode.Key))
             {
                 return _lastNode;
             }
-            else
+
+            var currentNode = this._firstNode;
+            while (currentNode != null)
             {
-                var currentNode = this._firstNode;
-                while (currentNode != null)
-                {
-                    if (key.IsEqualTo(currentNode.Key))
-                        break;
+                if (key.IsEqualTo(currentNode.Key))
+                    break;
 
-                    currentNode = currentNode.Next;
-                }
-
-                if (currentNode == null)
-                    throw new KeyNotFoundException();
-
-                return currentNode;
+                currentNode = currentNode.Next;
             }
+
+            if (currentNode == null)
+                throw new KeyNotFoundException();
+
+            return currentNode;
         }
 
         /// <summary>
@@ -318,10 +317,8 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else
-                {
-                    return new KeyValuePair<TKey, TValue>(_firstNode.Key, _firstNode.Value);
-                }
+
+                return new KeyValuePair<TKey, TValue>(_firstNode.Key, _firstNode.Value);
             }
         }
 
@@ -336,7 +333,8 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (_lastNode == null)
+
+                if (_lastNode == null)
                 {
                     var currentNode = _firstNode;
                     while (currentNode.Next != null)
@@ -708,8 +706,7 @@ namespace DataStructures.Lists
 
             if (currentNode != null)
                 return new KeyValuePair<TKey, TValue>(currentNode.Key, currentNode.Value);
-            else
-                throw new KeyNotFoundException("Item was not found.");
+            throw new KeyNotFoundException("Item was not found.");
         }
 
         /// <summary>
@@ -752,7 +749,8 @@ namespace DataStructures.Lists
             {
                 return newList;
             }
-            else if (index < 0 || index > Count)
+
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }

@@ -95,10 +95,8 @@ namespace DataStructures.Lists
                 _collection.RemoveAt(_collection.Count - 1);
                 return top;
             }
-            else
-            {
-                throw new Exception("Stack is empty.");
-            }
+
+            throw new Exception("Stack is empty.");
         }
 
         /// <summary>

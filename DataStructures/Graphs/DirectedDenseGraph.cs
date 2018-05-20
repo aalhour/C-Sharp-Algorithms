@@ -188,7 +188,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (_doesEdgeExist(srcIndex, dstIndex))
+            if (_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             _adjacencyMatrix[srcIndex, dstIndex] = true;
@@ -211,7 +211,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             _adjacencyMatrix[srcIndex, dstIndex] = false;
@@ -408,7 +408,7 @@ namespace DataStructures.Graphs
         {
             if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
             var stack = new Lists.Stack<T>(_verticesCount);
@@ -452,7 +452,7 @@ namespace DataStructures.Graphs
         {
             if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
             var visited = new HashSet<T>();

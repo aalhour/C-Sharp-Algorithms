@@ -193,10 +193,8 @@ namespace DataStructures.Dictionaries
                     _inTable++;
                     break;
                 }
-                else
-                {
-                    i++;
-                }
+
+                i++;
 
             } while (i != _size);
 
@@ -265,10 +263,8 @@ namespace DataStructures.Dictionaries
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         //removes key-value pair from the table

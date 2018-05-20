@@ -37,8 +37,7 @@ namespace DataStructures.Trees
         {
             if (node == null)
                 return -1;
-            else
-                return node.Height;
+            return node.Height;
         }
 
         /// <summary>

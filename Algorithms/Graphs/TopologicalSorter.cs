@@ -34,7 +34,7 @@ namespace Algorithms.Graphs
             // If the graph is either null or is not a DAG, throw exception.
             if (Graph == null)
                 throw new ArgumentNullException();
-            else if (!Graph.IsDirected || CyclesDetector.IsCyclic<T>(Graph))
+            if (!Graph.IsDirected || CyclesDetector.IsCyclic<T>(Graph))
                 throw new Exception("The graph is not a DAG.");
 
             var visited = new HashSet<T>();

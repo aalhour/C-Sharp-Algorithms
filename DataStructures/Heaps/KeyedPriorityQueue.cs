@@ -176,7 +176,8 @@ namespace DataStructures.Heaps
             {
                 throw new ArgumentOutOfRangeException("Queue is empty.");
             }
-            else if (!_keysMap.ContainsKey(key))
+
+            if (!_keysMap.ContainsKey(key))
             {
                 throw new KeyNotFoundException();
             }

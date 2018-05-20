@@ -37,7 +37,7 @@ namespace Algorithms.Graphs
         {
             if (Graph == null)
                 throw new ArgumentNullException();
-            else if (!Graph.HasVertex(Source))
+            if (!Graph.HasVertex(Source))
                 throw new ArgumentException("The source vertex doesn't belong to graph.");
 
             // Init
@@ -252,7 +252,7 @@ namespace Algorithms.Graphs
         {
             if (!_nodesToIndices.ContainsKey(destination))
                 throw new Exception("Graph doesn't have the specified vertex.");
-            else if (!HasPathTo(destination))
+            if (!HasPathTo(destination))
                 return null;
 
             int dstIndex = _nodesToIndices[destination];

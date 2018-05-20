@@ -110,7 +110,8 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (_lastNode == null)
+
+                if (_lastNode == null)
                 {
                     var currentNode = _firstNode;
                     while (currentNode.Next != null)
@@ -120,10 +121,8 @@ namespace DataStructures.Lists
                     _lastNode = currentNode;
                     return currentNode.Data;
                 }
-                else
-                {
-                    return _lastNode.Data;
-                }
+
+                return _lastNode.Data;
             }
         }
 
@@ -285,11 +284,13 @@ namespace DataStructures.Lists
             {
                 return First;
             }
-            else if (index == (Count - 1))
+
+            if (index == (Count - 1))
             {
                 return Last;
             }
-            else if (index > 0 && index < (Count - 1))
+
+            if (index > 0 && index < (Count - 1))
             {
                 var currentNode = _firstNode;
                 for (int i = 0; i < index; ++i)
@@ -298,10 +299,8 @@ namespace DataStructures.Lists
                 }
                 return currentNode.Data;
             }
-            else
-            {
-                throw new IndexOutOfRangeException();
-            }
+
+            throw new IndexOutOfRangeException();
         }
 
         /// <summary>
@@ -320,7 +319,8 @@ namespace DataStructures.Lists
             {
                 return newList;
             }
-            else if (index < 0 || index > Count)
+
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }

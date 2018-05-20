@@ -157,8 +157,7 @@ namespace DataStructures.Heaps
         {
             if (treeRoot == null)
                 return null;
-            else
-                return new BinomialNode<T>() { Value = treeRoot.Value, Child = _cloneTree(treeRoot.Child), Sibling = _cloneTree(treeRoot.Sibling) };
+            return new BinomialNode<T>() { Value = treeRoot.Value, Child = _cloneTree(treeRoot.Child), Sibling = _cloneTree(treeRoot.Sibling) };
         }
 
 

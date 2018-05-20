@@ -218,10 +218,8 @@ namespace DataStructures.SortedCollections
                 _collection.Remove(item.Key);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>

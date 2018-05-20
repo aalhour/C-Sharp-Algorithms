@@ -110,8 +110,7 @@ namespace DataStructures.Trees
         {
             if (node == null)
                 return 0;
-            else
-                return node.SubtreeSize;
+            return node.SubtreeSize;
         }
 
         /// <summary>
@@ -147,7 +146,8 @@ namespace DataStructures.Trees
                 node.Value = successor.Value;
                 return (true && _remove(successor));
             }
-            else if (node.HasLeftChild) // if the node has only a LEFT child
+
+            if (node.HasLeftChild) // if the node has only a LEFT child
             {
                 base._replaceNodeInParent(node, node.LeftChild);
                 _updateSubtreeSize(parent);
@@ -184,14 +184,15 @@ namespace DataStructures.Trees
             {
                 if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
                     return (1 + _getTreeHeight(node.LeftChild));
-                else
-                    return (1 + _getTreeHeight(node.RightChild));
+                return (1 + _getTreeHeight(node.RightChild));
             }
-            else if (node.HasLeftChild)
+
+            if (node.HasLeftChild)
             {
                 return (1 + _getTreeHeight(node.LeftChild));
             }
-            else if (node.HasRightChild)
+
+            if (node.HasRightChild)
             {
                 return (1 + _getTreeHeight(node.RightChild));
             }
@@ -307,8 +308,7 @@ namespace DataStructures.Trees
 
             if (node == null)
                 throw new Exception("Item was not found.");
-            else
-                return (this._subtreeSize(node.LeftChild) + 1);
+            return (this._subtreeSize(node.LeftChild) + 1);
         }
 
     }

@@ -15,7 +15,7 @@ namespace Algorithms.Numeric
         {
             if (a == 0)
                 return b;
-            else if (b == 0)
+            if (b == 0)
                 return a;
 
             uint _a = a, _b = b;

@@ -41,7 +41,7 @@ namespace UnitTest.AlgorithmsTests
         {
             if (a == 0)
                 return b == gcdCandidate;
-            else if (b == 0)
+            if (b == 0)
                 return a == gcdCandidate;
 
             if (a % gcdCandidate != 0 || b % gcdCandidate != 0)

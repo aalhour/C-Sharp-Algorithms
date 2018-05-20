@@ -282,7 +282,8 @@ namespace Algorithms.Graphs
             {
                 throw new Exception("Graph doesn't have the specified vertex.");
             }
-            else if (!HasPathTo(destination))
+
+            if (!HasPathTo(destination))
             {
                 return null;
             }

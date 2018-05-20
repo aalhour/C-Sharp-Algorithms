@@ -162,7 +162,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (_doesEdgeExist(srcIndex, dstIndex))
+            if (_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             _adjacencyMatrix[srcIndex, dstIndex] = weight;
@@ -185,7 +185,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             _adjacencyMatrix[srcIndex, dstIndex] = EMPTY_EDGE_SLOT;
@@ -212,7 +212,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             _adjacencyMatrix[srcIndex, dstIndex] = weight;
@@ -280,7 +280,7 @@ namespace DataStructures.Graphs
             // Check the existence of vertices and the directed edge
             if (srcIndex == -1 || dstIndex == -1)
                 throw new Exception("One of the vertices or both of them doesn't exist.");
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 throw new Exception("Edge doesn't exist.");
 
             return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));

@@ -158,9 +158,8 @@ namespace DataStructures.Graphs
 
                         if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
                             continue;
-                        else
-                            seen.Add(outgoingEdge);
-                    
+                        seen.Add(outgoingEdge);
+
                         yield return edge;
                     }
                 }//end-foreach
@@ -209,9 +208,9 @@ namespace DataStructures.Graphs
             // Check existence of nodes, the validity of the weight value, and the non-existence of edge
             if (weight == EMPTY_EDGE_VALUE)
                 return false;
-            else if (!HasVertex(source) || !HasVertex(destination))
+            if (!HasVertex(source) || !HasVertex(destination))
                 return false;
-            else if (_doesEdgeExist(source, destination))
+            if (_doesEdgeExist(source, destination))
                 return false;
 
             // Add edge from source to destination
@@ -267,7 +266,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and validity of the weight value
             if (weight == EMPTY_EDGE_VALUE)
                 return false;
-            else if (!HasVertex(source) || !HasVertex(destination))
+            if (!HasVertex(source) || !HasVertex(destination))
                 return false;
 
             // Status flag of updating an edge
@@ -483,7 +482,7 @@ namespace DataStructures.Graphs
             // Check for existence of source
             if (VerticesCount == 0)
                 return new ArrayList<T>(0);
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new KeyNotFoundException("The source vertex doesn't exist.");
 
             var visited = new HashSet<T>();
@@ -528,7 +527,7 @@ namespace DataStructures.Graphs
             // Check for existence of source
             if (VerticesCount == 0)
                 return new ArrayList<T>(0);
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new KeyNotFoundException("The source vertex doesn't exist.");
 
             var visited = new HashSet<T>();
