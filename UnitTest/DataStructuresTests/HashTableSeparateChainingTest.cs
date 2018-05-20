@@ -9,6 +9,7 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void DoTest()
         {
+            // TEST ADD KEY-VALUE PAIRS
             var studentsMarks = new ChainedHashTable<string, int>
             {
                 {"Konstantinos", 124},
@@ -35,10 +36,6 @@ namespace UnitTest.DataStructuresTests
                 {"Test888888888", 3210}
             };
 
-            //
-            // TEST ADD KEY-VALUE PAIRS
-
-            //
             // TEST FETCH KEY-VALUE
             var mark = studentsMarks["Ahmad"];
             Assert.True(mark == 924);
