@@ -3,5 +3,8 @@ solution: C-Sharp-Algorithms.sln
 dotnet: 2.0.3
 mono: none
 dist: trusty
+install:
+  - nuget restore C-Sharp-Algorithms.sln
+#  - nuget install xunit.runners -Version 2.3.1 -OutputDirectory testrunner
 script:
   - dotnet restore
