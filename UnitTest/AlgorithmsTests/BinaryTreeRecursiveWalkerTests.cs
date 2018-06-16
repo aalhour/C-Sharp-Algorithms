@@ -38,8 +38,14 @@ namespace UnitTest.AlgorithmsTests
 
             // Assert the fact that adding items PRE-ORDER will result in [3, 5, 7, 10, 13, 15, 17]
             BinaryTreeRecursiveWalker.ForEach(Root, addToList, preOrder);
-            Assert.True(list.ToArray() == new[] { 3, 5, 7, 10, 13, 15 },
-                "Wrong traversal, expected InOrder enumeration of tree!");
+            var expectedArray = new[] { 10, 5, 3, 7, 15, 13, 17 };
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] != expectedArray[i])
+                {
+                    throw new InvalidOperationException("Wrong traversal, expected InOrder enumeration of tree!");
+                }
+            }
         }
 
         [Fact]
