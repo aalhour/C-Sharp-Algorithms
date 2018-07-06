@@ -16,15 +16,17 @@ namespace Algorithms.Numeric
         /// Internal cache.
         /// By default contains the first two catalan numbers for the ranks: 0, and 1.
         /// </summary>
-        private static readonly Dictionary<uint, BigInteger> _catalanNumbers = new Dictionary<uint, BigInteger> { { 0, 1 }, { 1, 1 } };
+        private static readonly Dictionary<uint, BigInteger> CachedCatalanNumbers = new Dictionary<uint, BigInteger> { { 0, 1 }, { 1, 1 } };
 
         /// <summary>
-        /// Helper function.
+        /// Helper method.
         /// </summary>
+        /// <param name="rank"></param>
+        /// <returns></returns>
         private static BigInteger _recursiveHelper(uint rank)
         {
-            if (_catalanNumbers.ContainsKey(rank))
-                return _catalanNumbers[rank];
+            if (CachedCatalanNumbers.ContainsKey(rank))
+                return CachedCatalanNumbers[rank];
 
             BigInteger number = 0;
             var lastRank = rank - 1;
@@ -34,8 +36,8 @@ namespace Algorithms.Numeric
                 var firstPart = _recursiveHelper(i);
                 var secondPart = _recursiveHelper(lastRank - i);
 
-                if (!_catalanNumbers.ContainsKey(i)) _catalanNumbers.Add(i, firstPart);
-                if (!_catalanNumbers.ContainsKey(lastRank - i)) _catalanNumbers.Add(lastRank - i, secondPart);
+                if (!CachedCatalanNumbers.ContainsKey(i)) CachedCatalanNumbers.Add(i, firstPart);
+                if (!CachedCatalanNumbers.ContainsKey(lastRank - i)) CachedCatalanNumbers.Add(lastRank - i, secondPart);
 
                 number = number + (firstPart * secondPart);
             }
@@ -44,12 +46,14 @@ namespace Algorithms.Numeric
         }
 
         /// <summary>
-        /// Public API
+        /// Public API.
         /// </summary>
+        /// <param name="rank"></param>
+        /// <returns></returns>
         public static BigInteger GetNumber(uint rank)
         {
             // Assert the cache is not empty.
-            Debug.Assert(_catalanNumbers.Count >= 2);
+            Debug.Assert(CachedCatalanNumbers.Count >= 2);
 
             return _recursiveHelper(rank);
         }
@@ -57,6 +61,8 @@ namespace Algorithms.Numeric
         /// <summary>
         /// Calculate the number using the Binomial Coefficients algorithm
         /// </summary>
+        /// <param name="rank"></param>
+        /// <returns></returns>
         public static BigInteger GetNumberByBinomialCoefficients(uint rank)
         {
             // Calculate by binomial coefficient.
@@ -64,8 +70,11 @@ namespace Algorithms.Numeric
         }
 
         /// <summary>
-        /// Return the list of catalan numbers between two ranks, inclusive.
+        /// Return the list of catalan numbers between two ranks, inclusive
         /// </summary>
+        /// <param name="fromRank"></param>
+        /// <param name="toRank"></param>
+        /// <returns></returns>
         public static List<BigInteger> GetRange(uint fromRank, uint toRank)
         {
             var numbers = new List<BigInteger>();

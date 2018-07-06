@@ -10,6 +10,8 @@ namespace Algorithms.Numeric
         /// <summary>
         /// Calculate binomial coefficients, C(n, k).
         /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static BigInteger Calculate(uint n)
         {
             return Factorial(2 * n) / (Factorial(n) * Factorial(n + 1));
