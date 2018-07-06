@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Numerics;
 using Algorithms.Numeric;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace UnitTest.AlgorithmsTests
         public static void DoTest()
         {
             var list = CatalanNumbers.GetRange(0, 100);
-            var list2 = new List<ulong>();
+            var list2 = new List<BigInteger>();
 
             // TRY CALCULATING FROM Bin.Coeff.
             for (uint i = 0; i < list.Count; ++i)
