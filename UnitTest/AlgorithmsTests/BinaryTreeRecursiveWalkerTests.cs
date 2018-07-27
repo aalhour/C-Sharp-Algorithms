@@ -2,13 +2,14 @@
 using DataStructures.Trees;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-    public class BinaryTreeRecursiveWalkerTests
+    public static class BinaryTreeRecursiveWalkerTests
     {
-        // Construct a Simple Binary Search Tree 
+        // Construct a Simple Binary Search Tree
         private static readonly BSTNode<int> Root = new BSTNode<int>(10)
         {
             LeftChild = new BSTNode<int>(5)
@@ -85,7 +86,7 @@ namespace UnitTest.AlgorithmsTests
 
             // Assert the fact that adding items POST-ORDER will result in [3, 7, 5, 13, 17, 15, 10]
             BinaryTreeRecursiveWalker.ForEach(Root, addToList, postOrder);
-            Assert.True(list.ToArray() == new[] { 3, 7, 5, 13, 17, 15, 10 },
+            Assert.True(list.SequenceEqual(new[] { 3, 7, 5, 13, 17, 15, 10 }),
                 "Wrong traversal, expected InOrder enumeration of tree!");
         }
 
