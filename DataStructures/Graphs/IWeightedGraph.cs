@@ -32,5 +32,7 @@ namespace DataStructures.Graphs
         /// </summary>
         System.Collections.Generic.Dictionary<T, W> NeighboursMap(T vertex);
     }
+
+    public interface IWeightedGraph<T> : IWeightedGraph<T, Int64> where T : IComparable<T> { }
 }
 
