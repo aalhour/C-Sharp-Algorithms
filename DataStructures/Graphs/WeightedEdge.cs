@@ -7,7 +7,9 @@ namespace DataStructures.Graphs
     /// <summary>
     /// The graph weighted edge class.
     /// </summary>
-    public class WeightedEdge<TVertex> : IEdge<TVertex> where TVertex : IComparable<TVertex>
+    public class WeightedEdge<TVertex, TWeight> : IEdge<TVertex, TWeight>
+        where TVertex : IComparable<TVertex>
+        where TWeight : IComparable<TWeight>
     {
         /// <summary>
         /// Gets or sets the source.
@@ -25,7 +27,7 @@ namespace DataStructures.Graphs
         /// Gets or sets the weight of edge.
         /// </summary>
         /// <value>The weight.</value>
-        public Int64 Weight { get; set; }
+        public TWeight Weight { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this edge is weighted.
@@ -39,7 +41,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public WeightedEdge(TVertex src, TVertex dst, Int64 weight)
+        public WeightedEdge(TVertex src, TVertex dst, TWeight weight)
         {
             Source = src;
             Destination = dst;
@@ -48,7 +50,7 @@ namespace DataStructures.Graphs
 
 
         #region IComparable implementation
-        public int CompareTo(IEdge<TVertex> other)
+        public int CompareTo(IEdge<TVertex, TWeight> other)
         {
             if (other == null)
                 return -1;

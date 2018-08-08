@@ -53,7 +53,7 @@ namespace DataStructures.Graphs
 
 
         #region IComparable implementation
-        public int CompareTo(IEdge<TVertex> other)
+        public int CompareTo(IEdge<TVertex, Int64> other)
         {
             if (other == null)
                 return -1;

@@ -255,7 +255,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of all graph edges.
         /// </summary>
-        public IEnumerable<IEdge<T>> Edges
+        public IEnumerable<IEdge<T, Int64>> Edges
         {
             get
             {
@@ -273,7 +273,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get all incoming edges to vertex.
         /// </summary>
-        public IEnumerable<IEdge<T>> IncomingEdges(T vertex)
+        public IEnumerable<IEdge<T, Int64>> IncomingEdges(T vertex)
         {
             List<UnweightedEdge<T>> incomingEdges = new List<UnweightedEdge<T>>();
 
@@ -296,7 +296,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get all outgoing edges from a vertex.
         /// </summary>
-        public IEnumerable<IEdge<T>> OutgoingEdges(T vertex)
+        public IEnumerable<IEdge<T, Int64>> OutgoingEdges(T vertex)
         {
             List<UnweightedEdge<T>> outgoingEdges = new List<UnweightedEdge<T>>();
 
@@ -394,7 +394,7 @@ namespace DataStructures.Graphs
         /// Adds a list of vertices to the graph.
         /// </summary>
         /// <param name="collection">Collection.</param>
-        void IGraph<T>.AddVertices(IList<T> collection)
+        void IGraph<T, Int64>.AddVertices(IList<T> collection)
         {
             AddVertices(collection);
         }
@@ -598,7 +598,7 @@ namespace DataStructures.Graphs
         /// Returns the list of Vertices.
         /// </summary>
         /// <value>The vertices.</value>
-        IEnumerable<T> IGraph<T>.Vertices
+        IEnumerable<T> IGraph<T, Int64>.Vertices
         {
             get
             {

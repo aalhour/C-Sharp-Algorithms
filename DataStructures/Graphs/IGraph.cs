@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using DataStructures.Lists;
+using System.Linq;
 
 namespace DataStructures.Graphs
 {
-    public interface IGraph<T> where T : IComparable<T>
+    public interface IGraph<T, W> where T : IComparable<T>
     {
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
@@ -35,17 +35,17 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of edges.
         /// </summary>
-        IEnumerable<IEdge<T>> Edges { get; }
+        IEnumerable<IEdge<T, W>> Edges { get; }
 
         /// <summary>
         /// Get all incoming edges from vertex
         /// </summary>
-        IEnumerable<IEdge<T>> IncomingEdges(T vertex);
+        IEnumerable<IEdge<T, W>> IncomingEdges(T vertex);
 
         /// <summary>
         /// Get all outgoing edges from vertex
         /// </summary>
-        IEnumerable<IEdge<T>> OutgoingEdges(T vertex);
+        IEnumerable<IEdge<T, W>> OutgoingEdges(T vertex);
 
         /// <summary>
         /// Connects two vertices together.
@@ -124,5 +124,6 @@ namespace DataStructures.Graphs
         /// </summary>
         void Clear();
     }
-}
 
+    public interface IGraph<T> : IGraph<T, Int64> where T : IComparable<T> { }
+}

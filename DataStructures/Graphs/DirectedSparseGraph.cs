@@ -92,17 +92,17 @@ namespace DataStructures.Graphs
         }
 
 
-        IEnumerable<IEdge<T>> IGraph<T>.Edges
+        IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.Edges
         {
             get { return this.Edges; }
         }
 
-        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
+        IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.IncomingEdges(T vertex)
         {
             return this.IncomingEdges(vertex);
         }
 
-        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
+        IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.OutgoingEdges(T vertex)
         {
             return this.OutgoingEdges(vertex);
         }
