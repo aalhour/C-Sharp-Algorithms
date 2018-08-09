@@ -357,5 +357,5 @@ namespace DataStructures.Graphs
 
     }
 
+    public class DirectedWeightedDenseGraph<T> : DirectedWeightedDenseGraph<T, Int64> where T : IComparable<T> { }
 }
-

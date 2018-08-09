@@ -568,4 +568,6 @@ namespace DataStructures.Graphs
         }
     }
 
+
+    public class UndirectedWeightedSparseGraph<T> : UndirectedWeightedSparseGraph<T, Int64> where T : IComparable<T> { }
 }
