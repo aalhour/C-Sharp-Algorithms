@@ -33,6 +33,12 @@ namespace DataStructures.Graphs
         System.Collections.Generic.Dictionary<T, W> NeighboursMap(T vertex);
     }
 
-    public interface IWeightedGraph<T> : IWeightedGraph<T, Int64> where T : IComparable<T> { }
+    public interface IWeightedGraph<T> : IWeightedGraph<T, Int64> where T : IComparable<T>
+    {
+        /// <summary>
+        /// Get edge object from source to destination.
+        /// </summary>
+        new WeightedEdge<T> GetEdge(T source, T destination);
+    }
 }
 

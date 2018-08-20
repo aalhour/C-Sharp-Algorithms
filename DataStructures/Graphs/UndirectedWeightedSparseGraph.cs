@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataStructures.Common;
 using DataStructures.Lists;
 
@@ -567,7 +568,21 @@ namespace DataStructures.Graphs
             _adjacencyList.Clear();
         }
     }
+    
+    public class UndirectedWeightedSparseGraph<T> : UndirectedWeightedSparseGraph<T, Int64>, IGraph<T>, IWeightedGraph<T> where T : IComparable<T>
+    {
+        public new IEnumerable<WeightedEdge<T>> Edges => base.Edges.Select(edge => edge.ToSimpleEdge());
 
+        public new WeightedEdge<T> GetEdge(T source, T destination) => base.GetEdge(source, destination).ToSimpleEdge();
 
-    public class UndirectedWeightedSparseGraph<T> : UndirectedWeightedSparseGraph<T, Int64>, IGraph<T>, IWeightedGraph<T> where T : IComparable<T> { }
+        public new IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex) => base.IncomingEdges(vertex).Select(edge => edge.ToSimpleEdge());
+
+        public new IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex) => base.OutgoingEdges(vertex).Select(edge => edge.ToSimpleEdge());
+
+        IEnumerable<IEdge<T>> IGraph<T>.Edges => this.Edges;
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex) => this.IncomingEdges(vertex);
+
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex) => this.OutgoingEdges(vertex);
+    }
 }

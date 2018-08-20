@@ -357,5 +357,8 @@ namespace DataStructures.Graphs
 
     }
 
-    public class DirectedWeightedDenseGraph<T> : DirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T> { }
+    public class DirectedWeightedDenseGraph<T> : DirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T>
+    {
+        public new WeightedEdge<T> GetEdge(T source, T destination) => base.GetEdge(source, destination).ToSimpleEdge();
+    }
 }

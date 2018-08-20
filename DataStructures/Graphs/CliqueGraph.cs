@@ -255,7 +255,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of all graph edges.
         /// </summary>
-        public IEnumerable<IEdge<T, Int64>> Edges
+        public IEnumerable<IEdge<T>> Edges
         {
             get
             {
@@ -269,11 +269,13 @@ namespace DataStructures.Graphs
                 return returnEdges;
             }
         }
+        
+        IEnumerable<IEdge<T, long>> IGraph<T, long>.Edges => this.Edges;
 
         /// <summary>
         /// Get all incoming edges to vertex.
         /// </summary>
-        public IEnumerable<IEdge<T, Int64>> IncomingEdges(T vertex)
+        public IEnumerable<IEdge<T>> IncomingEdges(T vertex)
         {
             List<UnweightedEdge<T>> incomingEdges = new List<UnweightedEdge<T>>();
 
@@ -292,11 +294,16 @@ namespace DataStructures.Graphs
             return incomingEdges;
 
         }
+        
+        IEnumerable<IEdge<T, long>> IGraph<T, long>.IncomingEdges(T vertex)
+        {
+            return this.IncomingEdges(vertex);
+        }
 
         /// <summary>
         /// Get all outgoing edges from a vertex.
         /// </summary>
-        public IEnumerable<IEdge<T, Int64>> OutgoingEdges(T vertex)
+        public IEnumerable<IEdge<T>> OutgoingEdges(T vertex)
         {
             List<UnweightedEdge<T>> outgoingEdges = new List<UnweightedEdge<T>>();
 
@@ -313,6 +320,11 @@ namespace DataStructures.Graphs
             }
 
             return outgoingEdges;
+        }
+
+        IEnumerable<IEdge<T, long>> IGraph<T, long>.OutgoingEdges(T vertex)
+        {
+            return this.OutgoingEdges(vertex);
         }
 
         /// <summary>
@@ -824,7 +836,6 @@ namespace DataStructures.Graphs
             enumerator.Dispose();
             return ret;
         }
-
     }
 
     internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>> where T : IEquatable<T>

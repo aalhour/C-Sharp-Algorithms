@@ -374,6 +374,9 @@ namespace DataStructures.Graphs
             _adjacencyMatrix.Populate(rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: EMPTY_EDGE_SLOT);
         }
     }
-
-    public class UndirectedWeightedDenseGraph<T> : UndirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T> { }
+    
+    public class UndirectedWeightedDenseGraph<T> : UndirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T>
+    {
+        public new WeightedEdge<T> GetEdge(T source, T destination) => base.GetEdge(source, destination).ToSimpleEdge();
+    }
 }

@@ -102,9 +102,19 @@ namespace DataStructures.Graphs
         }
 
 
+        IEnumerable<IEdge<T>> IGraph<T>.Edges
+        {
+            get { return this.Edges; }
+        }
+
         IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.Edges
         {
             get { return this.Edges; }
+        }
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
+        {
+            return this.IncomingEdges(vertex);
         }
 
         IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.IncomingEdges(T vertex)
@@ -112,11 +122,15 @@ namespace DataStructures.Graphs
             return this.IncomingEdges(vertex);
         }
 
-        IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.OutgoingEdges(T vertex)
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
         {
             return this.OutgoingEdges(vertex);
         }
 
+        IEnumerable<IEdge<T, Int64>> IGraph<T, Int64>.OutgoingEdges(T vertex)
+        {
+            return this.OutgoingEdges(vertex);
+        }
 
         /// <summary>
         /// An enumerable collection of all directed unweighted edges in graph.

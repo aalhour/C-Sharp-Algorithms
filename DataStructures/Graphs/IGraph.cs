@@ -124,6 +124,22 @@ namespace DataStructures.Graphs
         /// </summary>
         void Clear();
     }
+    
+    public interface IGraph<T> : IGraph<T, Int64> where T : IComparable<T>
+    {
+        /// <summary>
+        /// An enumerable collection of edges.
+        /// </summary>
+        new IEnumerable<IEdge<T>> Edges { get; }
 
-    public interface IGraph<T> : IGraph<T, Int64> where T : IComparable<T> { }
+        /// <summary>
+        /// Get all incoming edges from vertex
+        /// </summary>
+        new IEnumerable<IEdge<T>> IncomingEdges(T vertex);
+
+        /// <summary>
+        /// Get all outgoing edges from vertex
+        /// </summary>
+        new IEnumerable<IEdge<T>> OutgoingEdges(T vertex);
+    }
 }

@@ -63,11 +63,24 @@ namespace DataStructures.Graphs
         }
         #endregion
     }
-
-    public class WeightedEdge<TVertex> : WeightedEdge<TVertex, Int64> where TVertex : IComparable<TVertex>
+    
+    public class WeightedEdge<TVertex> : WeightedEdge<TVertex, Int64>, IEdge<TVertex> where TVertex : IComparable<TVertex>
     {
         public WeightedEdge(TVertex src, TVertex dst, long weight) : base(src, dst, weight)
         {
+        }
+
+        public WeightedEdge(WeightedEdge<TVertex, Int64> edge) : base(edge.Source, edge.Destination, edge.Weight)
+        {
+        }
+    }
+
+    public static class WeightedEdgeExtension
+    {
+        public static WeightedEdge<TVertex> ToSimpleEdge<TVertex>(this WeightedEdge<TVertex, Int64> edge)
+            where TVertex : IComparable<TVertex>
+        {
+            return new WeightedEdge<TVertex>(edge.Source, edge.Destination, edge.Weight);
         }
     }
 }
