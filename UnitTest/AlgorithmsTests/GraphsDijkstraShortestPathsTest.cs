@@ -44,7 +44,7 @@ namespace UnitTest.AlgorithmsTests
             Assert.True(status == true);
 
             // Get E
-            IEnumerable<WeightedEdge<string, long>> E = graph.Edges;
+            IEnumerable<WeightedEdge<string>> E = graph.Edges;
             Assert.True(graph.EdgesCount == 10, "Wrong Edges Count.");
 
             // PRINT THE GRAPH

@@ -13,7 +13,7 @@ namespace UnitTest.AlgorithmsTests
         public static void DoTest()
         {
             string[] V;
-            IEnumerable<WeightedEdge<string, long>> E;
+            IEnumerable<WeightedEdge<string>> E;
             DirectedWeightedSparseGraph<string> graph;
             BellmanFordShortestPaths<DirectedWeightedSparseGraph<string>, string> BellmanFord;
 
