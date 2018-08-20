@@ -205,7 +205,7 @@ namespace Algorithms.Graphs
                 {
                     var w = _nodesToIndices[edge.Key];
 
-                    if (_distances[v] + edge.Value < _distances[w])
+                    if (_distances[v] < _distances[w] - edge.Value)
                     {
                         Console.WriteLine("edge " + vertex + "-" + edge.Key + " is not relaxed");
                         return false;
