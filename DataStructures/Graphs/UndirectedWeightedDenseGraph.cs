@@ -375,5 +375,5 @@ namespace DataStructures.Graphs
         }
     }
 
-    public class UndirectedWeightedDenseGraph<T> : UndirectedWeightedDenseGraph<T, Int64> where T : IComparable<T> { }
+    public class UndirectedWeightedDenseGraph<T> : UndirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T> { }
 }

@@ -538,5 +538,5 @@ namespace DataStructures.Graphs
 
     }
 
-    public class DirectedWeightedSparseGraph<T> : DirectedWeightedSparseGraph<T, Int64> where T : IComparable<T> { }
+    public class DirectedWeightedSparseGraph<T> : DirectedWeightedSparseGraph<T, Int64>, IGraph<T>, IWeightedGraph<T> where T : IComparable<T> { }
 }
