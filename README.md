@@ -13,7 +13,6 @@ This is a C#.NET solution-project, and it contains three subprojects:
   1. [Algorithms](Algorithms): A class library project. Contains the Algorithms implementations.
   2. [Data Structures](DataStructures): A class library project. Contains the Data Structures implementations.
   3. [UnitTest](UnitTest): Unit-testing project for the Algorithms and Data Structures.
-  4. ~[Main Program](MainProgram): Contains tests for the data structures and algorithms projects.~ **DEPRECATED**
 
 #### Requirements:
   1. .NET Core >= 2.0
