@@ -371,7 +371,7 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public void Remove_ThrowExceptionWhenTryRemoveNonExistentNode()
         {
-            //TODO Create more specyfic exception type for this kind of errors.
+            //TODO Create more specyfic exception type for this kind of errors, with inheritance from ArgumentException.
             Assert.Throws<Exception>(() =>redBlackTree.Remove(999));
         }
     }

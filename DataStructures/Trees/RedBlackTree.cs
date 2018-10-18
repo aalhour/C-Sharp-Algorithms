@@ -465,7 +465,7 @@ namespace DataStructures.Trees
                 return false;
             }
 
-            // Node X moves to the original nodeToDelete position in the tree.
+            // X it's node that will become move to original nodeToDelete position in the tree.
             RedBlackTreeNode<TKey> x;
 
             if (nodeToDelete.HasOnlyRightChild)
@@ -480,7 +480,7 @@ namespace DataStructures.Trees
             }
             else
             {
-                // Node Y moves to the original node X position in the tree.
+                // Y it's node that will become move to original X position in the tree.
                 var y = (RedBlackTreeNode<TKey>)_findMinNode(nodeToDelete.RightChild);
                 x = y.RightChild;
 
@@ -523,7 +523,7 @@ namespace DataStructures.Trees
         /// <summary>
         ///     Insert one subtree in the place of the other in his parent.
         /// </summary>
-        /// <param name="replaced">Subtree replaced by <param name="replacement">.</param></param>
+        /// <param name="replaced">Subtree of node will be replaced by <param name="replacement">.</param></param>
         /// <param name="replacement">Subtree replaces <param name="replaced">.</param></param>
         private void Transplant(RedBlackTreeNode<TKey> replaced, RedBlackTreeNode<TKey> replacement)
         {

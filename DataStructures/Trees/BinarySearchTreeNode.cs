@@ -1,5 +1,4 @@
-﻿
-namespace DataStructures.Trees
+﻿namespace DataStructures.Trees
 {
     /// <summary>
     /// The binary search tree node.
