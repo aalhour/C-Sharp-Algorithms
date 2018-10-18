@@ -1,7 +1,6 @@
-﻿using System;
+﻿using DataStructures.Common;
+using System;
 using System.Collections.Generic;
-
-using DataStructures.Common;
 
 namespace DataStructures.Trees
 {
@@ -233,8 +232,8 @@ namespace DataStructures.Trees
                 // This is the simplest step: Basically recolor, and bubble up to see if more work is needed.
                 if (_safeCheckIsRed(_safeGetSibling(currentNode.Parent)))
                 {
-                    // If it has a sibling and it is red, then then it has a parent
-                    currentNode.Parent.Color = RedBlackTreeColors.Red;
+                    // If it has a sibling and it is black, then then it has a parent
+                    currentNode.Parent.Color = RedBlackTreeColors.Black;
 
                     // Color sibling of parent as black
                     _safeUpdateColor(_safeGetSibling(currentNode.Parent), RedBlackTreeColors.Black);
@@ -455,80 +454,97 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// The internal remove helper.
-        /// Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
-        /// This is called from the overriden _remove(BSTNode nodeToDelete) helper.
+        ///     The internal remove helper.
+        ///     Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
+        ///     This is called from the overriden _remove(BSTNode nodeToDelete) helper.
         /// </summary>
         protected bool _remove(RedBlackTreeNode<TKey> nodeToDelete)
         {
             if (nodeToDelete == null)
+            {
                 return false;
+            }
 
-            // Temporary nodes
-            RedBlackTreeNode<TKey> node1, node2;
+            // Node X moves to the original nodeToDelete position in the tree.
+            RedBlackTreeNode<TKey> x;
 
-            // If nodeToDelete has either one child or no children at all
-            if (!nodeToDelete.HasLeftChild || !nodeToDelete.HasRightChild)
+            if (nodeToDelete.HasOnlyRightChild)
             {
-                node1 = nodeToDelete;
+                x = nodeToDelete.RightChild;
+                Transplant(nodeToDelete, nodeToDelete.RightChild);
+            }
+            else if (nodeToDelete.HasOnlyLeftChild)
+            {
+                x = nodeToDelete.LeftChild;
+                Transplant(nodeToDelete, nodeToDelete.LeftChild);
             }
             else
             {
-                // nodeToDelete has two children
-                node1 = (RedBlackTreeNode<TKey>)base._findNextLarger(nodeToDelete);
-            }
+                // Node Y moves to the original node X position in the tree.
+                var y = (RedBlackTreeNode<TKey>)_findMinNode(nodeToDelete.RightChild);
+                x = y.RightChild;
 
-            // Left child case
-            if (node1.HasLeftChild)
-            {
-                node2 = node1.LeftChild;
-            }
-            else
-            {
-                node2 = node1.RightChild;
-            }
-
-            // If node2 is not null, copy parent references
-            if (node2 != null)
-                node2.Parent = node1.Parent;
-
-            if (node1.Parent != null)
-            {
-                if (node1.IsLeftChild)
+                if (y.Parent == nodeToDelete)
                 {
-                    node1.Parent.LeftChild = node2;
+                    if (x != null)
+                    {
+                        x.Parent = y;
+                    }
                 }
                 else
                 {
-                    node1.Parent.RightChild = node2;
+                    Transplant(y, y.RightChild);
+                    y.RightChild = nodeToDelete.RightChild;
+                    y.RightChild.Parent = y;
+                }
+
+                Transplant(nodeToDelete, y);
+                y.LeftChild = nodeToDelete.LeftChild;
+                y.LeftChild.Parent = y;
+                y.Color = nodeToDelete.Color;
+
+                if (Root == nodeToDelete)
+                {
+                    Root = y;
+                    Root.Parent = null;
                 }
             }
-            else
+
+            if (nodeToDelete.Color == RedBlackTreeColors.Black)
             {
-                Root = node2;
-                Root.Parent = null;
+                _adjustTreeAfterRemoval(x);
             }
 
-            // Swap values
-            if (!node1.IsEqualTo(nodeToDelete))
-            {
-                nodeToDelete.Value = node1.Value;
-            }
-
-            // Adjust the Red-Black Tree rules
-            if (node1.Color == RedBlackTreeColors.Black && node2 != null)
-            {
-                _adjustTreeAfterRemoval(node2);
-                Root.Color = RedBlackTreeColors.Black;
-            }
-
-            // Decrement the count
             base._count--;
 
             return true;
         }
 
+        /// <summary>
+        ///     Insert one subtree in the place of the other in his parent.
+        /// </summary>
+        /// <param name="replaced">Subtree replaced by <param name="replacement">.</param></param>
+        /// <param name="replacement">Subtree replaces <param name="replaced">.</param></param>
+        private void Transplant(RedBlackTreeNode<TKey> replaced, RedBlackTreeNode<TKey> replacement)
+        {
+            if (replaced.Parent == null)
+            {
+                this.Root = replacement;
+            }
+            else if (replaced == replaced.Parent.LeftChild)
+            {
+                replaced.Parent.LeftChild = replacement;
+            }
+            else
+            {
+                replaced.Parent.RightChild = replacement;
+            }
 
+            if (replacement != null)
+            {
+                replacement.Parent = replaced.Parent;
+            }
+        }
         /*************************************************************************************************/
 
 

@@ -62,12 +62,22 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
+        ///     Check if this node has only one child and whether it is the right child.
+        /// </summary>
+        public virtual bool HasOnlyRightChild => !this.HasLeftChild && this.HasRightChild;
+
+        /// <summary>
         /// Checks whether this node has right child.
         /// </summary>
         public virtual bool HasRightChild
         {
             get { return (this.RightChild != null); }
         }
+
+        /// <summary>
+        ///     Check if this node has only one child and whether it is the left child.
+        /// </summary>
+        public virtual bool HasOnlyLeftChild => !this.HasRightChild && this.HasLeftChild;
 
         /// <summary>
         /// Checks whether this node is the left child of it's parent.
