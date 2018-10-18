@@ -374,6 +374,25 @@ namespace UnitTest.DataStructuresTests
             //TODO Create more specyfic exception type for this kind of errors, with inheritance from ArgumentException.
             Assert.Throws<Exception>(() =>redBlackTree.Remove(999));
         }
+
+        [Fact]
+        public void Remove_OneAndOnlyTreeNode()
+        {
+            var oneElementTree = new RedBlackTree<int>();
+            Assert.Equal(0, oneElementTree.Count);
+            Assert.Null(oneElementTree.Root);
+            Assert.True(oneElementTree.IsEmpty);
+
+            oneElementTree.Insert(1);
+            Assert.Equal(1, oneElementTree.Count);
+            Assert.NotNull(oneElementTree.Root);
+            Assert.False(oneElementTree.IsEmpty);
+
+            oneElementTree.Remove(1);
+            Assert.Equal(0, oneElementTree.Count);
+            Assert.Null(oneElementTree.Root);
+            Assert.True(oneElementTree.IsEmpty);
+        }
     }
 
     /// <summary>

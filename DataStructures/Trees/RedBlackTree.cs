@@ -465,54 +465,61 @@ namespace DataStructures.Trees
                 return false;
             }
 
-            // X it's node that will become move to original nodeToDelete position in the tree.
-            RedBlackTreeNode<TKey> x;
-
-            if (nodeToDelete.HasOnlyRightChild)
+            if (!nodeToDelete.HasChildren)
             {
-                x = nodeToDelete.RightChild;
-                Transplant(nodeToDelete, nodeToDelete.RightChild);
-            }
-            else if (nodeToDelete.HasOnlyLeftChild)
-            {
-                x = nodeToDelete.LeftChild;
-                Transplant(nodeToDelete, nodeToDelete.LeftChild);
+                Root = null;
             }
             else
             {
-                // Y it's node that will become move to original X position in the tree.
-                var y = (RedBlackTreeNode<TKey>)_findMinNode(nodeToDelete.RightChild);
-                x = y.RightChild;
+                // X it's node that will become move to original nodeToDelete position in the tree.
+                RedBlackTreeNode<TKey> x;
 
-                if (y.Parent == nodeToDelete)
+                if (nodeToDelete.HasOnlyRightChild)
                 {
-                    if (x != null)
-                    {
-                        x.Parent = y;
-                    }
+                    x = nodeToDelete.RightChild;
+                    Transplant(nodeToDelete, nodeToDelete.RightChild);
+                }
+                else if (nodeToDelete.HasOnlyLeftChild)
+                {
+                    x = nodeToDelete.LeftChild;
+                    Transplant(nodeToDelete, nodeToDelete.LeftChild);
                 }
                 else
                 {
-                    Transplant(y, y.RightChild);
-                    y.RightChild = nodeToDelete.RightChild;
-                    y.RightChild.Parent = y;
+                    // Y it's node that will become move to original X position in the tree.
+                    var y = (RedBlackTreeNode<TKey>) _findMinNode(nodeToDelete.RightChild);
+                    x = y.RightChild;
+
+                    if (y.Parent == nodeToDelete)
+                    {
+                        if (x != null)
+                        {
+                            x.Parent = y;
+                        }
+                    }
+                    else
+                    {
+                        Transplant(y, y.RightChild);
+                        y.RightChild = nodeToDelete.RightChild;
+                        y.RightChild.Parent = y;
+                    }
+
+                    Transplant(nodeToDelete, y);
+                    y.LeftChild = nodeToDelete.LeftChild;
+                    y.LeftChild.Parent = y;
+                    y.Color = nodeToDelete.Color;
+
+                    if (Root == nodeToDelete)
+                    {
+                        Root = y;
+                        Root.Parent = null;
+                    }
                 }
 
-                Transplant(nodeToDelete, y);
-                y.LeftChild = nodeToDelete.LeftChild;
-                y.LeftChild.Parent = y;
-                y.Color = nodeToDelete.Color;
-
-                if (Root == nodeToDelete)
+                if (nodeToDelete.Color == RedBlackTreeColors.Black)
                 {
-                    Root = y;
-                    Root.Parent = null;
+                    _adjustTreeAfterRemoval(x);
                 }
-            }
-
-            if (nodeToDelete.Color == RedBlackTreeColors.Black)
-            {
-                _adjustTreeAfterRemoval(x);
             }
 
             base._count--;
