@@ -530,6 +530,6 @@ namespace UnitTest.DataStructuresTests
     /// <summary>
     ///     Exception class throw when any of red black tree rule is violation. Only for unit tests.
     /// </summary>
-    internal class RedBlackTreeViolationRuleException : ArgumentException
+    internal class RedBlackTreeViolationRuleException : Exception
     { }
 }
