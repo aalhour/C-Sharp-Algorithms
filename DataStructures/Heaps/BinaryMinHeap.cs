@@ -46,6 +46,20 @@ namespace DataStructures.Heaps
         }
 
         /// <summary>
+        /// Private Method. Used to restore heap condition after insertion
+        /// </summary>
+        private void _siftUp(int nodeIndex)
+        {
+            int parent = (nodeIndex - 1) / 2;
+            while (_heapComparer.Compare(_collection[nodeIndex], _collection[parent]) < 0)
+            {
+                _collection.Swap(parent, nodeIndex);
+                nodeIndex = parent;
+                parent = (nodeIndex - 1) / 2;
+            }
+        }
+
+        /// <summary>
         /// Private Method. Used in Building a Min Heap.
         /// </summary>
         /// <typeparam name="T">Type of Heap elements</typeparam>
@@ -151,14 +165,10 @@ namespace DataStructures.Heaps
         /// <param name="heapKey">Heap key.</param>
         public void Add(T heapKey)
         {
-            if (IsEmpty)
+            _collection.Add(heapKey);
+            if (!IsEmpty)
             {
-                _collection.Add(heapKey);
-            }
-            else
-            {
-                _collection.Add(heapKey);
-                _buildMinHeap();
+                _siftUp(_collection.Count - 1);
             }
         }
 

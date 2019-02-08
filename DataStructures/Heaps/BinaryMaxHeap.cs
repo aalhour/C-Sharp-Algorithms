@@ -45,6 +45,20 @@ namespace DataStructures.Heaps
         }
 
         /// <summary>
+        /// Private Method. Used to restore heap condition after insertion
+        /// </summary>
+        private void _siftUp(int nodeIndex)
+        {
+            int parent = (nodeIndex - 1) / 2;
+            while (_heapComparer.Compare(_collection[nodeIndex], _collection[parent]) > 0)
+            {
+                _collection.Swap(parent, nodeIndex);
+                nodeIndex = parent;
+                parent = (nodeIndex - 1) / 2;
+            }
+        }
+
+        /// <summary>
         /// Private Method. Used in Building a Max Heap.
         /// </summary>
         private void _maxHeapify(int nodeIndex, int lastIndex)
@@ -144,14 +158,10 @@ namespace DataStructures.Heaps
         /// </summary>
         public void Add(T heapKey)
         {
-            if (IsEmpty)
+            _collection.Add(heapKey);
+            if (!IsEmpty)
             {
-                _collection.Add(heapKey);
-            }
-            else
-            {
-                _collection.Add(heapKey);
-                _buildMaxHeap();
+                _siftUp(_collection.Count - 1);
             }
         }
 
