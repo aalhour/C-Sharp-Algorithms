@@ -124,11 +124,10 @@ namespace DataStructures.Heaps
 
                 _collection[index] = value;
 
-                if (_heapComparer.Compare(_collection[index], _collection[0]) >= 0) // greater than or equal to max
-                {
-                    _collection.Swap(0, index);
-                    _buildMaxHeap();
-                }
+                if (index != 0 && _heapComparer.Compare(_collection[index], _collection[(index - 1) / 2]) > 0) // greater than or equal to max
+                    _siftUp(index);
+                else
+                    _maxHeapify(index, _collection.Count - 1);
             }
         }
 

@@ -129,11 +129,10 @@ namespace DataStructures.Heaps
 
                 _collection[index] = value;
 
-                if (_heapComparer.Compare(_collection[index], _collection[0]) <= 0) // less than or equal to min
-                {
-                    _collection.Swap(0, index);
-                    _buildMinHeap();
-                }
+                if (index != 0 && _heapComparer.Compare(_collection[index], _collection[(index - 1) / 2]) < 0) // less than or equal to min
+                    _siftUp(index);
+                else
+                    _minHeapify(index, _collection.Count - 1);
             }
         }
 
