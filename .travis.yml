@@ -1,10 +1,9 @@
 language: csharp
-solution: C-Sharp-Algorithms.sln
-dotnet: 2.0.3
 mono: none
-dist: trusty
+dotnet: 2.1.502
+solution: C-Sharp-Algorithms.sln
 install:
   - dotnet restore
 script:
-  - dotnet build
+  - dotnet restore
   - dotnet test UnitTest/UnitTest.csproj
