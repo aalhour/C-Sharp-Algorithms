@@ -2,13 +2,14 @@
 using DataStructures.Trees;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-    public class BinaryTreeRecursiveWalkerTests
+    public static class BinaryTreeRecursiveWalkerTests
     {
-        // Construct a Simple Binary Search Tree 
+        // Construct a Simple Binary Search Tree
         private static readonly BSTNode<int> Root = new BSTNode<int>(10)
         {
             LeftChild = new BSTNode<int>(5)
@@ -38,8 +39,14 @@ namespace UnitTest.AlgorithmsTests
 
             // Assert the fact that adding items PRE-ORDER will result in [3, 5, 7, 10, 13, 15, 17]
             BinaryTreeRecursiveWalker.ForEach(Root, addToList, preOrder);
-            Assert.True(list.ToArray() == new[] { 3, 5, 7, 10, 13, 15 },
-                "Wrong traversal, expected InOrder enumeration of tree!");
+            var expectedArray = new[] { 10, 5, 3, 7, 15, 13, 17 };
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] != expectedArray[i])
+                {
+                    throw new InvalidOperationException("Wrong traversal, expected PreOrder enumeration of tree!");
+                }
+            }
         }
 
         [Fact]
@@ -55,8 +62,15 @@ namespace UnitTest.AlgorithmsTests
 
             // Assert the fact that adding items IN-ORDER will result in [10, 5, 3, 7, 15, 13, 17]
             BinaryTreeRecursiveWalker.ForEach(Root, addToList, inOrder);
-            Assert.True(list.ToArray() == new[] { 10, 5, 3, 7, 15, 13, 17 },
-                "Wrong traversal, expected InOrder enumeration of tree!");
+
+            var expectedArray = new[] { 3, 5, 7, 10, 13, 15, 17 };
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] != expectedArray[i])
+                {
+                    throw new InvalidOperationException("Wrong traversal, expected InOrder enumeration of tree!");
+                }
+            }
         }
 
         [Fact]
@@ -72,7 +86,7 @@ namespace UnitTest.AlgorithmsTests
 
             // Assert the fact that adding items POST-ORDER will result in [3, 7, 5, 13, 17, 15, 10]
             BinaryTreeRecursiveWalker.ForEach(Root, addToList, postOrder);
-            Assert.True(list.ToArray() == new[] { 3, 7, 5, 13, 17, 15, 10 },
+            Assert.True(list.SequenceEqual(new[] { 3, 7, 5, 13, 17, 15, 10 }),
                 "Wrong traversal, expected InOrder enumeration of tree!");
         }
 

@@ -1,9 +1,9 @@
-﻿using DataStructures.Trees;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using DataStructures.Trees;
 using Xunit;
 
-namespace C_Sharp_Algorithms
+namespace UnitTest.DataStructuresTests
 {
     public static class BinarySearchTreeTest
     {

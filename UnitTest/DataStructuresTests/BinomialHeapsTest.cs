@@ -1,7 +1,7 @@
 ﻿using DataStructures.Heaps;
 using Xunit;
 
-namespace C_Sharp_Algorithms.DataStructuresTests
+namespace UnitTest.DataStructuresTests
 {
     public static class BinomialHeapsTest
     {
