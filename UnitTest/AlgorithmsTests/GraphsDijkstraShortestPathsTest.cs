@@ -11,23 +11,18 @@ namespace UnitTest.AlgorithmsTests
         [Fact]
         public static void DoTest()
         {
-            string[] V;
-            IEnumerable<WeightedEdge<string>> E;
-            DirectedWeightedSparseGraph<string> graph;
-            DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string> dijkstra;
-
             // Init graph object
-            graph = new DirectedWeightedSparseGraph<string>();
+            DirectedWeightedSparseGraph<string> graph = new DirectedWeightedSparseGraph<string>();
 
             // Init V
-            V = new string[6] { "r", "s", "t", "x", "y", "z" };
+            string[] V = new string[6] { "r", "s", "t", "x", "y", "z" };
 
             // Insert V
             graph.AddVertices(V);
             Assert.True(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
 
             // Insert E
-            var status = graph.AddEdge("r", "s", 7);
+            bool status = graph.AddEdge("r", "s", 7);
             Assert.True(status == true);
             status = graph.AddEdge("r", "t", 6);
             Assert.True(status == true);
@@ -49,7 +44,7 @@ namespace UnitTest.AlgorithmsTests
             Assert.True(status == true);
 
             // Get E
-            E = graph.Edges;
+            IEnumerable<WeightedEdge<string>> E = graph.Edges;
             Assert.True(graph.EdgesCount == 10, "Wrong Edges Count.");
 
             // PRINT THE GRAPH
@@ -57,22 +52,22 @@ namespace UnitTest.AlgorithmsTests
 
             // Graph representation:
             // Init DIJKSTRA
-            dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
+            DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string> dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
 
             Assert.True(dijkstra.HasPathTo("r") == false);
             Assert.True(dijkstra.HasPathTo("z") == true);
 
             // Get shortest path to Z
-            var pathToZ = string.Empty;
-            foreach (var node in dijkstra.ShortestPathTo("z"))
+            string pathToZ = string.Empty;
+            foreach (string node in dijkstra.ShortestPathTo("z"))
             {
                 pathToZ = String.Format("{0}({1}) -> ", pathToZ, node);
             }
 
             pathToZ = pathToZ.TrimEnd(new char[] { ' ', '-', '>' });
 
-            var pathToY = string.Empty;
-            foreach (var node in dijkstra.ShortestPathTo("y"))
+            string pathToY = string.Empty;
+            foreach (string node in dijkstra.ShortestPathTo("y"))
             {
                 pathToY = String.Format("{0}({1}) -> ", pathToY, node);
             }
@@ -114,24 +109,24 @@ namespace UnitTest.AlgorithmsTests
             // Init DIJKSTRA
             dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "A");
 
-            var pathToD = string.Empty;
-            foreach (var node in dijkstra.ShortestPathTo("D"))
+            string pathToD = string.Empty;
+            foreach (string node in dijkstra.ShortestPathTo("D"))
             {
                 pathToD = String.Format("{0}({1}) -> ", pathToD, node);
             }
 
             pathToD = pathToD.TrimEnd(new char[] { ' ', '-', '>' });
 
-            var vertices = graph.Vertices;
-            var dijkstraAllPairs = new DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph);
+            IEnumerable<string> vertices = graph.Vertices;
+            DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string> dijkstraAllPairs = new DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph);
 
             // Dijkstra All Pairs Shortest Paths:
-            foreach (var source in vertices)
+            foreach (string source in vertices)
             {
-                foreach (var destination in vertices)
+                foreach (string destination in vertices)
                 {
-                    var shortestPath = string.Empty;
-                    foreach (var node in dijkstraAllPairs.ShortestPath(source, destination))
+                    string shortestPath = string.Empty;
+                    foreach (string node in dijkstraAllPairs.ShortestPath(source, destination))
                         shortestPath = String.Format("{0}({1}) -> ", shortestPath, node);
 
                     shortestPath = shortestPath.TrimEnd(new char[] { ' ', '-', '>' });
