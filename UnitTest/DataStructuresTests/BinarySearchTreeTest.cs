@@ -128,7 +128,6 @@ namespace UnitTest.DataStructuresTests
             {
                 // Insert unique values
                 binarySearchTree.Insert(values);
-                inserting_duplicates_passed = true;
             }
             catch
             {
