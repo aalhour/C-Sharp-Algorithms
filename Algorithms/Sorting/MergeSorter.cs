@@ -11,37 +11,27 @@ namespace Algorithms.Sorting
         {
             comparer = comparer ?? Comparer<T>.Default;
 
-            return InternalMergeSort(collection, 0, collection.Count - 1, comparer);
+            return InternalMergeSort(collection, comparer);
         }
 
 
         //
         // Private static method
         // Implements the recursive merge-sort algorithm
-        private static List<T> InternalMergeSort<T>(List<T> collection, int startIndex, int endIndex, Comparer<T> comparer)
+        private static List<T> InternalMergeSort<T>(List<T> collection, Comparer<T> comparer)
         {
             if (collection.Count < 2)
             {
                 return collection;
             }
 
-            if (collection.Count == 2)
-            {
-                if (comparer.Compare(collection[endIndex], collection[startIndex]) < 0)
-                {
-                    collection.Swap(endIndex, startIndex);
-                }
-
-                return collection;
-            }
-
             int midIndex = collection.Count / 2;
 
-            var leftCollection = collection.GetRange(startIndex, midIndex);
-            var rightCollection = collection.GetRange(midIndex, (endIndex - midIndex) + 1);
+            var leftCollection = collection.GetRange(0, midIndex);
+            var rightCollection = collection.GetRange(midIndex, collection.Count - midIndex);
 
-            leftCollection = InternalMergeSort<T>(leftCollection, 0, leftCollection.Count - 1, comparer);
-            rightCollection = InternalMergeSort<T>(rightCollection, 0, rightCollection.Count - 1, comparer);
+            leftCollection = InternalMergeSort<T>(leftCollection, comparer);
+            rightCollection = InternalMergeSort<T>(rightCollection, comparer);
 
             return InternalMerge<T>(leftCollection, rightCollection, comparer);
         }
@@ -59,42 +49,31 @@ namespace Algorithms.Sorting
 
             List<T> result = new List<T>(length);
 
-            for (index = 0; index < length; ++index)
+            for (index = 0; right < rightCollection.Count && left < leftCollection.Count; ++index)
             {
-                if (right < rightCollection.Count && comparer.Compare(rightCollection[right], leftCollection[left]) <= 0) // rightElement <= leftElement
+                if (comparer.Compare(rightCollection[right], leftCollection[left]) <= 0) // rightElement <= leftElement
                 {
                     //resultArray.Add(rightCollection[right]);
-                    result.Insert(index, rightCollection[right]);
-                    right++;
+                    result.Insert(index, rightCollection[right++]);
                 }
                 else
                 {
                     //result.Add(leftCollection[left]);
-                    result.Insert(index, leftCollection[left]);
-                    left++;
-
-                    if (left == leftCollection.Count)
-                        break;
+                    result.Insert(index, leftCollection[left++]);
                 }
             }
 
             //
-            // Either one might have elements left
-            int rIndex = index + 1;
-            int lIndex = index + 1;
-
+            // At most one of left and right might still have elements left
+            
             while (right < rightCollection.Count)
             {
-                result.Insert(rIndex, rightCollection[right]);
-                rIndex++;
-                right++;
+                result.Insert(index++, rightCollection[right++]);
             }
 
             while (left < leftCollection.Count)
             {
-                result.Insert(lIndex, leftCollection[left]);
-                lIndex++;
-                left++;
+                result.Insert(index++, leftCollection[left++]);
             }
 
             return result;
