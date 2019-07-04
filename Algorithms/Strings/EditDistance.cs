@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using Algorithms.Common;
 
 namespace Algorithms.Strings
 {
@@ -18,7 +16,7 @@ namespace Algorithms.Strings
             // Validate parameters and TCost.
             if (source == null || destination == null || distances == null)
                 throw new ArgumentNullException("Some of the parameters are null.");
-            else if (source == destination)
+            if (source == destination)
                 return 0;
 
             // Dynamic Programming 3D Table
@@ -63,15 +61,12 @@ namespace Algorithms.Strings
             // Validate parameters and TCost.
             if (source == null || destination == null || distances == null)
                 throw new ArgumentNullException("Some of the parameters are null.");
-            else
-            {
-                var longDistance = new EditDistanceCostsMap<long>(
-                    insertionCost: Convert.ToInt64(distances.InsertionCost),
-                    deletionCost: Convert.ToInt64(distances.DeletionCost),
-                    substitutionCost: Convert.ToInt64(distances.InsertionCost));
+            var longDistance = new EditDistanceCostsMap<long>(
+                insertionCost: Convert.ToInt64(distances.InsertionCost),
+                deletionCost: Convert.ToInt64(distances.DeletionCost),
+                substitutionCost: Convert.ToInt64(distances.InsertionCost));
 
-                return Convert.ToInt32(EditDistance.GetMinDistance(source, destination, longDistance));
-            }
+            return Convert.ToInt32(EditDistance.GetMinDistance(source, destination, longDistance));
         }
 
         /// <summary>
@@ -82,15 +77,12 @@ namespace Algorithms.Strings
             // Validate parameters and TCost.
             if (source == null || destination == null || distances == null)
                 throw new ArgumentNullException("Some of the parameters are null.");
-            else
-            {
-                var longDistance = new EditDistanceCostsMap<long>(
-                    insertionCost: Convert.ToInt64(distances.InsertionCost),
-                    deletionCost: Convert.ToInt64(distances.DeletionCost),
-                    substitutionCost: Convert.ToInt64(distances.InsertionCost));
+            var longDistance = new EditDistanceCostsMap<long>(
+                insertionCost: Convert.ToInt64(distances.InsertionCost),
+                deletionCost: Convert.ToInt64(distances.DeletionCost),
+                substitutionCost: Convert.ToInt64(distances.InsertionCost));
 
-                return Convert.ToInt16(EditDistance.GetMinDistance(source, destination, longDistance));
-            }
+            return Convert.ToInt16(EditDistance.GetMinDistance(source, destination, longDistance));
         }
     }
 

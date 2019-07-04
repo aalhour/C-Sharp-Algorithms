@@ -49,7 +49,8 @@ namespace DataStructures.Lists
             {
                 throw new ArgumentOutOfRangeException();
             }
-            else if (capacity == 0)
+
+            if (capacity == 0)
             {
                 _collection = _emptyArray;
             }
@@ -167,10 +168,8 @@ namespace DataStructures.Lists
                 {
                     throw new IndexOutOfRangeException("List is empty.");
                 }
-                else
-                {
-                    return _collection[0];
-                }
+
+                return _collection[0];
             }
         }
 
@@ -187,10 +186,8 @@ namespace DataStructures.Lists
                 {
                     throw new IndexOutOfRangeException("List is empty.");
                 }
-                else
-                {
-                    return _collection[Count - 1];
-                }
+
+                return _collection[Count - 1];
             }
         }
 

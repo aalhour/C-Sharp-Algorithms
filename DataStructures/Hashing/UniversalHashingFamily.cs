@@ -9,10 +9,7 @@
  */
 
 using System;
-
 using DataStructures.Common;
-using DataStructures.Lists;
-using DataStructures.Hashing;
 
 namespace DataStructures.Hashing
 {

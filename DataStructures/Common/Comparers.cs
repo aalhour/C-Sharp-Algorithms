@@ -1,6 +1,4 @@
 ﻿using System;
-
-using DataStructures.Lists;
 using DataStructures.Trees;
 
 namespace DataStructures.Common
@@ -62,8 +60,7 @@ namespace DataStructures.Common
         {
             if (first == null || second == null)
                 return false;
-            else
-                return true;
+            return true;
         }
 
         public static bool IsEqualTo<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>

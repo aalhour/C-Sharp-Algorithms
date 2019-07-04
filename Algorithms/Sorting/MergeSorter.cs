@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using Algorithms.Common;
 
 namespace Algorithms.Sorting
@@ -26,7 +24,8 @@ namespace Algorithms.Sorting
             {
                 return collection;
             }
-            else if (collection.Count == 2)
+
+            if (collection.Count == 2)
             {
                 if (comparer.Compare(collection[endIndex], collection[startIndex]) < 0)
                 {
@@ -35,18 +34,16 @@ namespace Algorithms.Sorting
 
                 return collection;
             }
-            else
-            {
-                int midIndex = collection.Count / 2;
 
-                var leftCollection = collection.GetRange(startIndex, midIndex);
-                var rightCollection = collection.GetRange(midIndex, (endIndex - midIndex) + 1);
+            int midIndex = collection.Count / 2;
 
-                leftCollection = InternalMergeSort<T>(leftCollection, 0, leftCollection.Count - 1, comparer);
-                rightCollection = InternalMergeSort<T>(rightCollection, 0, rightCollection.Count - 1, comparer);
+            var leftCollection = collection.GetRange(startIndex, midIndex);
+            var rightCollection = collection.GetRange(midIndex, (endIndex - midIndex) + 1);
 
-                return InternalMerge<T>(leftCollection, rightCollection, comparer);
-            }
+            leftCollection = InternalMergeSort<T>(leftCollection, 0, leftCollection.Count - 1, comparer);
+            rightCollection = InternalMergeSort<T>(rightCollection, 0, rightCollection.Count - 1, comparer);
+
+            return InternalMerge<T>(leftCollection, rightCollection, comparer);
         }
 
 

@@ -1,6 +1,10 @@
 language: csharp
 solution: C-Sharp-Algorithms.sln
+dotnet: 2.0.3
+mono: none
+dist: trusty
 install:
-  - nuget restore C-Sharp-Algorithms.sln
-  - nuget install NUnit -Version 2.6.2
-  - nuget install NUnit.Runners -Version 2.6.4
+  - dotnet restore
+script:
+  - dotnet build
+  - dotnet test UnitTest/UnitTest.csproj

@@ -8,8 +8,6 @@
 
 using System;
 using System.Collections.Generic;
-
-using DataStructures.Lists;
 using DataStructures.Common;
 
 namespace DataStructures.Lists
@@ -100,6 +98,7 @@ namespace DataStructures.Lists
         {
             get
             {
+                // TODO:
                 throw new NotImplementedException();
             }
         }
@@ -231,11 +230,9 @@ namespace DataStructures.Lists
                 result = current.Value;
                 return true;
             }
-            else
-            {
-                result = default(T);
-                return false;
-            }
+
+            result = default(T);
+            return false;
         }
 
         /// <summary>
@@ -247,7 +244,7 @@ namespace DataStructures.Lists
 
             if (!TryDeleteMin(out min))
             {
-                throw new ApplicationException("SkipList is empty.");
+                throw new InvalidOperationException("SkipList is empty.");
             }
 
             return min;
@@ -276,7 +273,7 @@ namespace DataStructures.Lists
 
             if (!TryPeek(out peek))
             {
-                throw new ApplicationException("SkipList is empty.");
+                throw new InvalidOperationException("SkipList is empty.");
             }
 
             return peek;
@@ -339,7 +336,7 @@ namespace DataStructures.Lists
             // Validate the array and arrayIndex
             if (array == null)
                 throw new ArgumentNullException();
-            else if (array.Length == 0 || arrayIndex >= array.Length || arrayIndex < 0)
+            if (array.Length == 0 || arrayIndex >= array.Length || arrayIndex < 0)
                 throw new IndexOutOfRangeException();
 
             // Get enumerator

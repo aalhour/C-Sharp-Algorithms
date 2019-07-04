@@ -102,9 +102,8 @@ namespace DataStructures.Graphs
                             // Undirected edges should be checked once
                             if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
                                 continue;
-                            else
-                                seen.Add(outgoingEdge);
-                            
+                            seen.Add(outgoingEdge);
+
                             yield return (new WeightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value, weight));
                         }
                     }
@@ -184,7 +183,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (_doesEdgeExist(srcIndex, dstIndex))
+            if (_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             // Use only one triangle of the matrix
@@ -208,7 +207,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             // Reset it both ways
@@ -237,7 +236,7 @@ namespace DataStructures.Graphs
             // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
                 return false;
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
             // Edge exists, use only one triangle of the matrix
@@ -300,7 +299,7 @@ namespace DataStructures.Graphs
             // Check the existence of vertices and the undirected edge
             if (srcIndex == -1 || dstIndex == -1)
                 throw new Exception("One of the vertices or both of them doesn't exist.");
-            else if (!_doesEdgeExist(srcIndex, dstIndex))
+            if (!_doesEdgeExist(srcIndex, dstIndex))
                 throw new Exception("Edge doesn't exist.");
 
             return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));

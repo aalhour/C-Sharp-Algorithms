@@ -92,36 +92,35 @@ namespace DataStructures.Lists
             {
                 return First;
             }
-            else if (index == (Count - 1))
+
+            if (index == (Count - 1))
             {
                 return Last;
             }
+
+            DLinkedListNode<T> currentNode = null;
+
+            // Decide from which reference to traverse the list, and then move the currentNode reference to the index
+            // If index > half then traverse it from the end (_lastNode reference)
+            // Otherwise, traverse it from the beginning (_firstNode refrence)
+            if (index > (Count / 2))
+            {
+                currentNode = this._lastNode;
+                for (int i = (Count - 1); i > index; --i)
+                {
+                    currentNode = currentNode.Previous;
+                }
+            }
             else
             {
-                DLinkedListNode<T> currentNode = null;
-
-                // Decide from which reference to traverse the list, and then move the currentNode reference to the index
-                // If index > half then traverse it from the end (_lastNode reference)
-                // Otherwise, traverse it from the beginning (_firstNode refrence)
-                if (index > (Count / 2))
+                currentNode = this._firstNode;
+                for (int i = 0; i < index; ++i)
                 {
-                    currentNode = this._lastNode;
-                    for (int i = (Count - 1); i > index; --i)
-                    {
-                        currentNode = currentNode.Previous;
-                    }
+                    currentNode = currentNode.Next;
                 }
-                else
-                {
-                    currentNode = this._firstNode;
-                    for (int i = 0; i < index; ++i)
-                    {
-                        currentNode = currentNode.Next;
-                    }
-                }
-
-                return currentNode.Data;
             }
+
+            return currentNode.Data;
         }
 
         /// <summary>
@@ -201,10 +200,8 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else
-                {
-                    return _firstNode.Data;
-                }
+
+                return _firstNode.Data;
             }
         }
 
@@ -219,7 +216,8 @@ namespace DataStructures.Lists
                 {
                     throw new Exception("Empty list.");
                 }
-                else if (_lastNode == null)
+
+                if (_lastNode == null)
                 {
                     var currentNode = _firstNode;
                     while (currentNode.Next != null)
@@ -229,10 +227,8 @@ namespace DataStructures.Lists
                     _lastNode = currentNode;
                     return currentNode.Data;
                 }
-                else
-                {
-                    return _lastNode.Data;
-                }
+
+                return _lastNode.Data;
             }
         }
 
@@ -688,7 +684,8 @@ namespace DataStructures.Lists
             {
                 return newList;
             }
-            else if (index < 0 || index > Count)
+
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException();
             }

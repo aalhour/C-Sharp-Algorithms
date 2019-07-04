@@ -1,122 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{464251A0-3667-42BA-A3D5-0581D65C442B}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataStructures</RootNamespace>
-    <AssemblyName>DataStrcutres</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>    
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="xunit" Version="2.4.0" />
   </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="Dictionaries\CuckooHashTable.cs" />
-    <Compile Include="Dictionaries\OpenScatterHashTable.cs" />
-    <Compile Include="Graphs\DirectedSparseGraph.cs" />
-    <Compile Include="Graphs\DirectedWeightedSparseGraph.cs" />
-    <Compile Include="Graphs\UndirectedWeightedDenseGraph.cs" />
-    <Compile Include="Graphs\UndirectedWeightedSparseGraph.cs" />
-    <Compile Include="Graphs\WeightedEdge.cs" />
-    <Compile Include="Hashing\PrimeHashingFamily.cs" />
-    <Compile Include="Hashing\UniversalHashingFamily.cs" />
-    <Compile Include="Heaps\BinomialMinHeap.cs" />
-    <Compile Include="Lists\SkipList.cs" />
-    <Compile Include="Lists\SkipListNode.cs" />
-    <Compile Include="Trees\AugmentedBinarySearchTree.cs" />
-    <Compile Include="Trees\AVLTree.cs" />
-    <Compile Include="Trees\AVLTreeNode.cs" />
-    <Compile Include="Trees\BinarySearchTree.cs" />
-    <Compile Include="Trees\BinarySearchTreeNode.cs" />
-    <Compile Include="Trees\IBinarySearchTree.cs" />
-    <Compile Include="Heaps\IMaxHeap.cs" />
-    <Compile Include="Heaps\IMinHeap.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Lists\Stack.cs" />
-    <Compile Include="Lists\ArrayList.cs" />
-    <Compile Include="Lists\DLinkedList.cs" />
-    <Compile Include="Lists\SLinkedList.cs" />
-    <Compile Include="Lists\Queue.cs" />
-    <Compile Include="Heaps\BinaryMinHeap.cs" />
-    <Compile Include="Heaps\BinaryMaxHeap.cs" />
-    <Compile Include="Common\Helpers.cs" />
-    <Compile Include="Heaps\KeyedPriorityQueue.cs" />
-    <Compile Include="Heaps\MinPriorityQueue.cs" />
-    <Compile Include="Common\Comparers.cs" />
-    <Compile Include="Trees\RedBlackTree.cs" />
-    <Compile Include="Trees\RedBlackTreeNode.cs" />
-    <Compile Include="Trees\TreeDrawer.cs" />
-    <Compile Include="Dictionaries\ChainedHashTable.cs" />
-    <Compile Include="Lists\DLinkedList_KeyValue.cs" />
-    <Compile Include="Common\PrimesList.cs" />
-    <Compile Include="Graphs\UndirectedDenseGraph.cs" />
-    <Compile Include="Graphs\UndirectedSparseGraph.cs" />
-    <Compile Include="Graphs\IGraph.cs" />
-    <Compile Include="Graphs\DirectedDenseGraph.cs" />
-    <Compile Include="Graphs\DirectedWeightedDenseGraph.cs" />
-    <Compile Include="Graphs\IWeightedGraph.cs" />
-    <Compile Include="Graphs\CliqueGraph.cs" />
-    <Compile Include="Trees\Trie.cs" />
-    <Compile Include="Trees\TrieMap.cs" />
-    <Compile Include="Trees\TrieMapNode.cs" />
-    <Compile Include="Trees\TrieNode.cs" />
-    <Compile Include="Graphs\UnweightedEdge.cs" />
-    <Compile Include="Graphs\IEdge.cs" />
-    <Compile Include="SortedCollections\SortedList.cs" />
-    <Compile Include="SortedCollections\SortedDictionary.cs" />
-    <Compile Include="Trees\RedBlackTreeMap.cs" />
-    <Compile Include="Trees\RedBlackTreeMapNode.cs" />
-    <Compile Include="Trees\BinarySearchTreeMapNode.cs" />
-    <Compile Include="Trees\BinarySearchTreeMap.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <None Include="Data\PrimesDocument_10K.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Data\PrimesDocument_10K.txt">
+    <Content Include="Data\PrimesDocument_10K.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+
   <ItemGroup>
-    <Folder Include="SortedCollections\" />
+    <None Update="Data\PrimesDocument_10K.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

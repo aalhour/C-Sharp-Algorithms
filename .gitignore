@@ -188,4 +188,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-/.vs/C-Sharp-Algorithms/v16/Server/sqlite3
+.vs/
+.idea/

@@ -57,8 +57,7 @@ namespace DataStructures.Graphs
 
             if (!areNodesEqual)
                 return -1;
-            else
-                return Weight.CompareTo(other.Weight);
+            return Weight.CompareTo(other.Weight);
         }
         #endregion
     }

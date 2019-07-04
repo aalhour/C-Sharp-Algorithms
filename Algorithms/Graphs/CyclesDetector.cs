@@ -3,13 +3,9 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
-
 using Algorithms.Common;
 using DataStructures.Graphs;
-using DataStructures.Lists;
-
 
 namespace Algorithms.Graphs
 {
@@ -42,7 +38,7 @@ namespace Algorithms.Graphs
                         return true;
 
                     // If an adjacent is visited and NOT parent of current vertex, then there is a cycle.
-                    else if (parent != (object)null && !adjacent.IsEqualTo((T)parent))
+                    if (parent != (object)null && !adjacent.IsEqualTo((T)parent))
                         return true;
                 }
             }
@@ -76,7 +72,7 @@ namespace Algorithms.Graphs
                         return true;
 
                     // If an adjacent is visited and is on the recursion stack then there is a cycle.
-                    else if (recursionStack.Contains(adjacent))
+                    if (recursionStack.Contains(adjacent))
                         return true;
                 }
             }

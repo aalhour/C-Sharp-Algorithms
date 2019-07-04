@@ -234,7 +234,7 @@ namespace DataStructures.Heaps
             // Handle boundaries errors
             if (_heap.IsEmpty)
                 throw new ArgumentOutOfRangeException("Queue is empty.");
-            else if (!_keys.ContainsKey(key))
+            if (!_keys.ContainsKey(key))
                 throw new KeyNotFoundException();
 
             int i;

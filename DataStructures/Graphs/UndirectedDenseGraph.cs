@@ -149,9 +149,8 @@ namespace DataStructures.Graphs
 
                             if (seen.Contains(incomingEdge) || seen.Contains(outgoingEdge))
                                 continue;
-                            else
-                                seen.Add(outgoingEdge);
-                            
+                            seen.Add(outgoingEdge);
+
                             yield return new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value);
                         }
                     }
@@ -214,7 +213,7 @@ namespace DataStructures.Graphs
 
             if (indexOfFirst == -1 || indexOfSecond == -1)
                 return false;
-            else if (_doesEdgeExist(indexOfFirst, indexOfSecond))
+            if (_doesEdgeExist(indexOfFirst, indexOfSecond))
                 return false;
 
             _adjacencyMatrix[indexOfFirst, indexOfSecond] = true;
@@ -236,7 +235,7 @@ namespace DataStructures.Graphs
 
             if (indexOfFirst == -1 || indexOfSecond == -1)
                 return false;
-            else if (!_doesEdgeExist(indexOfFirst, indexOfSecond))
+            if (!_doesEdgeExist(indexOfFirst, indexOfSecond))
                 return false;
 
             _adjacencyMatrix[indexOfFirst, indexOfSecond] = false;
@@ -423,7 +422,7 @@ namespace DataStructures.Graphs
         {
             if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
             var stack = new Lists.Stack<T>(_verticesCount);
@@ -467,7 +466,7 @@ namespace DataStructures.Graphs
         {
             if (_verticesCount == 0)
                 return new ArrayList<T>();
-            else if (!HasVertex(source))
+            if (!HasVertex(source))
                 throw new Exception("The specified starting vertex doesn't exist.");
 
             var visited = new HashSet<T>();

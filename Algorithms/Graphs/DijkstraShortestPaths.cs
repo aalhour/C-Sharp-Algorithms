@@ -3,13 +3,11 @@
  * This class provides the same API as the BreadthFirstShortestPaths<T>.
  */
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
 using Algorithms.Common;
 using DataStructures.Graphs;
 using DataStructures.Heaps;
+using System;
+using System.Collections.Generic;
 
 namespace Algorithms.Graphs
 {
@@ -33,7 +31,7 @@ namespace Algorithms.Graphs
         private Dictionary<int, TVertex> _indicesToNodes;
 
         // A const that represent an infinite distance
-        private const Int64 Infinity = Int64.MaxValue;
+        private const long Infinity = long.MaxValue;
         private const int NilPredecessor = -1;
 
 
@@ -44,9 +42,14 @@ namespace Algorithms.Graphs
         public DijkstraShortestPaths(TGraph Graph, TVertex Source)
         {
             if (Graph == null)
+            {
                 throw new ArgumentNullException();
-            else if (!Graph.HasVertex(Source))
+            }
+
+            if (!Graph.HasVertex(Source))
+            {
                 throw new ArgumentException("The source vertex doesn't belong to graph.");
+            }
 
             // Init
             _initializeDataMembers(Graph);
@@ -55,9 +58,10 @@ namespace Algorithms.Graphs
             _dijkstra(Graph, Source);
 
             // check for the acyclic invariant
-            //if (!_checkOptimalityConditions(Graph, Source))
-            //    throw new Exception("Graph doesn't match optimality conditions.");
-            Debug.Assert(_checkOptimalityConditions(Graph, Source));
+            if (!_checkOptimalityConditions(Graph, Source))
+            {
+                throw new InvalidOperationException("Graph doesn't match optimality condition.");
+            }
         }
 
 
@@ -71,7 +75,7 @@ namespace Algorithms.Graphs
         {
             var minPQ = new MinPriorityQueue<TVertex, long>((uint)_verticesCount);
 
-            int srcIndex = _nodesToIndices[source];
+            var srcIndex = _nodesToIndices[source];
             _distances[srcIndex] = 0;
 
             minPQ.Enqueue(source, _distances[srcIndex]);
@@ -89,8 +93,10 @@ namespace Algorithms.Graphs
 
                     // calculate a new possible weighted path if the edge weight is less than infinity
                     var delta = Infinity;
-                    if (edge.Weight < Infinity && (Infinity - edge.Weight) > _distances[currentIndex])  // Handles overflow
+                    if (edge.Weight < Infinity && Infinity - edge.Weight > _distances[currentIndex])  // Handles overflow
+                    {
                         delta = _distances[currentIndex] + edge.Weight;
+                    }
 
                     // Relax the edge
                     // if check is true, a shorter path is found from current to adjacent
@@ -102,9 +108,13 @@ namespace Algorithms.Graphs
 
                         // decrease priority with a new distance if it exists; otherwise enqueque it
                         if (minPQ.Contains(edge.Destination))
+                        {
                             minPQ.UpdatePriority(edge.Destination, delta);
+                        }
                         else
+                        {
                             minPQ.Enqueue(edge.Destination, delta);
+                        }
                     }
                 }//end-foreach
             }//end-while
@@ -118,7 +128,7 @@ namespace Algorithms.Graphs
             _edgesCount = Graph.EdgesCount;
             _verticesCount = Graph.VerticesCount;
 
-            _distances = new Int64[_verticesCount];
+            _distances = new long[_verticesCount];
             _predecessors = new int[_verticesCount];
             _edgeTo = new WeightedEdge<TVertex>[_edgesCount];
 
@@ -126,11 +136,13 @@ namespace Algorithms.Graphs
             _indicesToNodes = new Dictionary<int, TVertex>();
 
             // Reset the information arrays
-            int i = 0;
+            var i = 0;
             foreach (var node in Graph.Vertices)
             {
                 if (i >= _verticesCount)
+                {
                     break;
+                }
 
                 _edgeTo[i] = null;
                 _distances[i] = Infinity;
@@ -151,7 +163,7 @@ namespace Algorithms.Graphs
         private bool _checkOptimalityConditions(TGraph graph, TVertex source)
         {
             // Get the source index (to be used with the information arrays).
-            int s = _nodesToIndices[source];
+            var s = _nodesToIndices[source];
 
             // check that edge weights are nonnegative
             foreach (var edge in graph.Edges)
@@ -170,10 +182,13 @@ namespace Algorithms.Graphs
                 return false;
             }
 
-            for (int v = 0; v < graph.VerticesCount; v++)
+            for (var v = 0; v < graph.VerticesCount; v++)
             {
                 if (v == s)
+                {
                     continue;
+                }
+
                 if (_predecessors[v] == NilPredecessor && _distances[v] != Infinity)
                 {
                     Console.WriteLine("distanceTo[] and edgeTo[] are inconsistent for at least one vertex.");
@@ -184,11 +199,11 @@ namespace Algorithms.Graphs
             // check that all edges e = v->w satisfy distTo[w] <= distTo[v] + e.weight()
             foreach (var vertex in graph.Vertices)
             {
-                int v = _nodesToIndices[vertex];
+                var v = _nodesToIndices[vertex];
 
                 foreach (var edge in graph.NeighboursMap(vertex))
                 {
-                    int w = _nodesToIndices[edge.Key];
+                    var w = _nodesToIndices[edge.Key];
 
                     if (_distances[v] + edge.Value < _distances[w])
                     {
@@ -201,18 +216,22 @@ namespace Algorithms.Graphs
             // check that all edges e = v->w on SPT satisfy distTo[w] == distTo[v] + e.weight()
             foreach (var vertex in graph.Vertices)
             {
-                int w = _nodesToIndices[vertex];
+                var w = _nodesToIndices[vertex];
 
                 if (_edgeTo[w] == null)
+                {
                     continue;
+                }
 
                 var edge = _edgeTo[w];
-                int v = _nodesToIndices[edge.Source];
+                var v = _nodesToIndices[edge.Source];
 
                 if (!vertex.IsEqualTo(edge.Destination))
+                {
                     return false;
+                }
 
-                if ((_distances[v] + edge.Weight) != _distances[w])
+                if (_distances[v] + edge.Weight != _distances[w])
                 {
                     Console.WriteLine("edge " + edge.Source + "-" + edge.Destination + " on shortest path not tight");
                     return false;
@@ -232,9 +251,11 @@ namespace Algorithms.Graphs
         public bool HasPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
+            {
                 throw new Exception("Graph doesn't have the specified vertex.");
+            }
 
-            int index = _nodesToIndices[destination];
+            var index = _nodesToIndices[destination];
             return _distances[index] != Infinity;
         }
 
@@ -244,9 +265,11 @@ namespace Algorithms.Graphs
         public long DistanceTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
+            {
                 throw new Exception("Graph doesn't have the specified vertex.");
+            }
 
-            int index = _nodesToIndices[destination];
+            var index = _nodesToIndices[destination];
             return _distances[index];
         }
 
@@ -256,16 +279,23 @@ namespace Algorithms.Graphs
         public IEnumerable<TVertex> ShortestPathTo(TVertex destination)
         {
             if (!_nodesToIndices.ContainsKey(destination))
+            {
                 throw new Exception("Graph doesn't have the specified vertex.");
-            else if (!HasPathTo(destination))
-                return null;
+            }
 
-            int dstIndex = _nodesToIndices[destination];
+            if (!HasPathTo(destination))
+            {
+                return null;
+            }
+
+            var dstIndex = _nodesToIndices[destination];
             var stack = new DataStructures.Lists.Stack<TVertex>();
 
             int index;
             for (index = dstIndex; _distances[index] != 0; index = _predecessors[index])
+            {
                 stack.Push(_indicesToNodes[index]);
+            }
 
             // Push the source vertex
             stack.Push(_indicesToNodes[index]);

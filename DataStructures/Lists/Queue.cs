@@ -16,7 +16,7 @@ namespace DataStructures.Lists
         private int _tailPointer { get; set; }
 
         // The internal collection.
-        private object[] _collection { get; set; }
+        private T[] _collection { get; set; }
         private const int _defaultCapacity = 8;
 
         // This sets the default maximum array length to refer to MAXIMUM_ARRAY_LENGTH_x64
@@ -45,7 +45,7 @@ namespace DataStructures.Lists
             _size = 0;
             _headPointer = 0;
             _tailPointer = 0;
-            _collection = new object[initialCapacity];
+            _collection = new T[initialCapacity];
         }
 
 
@@ -77,7 +77,7 @@ namespace DataStructures.Lists
                 {
                     //Array.Resize (ref _collection, newSize);
 
-                    var tempCollection = new object[newSize];
+                    var tempCollection = new T[newSize];
                     Array.Copy(_collection, _headPointer, tempCollection, 0, _size);
                     _collection = tempCollection;
                 }
@@ -123,7 +123,7 @@ namespace DataStructures.Lists
                 if (IsEmpty)
                     throw new Exception("Queue is empty.");
 
-                return (T)_collection[_headPointer];
+                return _collection[_headPointer];
             }
         }
 
@@ -166,7 +166,7 @@ namespace DataStructures.Lists
                 throw new Exception("Queue is empty.");
 
             var topItem = _collection[_headPointer];
-            _collection[_headPointer] = null;
+            _collection[_headPointer] = default(T);
 
             // Decrement the size
             _size--;
@@ -193,7 +193,7 @@ namespace DataStructures.Lists
                 _tailPointer = Array.IndexOf(_collection, tail);
             }
 
-            return (T)topItem;
+            return topItem;
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace DataStructures.Lists
             int j = 0;
             for (int i = 0; i < _size; ++i)
             {
-                array[j] = (T)_collection[_headPointer + i];
+                array[j] = _collection[_headPointer + i];
                 j++;
             }
 

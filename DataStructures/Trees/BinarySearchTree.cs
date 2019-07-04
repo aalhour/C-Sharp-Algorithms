@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+
+using System.Collections;
 
 using DataStructures.Common;
 
@@ -76,6 +77,10 @@ namespace DataStructures.Trees
                 else
                     node.Parent.RightChild = newNode;
             }
+            else
+            {
+                Root = newNode;
+            }
 
             if (newNode != null)
                 newNode.Parent = node.Parent;
@@ -95,11 +100,12 @@ namespace DataStructures.Trees
 
             if (node.ChildrenCount == 2) // if both children are present
             {
-                var successor = node.RightChild;
+                var successor = _findNextLarger(node);
                 node.Value = successor.Value;
                 return (true && _remove(successor));
             }
-            else if (node.HasLeftChild) // if the node has only a LEFT child
+
+            if (node.HasLeftChild) // if the node has only a LEFT child
             {
                 _replaceNodeInParent(node, node.LeftChild);
                 _count--;
@@ -133,54 +139,46 @@ namespace DataStructures.Trees
                 _count++;
                 return true;
             }
-            else
+
+            if (newNode.Parent == null)
+                newNode.Parent = this.Root;
+
+            // Check for value equality and whether inserting duplicates is allowed
+            if (_allowDuplicates == false && newNode.Parent.Value.IsEqualTo(newNode.Value))
             {
-                if (newNode.Parent == null)
-                    newNode.Parent = this.Root;
-
-                // Check for value equality and whether inserting duplicates is allowed
-                if (_allowDuplicates == false && newNode.Parent.Value.IsEqualTo(newNode.Value))
-                {
-                    return false;
-                }
-
-                // Go Left
-                if (newNode.Parent.Value.IsGreaterThan(newNode.Value)) // newNode < parent
-                {
-                    if (newNode.Parent.HasLeftChild == false)
-                    {
-                        newNode.Parent.LeftChild = newNode;
-
-                        // Increment count.
-                        _count++;
-
-                        return true;
-                    }
-                    else
-                    {
-                        newNode.Parent = newNode.Parent.LeftChild;
-                        return _insertNode(newNode);
-                    }
-                }
-                // Go Right
-                else // new node > parent
-                {
-                    if (newNode.Parent.HasRightChild == false)
-                    {
-                        newNode.Parent.RightChild = newNode;
-
-                        // Increment count.
-                        _count++;
-
-                        return true;
-                    }
-                    else
-                    {
-                        newNode.Parent = newNode.Parent.RightChild;
-                        return _insertNode(newNode);
-                    }
-                }
+                return false;
             }
+
+            // Go Left
+            if (newNode.Parent.Value.IsGreaterThan(newNode.Value)) // newNode < parent
+            {
+                if (newNode.Parent.HasLeftChild == false)
+                {
+                    newNode.Parent.LeftChild = newNode;
+
+                    // Increment count.
+                    _count++;
+
+                    return true;
+                }
+
+                newNode.Parent = newNode.Parent.LeftChild;
+                return _insertNode(newNode);
+            }
+            // Go Right
+
+            if (newNode.Parent.HasRightChild == false)
+            {
+                newNode.Parent.RightChild = newNode;
+
+                // Increment count.
+                _count++;
+
+                return true;
+            }
+
+            newNode.Parent = newNode.Parent.RightChild;
+            return _insertNode(newNode);
         }
 
         /// <summary>
@@ -194,17 +192,16 @@ namespace DataStructures.Trees
             if (node == null)
                 return 0;
             // Is leaf node
-            else if (node.IsLeafNode)
+            if (node.IsLeafNode)
                 return 1;
             // Has two children
-            else if (node.ChildrenCount == 2)
+            if (node.ChildrenCount == 2)
                 return (1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild)));
             // Has only left
-            else if (node.HasLeftChild)
+            if (node.HasLeftChild)
                 return (1 + _getTreeHeight(node.LeftChild));
             // Has only right
-            else
-                return (1 + _getTreeHeight(node.RightChild));
+            return (1 + _getTreeHeight(node.RightChild));
         }
 
         /// <summary>
@@ -222,11 +219,13 @@ namespace DataStructures.Trees
             {
                 return currentNode;
             }
-            else if (currentNode.HasLeftChild && item.IsLessThan(currentNode.Value))
+
+            if (currentNode.HasLeftChild && item.IsLessThan(currentNode.Value))
             {
                 return _findNode(currentNode.LeftChild, item);
             }
-            else if (currentNode.HasRightChild && item.IsGreaterThan(currentNode.Value))
+
+            if (currentNode.HasRightChild && item.IsGreaterThan(currentNode.Value))
             {
                 return _findNode(currentNode.RightChild, item);
             }
@@ -566,8 +565,7 @@ namespace DataStructures.Trees
 
             if (node != null)
                 return node.Value;
-            else
-                throw new Exception("Item was not found.");
+            throw new Exception("Item was not found.");
         }
 
         /// <summary>
@@ -657,12 +655,9 @@ namespace DataStructures.Trees
             {
                 if (node == null)
                     return;
-                else
-                {
-                    traverseQueue.Enqueue(node);
-                    visitNode(node.LeftChild);
-                    visitNode(node.RightChild);
-                }
+                traverseQueue.Enqueue(node);
+                visitNode(node.LeftChild);
+                visitNode(node.RightChild);
             }
 
             public T Current
@@ -720,12 +715,9 @@ namespace DataStructures.Trees
             {
                 if (node == null)
                     return;
-                else
-                {
-                    visitNode(node.LeftChild);
-                    traverseQueue.Enqueue(node);
-                    visitNode(node.RightChild);
-                }
+                visitNode(node.LeftChild);
+                traverseQueue.Enqueue(node);
+                visitNode(node.RightChild);
             }
 
             public T Current
@@ -782,12 +774,9 @@ namespace DataStructures.Trees
             {
                 if (node == null)
                     return;
-                else
-                {
-                    visitNode(node.LeftChild);
-                    visitNode(node.RightChild);
-                    traverseQueue.Enqueue(node);
-                }
+                visitNode(node.LeftChild);
+                visitNode(node.RightChild);
+                traverseQueue.Enqueue(node);
             }
 
             public T Current
