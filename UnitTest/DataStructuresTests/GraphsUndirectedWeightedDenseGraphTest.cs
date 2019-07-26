@@ -85,28 +85,26 @@ namespace UnitTest.DataStructuresTests
             // BFS from A
             // Walk the graph using BFS from A:
             var bfsWalk = graph.BreadthFirstWalk("a");
-
-            // output: (s) (a) (x) (z) (d) (c) (f) (v)
-            // output: (s) (a) (x) (z) (d) (c) (f) (v)
-            Assert.True(bfsWalk.SequenceEqual(new[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
+            // output: (a) (z) (s) (x) (d) (c) (f) (v)
+            Assert.True(bfsWalk.SequenceEqual(new[] { "a", "z", "s", "x", "d", "c", "f", "v" }));
 
             // DFS from A
             // Walk the graph using DFS from A:
             var dfsWalk = graph.DepthFirstWalk("a");
-            // output: (s) (a) (x) (z) (d) (c) (f) (v)
-            Assert.True(bfsWalk.SequenceEqual(new[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
+            // output: (a) (x) (c) (v) (f) (d) (s) (z)
+            Assert.True(dfsWalk.SequenceEqual(new[] { "a", "x", "c", "v", "f", "d", "s", "z" }));
 
             // BFS from F
             // Walk the graph using BFS from F:
             bfsWalk = graph.BreadthFirstWalk("f");
-            // output: (s) (a) (x) (z) (d) (c) (f) (v)
-            Assert.True(bfsWalk.SequenceEqual(new[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
+            // output: (f) (d) (c) (s) (x) (v) (a) (z)
+            Assert.True(bfsWalk.SequenceEqual(new[] { "f", "d", "c", "s", "x", "v", "a", "z" }));
 
             // DFS from F
             // Walk the graph using DFS from F:
             dfsWalk = graph.DepthFirstWalk("f");
-            // output: (s) (a) (x) (z) (d) (c) (f) (v)
-            Assert.True(bfsWalk.SequenceEqual(new[] { "s", "a", "x", "z", "d", "c", "f", "v" }));
+            // output: (f) (c) (v) (d) (x) (s) (a) (z)
+            Assert.True(dfsWalk.SequenceEqual(new[] { "f", "c", "v", "d", "x", "s", "a", "z" }));
 
 
             /********************************************************************/
@@ -131,10 +129,8 @@ namespace UnitTest.DataStructuresTests
 
             // Walk the graph using DFS:
             dfsWalk = graph.DepthFirstWalk();
-            // output: (a) (b) (e) (d) (c) (f) 
-            Assert.True(bfsWalk.SequenceEqual(new[] { "a", "b", "e", "d", "c", "f" }));
-
-            Console.ReadLine();
+            // output: (a) (d) (e) (c) (f) (b) 
+            Assert.True(dfsWalk.SequenceEqual(new[] { "a", "d", "e", "c", "f", "b" }));
         }
 
     }
