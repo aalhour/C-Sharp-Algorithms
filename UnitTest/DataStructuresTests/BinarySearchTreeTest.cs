@@ -126,13 +126,12 @@ namespace UnitTest.DataStructuresTests
             var inserting_unique_passed = true;
             try
             {
-                // Insert values with duplicates
+                // Insert unique values
                 binarySearchTree.Insert(values);
-                inserting_duplicates_passed = true;
             }
             catch
             {
-                inserting_duplicates_passed = false;
+                inserting_unique_passed = false;
             }
 
             Assert.True(inserting_unique_passed, "Fail! Inserting unique elements should pass!");

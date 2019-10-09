@@ -101,7 +101,11 @@ namespace UnitTest.DataStructuresTests
             Assert.True(studentsMarks.Count == 3);
 
             KeyValuePair<string, int>[] array = new KeyValuePair<string, int>[studentsMarks.Count];
-            studentsMarks.CopyTo(array, 0);
+        
+            if (studentsMarks != null)
+            {
+                studentsMarks.CopyTo(array, 0);
+            }
 
             Assert.True(array.Length == studentsMarks.Count);
         }

@@ -35,21 +35,23 @@ namespace Algorithms.Graphs
         /// </summary>
         public BellmanFordShortestPaths(TGraph Graph, TVertex Source)
         {
-            if (Graph == null)
-                throw new ArgumentNullException();
-            if (!Graph.HasVertex(Source))
-                throw new ArgumentException("The source vertex doesn't belong to graph.");
+            if (Graph == null) {
+                throw new ArgumentNullException ();
+            } else {
+                if (!Graph.HasVertex (Source))
+                    throw new ArgumentException ("The source vertex doesn't belong to graph.");
 
-            // Init
-            _initializeDataMembers(Graph);
+                // Init
+                _initializeDataMembers (Graph);
 
-            // Traverse the graph
-            var status = _bellmanFord(Graph, Source);
+                // Traverse the graph
+                var status = _bellmanFord (Graph, Source);
 
-            if (status == false)
-                throw new Exception("Negative-weight cycle detected.");
+                if (status == false)
+                    throw new Exception ("Negative-weight cycle detected.");
 
-            Debug.Assert(_checkOptimalityConditions(Graph, Source));
+                Debug.Assert (_checkOptimalityConditions (Graph, Source));
+            }
         }
 
 
