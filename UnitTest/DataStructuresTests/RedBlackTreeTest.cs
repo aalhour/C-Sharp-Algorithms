@@ -375,6 +375,47 @@ namespace UnitTest.DataStructuresTests
             Assert.Throws<Exception>(() =>redBlackTree.Remove(999));
         }
 
+        /** Remove 8, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     13(b)
+         **       / \      \           ===>     / \      \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b)   15(r)
+         **         / \                ===>       /
+         **     (r)5   8(r)            ===>     5(r)
+         **/
+        [Fact]
+        public void Remove_NodeWithoutChildren()
+        {
+            redBlackTree.Remove(8);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Null(redBlackTree.Root.LeftChild.RightChild.RightChild);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
         [Fact]
         public void Remove_OneAndOnlyTreeNode()
         {

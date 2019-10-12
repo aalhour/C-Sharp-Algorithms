@@ -13,7 +13,6 @@ namespace DataStructures.Trees
         Black = 1
     };
 
-
     /// <summary>
     /// Red-Black Tree Data Structure.
     /// </summary>
@@ -28,6 +27,10 @@ namespace DataStructures.Trees
             internal set { base.Root = value; }
         }
 
+        private bool IsRoot(RedBlackTreeNode<TKey> node)
+        {
+            return node == this.Root;
+        }
 
         /// <summary>
         /// CONSTRUCTOR.
@@ -465,16 +468,21 @@ namespace DataStructures.Trees
                 return false;
             }
 
-            if (!nodeToDelete.HasChildren)
+            if (IsRoot(nodeToDelete) && !nodeToDelete.HasChildren)
             {
                 Root = null;
             }
             else
             {
-                // X it's node that will become move to original nodeToDelete position in the tree.
+                // X is the node we will replace with the nodeToDelete in the tree once we remove it.
                 RedBlackTreeNode<TKey> x;
 
-                if (nodeToDelete.HasOnlyRightChild)
+                if (!nodeToDelete.HasChildren)
+                {
+                    x = nodeToDelete;
+                    Transplant(nodeToDelete, null);
+                }
+                else if (nodeToDelete.HasOnlyRightChild)
                 {
                     x = nodeToDelete.RightChild;
                     Transplant(nodeToDelete, nodeToDelete.RightChild);
@@ -486,8 +494,8 @@ namespace DataStructures.Trees
                 }
                 else
                 {
-                    // Y it's node that will become move to original X position in the tree.
-                    var y = (RedBlackTreeNode<TKey>) _findMinNode(nodeToDelete.RightChild);
+                    // Y is the node we will replace with the X in the tree once we move it to the nodeToDelete position.
+                    var y = (RedBlackTreeNode<TKey>)_findMinNode(nodeToDelete.RightChild);
                     x = y.RightChild;
 
                     if (y.Parent == nodeToDelete)
@@ -652,7 +660,5 @@ namespace DataStructures.Trees
             // Invoke the internal remove node method.
             this._remove(node);
         }
-
     }
-
 }
