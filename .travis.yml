@@ -4,9 +4,7 @@ dotnet: 2.1.502
 solution: C-Sharp-Algorithms.sln
 install:
   - dotnet restore
-  # - nuget install xunit.runners -Version 2.0.0 -OutputDirectory testrunner
-  # - nuget install xunit.runner.console -Version 2.4.1 -OutputDirectory testrunner
 script:
   - dotnet msbuild /p:Configuration=Release C-Sharp-Algorithms.sln
-  # - dotnet restore
-  # - dotnet test UnitTest/UnitTest.csproj
+  - dotnet restore
+  - dotnet test UnitTest/UnitTest.csproj
