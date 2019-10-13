@@ -1,5 +1,5 @@
-﻿using Algorithms.Sorting;
-using DataStructures.Heaps;
+﻿using DataStructures.Heaps;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -8,7 +8,7 @@ namespace UnitTest.DataStructuresTests
     public static class MinHeapTest
     {
         [Fact]
-        public static void DoTest()
+        public static void CheckOrderInHeap_RandomOrder_ReturnsTrue()
         {
             BinaryMinHeap<long> minHeap = new BinaryMinHeap<long>(Comparer<long>.Default);
 
@@ -17,26 +17,163 @@ namespace UnitTest.DataStructuresTests
             minHeap.Add(4);
             minHeap.Add(16);
             minHeap.Add(8);
-            minHeap.Add(15);
-            minHeap.Add(9);
-            minHeap.Add(55);
-            minHeap.Add(0);
-            minHeap.Add(34);
-            minHeap.Add(12);
+            minHeap.Add(1);
+            minHeap.Add(3);
+            minHeap.Add(100);
+            minHeap.Add(5);
+            minHeap.Add(7);
+
+            var isRightOrder = IsRightOrderInHeap<long>(minHeap);
+            Assert.True(isRightOrder);    
+        }
+
+        [Fact]
+        public static void CheckOrderInHeap_AscendingOrder_ReturnsTrue()
+        {
+            BinaryMinHeap<long> minHeap = new BinaryMinHeap<long>(Comparer<long>.Default);
+
+            minHeap.Add(1);
             minHeap.Add(2);
-            minHeap.Add(93);
-            minHeap.Add(14);
-            minHeap.Add(27);
+            minHeap.Add(3);
+            minHeap.Add(4);
+            minHeap.Add(5);
+            minHeap.Add(6);
+            minHeap.Add(7);
+            minHeap.Add(8);
+            minHeap.Add(9);
+            minHeap.Add(10);
 
-            var array = minHeap.ToArray();
-            Assert.True(array.Length == minHeap.Count, "Wrong size.");
+            var isRightOrder = IsRightOrderInHeap<long>(minHeap);
+            Assert.True(isRightOrder);
+        }
 
-            var list = minHeap.ToList();
-            Assert.True(list.Count == minHeap.Count, "Wrong size.");
+        [Fact]
+        public static void CheckOrderInHeap_DecreasingOrder_ReturnsTrue()
+        {
+            BinaryMinHeap<long> minHeap = new BinaryMinHeap<long>(Comparer<long>.Default);
 
-            array.HeapSortDescending();
-            var maxHeap = minHeap.ToMaxHeap();
-            Assert.True(maxHeap.Peek() == array[0], "Wrong maximum.");
+            minHeap.Add(10);
+            minHeap.Add(9);
+            minHeap.Add(8);
+            minHeap.Add(7);
+            minHeap.Add(6);
+            minHeap.Add(5);
+            minHeap.Add(4);
+            minHeap.Add(3);
+            minHeap.Add(2);
+            minHeap.Add(1);
+
+            var isRightOrder = IsRightOrderInHeap<long>(minHeap);
+            Assert.True(isRightOrder);
+        }
+
+        public static bool IsRightOrderInHeap<T>(BinaryMinHeap<T> binaryMinHeap) where T : IComparable<T>
+        {
+            var array = binaryMinHeap.ToArray();
+            
+            for(int i=0; i * 2 + 1 < array.Length; ++i)
+            {
+                int leftChildIndex = i * 2 + 1;
+                int rightChildIndex = leftChildIndex + 1;
+
+                if (array[i].CompareTo(array[leftChildIndex]) > 0)
+                {
+                    return false;
+                }
+
+                if (rightChildIndex < array.Length && array[i].CompareTo(array[rightChildIndex]) > 0)
+                {
+                    return true;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    public static class MaxHeapTest
+    {
+        [Fact]
+        public static void CheckOrderInHeap_RandomOrder_ReturnsTrue()
+        {
+            BinaryMaxHeap<long> maxHeap = new BinaryMaxHeap<long>(Comparer<long>.Default);
+
+            maxHeap.Add(23);
+            maxHeap.Add(42);
+            maxHeap.Add(4);
+            maxHeap.Add(16);
+            maxHeap.Add(8);
+            maxHeap.Add(1);
+            maxHeap.Add(3);
+            maxHeap.Add(100);
+            maxHeap.Add(5);
+            maxHeap.Add(7);
+
+            var isRightOrder = IsRightOrderInHeap<long>(maxHeap);
+            Assert.True(isRightOrder);
+        }
+
+        [Fact]
+        public static void CheckOrderInHeap_AscendingOrder_ReturnsTrue()
+        {
+            BinaryMaxHeap<long> maxHeap = new BinaryMaxHeap<long>(Comparer<long>.Default);
+
+            maxHeap.Add(1);
+            maxHeap.Add(2);
+            maxHeap.Add(3);
+            maxHeap.Add(4);
+            maxHeap.Add(5);
+            maxHeap.Add(6);
+            maxHeap.Add(7);
+            maxHeap.Add(8);
+            maxHeap.Add(9);
+            maxHeap.Add(10);
+
+            var isRightOrder = IsRightOrderInHeap<long>(maxHeap);
+            Assert.True(isRightOrder);
+        }
+
+        [Fact]
+        public static void CheckOrderInHeap_DecreasingOrder_ReturnsTrue()
+        {
+            BinaryMaxHeap<long> maxHeap = new BinaryMaxHeap<long>(Comparer<long>.Default);
+
+            maxHeap.Add(10);
+            maxHeap.Add(9);
+            maxHeap.Add(8);
+            maxHeap.Add(7);
+            maxHeap.Add(6);
+            maxHeap.Add(5);
+            maxHeap.Add(4);
+            maxHeap.Add(3);
+            maxHeap.Add(2);
+            maxHeap.Add(1);
+
+            var isRightOrder = IsRightOrderInHeap<long>(maxHeap);
+            Assert.True(isRightOrder);
+        }
+
+        public static bool IsRightOrderInHeap<T>(BinaryMaxHeap<T> binaryMaxHeap) where T : IComparable<T>
+        {
+            var array = binaryMaxHeap.ToArray();
+
+            for (int i = 0; i * 2 + 1 < array.Length; ++i)
+            {
+                int leftChildIndex = i * 2 + 1;
+                int rightChildIndex = leftChildIndex + 1;
+
+                if (array[i].CompareTo(array[leftChildIndex]) < 0)
+                {
+                    return false;
+                }
+
+                if (rightChildIndex < array.Length && array[i].CompareTo(array[rightChildIndex]) > 0)
+                {
+                    return true;
+                }
+            }
+
+            return true;
         }
     }
 }
