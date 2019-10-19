@@ -7,7 +7,7 @@ namespace Algorithms.Numeric
         /// <summary>
         ///     Returns the greatest common divisor of two numbers using Euclidean Algorithm.
         /// </summary>
-        public static int FindGDCEuclidean(int a, int b)
+        public static int FindGCDEuclidean(int a, int b)
         {
             a = Math.Abs(a);
             b = Math.Abs(b);
@@ -33,7 +33,7 @@ namespace Algorithms.Numeric
         /// <summary>
         ///     Returns the greatest common divisor of two numbers using Stein Algorithm.
         /// </summary>
-        public static int FindGDCStein(int a, int b)
+        public static int FindGCDStein(int a, int b)
         {
             a = Math.Abs(a);
             b = Math.Abs(b);

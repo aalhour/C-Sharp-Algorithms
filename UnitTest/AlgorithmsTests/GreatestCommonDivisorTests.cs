@@ -6,13 +6,13 @@ namespace UnitTest.AlgorithmsTests
     public class GreatestCommonDivisorTests
     {
         [Fact]
-        public void FindGDC_BothAreZero()
+        public void FindGCD_BothAreZero()
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(0, 0);
-            Assert.Equal(0, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(0, 0);
+            Assert.Equal(0, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(0, 0);
-            Assert.Equal(0, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(0, 0);
+            Assert.Equal(0, gcdStein);
         }
 
         [Theory]
@@ -20,13 +20,13 @@ namespace UnitTest.AlgorithmsTests
         [InlineData(0, 9, 9)]
         [InlineData(0, -14, 14)]
         [InlineData(0, -99, 99)]
-        public void FindGDC_FirstIsZero(int a, int b, int expected)
+        public void FindGCD_FirstIsZero(int a, int b, int expected)
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(a, b);
-            Assert.Equal(expected, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(a, b);
+            Assert.Equal(expected, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(a, b);
-            Assert.Equal(expected, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(a, b);
+            Assert.Equal(expected, gcdStein);
         }
 
         [Theory]
@@ -34,13 +34,13 @@ namespace UnitTest.AlgorithmsTests
         [InlineData(9, 0, 9)]
         [InlineData(-14, 0, 14)]
         [InlineData(-99, 0, 99)]
-        public void FindGDC_SecondIsZero(int a, int b, int expected)
+        public void FindGCD_SecondIsZero(int a, int b, int expected)
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(a, b);
-            Assert.Equal(expected, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(a, b);
+            Assert.Equal(expected, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(a, b);
-            Assert.Equal(expected, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(a, b);
+            Assert.Equal(expected, gcdStein);
         }
 
         [Theory]
@@ -48,13 +48,13 @@ namespace UnitTest.AlgorithmsTests
         [InlineData(27, 9, 9)]
         [InlineData(27, 14, 1)]
         [InlineData(9, 6, 3)]
-        public void FindGDC_BothNumberArePositive(int a, int b, int expected)
+        public void FindGCD_BothNumberArePositive(int a, int b, int expected)
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(a, b);
-            Assert.Equal(expected, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(a, b);
+            Assert.Equal(expected, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(a, b);
-            Assert.Equal(expected, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(a, b);
+            Assert.Equal(expected, gcdStein);
         }
 
         [Theory]
@@ -62,13 +62,13 @@ namespace UnitTest.AlgorithmsTests
         [InlineData(-27, -9, 9)]
         [InlineData(-27, -14, 1)]
         [InlineData(-9, -6, 3)]
-        public void FindGDC_BothNumberAreNegative(int a, int b, int expected)
+        public void FindGCD_BothNumberAreNegative(int a, int b, int expected)
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(a, b);
-            Assert.Equal(expected, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(a, b);
+            Assert.Equal(expected, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(a, b);
-            Assert.Equal(expected, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(a, b);
+            Assert.Equal(expected, gcdStein);
         }
 
         [Theory]
@@ -76,13 +76,13 @@ namespace UnitTest.AlgorithmsTests
         [InlineData(-27, 9, 9)]
         [InlineData(27, -14, 1)]
         [InlineData(-9, 6, 3)]
-        public void FindGDC_CombinationPositiveAndNegative(int a, int b, int expected)
+        public void FindGCD_CombinationPositiveAndNegative(int a, int b, int expected)
         {
-            var gdcEuclidean = GreatestCommonDivisor.FindGDCEuclidean(a, b);
-            Assert.Equal(expected, gdcEuclidean);
+            var gcdEuclidean = GreatestCommonDivisor.FindGCDEuclidean(a, b);
+            Assert.Equal(expected, gcdEuclidean);
 
-            var gdcStein = GreatestCommonDivisor.FindGDCStein(a, b);
-            Assert.Equal(expected, gdcStein);
+            var gcdStein = GreatestCommonDivisor.FindGCDStein(a, b);
+            Assert.Equal(expected, gcdStein);
         }
     }
 }
