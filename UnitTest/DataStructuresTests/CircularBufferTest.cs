@@ -1,27 +1,75 @@
 ﻿using DataStructures.Lists;
+using System;
 using Xunit;
 
-namespace UnitTest.DataStructuresTests {
-    public class CircularBufferTest {
+namespace UnitTest.DataStructuresTests 
+{
+    public class CircularBufferTest 
+    {
         
         [Fact]
-        public static void SetsFixedLength() {
+        public static void SetsFixedLength() 
+        {
             var circularBuffer = new CircularBuffer<byte>(3);
             var length = circularBuffer.Length;
-
             Assert.Equal(3, length);
         }
 
         [Fact]
-        public static void InitializesWithDefaultLengthOf10() {
+        public static void ChecksIsEmptyProperty() 
+        {
+            var circularBuffer = new CircularBuffer<byte>(4);
+            Assert.True(circularBuffer.IsEmpty);
+        }
+
+        [Fact]
+        public static void ChecksIsFilledProperty() 
+        {
+            var circularBuffer = new CircularBuffer<byte>(3, false);
+            circularBuffer.Write(1);
+            circularBuffer.Write(2);
+            circularBuffer.Write(3);
+
+            Assert.True(circularBuffer.IsFilledUp);
+        }
+
+        [Fact]
+        public static void InitializesWithDefaultLengthOf10() 
+        {
             var circularBuffer = new CircularBuffer<byte>();
             var length = circularBuffer.Length;
 
             Assert.Equal(10, length);
         }
+        [Fact]
+        public static void ThrowsArguementOutOfRangeExceptionForLengthLessThanOne() 
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => 
+            {
+                var circularBuffer = new CircularBuffer<byte>(0);
+            });
+            Assert.Throws<ArgumentOutOfRangeException>(() => 
+            {
+                var circularBuffer = new CircularBuffer<byte>(-2);
+            });
+        }
 
         [Fact]
-        public static void WritesAndReadsValue() {
+        public static void ThrowsCircularBufferFullExceptionWhenInsertingInFullBuffer() 
+        {
+            Assert.Throws<CircularBufferFullException>(() => 
+            {
+                var circularBuffer = new CircularBuffer<byte>(3, false);
+                circularBuffer.Write(1);
+                circularBuffer.Write(2);
+                circularBuffer.Write(3);
+                circularBuffer.Write(4);
+            });
+        }
+
+        [Fact]
+        public static void WritesAndReadsValue() 
+        {
             var circularBuffer = new CircularBuffer<byte>(4);
             circularBuffer.Write(13);
             circularBuffer.Write(43);
@@ -48,7 +96,8 @@ namespace UnitTest.DataStructuresTests {
         }
 
         [Fact]
-        public static void TestingCantOverrideFunctionality() {
+        public static void TestingCantOverrideFunctionality() 
+        {
             var circularBuffer = new CircularBuffer<byte>(3, false);
             circularBuffer.Write(3);
             circularBuffer.Write(34);
@@ -69,7 +118,8 @@ namespace UnitTest.DataStructuresTests {
         }
 
         [Fact]
-        public static void TestingWritingAndReadingSimultenouslyWithoutOverriding() {
+        public static void TestingWritingAndReadingSimultenouslyWithoutOverriding() 
+        {
             var circularBuffer = new CircularBuffer<byte>(3, false);
             circularBuffer.Write(3);
             circularBuffer.Write(34);
