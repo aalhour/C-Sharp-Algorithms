@@ -1,141 +1,85 @@
-# C# ALGORITHMS [![Build Status](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/aalhour/C-Sharp-Algorithms)
+# C# 算法集 [![Build Status](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/aalhour/C-Sharp-Algorithms)
 
-A C# plug-and-play class-library project of standard Data Structures and Algorithms. It contains 35+ Data Structures and 30+ Algorithms designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+一个可直接运行使用的标准的数据结构和算法类库项目，包括了35个以上的数据结构和30个以上的算法。它们使用面向对象的方式被设计为单个的组件。虽然此项目是以学习目的创建的，但是其中实现的数据结构和算法却是很标准，有效，稳定和可测的。
 
-## DESCRIPTION
+## 描述
 
-This project originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors) to contribute furthermore to it, the project took on a different meaning. So, I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my own research side-project under these topics.
+此项目起初是作为面试前的准备材料而发起的。可是，在 [reddit](https://redd.it/3etf9f)和[GitHubers](https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors) 上收到大量积极反馈后，便变得有些不同的意义。所以，我决定让此项目继续保持参考项目的身份，作为数据结构和算法的C#实现的参考。
 
-#### Solution Hierarchy:
+#### 项目结构:
 
-This is a C#.NET solution-project, and it contains three subprojects:
+这是个C#.NET项目，包括了三个子项目：
 
-  1. [Algorithms](Algorithms): A class library project. Contains the Algorithms implementations.
-  2. [Data Structures](DataStructures): A class library project. Contains the Data Structures implementations.
-  3. [UnitTest](UnitTest): Unit-testing project for the Algorithms and Data Structures.
+1、[Algorithms](Algorithms): 一个包含了算法实现的类库项目。
 
-#### Requirements:
-  1. .NET Core >= 2.0
-  2. XUnit
+2、[Data Structures](DataStructures): 一个包含了数据结构实现的类库项目。
 
-#### A Note to Contributors:
-If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
+3、 [UnitTest](UnitTest): 对 Algorithms 和 Data Structures 项目做单元测试的项目。
 
-Note: The projects where tested with Visual Studio Community using .NET Core 2.0.3 on OSX 10.
+#### 环境需求:
 
+1. .NET Core >= 2.0
+2. XUnit
 
-## DATA STRUCTURES
+#### 贡献者需知:
 
-#### Lists:
-  * [Skip List](DataStructures/Lists/SkipList.cs).
-  * [Array List](DataStructures/Lists/ArrayList.cs).
-  * [Stack](DataStructures/Lists/Stack.cs).
-  * [Queue](DataStructures/Lists/Queue.cs).
-  * [Single-Linked List](DataStructures/Lists/SLinkedList.cs).
-  * [Double-Linked List](DataStructures/Lists/DLinkedList.cs).
+如果你想为此项目做贡献，请先查阅[Contribution Guidelines](CONTRIBUTING.md)
 
-#### Heaps:
-  * [Binary-Min Heap](DataStructures/Heaps/BinaryMinHeap.cs).
-  * [Binary-Max Heap](DataStructures/Heaps/BinaryMaxHeap.cs).
-  * [Binomial-Min Heap](DataStructures/Heaps/BinomialMinHeap.cs).
- 
-#### Priority Queues:
-  * [Min-Priority Queue](DataStructures/Heaps/MinPriorityQueue.cs).
-  * [Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs).
- 
-#### Hashing Functions:
-  * [Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs).
-  * [Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs).
+注意：此项目使用 .NET Core 2.0.3 环境的 Visual Studio Community 版，在 OSX 10 中测试。
 
-#### Hash Tables:
-  * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs).
-  * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs).
-  * [Open-Addressing Hash Table](DataStructures/Dictionaries/OpenAddressingHashTable.cs).
+## 数据结构
 
-#### Sorted Collections (Tree-based):
-  * [Sorted List](DataStructures/SortedCollections/SortedList.cs).
-  * [Sorted Dictionary](DataStructures/SortedCollections/SortedDictionary.cs).
+#### 排序:
+  * [冒泡排序](Algorithms/Sorting/BubbleSorter.cs).
+  * [桶排序](Algorithms/Sorting/BucketSorter.cs).
+  * [二叉搜索树排序](Algorithms/Sorting/BinarySearchTreeSorter.cs).
+  * [梳排序](Algorithms/Sorting/CombSorter.cs).
+  * [计数排序](Algorithms/Sorting/CountingSorter.cs).
+  * [圈排序](Algorithms/Sorting/CycleSorter.cs).
+  * [侏儒排序](Algorithms/Sorting/GnomeSorter.cs).
+  * [堆排序](Algorithms/Sorting/HeapSorter.cs).
+  * [插入排序](Algorithms/Sorting/InsertionSorter.cs).
+  * [二叉基数排序](Algorithms/Sorting/LSDRadixSorter.cs).
+  * [归并排序](Algorithms/Sorting/MergeSorter.cs).
+  * [选择排序](Algorithms/Sorting/SelectionSorter.cs).
+  * [希尔排序](Algorithms/Sorting/ShellSorter.cs).
+  * [奇偶排序](Algorithms/Sorting/OddEvenSorter.cs).
+  * [鸽巢排序](Algorithms/Sorting/PigeonHoleSorter.cs).
+  * [快速排序](Algorithms/Sorting/QuickSorter.cs).
 
-#### Trees:
-  * [Trie](DataStructures/Trees/Trie.cs).
-  * [Trie Map](DataStructures/Trees/TrieMap.cs).
-  * [AVL Tree](DataStructures/Trees/AVLTree.cs).
-  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs).
-    * [Map version](DataStructures/Trees/RedBlackTreeMap.cs). Supports key-value pairs nodes; indexes nodes by keys.
-  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs).
-    * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs). Supports key-value pairs nodes; indexes nodes by keys.
-  * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs).
- 
-#### Graphs:
-  * Undirected Graphs:
-    + [Clique Graphs](DataStructures/Graphs/CliqueGraph.cs).
-    + [Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs).
-    + [Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs).
-  * Undirected Weighted Graphs:
-    + [Undirected Weighted Sparse Graph](DataStructures/Graphs/UndirectedWeightedSparseGraph.cs).
-    + [Undirected Weighted Dense Graph](DataStructures/Graphs/UndirectedWeightedDenseGraph.cs).
-  * Directed Graphs:
-    + [Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs).
-    + [Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs).
-  * Directed Weighted Graphs:
-    + [Directed Weighted Sparse Graph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs).
-    + [Directed Weighted Dense Graph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs).
+#### 图:
+  * 图搜索:
+    + [深度优先搜索](Algorithms/Graphs/DepthFirstSearcher.cs).
+    + [广度优先搜索](Algorithms/Graphs/BreadthFirstSearcher.cs).
+  * 最短路径:
+    + [广度优先 最短路径](Algorithms/Graphs/BreadthFirstShortestPaths.cs).
+    + [贝尔曼-福特算法 最短路径](Algorithms/Graphs/BellmanFordShortestPaths.cs).
+    + [特斯拉 最短路径](Algorithms/Graphs/DijkstraShortestPaths.cs).
+    + [特斯拉 所有结对点 最短路径](Algorithms/Graphs/DijkstraAllPairsShortestPaths.cs).
+  * 深度优先的应用:
+    + [循环检测](Algorithms/Graphs/CyclesDetector.cs).
+    + [拓扑排序](Algorithms/Graphs/TopologicalSorter.cs).
+  * 广度优先的应用:
+    + [连通分量](Algorithms/Graphs/ConnectedComponents.cs).
+    + [二分图渲染](Algorithms/Graphs/BipartiteColoring.cs).
 
+#### 树:
+  * [递归二叉树](Algorithms/Trees/BinaryTreeRecursiveWalker.cs).
+    + 方法: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder.
 
-## ALGORITHMS
+#### 字符串:
+  * [组合与异位](Algorithms/Strings/Permutations.cs).
+  * [编辑距离](Algorithms/Strings/EditDistance.cs).
+    + 使用基础类 EditDistanceCostsMap<T> 传递距离: [EditDistanceCostsMap\<T\>](Algorithms/Strings/EditDistanceCostsMap.cs).
 
-#### Sorting:
-  * [Bubble Sort](Algorithms/Sorting/BubbleSorter.cs).
-  * [Bucket Sort](Algorithms/Sorting/BucketSorter.cs).
-  * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs).
-  * [Comb Sort](Algorithms/Sorting/CombSorter.cs).
-  * [Counting Sort](Algorithms/Sorting/CountingSorter.cs).
-  * [Cycle Sort](Algorithms/Sorting/CycleSorter.cs).
-  * [Gnome Sort](Algorithms/Sorting/GnomeSorter.cs).
-  * [Heap Sort](Algorithms/Sorting/HeapSorter.cs).
-  * [Insertion Sort](Algorithms/Sorting/InsertionSorter.cs).
-  * [LSD Radix Sort](Algorithms/Sorting/LSDRadixSorter.cs).
-  * [Merge Sort](Algorithms/Sorting/MergeSorter.cs).
-  * [Selection Sort](Algorithms/Sorting/SelectionSorter.cs).
-  * [Shell Sort](Algorithms/Sorting/ShellSorter.cs).
-  * [OddEven Sort](Algorithms/Sorting/OddEvenSorter.cs).
-  * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs).
-  * [Quick Sort](Algorithms/Sorting/QuickSorter.cs).
+#### 数:
+  * [卡特兰数](Algorithms/Numeric/CatalanNumbers.cs).
+  * [最大公约数](Algorithms/Numeric/GreatestCommonDivisor.cs)
 
-#### Graphs:
-  * Graph Search:
-    + [Depth-First Searcher](Algorithms/Graphs/DepthFirstSearcher.cs).
-    + [Breadth-First Searcher](Algorithms/Graphs/BreadthFirstSearcher.cs).
-  * Shortest Paths:
-    + [Breadth-First SPs](Algorithms/Graphs/BreadthFirstShortestPaths.cs).
-    + [Bellman-Ford SPs](Algorithms/Graphs/BellmanFordShortestPaths.cs).
-    + [Dijkstra SPs](Algorithms/Graphs/DijkstraShortestPaths.cs).
-    + [Dijkstra All-Pairs SPs](Algorithms/Graphs/DijkstraAllPairsShortestPaths.cs).
-  * DFS Applications:
-    + [Cycles Detector](Algorithms/Graphs/CyclesDetector.cs).
-    + [Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs).
-  * BFS Applications:
-    + [Connected Components](Algorithms/Graphs/ConnectedComponents.cs).
-    + [Bipartite Graphs Coloring](Algorithms/Graphs/BipartiteColoring.cs).
+#### 可视化:
+  * [树结构的显示](DataStructures/Trees/TreeDrawer.cs).
 
-#### Trees:
-  * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs).
-    + Methods: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder.
-
-#### Strings:
-  * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs).
-  * [Edit Distance](Algorithms/Strings/EditDistance.cs).
-    + Uses a generic custom class for passing costs: [EditDistanceCostsMap\<T\>](Algorithms/Strings/EditDistanceCostsMap.cs).
-
-#### Numeric:
-  * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs).
-  * [Greatest Common Divisor](Algorithms/Numeric/GreatestCommonDivisor.cs)
-
-#### Visualization:
-  * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs).
-
-
-## CONTRIBUTORS
+## 贡献者
 
   * [Edgar Carballo Domínguez](https://github.com/karv).
   * [Lucas Lemaire](https://github.com/ZwoRmi).
@@ -143,5 +87,5 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
   * [Ivandro Ismael Gomes Jao](https://github.com/ivandrofly)
 
 
-## LICENSE
-This project is licensed under the [MIT License](LICENSE).
+## 许可
+此项目遵守 [MIT 许可](LICENSE).
