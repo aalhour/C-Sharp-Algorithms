@@ -102,12 +102,13 @@ namespace UnitTest.DataStructuresTests
             circularBuffer.Write(3);
             circularBuffer.Write(34);
             circularBuffer.Write(24);
-            // if it doesn't override, then the values above will be read else, 
-            // the value below will be read
-            circularBuffer.Write(2);
-            circularBuffer.Write(1);
-            circularBuffer.Write(3);
-
+            // if it doesn't override, then it will throw CircularBufferFullException
+            Assert.Throws<CircularBufferFullException>(() => 
+            {
+                circularBuffer.Write(2);
+            });
+            
+            // Ensuring that it reads the appropriate values in the buffer.
             var result1 = circularBuffer.Read();
             var result2 = circularBuffer.Read();
             var result3 = circularBuffer.Read();
