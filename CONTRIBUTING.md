@@ -6,6 +6,8 @@ Hi there, and thanks for your interest in the C# ALGORITHMS repository. This doc
 
 Whether you want to report a bug, an enhancement, a new data structure, or a new algorithm implementation please make sure you check out the issues, if there is any, regarding the data structures and/or algorithms you want to implement, someone might have started working on them already. If you are sure that what you want to contribute is new, then please open an issue describing what you want to accomplish before you decide to commit any code. This will guarantee no one else will work on the same file(s), data structure and/or algorithm you are working on.
 
+It would be great if you can check out the existing [GITHUB ISSUE TEMPLATES](https://github.com/aalhour/C-Sharp-Algorithms/tree/master/.github/ISSUE_TEMPLATE) we have in this project which outline specific formats for writing issues.
+
 ## Coding Conventions:
 
 The coding conventions are the official Microsoft C# Coding Conventions. Most of the official code styling is supported by default on Visual Studio, but you need to set it up as a policy on Xamarian Studio via the Solution/Project properties window, in case you are using Xamarian Studio.
