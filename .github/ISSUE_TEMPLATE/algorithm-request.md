@@ -17,7 +17,7 @@ A clear and concise description of what you want to happen. For example:
 
 Or, more concretely:
 
-> I'd like to have an implementation of this variation of the A* Search Algorithm: [Near Optimal Hierarchical Path-Finding](https://webdocs.cs.ualberta.ca/~mmueller/ps/hpastar.pdf).
+> I'd like to have an implementation of the A* Search Algorithm, based on the following research paper: [Near Optimal Hierarchical Path-Finding - Botea, Mueller & Schaeffer](https://webdocs.cs.ualberta.ca/~mmueller/ps/hpastar.pdf).
 
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.

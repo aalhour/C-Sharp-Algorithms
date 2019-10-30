@@ -17,7 +17,7 @@ A clear and concise description of what you want to happen. For example:
 
 Or, more concretely:
 
-> I'd like to have an implementation of the BTree Data Structure, based on the following research paper: [Organization and Maintenance of Large Ordered Indexes, Bayer & McCreight](https://infolab.usc.edu/csci585/Spring2010/den_ar/indexing.pdf).
+> I'd like to have an implementation of the BTree Data Structure, based on the following research paper: [Organization and Maintenance of Large Ordered Indexes - Bayer & McCreight](https://infolab.usc.edu/csci585/Spring2010/den_ar/indexing.pdf).
 
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.
