@@ -1,10 +1,47 @@
-# C# ALGORITHMS [![Build Status](https://travis-ci.org/aalhour/C-Sharp-Algorithms.svg?branch=master)](https://travis-ci.org/aalhour/C-Sharp-Algorithms)
+```
 
-A C# plug-and-play class-library project of standard Data Structures and Algorithms. It contains 35+ Data Structures and 30+ Algorithms designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+                                          o---o    |  |                                 
+                                         /       --O--O--                               
+                                        O          |  |                                 
+                                         \       --O--O--                               
+                                          o---o    |  |                                 
 
-## DESCRIPTION
+
+              O    o       o--o    o--o   o---o   o-O-o  o--O--o  o   o  o     o   o--o 
+             / \   |      o       o    o  |   |     |       |     |   |  |\   /|  |     
+            o---o  |      |   -o  |    |  O--Oo     |       |     O---O  | \O/ |   o--o 
+            |   |  |      o    |  o    o  |  \      |       |     |   |  |     |      | 
+            o   o  O---o   o--o    o--o   o   \o  o-O-o     o     o   o  o     o  o---o 
+
+```
+
+<p align="center">
+  <a href="" alt="License">
+    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+  </a>
+  <a href="" alt="Build">
+    <img src="https://img.shields.io/travis/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+  </a>
+  <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors" alt="Contributors">
+    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+  </a>
+  <a href="https://github.com/aalhour/C-Sharp-Algorithms/pulse" alt="Activity">
+    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+  </a>
+</p>
+
+##
+### WHAT IS C# ALGORITHMS?
+
+A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains 35+ Data Structures and 30+ Algorithms designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+
+##
+### BACK STORY
 
 This project originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms#contributors) to contribute furthermore to it, the project took on a different meaning. So, I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my own research side-project under these topics.
+
+##
+### DESCRIPTION
 
 #### Solution Hierarchy:
 
@@ -25,8 +62,8 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
 
 Note: The projects where tested with Visual Studio Community using .NET Core 2.0.3 on mac OS.
 
-
-## DATA STRUCTURES
+##
+### DATA STRUCTURES
 
 #### Lists:
 
@@ -92,7 +129,8 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
     + [Directed Weighted Dense Graph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs)
 
 
-## ALGORITHMS
+##
+### ALGORITHMS
 
 #### Sorting:
 
@@ -151,7 +189,8 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
   * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs)
 
 
-## CONTRIBUTORS
+##
+### CONTRIBUTORS
 
 <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors">
   <img src="https://contributors-img.firebaseapp.com/image?repo=aalhour/C-Sharp-Algorithms" />
@@ -160,6 +199,7 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 <br />
 <!-- Made with [contributors-img](https://contributors-img.firebaseapp.com). -->
 
-## LICENSE
+##
+### LICENSE
 
 This project is licensed under the [MIT License](LICENSE).
