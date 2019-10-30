@@ -352,19 +352,24 @@ namespace DataStructures.Lists
             var currentNode = _firstNode;
             while (currentNode != null)
             {
+                var minNode = currentNode;
                 var nextNode = currentNode.Next;
                 while (nextNode != null)
                 {
-                    if (nextNode.Data.IsLessThan(currentNode.Data))
+                    if (nextNode.Data.IsLessThan(minNode.Data))
                     {
-                        var temp = nextNode.Data;
-                        nextNode.Data = currentNode.Data;
-                        currentNode.Data = temp;
+                        minNode = nextNode;
                     }
 
                     nextNode = nextNode.Next;
                 }
 
+                if (minNode != currentNode)
+                {
+                    var temp = minNode.Data;
+                    minNode.Data = currentNode.Data;
+                    currentNode.Data = temp;
+                }
                 currentNode = currentNode.Next;
             }
         }
