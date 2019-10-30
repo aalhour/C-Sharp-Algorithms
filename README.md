@@ -4,7 +4,7 @@ A C# plug-and-play class-library project of standard Data Structures and Algorit
 
 ## DESCRIPTION
 
-This project originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors) to contribute furthermore to it, the project took on a different meaning. So, I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my own research side-project under these topics.
+This project originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms#contributors) to contribute furthermore to it, the project took on a different meaning. So, I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my own research side-project under these topics.
 
 #### Solution Hierarchy:
 
