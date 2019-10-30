@@ -137,11 +137,12 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 
 ## CONTRIBUTORS
 
-  * [Edgar Carballo Domínguez](https://github.com/karv).
-  * [Lucas Lemaire](https://github.com/ZwoRmi).
-  * [Samuel Kenney](https://github.com/samuelkenney).
-  * [Ivandro Ismael Gomes Jao](https://github.com/ivandrofly)
+<a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors">
+  <img src="https://contributors-img.firebaseapp.com/image?repo=aalhour/C-Sharp-Algorithms" />
+</a>
 
+<br />
+<!-- Made with [contributors-img](https://contributors-img.firebaseapp.com). -->
 
 ## LICENSE
 This project is licensed under the [MIT License](LICENSE).
