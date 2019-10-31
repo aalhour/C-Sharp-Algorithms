@@ -4,6 +4,19 @@ namespace DataStructures.Lists
 {
     public class CircularBuffer<T> 
     {
+        private T[] _circularBuffer;
+        private int _end;
+        private int _start;
+        private static readonly int _defaultBufferLength = 10;
+
+        /// <summary>
+        /// Controls whether data should be overridden when it is continously inserted without reading
+        /// </summary>
+        public bool CanOverride { get; }
+        public bool IsEmpty { get => _end == _start; }
+        public int Length { get => _circularBuffer.Length - 1; }
+        public bool IsFilledUp { get => ((_end + 1) % _circularBuffer.Length == _start) && !_circularBuffer[_start].Equals(_circularBuffer[_end]); }
+
         /// <summary>
         /// Initializes a circular buffer with initial length of 10
         /// </summary>
@@ -31,30 +44,24 @@ namespace DataStructures.Lists
         /// Writes value to the back of the buffer
         /// </summary>
         /// <param name="value">value to be added to the buffer</param>
-        public void Write(T value) 
+        public void Add(T value) 
         {
             if (CanOverride) 
             {
-                InsertData(value);
+                innerInsert(value);
             }
             else 
             {
-                DontOverrides(value);
+                if (IsFilledUp) 
+                {
+                    throw new CircularBufferFullException($"Circular Buffer is filled up. {value} can not be inserted");
+                }
+                innerInsert(value);
             }
-        }
-
-        // Inserts data into the buffer when it is not filled up
-        private void DontOverrides(T value) 
-        {
-            if (IsFilledUp) 
-            {
-                throw new CircularBufferFullException($"Circular Buffer is filled up. {value} can not be inserted");
-            }
-            InsertData(value);
         }
 
         // Inserts data into the buffer without checking if it is full
-        private void InsertData(T value) 
+        private void innerInsert(T value) 
         {
             _circularBuffer[_end] = value;
             _end = (_end + 1) % _circularBuffer.Length;
@@ -65,28 +72,15 @@ namespace DataStructures.Lists
         }
 
         /// <summary>
-        ///     Reads value from the front of the buffer
+        ///     Reads and removes the value in front of the buffer, and places the next value in front.
         /// </summary>
-        public T Read() 
+        public T Pop() 
         {
             var result = _circularBuffer[_start];
             _circularBuffer[_start] = _circularBuffer[_end];
             _start = (_start + 1) % _circularBuffer.Length;
             return result;
         }
-
-        /// <summary>
-        /// Controls whether data should be overridden when it is continously inserted without reading
-        /// </summary>
-        public bool CanOverride { get; }
-        public bool IsEmpty { get => _end == _start; }
-        public int Length { get => _circularBuffer.Length - 1; }
-        public bool IsFilledUp { get => ((_end + 1) % _circularBuffer.Length == _start) && !_circularBuffer[_start].Equals(_circularBuffer[_end]); }
-
-        private T[] _circularBuffer;
-        private int _end;
-        private int _start;
-        private static readonly int _defaultBufferLength = 10;
     }
 
     public class CircularBufferFullException: Exception 
