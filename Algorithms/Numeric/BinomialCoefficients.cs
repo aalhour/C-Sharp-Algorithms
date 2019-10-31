@@ -1,30 +1,33 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Numerics;
 
 namespace Algorithms.Numeric
 {
     public static class BinomialCoefficients
     {
+        private static readonly Dictionary<uint, BigInteger> Cache = new Dictionary<uint, BigInteger>();
+
         /// <summary>
         /// Calculate binomial coefficients, C(n, k).
         /// </summary>
-        public static ulong Calculate(uint n, uint k)
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static BigInteger Calculate(uint n)
         {
-            ulong result = 1;
-
-            // Since C(n, k) = C(n, n-k)
-            if (k > n - k)
-                k = n - k;
-
-            // Calculate value of [n*(n-1)*---*(n-k+1)] / [k*(k-1)*---*1]
-            for (int i = 0; i < k; ++i)
-            {
-                result *= Convert.ToUInt64(n - i);
-                result /= Convert.ToUInt64(i + 1);
-            }
-
-            return result;
+            return Factorial(2 * n) / (Factorial(n) * Factorial(n + 1));
         }
 
+        private static BigInteger Factorial(uint n)
+        {
+            if (n <= 1)
+                return 1;
+            if (Cache.ContainsKey(n))
+            {
+                return Cache[n];
+            }
+            var value = n * Factorial(n - 1);
+            Cache[n] = value;
+            return value;
+        }
     }
-
 }
