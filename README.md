@@ -181,6 +181,7 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 
 #### Numeric:
 
+  * [Binomial Coefficients](Algorithms/Numeric/BinomialCoefficients.cs)
   * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs)
   * [Greatest Common Divisor](Algorithms/Numeric/GreatestCommonDivisor.cs)
 
