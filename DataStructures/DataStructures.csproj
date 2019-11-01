@@ -2,16 +2,12 @@
   <PropertyGroup>    
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-  
   <ItemGroup>
-    <Content Include="Data\PrimesDocument_10K.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Remove="Data\PrimesDocument_10K.csv" />
   </ItemGroup>
-
   <ItemGroup>
-    <None Update="Data\PrimesDocument_10K.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Data\PrimesDocument_10K.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
