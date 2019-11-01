@@ -11,7 +11,7 @@ namespace UnitTest.DataStructuresTests
         public static void SetsFixedLength() 
         {
             var circularBuffer = new CircularBuffer<byte>(3);
-            var length = circularBuffer.Count;
+            var length = circularBuffer.Length;
             Assert.Equal(3, length);
         }
 
@@ -37,7 +37,7 @@ namespace UnitTest.DataStructuresTests
         public static void InitializesWithDefaultLengthOf10() 
         {
             var circularBuffer = new CircularBuffer<byte>();
-            var length = circularBuffer.Count;
+            var length = circularBuffer.Length;
 
             Assert.Equal(10, length);
         }
@@ -159,12 +159,15 @@ namespace UnitTest.DataStructuresTests
             //Testing Remove
             Assert.True(circularBuffer.Remove(3));
             Assert.False(circularBuffer.Remove(14));
-            
+
+            //Testing Count
+            Assert.Equal(2, circularBuffer.Count);
             //Testing clear
             circularBuffer.Clear();
             Assert.Equal(0, circularBuffer.Pop());
             Assert.Equal(0, circularBuffer.Pop());
             Assert.Equal(0, circularBuffer.Pop());
+            Assert.Empty(circularBuffer);
         }
     }
 }
