@@ -83,7 +83,7 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 #### Priority Queues:
 
   * [Min-Priority Queue](DataStructures/Heaps/MinPriorityQueue.cs)
-  * [Keyed Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs)
+  * [Key-value Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs)
  
 #### Hashing Functions:
 
@@ -103,14 +103,16 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 
 #### Trees:
 
+
+  * [AVL Tree](DataStructures/Trees/AVLTree.cs)
+  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
+    * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
+    * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
+    * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+  * [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)
   * [Trie](DataStructures/Trees/Trie.cs)
   * [Trie Map](DataStructures/Trees/TrieMap.cs)
-  * [AVL Tree](DataStructures/Trees/AVLTree.cs)
-  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
-    * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairs nodes; indexes nodes by keys)_
-  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
-    * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairs nodes; indexes nodes by keys)_
-  * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
  
 #### Graphs:
 
