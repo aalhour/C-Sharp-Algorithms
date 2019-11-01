@@ -11,7 +11,7 @@ namespace UnitTest.DataStructuresTests
         public static void SetsFixedLength() 
         {
             var circularBuffer = new CircularBuffer<byte>(3);
-            var length = circularBuffer.Length;
+            var length = circularBuffer.Count;
             Assert.Equal(3, length);
         }
 
@@ -37,7 +37,7 @@ namespace UnitTest.DataStructuresTests
         public static void InitializesWithDefaultLengthOf10() 
         {
             var circularBuffer = new CircularBuffer<byte>();
-            var length = circularBuffer.Length;
+            var length = circularBuffer.Count;
 
             Assert.Equal(10, length);
         }
@@ -137,6 +137,34 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(24, result3);
             Assert.Equal(4, result4);
             Assert.Equal(14, result5);
+        }
+
+        [Fact]
+        public static void TestingICollectionImplementation() 
+        {
+            var circularBuffer = new CircularBuffer<byte>(3, false);
+            circularBuffer.Add(3);
+            circularBuffer.Add(34);
+            circularBuffer.Add(24);
+            //Testing contains
+            Assert.True(circularBuffer.Contains(3));
+            
+            //Testing CopyTo
+            var array = new byte[3];
+            circularBuffer.CopyTo(array, 0);
+            Assert.Equal(3, array[0]);
+            Assert.Equal(34, array[1]);
+            Assert.Equal(24, array[2]);
+            
+            //Testing Remove
+            Assert.True(circularBuffer.Remove(3));
+            Assert.False(circularBuffer.Remove(14));
+            
+            //Testing clear
+            circularBuffer.Clear();
+            Assert.Equal(0, circularBuffer.Pop());
+            Assert.Equal(0, circularBuffer.Pop());
+            Assert.Equal(0, circularBuffer.Pop());
         }
     }
 }
