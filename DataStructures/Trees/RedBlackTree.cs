@@ -1,7 +1,6 @@
-﻿using System;
+﻿using DataStructures.Common;
+using System;
 using System.Collections.Generic;
-
-using DataStructures.Common;
 
 namespace DataStructures.Trees
 {
@@ -13,7 +12,6 @@ namespace DataStructures.Trees
         Red = 0,
         Black = 1
     };
-
 
     /// <summary>
     /// Red-Black Tree Data Structure.
@@ -29,6 +27,10 @@ namespace DataStructures.Trees
             internal set { base.Root = value; }
         }
 
+        private bool IsRoot(RedBlackTreeNode<TKey> node)
+        {
+            return node == this.Root;
+        }
 
         /// <summary>
         /// CONSTRUCTOR.
@@ -233,8 +235,8 @@ namespace DataStructures.Trees
                 // This is the simplest step: Basically recolor, and bubble up to see if more work is needed.
                 if (_safeCheckIsRed(_safeGetSibling(currentNode.Parent)))
                 {
-                    // If it has a sibling and it is red, then then it has a parent
-                    currentNode.Parent.Color = RedBlackTreeColors.Red;
+                    // If it has a sibling and it is black, then then it has a parent
+                    currentNode.Parent.Color = RedBlackTreeColors.Black;
 
                     // Color sibling of parent as black
                     _safeUpdateColor(_safeGetSibling(currentNode.Parent), RedBlackTreeColors.Black);
@@ -455,80 +457,109 @@ namespace DataStructures.Trees
         }
 
         /// <summary>
-        /// The internal remove helper.
-        /// Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
-        /// This is called from the overriden _remove(BSTNode nodeToDelete) helper.
+        ///     The internal remove helper.
+        ///     Separated from the overriden version to avoid casting the objects from BSTNode to RedBlackTreeNode.
+        ///     This is called from the overriden _remove(BSTNode nodeToDelete) helper.
         /// </summary>
         protected bool _remove(RedBlackTreeNode<TKey> nodeToDelete)
         {
             if (nodeToDelete == null)
+            {
                 return false;
+            }
 
-            // Temporary nodes
-            RedBlackTreeNode<TKey> node1, node2;
-
-            // If nodeToDelete has either one child or no children at all
-            if (!nodeToDelete.HasLeftChild || !nodeToDelete.HasRightChild)
+            if (IsRoot(nodeToDelete) && !nodeToDelete.HasChildren)
             {
-                node1 = nodeToDelete;
+                Root = null;
             }
             else
             {
-                // nodeToDelete has two children
-                node1 = (RedBlackTreeNode<TKey>)base._findNextLarger(nodeToDelete);
-            }
+                // X is the node we will replace with the nodeToDelete in the tree once we remove it.
+                RedBlackTreeNode<TKey> x;
 
-            // Left child case
-            if (node1.HasLeftChild)
-            {
-                node2 = node1.LeftChild;
-            }
-            else
-            {
-                node2 = node1.RightChild;
-            }
-
-            // If node2 is not null, copy parent references
-            if (node2 != null)
-                node2.Parent = node1.Parent;
-
-            if (node1.Parent != null)
-            {
-                if (node1.IsLeftChild)
+                if (!nodeToDelete.HasChildren)
                 {
-                    node1.Parent.LeftChild = node2;
+                    x = nodeToDelete;
+                    Transplant(nodeToDelete, null);
+                }
+                else if (nodeToDelete.HasOnlyRightChild)
+                {
+                    x = nodeToDelete.RightChild;
+                    Transplant(nodeToDelete, nodeToDelete.RightChild);
+                }
+                else if (nodeToDelete.HasOnlyLeftChild)
+                {
+                    x = nodeToDelete.LeftChild;
+                    Transplant(nodeToDelete, nodeToDelete.LeftChild);
                 }
                 else
                 {
-                    node1.Parent.RightChild = node2;
+                    // Y is the node we will replace with the X in the tree once we move it to the nodeToDelete position.
+                    var y = (RedBlackTreeNode<TKey>)_findMinNode(nodeToDelete.RightChild);
+                    x = y.RightChild;
+
+                    if (y.Parent == nodeToDelete)
+                    {
+                        if (x != null)
+                        {
+                            x.Parent = y;
+                        }
+                    }
+                    else
+                    {
+                        Transplant(y, y.RightChild);
+                        y.RightChild = nodeToDelete.RightChild;
+                        y.RightChild.Parent = y;
+                    }
+
+                    Transplant(nodeToDelete, y);
+                    y.LeftChild = nodeToDelete.LeftChild;
+                    y.LeftChild.Parent = y;
+                    y.Color = nodeToDelete.Color;
+
+                    if (Root == nodeToDelete)
+                    {
+                        Root = y;
+                        Root.Parent = null;
+                    }
+                }
+
+                if (nodeToDelete.Color == RedBlackTreeColors.Black)
+                {
+                    _adjustTreeAfterRemoval(x);
                 }
             }
-            else
-            {
-                Root = node2;
-                Root.Parent = null;
-            }
 
-            // Swap values
-            if (!node1.IsEqualTo(nodeToDelete))
-            {
-                nodeToDelete.Value = node1.Value;
-            }
-
-            // Adjust the Red-Black Tree rules
-            if (node1.Color == RedBlackTreeColors.Black && node2 != null)
-            {
-                _adjustTreeAfterRemoval(node2);
-                Root.Color = RedBlackTreeColors.Black;
-            }
-
-            // Decrement the count
             base._count--;
 
             return true;
         }
 
+        /// <summary>
+        ///     Insert one subtree in the place of the other in his parent.
+        /// </summary>
+        /// <param name="replaced">Subtree of node will be replaced by <param name="replacement">.</param></param>
+        /// <param name="replacement">Subtree replaces <param name="replaced">.</param></param>
+        private void Transplant(RedBlackTreeNode<TKey> replaced, RedBlackTreeNode<TKey> replacement)
+        {
+            if (replaced.Parent == null)
+            {
+                this.Root = replacement;
+            }
+            else if (replaced == replaced.Parent.LeftChild)
+            {
+                replaced.Parent.LeftChild = replacement;
+            }
+            else
+            {
+                replaced.Parent.RightChild = replacement;
+            }
 
+            if (replacement != null)
+            {
+                replacement.Parent = replaced.Parent;
+            }
+        }
         /*************************************************************************************************/
 
 
@@ -629,7 +660,5 @@ namespace DataStructures.Trees
             // Invoke the internal remove node method.
             this._remove(node);
         }
-
     }
-
 }
