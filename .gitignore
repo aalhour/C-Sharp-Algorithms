@@ -19,6 +19,7 @@ bld/
 
 # Roslyn cache directories
 *.ide/
+.ionide/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -193,3 +194,4 @@ ModelManifest.xml
 
 # Local test runner
 testrunner
+
