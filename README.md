@@ -58,9 +58,7 @@ This is a C#.NET solution-project, and it contains three subprojects:
 
 #### A Note to Contributors:
 
-If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
-
-Note: The projects where tested with Visual Studio Community using .NET Core 2.0.3 on mac OS.
+If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](.github/CONTRIBUTING.md) first.
 
 ##
 ### DATA STRUCTURES
