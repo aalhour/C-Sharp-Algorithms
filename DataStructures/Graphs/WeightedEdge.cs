@@ -32,8 +32,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public bool IsWeighted
         {
-            get
-            { return false; }
+            get { return true; }
         }
 
         /// <summary>
