@@ -1,142 +1,252 @@
 ﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-    public static class GraphsDijkstraShortestPathsTest
+    public class GraphsDijkstraShortestPathsTest
     {
         [Fact]
-        public static void DoTest()
+        public void Constructor_Throw_WhenGraphInNull()
         {
-            // Init graph object
-            DirectedWeightedSparseGraph<string> graph = new DirectedWeightedSparseGraph<string>();
-
-            // Init V
-            string[] V = new string[6] { "r", "s", "t", "x", "y", "z" };
-
-            // Insert V
-            graph.AddVertices(V);
-            Assert.True(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
-
-            // Insert E
-            bool status = graph.AddEdge("r", "s", 7);
-            Assert.True(status == true);
-            status = graph.AddEdge("r", "t", 6);
-            Assert.True(status == true);
-            status = graph.AddEdge("s", "t", 5);
-            Assert.True(status == true);
-            status = graph.AddEdge("s", "x", 9);
-            Assert.True(status == true);
-            status = graph.AddEdge("t", "x", 10);
-            Assert.True(status == true);
-            status = graph.AddEdge("t", "y", 7);
-            Assert.True(status == true);
-            status = graph.AddEdge("t", "z", 5);
-            Assert.True(status == true);
-            status = graph.AddEdge("x", "y", 2);
-            Assert.True(status == true);
-            status = graph.AddEdge("x", "z", 4);
-            Assert.True(status == true);
-            status = graph.AddEdge("y", "z", 1);
-            Assert.True(status == true);
-
-            // Get E
-            IEnumerable<WeightedEdge<string>> E = graph.Edges;
-            Assert.True(graph.EdgesCount == 10, "Wrong Edges Count.");
-
-            // PRINT THE GRAPH
-            // [*] DIJKSTRA ON DIRECTED WEIGHTED GRAPH - TEST 01:
-
-            // Graph representation:
-            // Init DIJKSTRA
-            DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string> dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
-
-            Assert.True(dijkstra.HasPathTo("r") == false);
-            Assert.True(dijkstra.HasPathTo("z") == true);
-
-            // Get shortest path to Z
-            string pathToZ = string.Empty;
-            foreach (string node in dijkstra.ShortestPathTo("z"))
-            {
-                pathToZ = String.Format("{0}({1}) -> ", pathToZ, node);
-            }
-
-            pathToZ = pathToZ.TrimEnd(new char[] { ' ', '-', '>' });
-
-            string pathToY = string.Empty;
-            foreach (string node in dijkstra.ShortestPathTo("y"))
-            {
-                pathToY = String.Format("{0}({1}) -> ", pathToY, node);
-            }
-
-            pathToY = pathToY.TrimEnd(new char[] { ' ', '-', '>' });
-
-            // Console.WriteLine("Shortest path to node 'y': " + pathToY + "\r\n");
-
-            // Clear the graph and insert new V and E to the instance
-            graph.Clear();
-
-            V = new string[] { "A", "B", "C", "D", "E" };
-
-            // Insert new values of V
-            graph.AddVertices(V);
-            Assert.True(graph.VerticesCount == V.Length, "Wrong Vertices Count.");
-
-            // Insert new value for edges
-            status = graph.AddEdge("A", "C", 7);
-            Assert.True(status == true);
-            status = graph.AddEdge("B", "A", 19);
-            Assert.True(status == true);
-            status = graph.AddEdge("B", "C", 11);
-            Assert.True(status == true);
-            status = graph.AddEdge("C", "E", 5);
-            Assert.True(status == true);
-            status = graph.AddEdge("C", "D", 15);
-            Assert.True(status == true);
-            status = graph.AddEdge("D", "B", 4);
-            Assert.True(status == true);
-            status = graph.AddEdge("E", "D", 13);
-            Assert.True(status == true);
-
-            Assert.True(graph.EdgesCount == 7, "Wrong Edges Count.");
-
-            // [*] DIJKSTRA ON DIRECTED WEIGHTED GRAPH - TEST 01:
-
-            // Graph representation:
-            // Init DIJKSTRA
-            dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "A");
-
-            string pathToD = string.Empty;
-            foreach (string node in dijkstra.ShortestPathTo("D"))
-            {
-                pathToD = String.Format("{0}({1}) -> ", pathToD, node);
-            }
-
-            pathToD = pathToD.TrimEnd(new char[] { ' ', '-', '>' });
-
-            IEnumerable<string> vertices = graph.Vertices;
-            DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string> dijkstraAllPairs = new DijkstraAllPairsShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph);
-
-            // Dijkstra All Pairs Shortest Paths:
-            foreach (string source in vertices)
-            {
-                foreach (string destination in vertices)
-                {
-                    string shortestPath = string.Empty;
-                    foreach (string node in dijkstraAllPairs.ShortestPath(source, destination))
-                        shortestPath = String.Format("{0}({1}) -> ", shortestPath, node);
-
-                    shortestPath = shortestPath.TrimEnd(new char[] { ' ', '-', '>' });
-
-                    // Console.WriteLine("Shortest path from '" + source + "' to '" + destination + "' is: " + shortestPath + "\r\n");
-                }
-            }
-
+            Assert.Throws<ArgumentNullException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(null, "vertex"));
         }
 
-    }
+        [Fact]
+        public void Constructor_Throw_WhenSourceVertexIsNull()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            Assert.Throws<ArgumentNullException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, null));
+        }
 
+        [Fact]
+        public void Constructor_Throw_WhenSourceIsNotPartOfGraph()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+            Assert.Throws<ArgumentException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "x"));
+        }
+
+        [Fact]
+        public void Constructor_Throw_WhenAnyEdgeWeightIsLessThanZero()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+
+            graph.AddEdge("a", "b", -1);
+
+            Assert.Throws<ArgumentException>(() => new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a"));
+        }
+
+        [Fact]
+        public void ShortestPathTo_Throw_WhenDestinationIsNotInGraph()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.Throws<ArgumentException>(() => dijkstra.ShortestPathTo("z"));
+        }
+
+        [Fact]
+        public void ShortestPathTo_ReturnNull_WhenDestinationIsNotAchievable()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+
+            graph.AddEdge("a", "b", 1);
+            graph.AddEdge("b", "c", 1);
+            graph.AddEdge("c", "a", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.Null(dijkstra.ShortestPathTo("d"));
+        }
+
+        [Fact]
+        public void ShortestPathTo_ReturnSingleVertex_WhenDestinationIsSameAsSource()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+
+            graph.AddEdge("a", "b", 1);
+            graph.AddEdge("b", "c", 1);
+            graph.AddEdge("c", "a", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var result = dijkstra.ShortestPathTo("a");
+            Assert.NotNull(result);
+            Assert.Single(result);
+            Assert.Equal("a", result.Single());
+        }
+
+        [Fact]
+        public void ShortestPathTo_FindShortestPath_WhenThereIsOnlyOnePath()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+
+            graph.AddEdge("a", "b", 1);
+            graph.AddEdge("b", "c", 1);
+            graph.AddEdge("a", "c", 1);
+            graph.AddEdge("c", "d", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var result = dijkstra.ShortestPathTo("d");
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count());
+            Assert.Contains("a", result);
+            Assert.Contains("c", result);
+            Assert.Contains("d", result);
+            Assert.Equal(2, dijkstra.DistanceTo("d"));
+        }
+
+        [Fact]
+        public void ShortestPathTo_FindShortestPath_WhenThereIsPossibleMultiplePaths()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+            graph.AddVertex("d");
+
+            graph.AddEdge("a", "b", 1);
+            graph.AddEdge("b", "c", 1);
+            graph.AddEdge("c", "a", 1);
+            graph.AddEdge("c", "d", 1);
+            graph.AddEdge("b", "d", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            var result = dijkstra.ShortestPathTo("d");
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Count());
+            Assert.Contains("a", result);
+            Assert.Contains("b", result);
+            Assert.Contains("d", result);
+            Assert.Equal(2, dijkstra.DistanceTo("d"));
+        }
+
+        [Fact]
+        public void ShortestPathTo_FindShortestPath_WhenEdgeHaveDifferentWeight()
+        {
+            var vertices = new[] { "r", "s", "t", "x", "y", "z" };
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertices(vertices);
+
+            graph.AddEdge("r", "s", 7);
+            graph.AddEdge("r", "t", 6);
+            graph.AddEdge("s", "t", 5);
+            graph.AddEdge("s", "x", 9);
+            graph.AddEdge("t", "x", 10);
+            graph.AddEdge("t", "y", 7);
+            graph.AddEdge("t", "z", 5);
+            graph.AddEdge("x", "y", 2);
+            graph.AddEdge("x", "z", 4);
+            graph.AddEdge("y", "z", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "s");
+            var shortestToZ = dijkstra.ShortestPathTo("z");
+            Assert.NotNull(shortestToZ);
+            Assert.Equal(3, shortestToZ.Count());
+            Assert.Contains("s", shortestToZ);
+            Assert.Contains("t", shortestToZ);
+            Assert.Contains("z", shortestToZ);
+            Assert.Equal(10, dijkstra.DistanceTo("z"));
+
+            var shortestToY = dijkstra.ShortestPathTo("y");
+            Assert.NotNull(shortestToY);
+            Assert.Equal(3, shortestToY.Count());
+            Assert.Contains("s", shortestToY);
+            Assert.Contains("x", shortestToY);
+            Assert.Contains("y", shortestToY);
+            Assert.Equal(11, dijkstra.DistanceTo("y"));
+        }
+
+        [Fact]
+        public void HasPathTo_Throw_WhenVertexIsNotInGraph()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+
+            graph.AddEdge("a", "b", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.Throws<ArgumentException>(() => dijkstra.HasPathTo("z"));
+        }
+
+        [Fact]
+        public void HasPathTo_ReturnTrue_WhenVertexIsAchievable()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+
+            graph.AddEdge("a", "b", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.True(dijkstra.HasPathTo("b"));
+        }
+
+        [Fact]
+        public void HasPathTo_ReturnFalse_WhenVertexIsNotAchievable()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+
+            graph.AddEdge("a", "b", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.False(dijkstra.HasPathTo("c"));
+        }
+
+        [Fact]
+        public void DistanceTo_Throw_WhenVertexIsNotInGraph()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+
+            graph.AddEdge("a", "b", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.Throws<ArgumentException>(() => dijkstra.DistanceTo("z"));
+        }
+
+        [Fact]
+        public void DistanceTo_ReturnInfinity_WhenVertexIsNotAchievable()
+        {
+            var graph = new DirectedWeightedSparseGraph<string>();
+            graph.AddVertex("a");
+            graph.AddVertex("b");
+            graph.AddVertex("c");
+
+            graph.AddEdge("a", "b", 1);
+
+            var dijkstra = new DijkstraShortestPaths<DirectedWeightedSparseGraph<string>, string>(graph, "a");
+            Assert.Equal(long.MaxValue, dijkstra.DistanceTo("c"));
+        }
+    }
 }
