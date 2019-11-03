@@ -44,14 +44,14 @@ namespace Algorithms.Graphs
             _graph = graph;
             _source = source;
 
-            Initialize();
-            Dijkstra();
+            _initialize();
+            _dijkstra();
         }
 
         /// <summary>
         ///     The Dijkstra's algorithm.
         /// </summary>
-        private void Dijkstra()
+        private void _dijkstra()
         {
             while (!_minPriorityQueue.IsEmpty)
             {
@@ -82,7 +82,7 @@ namespace Algorithms.Graphs
             }
         }
 
-        private void Initialize()
+        private void _initialize()
         {
             var verticesCount = _graph.VerticesCount;
 
