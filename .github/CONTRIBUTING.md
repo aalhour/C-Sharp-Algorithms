@@ -21,19 +21,26 @@ Please note that an [issue](https://github.com/aalhour/C-Sharp-Algorithms/issues
     - [Algorithm Request](https://github.com/aalhour/C-Sharp-Algorithms/issues)
     - [Data Structure Request](https://github.com/aalhour/C-Sharp-Algorithms/issues)
 
-## Communication and Issues:
+## Communication and Issues
 
-Whether you want to report a bug, an enhancement, a new data structure, or a new algorithm implementation please make sure you check out the issues first, someone might have started working on a similar idea already. If you are sure that what you want to contribute is new, then please open an issue describing what you want to accomplish before you decide to commit any code. This will guarantee no one else will work on the same file(s), data structure and/or algorithm you are working on.
+Please make sure you check out the issues first, someone might have started working on a similar idea already. If you are sure that what you want to contribute is new, then please open an issue describing what you want to implement before you decide to submit a PR.
 
-It would be great if you can check out the existing [Issue Templates](ISSUE_TEMPLATE) which outline different types of contributions and how to submit them.
+Please refer to the [Issue Templates](ISSUE_TEMPLATE) to see the different types of contributions.
 
-## Coding Conventions:
+## Submitting a Pull Requests
 
-The coding conventions are the official Microsoft C# Coding Conventions. Most of the official code styling is supported by default on Visual Studio, but you need to set it up as a policy on Xamarian Studio via the Solution/Project properties window, in case you are using Xamarian Studio.
+After you commit your code, please submit your changes with a pull-request, you can do this on GitHub or through git. Please make sure to refer to the [Pull Request Guideline](PULL_REQUEST_TEMPLATE.md) when creating a new one.
 
-Please refer to the [Framework Design Guidelines](https://msdn.microsoft.com/en-us/library/ms229042(v=vs.110).aspx) document on MSDN.
+## Coding Conventions
 
-## NuGet and 3rd Party Libraries:
+We follow the official Microsoft C# Coding Conventions (see: below). Most of the styleguide is supported by default on Visual Studio, but you need to set it up as a policy from the Solution/Project properties window, in case you are using Visual Studio Community.
+
+Please refer to the following guidelines:
+
+  * [MS C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
+  * [MS Framework Design Guidelines](https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/index?redirectedfrom=MSDN)
+
+## NuGet and 3rd Party Libraries
 
 If your implementation depends on a 3rd party library, and you think it is critical, then please communicate this before you change the solution/projects references. We are striving to provide a bare-bones library of data structures and algorithms.
 
@@ -45,7 +52,3 @@ You should write a test for every data structure and algorithm you implement. Th
 
  * `AlgorithmsTests`: Package hosting unit tests for the Algorithms project.
  * `DataStructuresTests`: Package hosting unit tests for the Data Structures project.
-
-## Submitting a Pull Request
-
-After you commit your code, please submit your changes with a pull-request, you can do this on GitHub or through git. Please make sure to refer to the [Pull Request Guideline](PULL_REQUEST_TEMPLATE.md) when creating a new one.
