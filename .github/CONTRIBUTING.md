@@ -29,7 +29,9 @@ Please refer to the [Issue Templates](ISSUE_TEMPLATE) to see the different types
 
 ## Submitting a Pull Requests
 
-After you commit your code, please submit your changes with a pull-request, you can do this on GitHub or through git. Please make sure to refer to the [Pull Request Guideline](PULL_REQUEST_TEMPLATE.md) when creating a new one.
+Pull requests should be submitted from your cloned repository's `master` branch to the upstream `master` branch. Please make sure that you rebase your local branch against the upstream branch before you submit your pull request.
+
+Please make sure to refer to the [Pull Request Guideline](PULL_REQUEST_TEMPLATE.md) when submitting a new one.
 
 ## Coding Conventions
 
