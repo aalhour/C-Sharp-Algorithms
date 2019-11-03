@@ -95,6 +95,36 @@ namespace UnitTest.DataStructuresTests
             var intArray = listOfNumbers.ToArray();
             Assert.True(intArray[0] == 0 && intArray[intArray.Length - 1] == 55, "Wrong sorting!");
         }
+
+        /// <summary>
+        ///Check SelectionSort method
+        ///</summary>
+        ///<returns></returns>
+        [Fact]
+        public static void TestSelectionSort()
+        {
+            var listOfNumbers = new DLinkedList<int>();
+            listOfNumbers.Append(23);
+            listOfNumbers.Append(42);
+            listOfNumbers.Append(4);
+            listOfNumbers.Append(16);
+            listOfNumbers.Append(8);
+            listOfNumbers.Append(15);
+            listOfNumbers.Append(9);
+            listOfNumbers.Append(55);
+            listOfNumbers.Append(0);
+
+            listOfNumbers.SelectionSort();
+            var intArray = listOfNumbers.ToArray();
+            var i = 0;
+            while (i < intArray.Length - 1)
+            {
+                Assert.True(intArray[i] <= intArray[i + 1], "Wrong sorting at index: " + i);
+                ++i;
+            }
+
+        }
+
     }
 }
 
