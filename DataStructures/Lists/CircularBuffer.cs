@@ -10,7 +10,6 @@ namespace DataStructures.Lists
         private T[] _circularBuffer;
         private int _end;
         private int _start;
-        private readonly T _default;
         private static readonly int _defaultBufferLength = 10;
 
         /// <summary>
@@ -72,7 +71,6 @@ namespace DataStructures.Lists
                 throw new ArgumentOutOfRangeException("length can not be zero or negative");
             }
             _circularBuffer = new T[length + 1];
-            _default = _circularBuffer[length];
             _end = 0;
             _start = 0;
             CanOverride = canOverride;
@@ -121,7 +119,7 @@ namespace DataStructures.Lists
         #region IEnumerable Implementation
         public IEnumerator<T> GetEnumerator() 
         {
-            for (int i = 0; i < Count; i++) 
+            for (int i = _start; i <= Count; i++) 
             {
                 yield return _circularBuffer[i];
             }
@@ -161,6 +159,8 @@ namespace DataStructures.Lists
         public void Clear() 
         {
             _count = 0;
+            _start = 0;
+            _end = 0;
             _circularBuffer = new T[Length + 1];
         }
         /// <summary>
@@ -212,13 +212,23 @@ namespace DataStructures.Lists
             {
                 if (item.Equals(_circularBuffer[i])) 
                 {
-                    _circularBuffer[i] = _default;
+                    _circularBuffer[i] = default(T);
                     --_count;
                     result = true;
+                    int j = i;
+                    // Moving elements one step forward
+                    while(j < Length ) 
+                    {
+                        var temp = _circularBuffer[j];
+                        _circularBuffer[j] = _circularBuffer[j + 1];
+                        _circularBuffer[j + 1] = temp;
+                        j++;
+                    }
+                    _end = i + _count ;
+                    break;
                 }
             }
             return result;
-
         }
         #endregion
     }
