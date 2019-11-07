@@ -119,7 +119,7 @@ namespace DataStructures.Lists
         #region IEnumerable Implementation
         public IEnumerator<T> GetEnumerator() 
         {
-            for (int i = _start; i <= Count; i++) 
+            for (int i = _start; i < Count; i++) 
             {
                 yield return _circularBuffer[i];
             }
@@ -207,28 +207,21 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Remove(T item) 
         {
-            var result = false;
-            for (int i = 0; i < _circularBuffer.Length; i++) 
+            if (!IsEmpty && Contains(item)) 
             {
-                if (item.Equals(_circularBuffer[i])) 
+               var sourceArray = _circularBuffer.Except(new T[] { item }).ToArray();
+                _circularBuffer = new T[Length + 1];
+                Array.Copy(sourceArray, _circularBuffer, sourceArray.Length);
+
+                if (!item.Equals(default(T))) 
                 {
-                    _circularBuffer[i] = default(T);
-                    --_count;
-                    result = true;
-                    int j = i;
-                    // Moving elements one step forward
-                    while(j < Length ) 
-                    {
-                        var temp = _circularBuffer[j];
-                        _circularBuffer[j] = _circularBuffer[j + 1];
-                        _circularBuffer[j + 1] = temp;
-                        j++;
-                    }
-                    _end = i + _count ;
-                    break;
-                }
+                    _end = sourceArray.Length - 1;
+                    _count = sourceArray.Length-1;
+                }  
+                return true;
             }
-            return result;
+
+            return false;
         }
         #endregion
     }

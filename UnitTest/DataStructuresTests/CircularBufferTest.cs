@@ -155,19 +155,63 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(3, array[0]);
             Assert.Equal(34, array[1]);
             Assert.Equal(24, array[2]);
-            
-            //Testing Remove
-            Assert.True(circularBuffer.Remove(3));
-            Assert.False(circularBuffer.Remove(14));
 
             //Testing Count
-            Assert.Equal(2, circularBuffer.Count);
+            Assert.Equal(3, circularBuffer.Count);
             //Testing clear
             circularBuffer.Clear();
             Assert.Equal(0, circularBuffer.Pop());
             Assert.Equal(0, circularBuffer.Pop());
             Assert.Equal(0, circularBuffer.Pop());
             Assert.Empty(circularBuffer);
+        }
+        [Fact]
+        public static void TestingRemoveMethod() {
+            var circularBuffer = new CircularBuffer<byte>(5, false);
+            circularBuffer.Add(3);
+            circularBuffer.Add(34);
+            circularBuffer.Add(24);
+            circularBuffer.Add(31);
+            circularBuffer.Add(14);
+            
+            //Removing default(T) from the buffer. buffer should not be affected since default is not contained
+            circularBuffer.Remove(default(byte));
+            Assert.Equal(3, circularBuffer.Pop());
+            Assert.Equal(34, circularBuffer.Pop());
+            Assert.Equal(24, circularBuffer.Pop());
+            Assert.Equal(31, circularBuffer.Pop());
+            Assert.Equal(14, circularBuffer.Pop());
+
+            //Filling the buffer again with some duplicate entries
+            circularBuffer.Add(3);
+            circularBuffer.Add(3);
+            circularBuffer.Add(3);
+            circularBuffer.Add(31);
+            circularBuffer.Add(14);
+
+            circularBuffer.Remove(3);
+            Assert.Equal(5 - 3, circularBuffer.Count);
+
+            circularBuffer = new CircularBuffer<byte>(3, false);
+            circularBuffer.Add(1);
+            circularBuffer.Add(2);
+            circularBuffer.Add(3);
+            Assert.Equal(3, circularBuffer.Count);
+            //Removing elements one by one from the end
+            circularBuffer.Remove(3);
+            circularBuffer.Remove(2);
+            circularBuffer.Remove(1);
+            Assert.Empty(circularBuffer);
+            //Adding elements back
+            circularBuffer.Add(1);
+            circularBuffer.Add(2);
+            circularBuffer.Add(3);
+            Assert.Equal(3, circularBuffer.Count);
+
+            //buffer would yield these results if it was poped initially
+            Assert.Equal(1, circularBuffer.Pop());
+            Assert.Equal(2, circularBuffer.Pop());
+            Assert.Equal(3, circularBuffer.Pop());
         }
     }
 }
