@@ -7,10 +7,9 @@ namespace Algorithms.Search
 {
     public class BinarySearcher<T> : IEnumerator<T>
     {
-
         private readonly IList<T> _collection;
         private readonly Comparer<T> _comparer;
-
+        private T _item;
         private int _currentItemIndex;
         private int _leftIndex;
         private int _rightIndex;
@@ -18,15 +17,13 @@ namespace Algorithms.Search
         /// <summary>
         /// The value of the current item
         /// </summary>
-        public T Current {
-
+        public T Current
+        {
             get
             {
                 return _collection[_currentItemIndex];
             }
-
         }
-
 
         object IEnumerator.Current => Current;
 
@@ -41,59 +38,39 @@ namespace Algorithms.Search
             {
                 throw new NullReferenceException("List is null");
             }
-
-            this._collection = collection;
-            this._comparer = comparer;
-           
+            _collection = collection;
+            _comparer = comparer;
+            HeapSorter.HeapSort(_collection);
         }
 
-     
+        public void SearchFor(T item)
+        {
+            if (item == null)
+            {
+                throw new NullReferenceException("Item to search for is not set");
+            }
+            Reset();
+            _item = item;
+        }
+
         /// <summary>
         /// Apply Binary Search in a list.
         /// </summary>
-        /// <param name="item">The item we search for</param>
         /// <returns>If item found, its' index, -1 otherwise</returns>
-        public int BinarySearch(T item)
+        public int BinarySearch()
         {
-            _currentItemIndex = -1;
-            _leftIndex = 0;
-            _rightIndex = _collection.Count - 1;
-            HeapSorter.HeapSort(_collection);
-            InternalBinarySearch(item);
+            bool notFound = true;
+
+            while ((_leftIndex <= _rightIndex) && notFound)
+            {
+                notFound = MoveNext();
+            }
+
+            if (notFound)
+            {
+                Reset();
+            }
             return _currentItemIndex;
-        }
-
-
-        /// <summary>
-        /// An implementation of binary search algorithm.
-        /// </summary>
-        /// <param name="item">The item we search for</param>
-        /// <returns></returns>
-        private void InternalBinarySearch(T item)
-        {
-            bool found = false;
-           
-            while (MoveNext() && !found)
-            {
-                if (_comparer.Compare(item, Current) < 0)
-                {
-                    _rightIndex = _currentItemIndex - 1;
-                }
-                else if (_comparer.Compare(item, Current) > 0)
-                {
-                    _leftIndex = _currentItemIndex + 1;
-                }
-                else
-                {
-                    found = true;
-                }
-            }
-            
-            if (!found)
-            {
-                this.Reset();
-            }
-
         }
 
         /// <summary>
@@ -104,23 +81,31 @@ namespace Algorithms.Search
         {
             _currentItemIndex = this._leftIndex + (this._rightIndex - this._leftIndex) / 2;
 
-            if (_leftIndex <= _rightIndex)
+            if (_comparer.Compare(_item, Current) < 0)
             {
-                return true;
+                _rightIndex = _currentItemIndex - 1;
+            }
+            else if (_comparer.Compare(_item, Current) > 0)
+            {
+                _leftIndex = _currentItemIndex + 1;
             }
             else
             {
                 return false;
             }
-
+            return true;
         }
 
-        
-        public void Reset(){ this._currentItemIndex = -1; }
+        public void Reset()
+        { 
+            this._currentItemIndex = -1;
+            _leftIndex = 0;
+            _rightIndex = _collection.Count - 1;
+        }
 
-        
-        public void Dispose(){}
-
+        public void Dispose()
+        { 
+           //not implementing this, since there are no managed resources to release 
+        }
     }
-
 }
