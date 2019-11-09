@@ -43,23 +43,21 @@ namespace Algorithms.Search
             HeapSorter.HeapSort(_collection);
         }
 
-        public void SearchFor(T item)
+        /// <summary>
+        /// Apply Binary Search in a list.
+        /// </summary>
+        /// <param name="item">The item we search</param>
+        /// <returns>If item found, its' index, -1 otherwise</returns>
+        public int BinarySearch(T item)
         {
+            bool notFound = true;
+
             if (item == null)
             {
                 throw new NullReferenceException("Item to search for is not set");
             }
             Reset();
             _item = item;
-        }
-
-        /// <summary>
-        /// Apply Binary Search in a list.
-        /// </summary>
-        /// <returns>If item found, its' index, -1 otherwise</returns>
-        public int BinarySearch()
-        {
-            bool notFound = true;
 
             while ((_leftIndex <= _rightIndex) && notFound)
             {
