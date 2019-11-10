@@ -151,6 +151,10 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs)
   * [Quick Sort](Algorithms/Sorting/QuickSorter.cs)
 
+#### Searching:
+
+  * [Binary Search](Algorithms/Search/BinarySearcher.cs)
+
 #### Graphs:
 
   * Graph Search:
