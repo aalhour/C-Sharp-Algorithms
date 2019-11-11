@@ -109,7 +109,7 @@ namespace DataStructures.Graphs
         /// <summary>
         ///     Get all incoming edges to a vertex
         /// </summary>
-        public new IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
+        public virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
@@ -131,7 +131,7 @@ namespace DataStructures.Graphs
         /// <summary>
         ///     Get all outgoing weighted edges from vertex
         /// </summary>
-        public new IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
