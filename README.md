@@ -17,16 +17,16 @@
 
 <p align="center">
   <a href="LICENSE" alt="License">
-    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://travis-ci.org/aalhour/C-Sharp-Algorithms" alt="Build">
-    <img src="https://img.shields.io/travis/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/travis/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors" alt="Contributors">
-    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://github.com/aalhour/C-Sharp-Algorithms/pulse" alt="Activity">
-    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
 </p>
 
