@@ -212,6 +212,48 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(1, circularBuffer.Pop());
             Assert.Equal(2, circularBuffer.Pop());
             Assert.Equal(3, circularBuffer.Pop());
+
+            //Test for removing duplicate values of default(T)
+            circularBuffer = new CircularBuffer<byte>(12, false);
+            circularBuffer.Add(1);
+            circularBuffer.Add(0);
+            circularBuffer.Add(2);
+            circularBuffer.Add(0);
+            circularBuffer.Add(3);
+            circularBuffer.Add(0);
+            circularBuffer.Add(4);
+            circularBuffer.Add(0);
+            circularBuffer.Add(5);
+
+            circularBuffer.Remove(0);
+            Assert.Equal(5, circularBuffer.Count);
+
+            Assert.Equal(1, circularBuffer.Pop());
+            Assert.Equal(2, circularBuffer.Pop());
+            Assert.Equal(3, circularBuffer.Pop());
+            Assert.Equal(4, circularBuffer.Pop());
+            Assert.Equal(5, circularBuffer.Pop());
+
+            //Test for removing duplicate values of default(T) for strings
+            var stringBuffer = new CircularBuffer<string>(10, false);
+            stringBuffer.Add("one");
+            stringBuffer.Add(null);
+            stringBuffer.Add("two");
+            stringBuffer.Add(null);
+            stringBuffer.Add("three");
+            stringBuffer.Add(null);
+            stringBuffer.Add("four");
+            stringBuffer.Add(null);
+            stringBuffer.Add("five");
+
+            stringBuffer.Remove(null);
+            Assert.Equal(5, stringBuffer.Count);
+
+            Assert.Equal("one", stringBuffer.Pop());
+            Assert.Equal("two", stringBuffer.Pop());
+            Assert.Equal("three", stringBuffer.Pop());
+            Assert.Equal("four", stringBuffer.Pop());
+            Assert.Equal("five", stringBuffer.Pop());
         }
     }
 }

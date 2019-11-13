@@ -213,11 +213,17 @@ namespace DataStructures.Lists
                 _circularBuffer = new T[Length + 1];
                 Array.Copy(sourceArray, _circularBuffer, sourceArray.Length);
 
-                if (!item.Equals(default(T))) 
+                if (!Equals(item,default(T))) 
                 {
                     _end = sourceArray.Length - 1;
                     _count = sourceArray.Length-1;
-                }  
+                }
+                else 
+                {
+                    _end = sourceArray.Length;
+                    _count = sourceArray.Length;
+                }
+
                 return true;
             }
 
