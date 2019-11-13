@@ -63,7 +63,7 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
 ##
 ### DATA STRUCTURES
 
-#### Lists:
+#### Linear:
 
   * [Skip List](DataStructures/Lists/SkipList.cs)
   * [Array List](DataStructures/Lists/ArrayList.cs)
@@ -71,6 +71,10 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [Queue](DataStructures/Lists/Queue.cs)
   * [Single-Linked List](DataStructures/Lists/SLinkedList.cs)
   * [Double-Linked List](DataStructures/Lists/DLinkedList.cs)
+
+#### Circular
+  
+  * [Circular Buffer](DataStructures/Lists/CircularBuffer.cs)
 
 #### Heaps:
 
