@@ -16,5 +16,4 @@ jobs:
     - name: Build and Test with Dotnet
       run: |
         dotnet build --configuration Release
-        dotnet restore
         dotnet test
