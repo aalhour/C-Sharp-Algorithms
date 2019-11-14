@@ -13,5 +13,10 @@ jobs:
         dotnet-version: 2.2.108
     - name: Build with .NET Core
       run: dotnet build --configuration Release
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v1
     - name: Run Tests
       run: dotnet test
