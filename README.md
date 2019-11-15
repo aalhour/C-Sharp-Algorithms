@@ -33,7 +33,7 @@
 ##
 ### WHAT IS C# ALGORITHMS?
 
-A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains 35+ Data Structures and 30+ Algorithms designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains **75+** Data Structures and Algorithms, designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
 
 ##
 ### BACK STORY
@@ -105,16 +105,20 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
 
 #### Trees:
 
-
-  * [AVL Tree](DataStructures/Trees/AVLTree.cs)
-  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
-    * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
-    * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
-    * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-  * [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)
-  * [Trie](DataStructures/Trees/Trie.cs)
-  * [Trie Map](DataStructures/Trees/TrieMap.cs)
+  
+  * Basic Search Trees:
+    + [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
+      * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+    + [\(Augmented\) Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
+    + [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)  
+  * Self-Balancing Trees:
+    + [AVL Tree](DataStructures/Trees/AVLTree.cs)
+    + [B-Tree](DataStructures/Trees/BTree.cs)
+    + [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
+      * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+  * Prefix Trees:
+    + [Trie](DataStructures/Trees/Trie.cs)
+    + [Trie Map](DataStructures/Trees/TrieMap.cs) _(associative prefix tree; complete words are keys to records)_
  
 #### Graphs:
 
