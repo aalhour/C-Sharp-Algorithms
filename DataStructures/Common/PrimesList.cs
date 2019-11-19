@@ -49,8 +49,8 @@ namespace DataStructures.Common
                     {
                         if (_instance == null)
                         {
-                            _instance = new PrimesList();
                             _initializeData();
+                            _instance = new PrimesList();
                         }
                     }
                 }
