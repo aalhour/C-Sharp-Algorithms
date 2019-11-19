@@ -1,7 +1,7 @@
 ﻿using DataStructures.Common;
 using Xunit;
 
-namespace UnitTest.AlgorithmsTests
+namespace UnitTest.DataStructuresTests
 {
     public class PrimeListTest
     {
