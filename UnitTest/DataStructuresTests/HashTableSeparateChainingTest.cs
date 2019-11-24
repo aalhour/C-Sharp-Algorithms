@@ -40,6 +40,7 @@ namespace UnitTest.DataStructuresTests
             
             var exception = Assert.Throws<ArgumentException>(act);
             Assert.Equal("Key already exists in the hash table.", exception.Message);
+            Assert.True(studentsMarks.Count == 2);
         }
 
         [Fact]
@@ -52,6 +53,7 @@ namespace UnitTest.DataStructuresTests
             var value = studentsMarks["Name2"];
 
             Assert.Equal(5, value);
+            Assert.True(studentsMarks.Count == 2);
         }
 
         [Fact]
@@ -65,6 +67,7 @@ namespace UnitTest.DataStructuresTests
             Action act = () => value = studentsMarks["Name3"];
 
             Assert.Throws<KeyNotFoundException>(act);
+            Assert.True(studentsMarks.Count == 2);
         }
 
         [Fact]
@@ -120,6 +123,11 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal("Name1", arrayKeys[0]);
             Assert.Equal("Name2", arrayKeys[1]);
             Assert.Equal("Name3", arrayKeys[2]);
+            var arrayValues = array.Select(x => x.Value).OrderBy(x => x).ToArray();
+            Assert.Equal(1, arrayValues[0]);
+            Assert.Equal(3, arrayValues[1]);
+            Assert.Equal(5, arrayValues[2]);
+
         }
 
         [Fact]
