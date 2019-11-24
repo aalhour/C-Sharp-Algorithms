@@ -442,7 +442,7 @@ namespace DataStructures.Dictionaries
                 // Decrease the number of free slots.
                 _freeSlotsCount--;
             }
-            else if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
+            else if (_hashTableStore[hashcode].Count > 0)
             {
                 if (_hashTableStore[hashcode].ContainsKey(key) == true)
                     throw new ArgumentException("Key already exists in the hash table.");
@@ -582,7 +582,7 @@ namespace DataStructures.Dictionaries
 
             int i = arrayIndex;
             int hashTableIndex = 0;
-            int countOfElements = (array.Length - arrayIndex);
+            var currentChainNode = new DLinkedListNode<TKey, TValue>();
 
             while (true)
             {
@@ -591,30 +591,19 @@ namespace DataStructures.Dictionaries
                 if (i >= array.Length)
                     break;
 
-                if (_hashTableStore[hashTableIndex] != null && _hashTableStore[hashTableIndex].Count > 0)
+                if (_hashTableStore[hashTableIndex] != null)
                 {
-                    if (_hashTableStore[hashTableIndex].Count == 1)
+                    currentChainNode = _hashTableStore[hashTableIndex].Head;
+                    while (currentChainNode != null && i < array.Length)
                     {
-                        pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+                        pair = new KeyValuePair<TKey, TValue>(currentChainNode.Key, currentChainNode.Value);
                         array[i] = pair;
                         i++;
                         hashTableIndex++;
+
+                        currentChainNode = currentChainNode.Next;
                     }
-                    else
-                    {
-                        var headOfChain = _hashTableStore[hashTableIndex].Head;
-
-                        while (i < array.Length)
-                        {
-                            pair = new KeyValuePair<TKey, TValue>(headOfChain.Key, headOfChain.Value);
-                            array[i] = pair;
-                            i++;
-                            hashTableIndex++;
-
-                            headOfChain = headOfChain.Next;
-                        }
-                    }//end-if-else
-                }//end-if
+                }
                 else
                 {
                     hashTableIndex++;
