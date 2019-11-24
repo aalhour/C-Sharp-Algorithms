@@ -34,7 +34,6 @@ namespace DataStructures.Dictionaries
         private decimal _slotsLoadFactor;
         private const int _defaultCapacity = 8;
         private DLinkedList<TKey, TValue>[] _hashTableStore;
-        private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[_defaultCapacity];
         private List<TKey> _keysCollection { get; set; }
         private List<TValue> _valuesCollection { get; set; }
 
@@ -56,7 +55,7 @@ namespace DataStructures.Dictionaries
         public ChainedHashTable()
         {
             this._size = 0;
-            this._hashTableStore = _emptyArray;
+            this._hashTableStore = new DLinkedList<TKey, TValue>[_defaultCapacity];
             this._freeSlotsCount = this._hashTableStore.Length;
             this._keysComparer = EqualityComparer<TKey>.Default;
             this._valuesComparer = EqualityComparer<TValue>.Default;
@@ -442,7 +441,7 @@ namespace DataStructures.Dictionaries
                 // Decrease the number of free slots.
                 _freeSlotsCount--;
             }
-            else if (_hashTableStore[hashcode] != null && _hashTableStore[hashcode].Count > 0)
+            else if (_hashTableStore[hashcode].Count > 0)
             {
                 if (_hashTableStore[hashcode].ContainsKey(key) == true)
                     throw new ArgumentException("Key already exists in the hash table.");
@@ -582,7 +581,7 @@ namespace DataStructures.Dictionaries
 
             int i = arrayIndex;
             int hashTableIndex = 0;
-            int countOfElements = (array.Length - arrayIndex);
+            var currentChainNode = new DLinkedListNode<TKey, TValue>();
 
             while (true)
             {
@@ -591,30 +590,19 @@ namespace DataStructures.Dictionaries
                 if (i >= array.Length)
                     break;
 
-                if (_hashTableStore[hashTableIndex] != null && _hashTableStore[hashTableIndex].Count > 0)
+                if (_hashTableStore[hashTableIndex] != null)
                 {
-                    if (_hashTableStore[hashTableIndex].Count == 1)
+                    currentChainNode = _hashTableStore[hashTableIndex].Head;
+                    while (currentChainNode != null && i < array.Length)
                     {
-                        pair = new KeyValuePair<TKey, TValue>(_hashTableStore[hashTableIndex].First.Key, _hashTableStore[hashTableIndex].First.Value);
+                        pair = new KeyValuePair<TKey, TValue>(currentChainNode.Key, currentChainNode.Value);
                         array[i] = pair;
                         i++;
                         hashTableIndex++;
+
+                        currentChainNode = currentChainNode.Next;
                     }
-                    else
-                    {
-                        var headOfChain = _hashTableStore[hashTableIndex].Head;
-
-                        while (i < array.Length)
-                        {
-                            pair = new KeyValuePair<TKey, TValue>(headOfChain.Key, headOfChain.Value);
-                            array[i] = pair;
-                            i++;
-                            hashTableIndex++;
-
-                            headOfChain = headOfChain.Next;
-                        }
-                    }//end-if-else
-                }//end-if
+                }
                 else
                 {
                     hashTableIndex++;
@@ -631,7 +619,7 @@ namespace DataStructures.Dictionaries
             Array.Clear(_hashTableStore, 0, _hashTableStore.Length);
 
             // Re-initialize to empty collection.
-            _hashTableStore = _emptyArray;
+            _hashTableStore = new DLinkedList<TKey, TValue>[_defaultCapacity];
 
             _size = 0;
             _slotsLoadFactor = 0;
