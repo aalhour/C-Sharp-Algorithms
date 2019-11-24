@@ -34,7 +34,6 @@ namespace DataStructures.Dictionaries
         private decimal _slotsLoadFactor;
         private const int _defaultCapacity = 8;
         private DLinkedList<TKey, TValue>[] _hashTableStore;
-        private static readonly DLinkedList<TKey, TValue>[] _emptyArray = new DLinkedList<TKey, TValue>[_defaultCapacity];
         private List<TKey> _keysCollection { get; set; }
         private List<TValue> _valuesCollection { get; set; }
 
@@ -56,7 +55,7 @@ namespace DataStructures.Dictionaries
         public ChainedHashTable()
         {
             this._size = 0;
-            this._hashTableStore = _emptyArray;
+            this._hashTableStore = new DLinkedList<TKey, TValue>[_defaultCapacity];
             this._freeSlotsCount = this._hashTableStore.Length;
             this._keysComparer = EqualityComparer<TKey>.Default;
             this._valuesComparer = EqualityComparer<TValue>.Default;
@@ -620,7 +619,7 @@ namespace DataStructures.Dictionaries
             Array.Clear(_hashTableStore, 0, _hashTableStore.Length);
 
             // Re-initialize to empty collection.
-            _hashTableStore = _emptyArray;
+            _hashTableStore = new DLinkedList<TKey, TValue>[_defaultCapacity];
 
             _size = 0;
             _slotsLoadFactor = 0;
