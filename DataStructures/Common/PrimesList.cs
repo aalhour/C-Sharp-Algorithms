@@ -76,9 +76,16 @@ namespace DataStructures.Common
 
                 if (numbersAsStrings.Count > 0)
                 {
-                    // cast them into integers and add them to the primes list
-                    var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
-                    _primes.AddRange(numbers);
+                    try
+                    {
+                        // cast them into integers and add them to the primes list
+                        var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
+                        _primes.AddRange(numbers);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(line, e);
+                    }
                 }
             }
         }
@@ -225,7 +232,5 @@ namespace DataStructures.Common
 		        throw new Exception($"Failed to read resource {resourceName}", ex);
 	        }
         }
-
-	}
-
+    }
 }
