@@ -84,7 +84,7 @@ namespace DataStructures.Common
                     }
                     catch (Exception e)
                     {
-                        throw new Exception(line, e);
+                        throw new Exception(line.Replace("\r","{\\r}").Replace("\n", "{\\n}"), e);
                     }
                 }
             }
