@@ -17,23 +17,23 @@
 
 <p align="center">
   <a href="LICENSE" alt="License">
-    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://travis-ci.org/aalhour/C-Sharp-Algorithms" alt="Build">
-    <img src="https://img.shields.io/travis/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/travis/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors" alt="Contributors">
-    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
   <a href="https://github.com/aalhour/C-Sharp-Algorithms/pulse" alt="Activity">
-    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=darkred" />
+    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
   </a>
 </p>
 
 ##
 ### WHAT IS C# ALGORITHMS?
 
-A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains 35+ Data Structures and 30+ Algorithms designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains **75+** Data Structures and Algorithms, designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
 
 ##
 ### BACK STORY
@@ -58,14 +58,12 @@ This is a C#.NET solution-project, and it contains three subprojects:
 
 #### A Note to Contributors:
 
-If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](CONTRIBUTING.md) first.
-
-Note: The projects where tested with Visual Studio Community using .NET Core 2.0.3 on mac OS.
+If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](.github/CONTRIBUTING.md) first.
 
 ##
 ### DATA STRUCTURES
 
-#### Lists:
+#### Linear:
 
   * [Skip List](DataStructures/Lists/SkipList.cs)
   * [Array List](DataStructures/Lists/ArrayList.cs)
@@ -73,6 +71,10 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
   * [Queue](DataStructures/Lists/Queue.cs)
   * [Single-Linked List](DataStructures/Lists/SLinkedList.cs)
   * [Double-Linked List](DataStructures/Lists/DLinkedList.cs)
+
+#### Circular
+  
+  * [Circular Buffer](DataStructures/Lists/CircularBuffer.cs)
 
 #### Heaps:
 
@@ -103,16 +105,20 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
 
 #### Trees:
 
-
-  * [AVL Tree](DataStructures/Trees/AVLTree.cs)
-  * [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
-    * [Augmented Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
-    * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-  * [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
-    * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-  * [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)
-  * [Trie](DataStructures/Trees/Trie.cs)
-  * [Trie Map](DataStructures/Trees/TrieMap.cs)
+  
+  * Basic Search Trees:
+    + [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
+      * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+    + [\(Augmented\) Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
+    + [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)  
+  * Self-Balancing Trees:
+    + [AVL Tree](DataStructures/Trees/AVLTree.cs)
+    + [B-Tree](DataStructures/Trees/BTree.cs)
+    + [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
+      * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
+  * Prefix Trees:
+    + [Trie](DataStructures/Trees/Trie.cs)
+    + [Trie Map](DataStructures/Trees/TrieMap.cs) _(associative prefix tree; complete words are keys to records)_
  
 #### Graphs:
 
@@ -152,6 +158,10 @@ Note: The projects where tested with Visual Studio Community using .NET Core 2.0
   * [OddEven Sort](Algorithms/Sorting/OddEvenSorter.cs)
   * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs)
   * [Quick Sort](Algorithms/Sorting/QuickSorter.cs)
+
+#### Searching:
+
+  * [Binary Search](Algorithms/Search/BinarySearcher.cs)
 
 #### Graphs:
 

@@ -20,7 +20,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private const object EMPTY_VERTEX_SLOT = (object)null;
+        protected const object EMPTY_VERTEX_SLOT = (object)null;
 
         protected virtual int _edgesCount { get; set; }
         protected virtual int _verticesCount { get; set; }

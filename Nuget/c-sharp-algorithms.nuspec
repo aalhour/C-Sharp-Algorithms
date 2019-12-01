@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>C-Sharp-Algorithms</id>
+    <version>1.0.0</version>
+    <title>C-Sharp-Algorithms</title>
+    <authors>Ahmad Alhour</authors>
+    <owners>Ahmad Alhour</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/aalhour/C-Sharp-Algorithms</projectUrl>
+    <icon>images\icon.png</icon>
+    <description>Plug-and-play class-library project of standard Data Structures and Algorithms in C#.</description>
+  </metadata>
+  	<files>
+		<file src="..\Algorithms\bin\Release\**\*.*" target="lib" />
+		<file src=".\*.*" exclude="*.cmd" />
+		<file src=".\images\icon.png" target="images\" />
+	</files>
+</package>
