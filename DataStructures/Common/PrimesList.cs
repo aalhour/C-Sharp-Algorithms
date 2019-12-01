@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 
 namespace DataStructures.Common
 {
@@ -65,7 +64,8 @@ namespace DataStructures.Common
         /// </summary>
         private static void _initializeData()
         {
-			string[] lines = _readResource("DataStructures.Data.PrimesDocument_10K.csv");
+            _primesDocPath = Path.Combine(Path.GetDirectoryName(typeof(PrimesList).GetTypeInfo().Assembly.Location), @"Data/PrimesDocument_10K.csv");
+            string[] lines = File.ReadAllLines(_primesDocPath);
 
             foreach (var line in lines)
             {
@@ -84,28 +84,10 @@ namespace DataStructures.Common
             }
         }
 
-		/// <summary>
-		/// Reads an embedded resource as a text file.
-		/// </summary>
-		/// <returns></returns>
-        public static string[] _readResource(string resourceName)
-        {
-	        try
-	        {
-		        using (var stream = typeof(PrimesList).GetTypeInfo().Assembly.GetManifestResourceStream(resourceName))
-		        using (var reader = new StreamReader(stream ?? throw new InvalidOperationException("Failed to read resource"), Encoding.UTF8))
-			        return reader.ReadToEnd().Split("\r\n");
-	        }
-	        catch (Exception ex)
-	        {
-		        throw new Exception($"Failed to read resource {resourceName}", ex);
-	        }
-        }
-
-		/// <summary>
-		/// Return count of primes.
-		/// </summary>
-		public int Count
+        /// <summary>
+        /// Return count of primes.
+        /// </summary>
+        public int Count
         {
             get { return _primes.Count; }
         }
@@ -228,4 +210,5 @@ namespace DataStructures.Common
         }
 
     }
+
 }
