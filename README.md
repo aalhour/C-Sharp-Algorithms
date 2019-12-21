@@ -1,10 +1,10 @@
 ```
 
-                                          o---o    |  |                                 
-                                         /       --O--O--                               
-                                        O          |  |                                 
-                                         \       --O--O--                               
-                                          o---o    |  |                                 
+                                          o---o    |   |                                 
+                                         /       --O---O--                               
+                                        O          |   |                                 
+                                         \       --O---O--                               
+                                          o---o    |   |                                 
 
 
               O    o       o--o    o--o   o---o   o-O-o  o--O--o  o   o  o     o   o--o 
@@ -72,7 +72,7 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [Single-Linked List](DataStructures/Lists/SLinkedList.cs)
   * [Double-Linked List](DataStructures/Lists/DLinkedList.cs)
 
-#### Circular
+#### Circular:
   
   * [Circular Buffer](DataStructures/Lists/CircularBuffer.cs)
 
