@@ -19,7 +19,7 @@ using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    public class DirectedWeightedSparseGraph<T, W> : IGraph<T, W>, IWeightedGraph<T, W> where T : IComparable<T> where W : IComparable<W>
+    public class DirectedWeightedSparseGraph<T, W> : IGraph<T>, IWeightedGraph<T, W> where T : IComparable<T> where W : IComparable<W>
     {
         /// <summary>
         /// INSTANCE VARIABLES
@@ -124,17 +124,17 @@ namespace DataStructures.Graphs
         }
 
 
-        IEnumerable<IEdge<T, W>> IGraph<T, W>.Edges
+        IEnumerable<IEdge<T>> IGraph<T>.Edges
         {
             get { return this.Edges; }
         }
 
-        IEnumerable<IEdge<T, W>> IGraph<T, W>.IncomingEdges(T vertex)
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
         {
             return this.IncomingEdges(vertex);
         }
 
-        IEnumerable<IEdge<T, W>> IGraph<T, W>.OutgoingEdges(T vertex)
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
         {
             return this.OutgoingEdges(vertex);
         }

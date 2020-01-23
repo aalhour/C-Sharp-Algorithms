@@ -9,8 +9,6 @@ namespace DataStructures.Graphs
     /// </summary>
     public class UnweightedEdge<TVertex> : IEdge<TVertex> where TVertex : IComparable<TVertex>
     {
-        private const int _edgeWeight = 0;
-
         /// <summary>
         /// Gets or sets the source vertex.
         /// </summary>
@@ -22,16 +20,6 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <value>The destination.</value>
         public TVertex Destination { get; set; }
-
-        /// <summary>
-        /// [PRIVATE MEMBER] Gets or sets the weight.
-        /// </summary>
-        /// <value>The weight.</value>
-        public Int64 Weight
-        {
-            get { throw new NotImplementedException("Unweighted edges don't have weights."); }
-            set { throw new NotImplementedException("Unweighted edges can't have weights."); }
-        }
 
         /// <summary>
         /// Gets a value indicating whether this edge is weighted.
@@ -53,9 +41,9 @@ namespace DataStructures.Graphs
 
 
         #region IComparable implementation
-        public int CompareTo(IEdge<TVertex, Int64> other)
+        public int CompareTo(IEdge<TVertex> other)
         {
-            if (other == null)
+            if (other == null || !(other is UnweightedEdge<TVertex>))
                 return -1;
 
             bool areNodesEqual = Source.IsEqualTo<TVertex>(other.Source) && Destination.IsEqualTo<TVertex>(other.Destination);

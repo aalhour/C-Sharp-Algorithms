@@ -269,8 +269,6 @@ namespace DataStructures.Graphs
                 return returnEdges;
             }
         }
-        
-        IEnumerable<IEdge<T, long>> IGraph<T, long>.Edges => this.Edges;
 
         /// <summary>
         /// Get all incoming edges to vertex.
@@ -294,11 +292,6 @@ namespace DataStructures.Graphs
             return incomingEdges;
 
         }
-        
-        IEnumerable<IEdge<T, long>> IGraph<T, long>.IncomingEdges(T vertex)
-        {
-            return this.IncomingEdges(vertex);
-        }
 
         /// <summary>
         /// Get all outgoing edges from a vertex.
@@ -320,11 +313,6 @@ namespace DataStructures.Graphs
             }
 
             return outgoingEdges;
-        }
-
-        IEnumerable<IEdge<T, long>> IGraph<T, long>.OutgoingEdges(T vertex)
-        {
-            return this.OutgoingEdges(vertex);
         }
 
         /// <summary>
@@ -406,7 +394,7 @@ namespace DataStructures.Graphs
         /// Adds a list of vertices to the graph.
         /// </summary>
         /// <param name="collection">Collection.</param>
-        void IGraph<T, Int64>.AddVertices(IList<T> collection)
+        void IGraph<T>.AddVertices(IList<T> collection)
         {
             AddVertices(collection);
         }
@@ -610,7 +598,7 @@ namespace DataStructures.Graphs
         /// Returns the list of Vertices.
         /// </summary>
         /// <value>The vertices.</value>
-        IEnumerable<T> IGraph<T, Int64>.Vertices
+        IEnumerable<T> IGraph<T>.Vertices
         {
             get
             {
