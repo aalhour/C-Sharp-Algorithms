@@ -117,6 +117,7 @@ namespace DataStructures.Graphs
             return this.OutgoingEdges(vertex);
         }
 
+
         /// <summary>
         /// An enumerable collection of all directed unweighted edges in graph.
         /// </summary>
