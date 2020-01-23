@@ -1,18 +1,17 @@
 ﻿/***
  * The Undirected Weighted Dense Graph Data Structure.
- * 
+ *
  * Definition:
  * A dense graph is a graph G = (V, E) in which |E| = O(|V|^2).
  * A weighted graph is a graph where each edge has a weight (zero weights mean there is no edge).
- * 
- * An adjacency-matrix (two dimensional array of longs) weighted graph representation. 
+ *
+ * An adjacency-matrix (two dimensional array of longs) weighted graph representation.
  * Inherits and extends the Undirected Dense verion (UndirectedDenseGraph<T> class).
  * Implements the IWeightedGraph<T> interface.
  */
 
 using System;
 using System.Collections.Generic;
-
 using DataStructures.Common;
 using DataStructures.Lists;
 
@@ -27,13 +26,11 @@ namespace DataStructures.Graphs
         /// INSTANCE VARIABLES
         /// </summary>
         private static readonly W EMPTY_EDGE_SLOT = default(W);
-        private const object EMPTY_VERTEX_SLOT = (object)null;
 
         // Store edges and their weights as integers.
         // Any edge with a value of zero means it doesn't exist. Otherwise, it exist with a specific weight value.
         // Default value for positive edges is 1.
         protected new W[,] _adjacencyMatrix { get; set; }
-
 
         /// <summary>
         /// CONSTRUCTOR
@@ -46,9 +43,8 @@ namespace DataStructures.Graphs
 
             _vertices = new ArrayList<object>(_verticesCapacity);
             _adjacencyMatrix = new W[_verticesCapacity, _verticesCapacity];
-            _adjacencyMatrix.Populate(rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: EMPTY_EDGE_SLOT);
+            _adjacencyMatrix.Populate(_verticesCapacity, _verticesCapacity, EMPTY_EDGE_SLOT);
         }
-
 
         /// <summary>
         /// Helper function. Checks if edge exist in graph.
@@ -65,7 +61,6 @@ namespace DataStructures.Graphs
         {
             return (!EMPTY_EDGE_SLOT.Equals(_adjacencyMatrix[source, destination]) ? _adjacencyMatrix[source, destination] : _adjacencyMatrix[destination, source]);
         }
-
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
@@ -93,7 +88,7 @@ namespace DataStructures.Graphs
                         // Check existence of vertex
                         if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                         {
-                            var neighbor = (T)_vertices[adjacent]; 
+                            var neighbor = (T)_vertices[adjacent];
                             var weight = _getEdgeWeight(source, adjacent);
 
                             var outgoingEdge = new KeyValuePair<T, T>((T)vertex, neighbor);
@@ -112,15 +107,14 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
-        /// Get all incoming edges to a vertex
+        ///     Get all incoming edges to a vertex
         /// </summary>
         public new virtual IEnumerable<WeightedEdge<T, W>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
-                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
 
             int source = _vertices.IndexOf(vertex);
-
             for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
@@ -131,19 +125,18 @@ namespace DataStructures.Graphs
                         _getEdgeWeight(source, adjacent)    // weight
                     ));
                 }
-            }//end-for
+            }
         }
 
         /// <summary>
-        /// Get all outgoing weighted edges from vertex
+        ///     Get all outgoing weighted edges from vertex
         /// </summary>
         public new virtual IEnumerable<WeightedEdge<T, W>> OutgoingEdges(T vertex)
         {
             if (!HasVertex(vertex))
-                throw new KeyNotFoundException("Vertex doesn't belong to graph.");
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
 
             int source = _vertices.IndexOf(vertex);
-
             for (int adjacent = 0; adjacent < _vertices.Count; ++adjacent)
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
@@ -154,17 +147,7 @@ namespace DataStructures.Graphs
                         _getEdgeWeight(source, adjacent)    // weight
                     ));
                 }
-            }//end-for
-        }
-
-
-        /// <summary>
-        /// Obsolete. Another AddEdge function is implemented with a weight parameter.
-        /// </summary>
-        [Obsolete("Use the AddEdge method with the weight parameter.")]
-        public new bool AddEdge(T source, T destination)
-        {
-            throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -200,21 +183,16 @@ namespace DataStructures.Graphs
         /// </summary>
         public override bool RemoveEdge(T source, T destination)
         {
-            // Get indices of vertices
             int srcIndex = _vertices.IndexOf(source);
             int dstIndex = _vertices.IndexOf(destination);
 
-            // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
-                return false;
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
-            // Reset it both ways
             _adjacencyMatrix[srcIndex, dstIndex] = EMPTY_EDGE_SLOT;
             _adjacencyMatrix[dstIndex, srcIndex] = EMPTY_EDGE_SLOT;
-
-            // Increment edges count
             --_edgesCount;
 
             return true;
@@ -225,21 +203,14 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool UpdateEdgeWeight(T source, T destination, W weight)
         {
-            // Return if the weight is equals to the empty edge value
-            if (EMPTY_EDGE_SLOT.Equals(weight))
-                return false;
-
-            // Get indices of vertices
             int srcIndex = _vertices.IndexOf(source);
             int dstIndex = _vertices.IndexOf(destination);
 
-            // Check existence of vertices and non-existence of edge
             if (srcIndex == -1 || dstIndex == -1)
-                return false;
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return false;
 
-            // Edge exists, use only one triangle of the matrix
             if (!EMPTY_EDGE_SLOT.Equals(_adjacencyMatrix[srcIndex, dstIndex]))
                 _adjacencyMatrix[srcIndex, dstIndex] = weight;
             else
@@ -288,25 +259,24 @@ namespace DataStructures.Graphs
         }
 
         /// <summary>
-        /// Get edge object from source to destination.
+        ///     Get edge object from source to destination.
         /// </summary>
         public virtual WeightedEdge<T, W> GetEdge(T source, T destination)
         {
-            // Get indices of vertices
             int srcIndex = _vertices.IndexOf(source);
             int dstIndex = _vertices.IndexOf(destination);
 
-            // Check the existence of vertices and the undirected edge
             if (srcIndex == -1 || dstIndex == -1)
-                throw new Exception("One of the vertices or both of them doesn't exist.");
+                throw new ArgumentOutOfRangeException("One of vertex is not part of the graph.");
+
             if (!_doesEdgeExist(srcIndex, dstIndex))
-                throw new Exception("Edge doesn't exist.");
+                return null;
 
             return (new WeightedEdge<T, W>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));
         }
 
         /// <summary>
-        /// Returns the edge weight from source to destination.
+        ///     Returns the edge weight from source to destination.
         /// </summary>
         public virtual W GetEdgeWeight(T source, T destination)
         {
@@ -374,7 +344,7 @@ namespace DataStructures.Graphs
             _adjacencyMatrix.Populate(rows: _verticesCapacity, columns: _verticesCapacity, defaultValue: EMPTY_EDGE_SLOT);
         }
     }
-    
+
     public class UndirectedWeightedDenseGraph<T> : UndirectedWeightedDenseGraph<T, Int64>, IWeightedGraph<T> where T : IComparable<T>
     {
         public new WeightedEdge<T> GetEdge(T source, T destination) => base.GetEdge(source, destination).ToSimpleEdge();

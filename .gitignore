@@ -19,6 +19,7 @@ bld/
 
 # Roslyn cache directories
 *.ide/
+.ionide/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -190,3 +191,7 @@ _Pvt_Extensions/
 ModelManifest.xml
 .vs/
 .idea/
+
+# Local test runner
+testrunner
+

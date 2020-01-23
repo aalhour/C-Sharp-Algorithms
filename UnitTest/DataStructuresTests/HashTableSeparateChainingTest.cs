@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DataStructures.Dictionaries;
 using Xunit;
 
@@ -7,103 +9,142 @@ namespace UnitTest.DataStructuresTests
     public static class HashTableSeparateChainingTest
     {
         [Fact]
-        public static void DoTest()
+        public static void Adding_ThreeDifferentElements_ReturnsSuccessful()
         {
-            // TEST ADD KEY-VALUE PAIRS
-            var studentsMarks = new ChainedHashTable<string, int>
-            {
-                {"Konstantinos", 124},
-                {"Bic", 224},
-                {"Z", 324},
-                {"Ioanna", 424},
-                {"Mark Zuckerberg", 524},
-                {"Semsem", 624},
-                {"Sa3eeed", 724},
-                {"Sameer", 824},
-                {"Ahmad", 924},
-                {"Zeyad", 999},
-                {"Mahmoood 3eed", 111},
-                {"Mahmoood Abu 3eed", 222},
-                {"EISA", 333},
-                {"Test1", 3210},
-                {"Test11", 3210},
-                {"Test222", 3210},
-                {"Test3333", 3210},
-                {"Test44444", 3210},
-                {"Test555555", 3210},
-                {"Test6666666", 3210},
-                {"Test77777777", 3210},
-                {"Test888888888", 3210}
-            };
+            var studentsMarks = new ChainedHashTable<string, int>();
 
-            // TEST FETCH KEY-VALUE
-            var mark = studentsMarks["Ahmad"];
-            Assert.True(mark == 924);
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
 
-            mark = studentsMarks["Konstantinos"];
-            Assert.True(mark == 124);
+            var mark = studentsMarks["Name1"];
+            Assert.True(mark == 1);
 
-            mark = studentsMarks["Bic"];
-            Assert.True(mark == 224);
+            mark = studentsMarks["Name2"];
+            Assert.True(mark == 5);
 
-            mark = studentsMarks["Z"];
-            Assert.True(mark == 324);
-
-            mark = studentsMarks["Ioanna"];
-            Assert.True(mark == 424);
-
-            mark = studentsMarks["Mark Zuckerberg"];
-            Assert.True(mark == 524);
-
-            mark = studentsMarks["Semsem"];
-            Assert.True(mark == 624);
-
-            mark = studentsMarks["Sa3eeed"];
-            Assert.True(mark == 724);
-
-            mark = studentsMarks["Sameer"];
-            Assert.True(mark == 824);
-
-            mark = studentsMarks["Zeyad"];
-            Assert.True(mark == 999);
-
-            mark = studentsMarks["Mahmoood 3eed"];
-            Assert.True(mark == 111);
-
-            mark = studentsMarks["Mahmoood Abu 3eed"];
-            Assert.True(mark == 222);
-
-            mark = studentsMarks["EISA"];
-            Assert.True(mark == 333);
-
-            //
-            // TEST DELETE BY KEYS
-            studentsMarks.Remove("Ahmad");
-            studentsMarks.Remove("Zeyad");
-            studentsMarks.Remove("Bic");
-            studentsMarks.Remove("Konstantinos");
-            studentsMarks.Remove("Sameer");
-            studentsMarks.Remove("Z");
-            studentsMarks.Remove("Ioanna");
-            studentsMarks.Remove("Mark Zuckerberg");
-            studentsMarks.Remove("Semsem");
-            studentsMarks.Remove("Sa3eeed");
-            studentsMarks.Remove("Test1");
-            studentsMarks.Remove("Test11");
-            studentsMarks.Remove("Test222");
-            studentsMarks.Remove("Test3333");
-            studentsMarks.Remove("Test44444");
-            studentsMarks.Remove("Test555555");
-            studentsMarks.Remove("Test6666666");
-            studentsMarks.Remove("Test77777777");
-            studentsMarks.Remove("Test888888888");
+            mark = studentsMarks["Name3"];
+            Assert.True(mark == 3);
 
             Assert.True(studentsMarks.Count == 3);
+        }
 
-            KeyValuePair<string, int>[] array = new KeyValuePair<string, int>[studentsMarks.Count];
+        [Fact]
+        public static void Adding_TwoDuplicateElements_ReturnsException()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+
+            Action act = () => studentsMarks.Add("Name2", 7);
+            
+            var exception = Assert.Throws<ArgumentException>(act);
+            Assert.Equal("Key already exists in the hash table.", exception.Message);
+            Assert.True(studentsMarks.Count == 2);
+        }
+
+        [Fact]
+        public static void GetElement_ExistingElement_ReturnsElement()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+
+            var value = studentsMarks["Name2"];
+
+            Assert.Equal(5, value);
+            Assert.True(studentsMarks.Count == 2);
+        }
+
+        [Fact]
+        public static void GetElement_NonExistingElement_ReturnsException()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+
+            int value;
+            Action act = () => value = studentsMarks["Name3"];
+
+            Assert.Throws<KeyNotFoundException>(act);
+            Assert.True(studentsMarks.Count == 2);
+        }
+
+        [Fact]
+        public static void RemovingOneElement_ThreeDifferentElements_ReturnsSuccessful()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+
+            studentsMarks.Remove("Name2");
+
+            var mark = studentsMarks["Name1"];
+            Assert.True(mark == 1);
+
+            mark = studentsMarks["Name3"];
+            Assert.True(mark == 3);
+
+            Assert.False(studentsMarks.ContainsKey("Name2"));
+
+            Assert.True(studentsMarks.Count == 2);
+        }
+
+        [Fact]
+        public static void RemovingAllElement_ThreeDifferentElements_ReturnsSuccessful()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+
+            studentsMarks.Remove("Name2");
+            studentsMarks.Remove("Name1");
+            studentsMarks.Remove("Name3");
+
+            Assert.True(studentsMarks.Count == 0);
+        }
+
+        [Fact]
+        public static void CopyTo_FilledHashTable_ReturnsSuccessful()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+
+            var array = new KeyValuePair<string, int>[studentsMarks.Count];
             studentsMarks.CopyTo(array, 0);
 
-            Assert.True(array.Length == studentsMarks.Count);
+            Assert.True(studentsMarks.Count == 3);
+            Assert.True(array.Length == 3);
+            var arrayKeys = array.Select(x => x.Key).OrderBy(x => x).ToArray();
+            Assert.Equal("Name1", arrayKeys[0]);
+            Assert.Equal("Name2", arrayKeys[1]);
+            Assert.Equal("Name3", arrayKeys[2]);
+            var arrayValues = array.Select(x => x.Value).OrderBy(x => x).ToArray();
+            Assert.Equal(1, arrayValues[0]);
+            Assert.Equal(3, arrayValues[1]);
+            Assert.Equal(5, arrayValues[2]);
+
+        }
+
+        [Fact]
+        public static void CopyTo_EmptyHashTable_ReturnsSuccessful()
+        {
+            var studentsMarks = new ChainedHashTable<string, int>();
+            studentsMarks.Add("Name1", 1);
+            studentsMarks.Add("Name2", 5);
+            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+
+            studentsMarks.Remove("Name2");
+            studentsMarks.Remove("Name1");
+            studentsMarks.Remove("Name3");
+
+            Assert.True(studentsMarks.Count == 0);
+            var array = new KeyValuePair<string, int>[studentsMarks.Count];
+            studentsMarks.CopyTo(array, 0);
         }
     }
 }
