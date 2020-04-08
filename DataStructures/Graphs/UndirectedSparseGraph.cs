@@ -236,18 +236,15 @@ namespace DataStructures.Graphs
             if (!_adjacencyList.ContainsKey(vertex))
                 return false;
 
-            _adjacencyList.Remove(vertex);
-
-            foreach (var adjacent in _adjacencyList)
+            var neighbors = Neighbours(vertex);
+            foreach (var neighbor in neighbors)
             {
-                if (adjacent.Value.Contains(vertex))
-                {
-                    adjacent.Value.Remove(vertex);
-
-                    // Decrement the edges count.
-                    --_edgesCount;
-                }
+                _adjacencyList[neighbor].Remove(vertex);
             }
+
+            _edgesCount -= neighbors.Count;
+
+            _adjacencyList.Remove(vertex);
 
             return true;
         }
