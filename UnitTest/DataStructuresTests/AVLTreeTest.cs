@@ -118,11 +118,11 @@ namespace UnitTest.DataStructuresTests
             //
             /**************************************************************************
              ** UNBALANCED     ===>    TRANSITION (1st R)    ===>    BALANCED (2nd Rt)
-             **       null                                              .6..
+             **       null                                              .5..
              **      /   \                                             /    \
-             **     2     6    ===>                      ===>         2      7
-             **    / \   / \                                         / \    /
-             **   1   3 5   7                                       1   3  5
+             **     2     6    ===>                      ===>         2      6
+             **    / \   / \                                         / \      \
+             **   1   3 5   7                                       1   3      7
              **
              **************************************************************************
              */
@@ -251,18 +251,18 @@ namespace UnitTest.DataStructuresTests
         {
             var avlRoot = avlTree.Root;
             Assert.True(avlRoot.Height == 2, "Wrong root height!");
-            Assert.True(avlRoot.Value == 6, "Wrong root.");
+            Assert.True(avlRoot.Value == 5, "Wrong root.");
             Assert.True(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
-            Assert.True(avlRoot.RightChild.Value == 7, "Wrong right child from root.");
+            Assert.True(avlRoot.RightChild.Value == 6, "Wrong right child from root.");
             Assert.True(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
             Assert.True(avlRoot.LeftChild.RightChild.Value == 3, "Wrong value at {root->left->right}.");
-            Assert.True(avlRoot.RightChild.LeftChild.Value == 5, "Wrong value at {root->right->left}.");
-            Assert.True(avlRoot.RightChild.RightChild == null, "Wrong value at {root->right->right}.");
+            Assert.True(avlRoot.RightChild.LeftChild == null, "Wrong value at {root->right->left}.");
+            Assert.True(avlRoot.RightChild.RightChild.Value == 7, "Wrong value at {root->right->right}.");
 
             Assert.True(
                 avlRoot.LeftChild.LeftChild.Height == 0
                 && avlRoot.LeftChild.RightChild.Height == 0
-                && avlRoot.RightChild.LeftChild.Height == 0
+                && avlRoot.RightChild.RightChild.Height == 0
                 ,
                 "Wrong heights at the leaf nodes!.");
 

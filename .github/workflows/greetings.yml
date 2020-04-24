@@ -1,0 +1,13 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: 'Thanks for supporting the development of C# Algorithms with your first issue! We look forward to handling it.'
+        pr-message: 'Congratulations! You are officially a C# Algorithms contributor! :tada:'

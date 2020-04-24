@@ -1,170 +1,576 @@
-﻿using System;
+﻿using DataStructures.Trees;
+using System;
 using System.Collections.Generic;
-using DataStructures.Trees;
+using System.Linq;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests
 {
-    public static class RedBlackTreeTest
+    public class RedBlackTreeTest
     {
-        [Fact]
-        public static void DoTest()
+        /** Input tree for test cases, (r -> red, b -> black):
+        **          11(b)
+        **         /    \
+        **      (r)3    13(b)
+        **       / \      \
+        **   (b)1  7(b)   15(r)
+        **         / \
+        **     (r)5   8(r)
+        **/
+        private RedBlackTree<int> redBlackTree;
+
+        public RedBlackTreeTest()
         {
-            // Test against the worst case of insertion
-            // Case: insert increasing numbers and check if it leads to a linked list
-            var redBlackTree = new RedBlackTree<int>(false);
-
-            redBlackTree.Insert(1);
-            redBlackTree.Insert(2);
-            redBlackTree.Insert(3);
-            redBlackTree.Insert(4);
-            redBlackTree.Insert(5);
-            redBlackTree.Insert(6);
-            redBlackTree.Insert(7);
-            redBlackTree.Insert(8);
-            redBlackTree.Insert(9);
-            redBlackTree.Insert(10);
-
-            Assert.True(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
-
-
-            //
-            // Test against re-shuffled insertions (not like above order)
             redBlackTree = new RedBlackTree<int>(false);
 
-            redBlackTree.Insert(4);
-            redBlackTree.Insert(5);
-            redBlackTree.Insert(7);
-            redBlackTree.Insert(2);
-            redBlackTree.Insert(1);
+            redBlackTree.Insert(11);
             redBlackTree.Insert(3);
-            redBlackTree.Insert(6);
-            redBlackTree.Insert(0);
+            redBlackTree.Insert(13);
+            redBlackTree.Insert(1);
+            redBlackTree.Insert(7);
+            redBlackTree.Insert(15);
+            redBlackTree.Insert(5);
             redBlackTree.Insert(8);
-            redBlackTree.Insert(10);
-            redBlackTree.Insert(9);
+        }
 
-            //
-            // ASSERT INSERTING DUPLICATES WOULD BREAK
-            bool insertDuplicatePassed;
-            try
-            {
-                // 2 already exists in tree
-                redBlackTree.Insert(2);
-                insertDuplicatePassed = true;
-            }
-            catch
-            {
-                insertDuplicatePassed = false;
-            }
+        [Fact]
+        public void Insert_CheckCorrectConstructionOfInputTree()
+        {
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
 
-            Assert.True(insertDuplicatePassed == false, "Fail! The tree doesn't allow duplicates");
+            Assert.Equal(8, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
 
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
 
-            // Assert count
-            Assert.True(redBlackTree.Count == 11);
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
 
-            // Assert existence and nonexistence of some items
-            Assert.True(redBlackTree.Contains(1));
-            Assert.True(redBlackTree.Contains(3));
-            Assert.False(redBlackTree.Contains(999));
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
 
-            // ASSERT THAT EACH LEVEL HAS A DIFFERENT COLOR
-            AssetLevelsDifferentColors(redBlackTree);
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
 
-            // Do some deletions
-            redBlackTree.Remove(7);
-            redBlackTree.Remove(1);
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
+        /** Insert 4, (r -> red, b -> black):
+         **          11(b)             ===>          7(b)
+         **         /    \             ===>        /      \
+         **      (r)3    13(b)         ===>      (r)3     11(r)
+         **       / \      \           ===>      / \       /  \
+         **   (b)1  7(b)   15(r)       ===>  (b)1  5(b)  (b)8 13(b)
+         **         / \                ===>        /            \
+         **     (r)5   8(r)            ===>      4(r)           15(r)
+         **/
+        [Fact]
+        public void Insert_ParentSiblingIsRed()
+        {
+            redBlackTree.Insert(4);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(9, redBlackTree.Count);
+            Assert.Equal(7, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(4, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Equal(11, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(8, redBlackTree.Root.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.LeftChild.Color);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.RightChild.Color);
+        }
+
+        /** Insert 14, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     14(b)
+         **       / \      \           ===>     / \      /   \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b) 13(r) 15(r)
+         **         / \                ===>       / \
+         **     (r)5   8(r)            ===>   (r)5   8(r)
+         **/
+        [Fact]
+        public void Insert_ParentSiblingIsBlackAndNewElementIsLeftChild()
+        {
+            redBlackTree.Insert(14);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(9, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
+
+            Assert.Equal(14, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.LeftChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
+        /** Insert 16, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     15(b)
+         **       / \      \           ===>     / \      /   \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b) 13(r) 16(r)
+         **         / \                ===>       / \
+         **     (r)5   8(r)            ===>   (r)5   8(r)
+         **/
+        [Fact]
+        public void Insert_ParentSiblingIsBlackAndNewElementIsRightChild()
+        {
+            redBlackTree.Insert(16);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(9, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.LeftChild.Color);
+
+            Assert.Equal(16, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
+        [Fact]
+        public void Insert_ThrowExceptionWhenNotAllowDuplicate()
+        {
+            var redBlackTreeWithoutDuplicates = new RedBlackTree<int>(false);
+
+            redBlackTreeWithoutDuplicates.Insert(1);
+            redBlackTreeWithoutDuplicates.Insert(2);
+            redBlackTreeWithoutDuplicates.Insert(3);
+
+            //TODO Create more specyfic exception type for this kind of errors, with inheritance from InvalidOperationException.
+            Assert.Throws<InvalidOperationException>(() => redBlackTreeWithoutDuplicates.Insert(2));
+        }
+
+        /** Remove 13, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     15(b)
+         **       / \      \           ===>     / \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b)
+         **         / \                ===>       / \
+         **     (r)5   8(r)            ===>   (r)5   8(r)
+         **/
+        [Fact]
+        public void Remove_SiblingIsRed()
+        {
+            redBlackTree.Remove(13);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+        }
+
+        /** Remove 3, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)5     13(b)
+         **       / \      \           ===>    /  \       \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b)    15(r)
+         **         / \                ===>         \
+         **     (r)5   8(r)            ===>         8(r)
+         **/
+        [Fact]
+        public void Remove_SiblingIsBlackAndBothChildAreBlack()
+        {
             redBlackTree.Remove(3);
 
-            // Assert count
-            Assert.True(redBlackTree.Count == 8);
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
 
-            // Assert nonexistence of previously existing items
-            Assert.False(redBlackTree.Contains(1));
-            Assert.False(redBlackTree.Contains(3));
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
 
-            // Remove root value
-            var oldRootVal = redBlackTree.Root.Value;
-            redBlackTree.Remove(redBlackTree.Root.Value);
+            Assert.Equal(5, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
 
-            // Assert count
-            Assert.True(redBlackTree.Count == 7);
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
 
-            // Assert nonexistence of old root's value
-            Assert.False(redBlackTree.Contains(oldRootVal));
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
 
-        }//end-do-test
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
 
+            Assert.Equal(13, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
 
-        /// <summary>
-        /// Testing helper to assert that all items at every level of the tree has the same color and each level has different color than the other levels
-        /// </summary>
-        private static void AssetLevelsDifferentColors(RedBlackTree<int> redBlackTree)
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
+        /** Remove 7, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     13(b)
+         **       / \      \           ===>     / \       \
+         **   (b)1  7(b)   15(r)       ===> (b)1  8(b)    15(r)
+         **         / \                ===>       /
+         **     (r)5   8(r)            ===>     5(r)
+         **/
+        [Fact]
+        public void Remove_SiblingIsBlackAndRightChildIsRed()
         {
-            var root = redBlackTree.Root;
+            redBlackTree.Remove(7);
 
-            var height = GetMaxHeight(root);
-            var levels = new List<List<RedBlackTreeNode<int>>>();
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
 
-            // Initialize the list
-            for (var i = 0; i < height; ++i)
-            {
-                levels.Add(new List<RedBlackTreeNode<int>>());
-            }
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
 
-            var levelsIndex = 0;
-            var nodesInNextLevel = 0;
-            var nodesInCurrentLevel = 1;
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
 
-            var queue = new Queue<RedBlackTreeNode<int>>();
-            queue.Enqueue(root);
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
 
-            while (queue.Count > 0)
-            {
-                var curr = queue.Dequeue();
-                nodesInCurrentLevel--;
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
 
-                if (curr != null)
-                {
-                    levels[levelsIndex].Add(curr);
-                    queue.Enqueue(curr.LeftChild);
-                    queue.Enqueue(curr.RightChild);
-                    nodesInNextLevel += 2;
-                }
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
 
-                if (nodesInCurrentLevel == 0)
-                {
-                    levelsIndex++;
-                    nodesInCurrentLevel = nodesInNextLevel;
-                    nodesInNextLevel = 0;
-                }
-            }
-            var color = RedBlackTreeColors.Black;
-            for (var i = 0; i < levels.Count; ++i)
-            {
-                for (var j = 0; j < levels[i].Count; ++j)
-                {
-                    // TODO: [2,1] == red?
-                    Assert.True(levels[i][j].Color == color);
-                }
-                color = color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black;
-            }
-        }//end-test-case
+            Assert.Equal(13, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
 
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
 
-        /// <summary>
-        /// Helper function to calculate the Maximum Height
-        /// </summary>
-        private static int GetMaxHeight(RedBlackTreeNode<int> tree)
+        /** Remove 11, (r -> red, b -> black):
+         **          11(b)             ===>        13(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     15(b)
+         **       / \      \           ===>     / \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b)
+         **         / \                ===>       / \
+         **     (r)5   8(r)            ===>     5(r) 8(r)
+         **/
+        [Fact]
+        public void Remove_CurrentRoot()
         {
-            if (tree == null)
-            {
-                return 0;
-            }
+            redBlackTree.Remove(11);
 
-            return 1 + Math.Max(GetMaxHeight(tree.LeftChild), GetMaxHeight(tree.RightChild));
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(13, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Equal(8, redBlackTree.Root.LeftChild.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+        }
+
+        [Fact]
+        public void Remove_ThrowExceptionWhenTryRemoveNonExistentNode()
+        {
+            //TODO Create more specyfic exception type for this kind of errors, with inheritance from ArgumentException.
+            Assert.Throws<Exception>(() =>redBlackTree.Remove(999));
+        }
+
+        /** Remove 8, (r -> red, b -> black):
+         **          11(b)             ===>        11(b)
+         **         /    \             ===>       /     \
+         **      (r)3    13(b)         ===>    (r)3     13(b)
+         **       / \      \           ===>     / \      \
+         **   (b)1  7(b)   15(r)       ===> (b)1  7(b)   15(r)
+         **         / \                ===>       /
+         **     (r)5   8(r)            ===>     5(r)
+         **/
+        [Fact]
+        public void Remove_NodeWithoutChildren()
+        {
+            redBlackTree.Remove(8);
+
+            RedBlackTreeRule.CheckRedBlackTreeRules(redBlackTree);
+
+            Assert.Equal(7, redBlackTree.Count);
+            Assert.Equal(11, redBlackTree.Root.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.Color);
+
+            Assert.Equal(3, redBlackTree.Root.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.Color);
+
+            Assert.Equal(1, redBlackTree.Root.LeftChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.LeftChild.Color);
+
+            Assert.Equal(7, redBlackTree.Root.LeftChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.LeftChild.RightChild.Color);
+
+            Assert.Equal(5, redBlackTree.Root.LeftChild.RightChild.LeftChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.LeftChild.RightChild.LeftChild.Color);
+
+            Assert.Null(redBlackTree.Root.LeftChild.RightChild.RightChild);
+
+            Assert.Equal(13, redBlackTree.Root.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Black, redBlackTree.Root.RightChild.Color);
+
+            Assert.Equal(15, redBlackTree.Root.RightChild.RightChild.Value);
+            Assert.Equal(RedBlackTreeColors.Red, redBlackTree.Root.RightChild.RightChild.Color);
+        }
+
+        [Fact]
+        public void Remove_OneAndOnlyTreeNode()
+        {
+            var oneElementTree = new RedBlackTree<int>();
+            Assert.Equal(0, oneElementTree.Count);
+            Assert.Null(oneElementTree.Root);
+            Assert.True(oneElementTree.IsEmpty);
+
+            oneElementTree.Insert(1);
+            Assert.Equal(1, oneElementTree.Count);
+            Assert.NotNull(oneElementTree.Root);
+            Assert.False(oneElementTree.IsEmpty);
+
+            oneElementTree.Remove(1);
+            Assert.Equal(0, oneElementTree.Count);
+            Assert.Null(oneElementTree.Root);
+            Assert.True(oneElementTree.IsEmpty);
         }
     }
 
+    /// <summary>
+    ///     Contains set of method that facilitate work. Only for unit tests.
+    /// </summary>
+    internal static class RedBlackTreeHelper
+    {
+        public static IEnumerable<RedBlackTreeNode<T>> GetNodes<T>(this RedBlackTreeNode<T> node)
+            where T : IComparable<T>
+        {
+            if (node.LeftChild != null)
+            {
+                yield return node.LeftChild;
+
+                foreach (var child in node.LeftChild.GetNodes())
+                {
+                    yield return child;
+                }
+            }
+
+            if (node.RightChild != null)
+            {
+                yield return node.RightChild;
+
+                foreach (var child in node.RightChild.GetNodes())
+                {
+                    yield return child;
+                }
+            }
+
+            if (node.Parent == null)
+            {
+                yield return node;
+            }
+        }
+
+        public static IEnumerable<IEnumerable<RedBlackTreeNode<T>>> GetPathToLeaves<T>(this RedBlackTreeNode<T> root)
+            where T : IComparable<T>
+        {
+            if (root.Parent != null)
+            {
+                throw new ArgumentException("The given node is not root.");
+            }
+
+            var leaves = root.GetNodes().Where(node => node.IsLeafNode);
+            var paths = new List<List<RedBlackTreeNode<T>>>();
+            foreach (var leaf in leaves)
+            {
+                paths.Add(new List<RedBlackTreeNode<T>>() { leaf });
+            }
+
+            for (var index = 0; index < paths.Count; index++)
+            {
+                var path = paths[index];
+
+                while (path.Last().Parent != null)
+                {
+                    path.Add(path.Last().Parent);
+                }
+            }
+
+            return paths;
+        }
+    }
+
+    /// <summary>
+    ///     Contains method to check asked red black tree fulfills red black tree rules. Only for unit tests.
+    /// </summary>
+    internal static class RedBlackTreeRule
+    {
+        public static void CheckRedBlackTreeRules(RedBlackTree<int> redBlackTree)
+        {
+            CheckIsEveryNodeRedOrBlack(redBlackTree);
+            CheckRootIsBlack(redBlackTree);
+            CheckNodeIsRedIfBothChildrenAreBlack(redBlackTree);
+            CheckPathToEveryLeafHasSameNumberOfBlackNode(redBlackTree);
+        }
+
+        private static void CheckIsEveryNodeRedOrBlack(RedBlackTree<int> redBlackTree)
+        {
+            var nodes = redBlackTree.Root.GetNodes().ToList();
+
+            if (!nodes.Any(node => node.IsBlack || node.IsRed))
+            {
+                throw new RedBlackTreeViolationRuleException();
+            }
+        }
+
+        private static void CheckRootIsBlack(RedBlackTree<int> redBlackTree)
+        {
+            if (!redBlackTree.Root.IsBlack)
+            {
+                throw new RedBlackTreeViolationRuleException();
+            }
+        }
+
+        private static void CheckNodeIsRedIfBothChildrenAreBlack(RedBlackTree<int> redBlackTree)
+        {
+            var nodes = redBlackTree.Root.GetNodes().ToList();
+
+            foreach (var redNode in nodes.Where(node => node.IsRed))
+            {
+                if (redNode.RightChild != null
+                        && !redNode.RightChild.IsBlack)
+                {
+                    throw new RedBlackTreeViolationRuleException();
+                }
+
+                if (redNode.LeftChild != null
+                        && !redNode.LeftChild.IsBlack)
+                {
+                    throw new RedBlackTreeViolationRuleException();
+                }
+            }
+        }
+
+        private static void CheckPathToEveryLeafHasSameNumberOfBlackNode(RedBlackTree<int> redBlackTree)
+        {
+            var paths = redBlackTree.Root.GetPathToLeaves();
+
+            if (paths != null)
+            {
+                var blacks = paths.FirstOrDefault().Count(node => node.IsBlack);
+                foreach (var path in paths)
+                {
+                    if (blacks != path.Count(node => node.IsBlack))
+                    {
+                        throw new RedBlackTreeViolationRuleException();
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    ///     Exception class throw when any of red black tree rule is violation. Only for unit tests.
+    /// </summary>
+    internal class RedBlackTreeViolationRuleException : Exception
+    { }
 }

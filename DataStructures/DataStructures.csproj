@@ -4,18 +4,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.4.0" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Content Include="Data\PrimesDocument_10K.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\PrimesDocument_10K.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="Data\PrimesDocument_10K.csv">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

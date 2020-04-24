@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace DataStructures.Common
 {
@@ -22,7 +23,6 @@ namespace DataStructures.Common
 
         //
         // INSTANCE VARIABLES
-        private static string _primesDocPath = string.Empty;
         private readonly static List<int> _primes = new List<int>();
 
         // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
@@ -49,8 +49,8 @@ namespace DataStructures.Common
                     {
                         if (_instance == null)
                         {
-                            _instance = new PrimesList();
                             _initializeData();
+                            _instance = new PrimesList();
                         }
                     }
                 }
@@ -64,10 +64,9 @@ namespace DataStructures.Common
         /// </summary>
         private static void _initializeData()
         {
-            _primesDocPath = Path.Combine(Path.GetDirectoryName(typeof(PrimesList).GetTypeInfo().Assembly.Location), @"Data/PrimesDocument_10K.csv");
-            string[] lines = File.ReadAllLines(_primesDocPath);
+			string[] lines = _readResource("DataStructures.Data.PrimesDocument_10K.csv");
 
-            foreach (var line in lines)
+			foreach (var line in lines)
             {
                 // Split the line by commas and convert the collection to a list.
                 var numbersAsStrings = line.Split(',').ToList<string>();
@@ -77,9 +76,16 @@ namespace DataStructures.Common
 
                 if (numbersAsStrings.Count > 0)
                 {
-                    // cast them into integers and add them to the primes list
-                    var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
-                    _primes.AddRange(numbers);
+                    try
+                    {
+                        // cast them into integers and add them to the primes list
+                        var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
+                        _primes.AddRange(numbers);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Exception(line.Replace("\r","{\\r}").Replace("\n", "{\\n}"), e);
+                    }
                 }
             }
         }
@@ -209,6 +215,22 @@ namespace DataStructures.Common
             }
         }
 
+        /// <summary>
+        /// Reads an embedded resource as a text file.
+        /// </summary>
+        /// <returns></returns>
+        private static string[] _readResource(string resourceName)
+        {
+	        try
+	        {
+		        using (var stream = typeof(PrimesList).GetTypeInfo().Assembly.GetManifestResourceStream(resourceName))
+		        using (var reader = new StreamReader(stream ?? throw new InvalidOperationException("Failed to read resource"), Encoding.UTF8))
+			        return reader.ReadToEnd().Split("\n");
+	        }
+	        catch (Exception ex)
+	        {
+		        throw new Exception($"Failed to read resource {resourceName}", ex);
+	        }
+        }
     }
-
 }
