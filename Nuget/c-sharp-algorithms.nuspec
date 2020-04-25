@@ -11,6 +11,9 @@
     <projectUrl>https://github.com/aalhour/C-Sharp-Algorithms</projectUrl>
     <icon>images\icon.png</icon>
     <description>Plug-and-play class-library project of standard Data Structures and Algorithms in C#.</description>
+    <dependencies>
+	  <group targetFramework=".NETStandard2.0" />
+    </dependencies>
   </metadata>
   	<files>
 		<file src="..\Algorithms\bin\Release\**\*.*" target="lib" />
