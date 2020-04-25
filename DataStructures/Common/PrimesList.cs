@@ -225,7 +225,7 @@ namespace DataStructures.Common
 	        {
 		        using (var stream = typeof(PrimesList).GetTypeInfo().Assembly.GetManifestResourceStream(resourceName))
 		        using (var reader = new StreamReader(stream ?? throw new InvalidOperationException("Failed to read resource"), Encoding.UTF8))
-			        return reader.ReadToEnd().Split("\n");
+			        return reader.ReadToEnd().Split('\n');
 	        }
 	        catch (Exception ex)
 	        {
