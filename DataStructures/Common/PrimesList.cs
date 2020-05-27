@@ -184,11 +184,11 @@ namespace DataStructures.Common
         }
 
         /// <summary>
-        /// Returns the list of primes
+        /// Returns the read-only IList of primes
         /// </summary>
-        public List<int> GetAll
+        public IList<int> GetAll
         {
-            get { return _primes; }
+            get { return _primes.AsReadOnly(); }
         }
 
         /// <summary>
