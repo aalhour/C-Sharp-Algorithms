@@ -9,6 +9,8 @@ namespace Algorithms.Numeric
         /// </summary>
         public static int FindGCDEuclidean(int a, int b)
         {
+            int t = 0;
+
             a = Math.Abs(a);
             b = Math.Abs(b);
 
@@ -16,18 +18,13 @@ namespace Algorithms.Numeric
                 return b;
             if (b == 0)
                 return a;
-            if (a == b)
-                return a;
 
-            return Euclidean(a, b);
-        }
-
-        private static int Euclidean(int a, int b)
-        {
-            if (b == 0)
-                return a;
-
-            return Euclidean(b, a % b);
+            while (a % b != 0) {
+                t = b;
+                b = a % b;
+                a = t;
+            }
+            return b;
         }
 
         /// <summary>
