@@ -7,7 +7,9 @@ namespace DataStructures.Graphs
     /// <summary>
     /// The graph weighted edge class.
     /// </summary>
-    public class WeightedEdge<TVertex> : IEdge<TVertex> where TVertex : IComparable<TVertex>
+    public class WeightedEdge<TVertex, TWeight> : IEdge<TVertex>
+        where TVertex : IComparable<TVertex>
+        where TWeight : IComparable<TWeight>
     {
         /// <summary>
         /// Gets or sets the source.
@@ -25,7 +27,7 @@ namespace DataStructures.Graphs
         /// Gets or sets the weight of edge.
         /// </summary>
         /// <value>The weight.</value>
-        public Int64 Weight { get; set; }
+        public TWeight Weight { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this edge is weighted.
@@ -38,7 +40,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
-        public WeightedEdge(TVertex src, TVertex dst, Int64 weight)
+        public WeightedEdge(TVertex src, TVertex dst, TWeight weight)
         {
             Source = src;
             Destination = dst;
@@ -49,15 +51,37 @@ namespace DataStructures.Graphs
         #region IComparable implementation
         public int CompareTo(IEdge<TVertex> other)
         {
-            if (other == null)
+            if (other == null || !(other is WeightedEdge<TVertex, TWeight>))
                 return -1;
-            
+
             bool areNodesEqual = Source.IsEqualTo<TVertex>(other.Source) && Destination.IsEqualTo<TVertex>(other.Destination);
 
             if (!areNodesEqual)
                 return -1;
-            return Weight.CompareTo(other.Weight);
+
+            var o = other as WeightedEdge<TVertex, TWeight>;
+            return Weight.CompareTo(o.Weight);
         }
         #endregion
+    }
+    
+    public class WeightedEdge<TVertex> : WeightedEdge<TVertex, Int64>, IEdge<TVertex> where TVertex : IComparable<TVertex>
+    {
+        public WeightedEdge(TVertex src, TVertex dst, long weight) : base(src, dst, weight)
+        {
+        }
+
+        public WeightedEdge(WeightedEdge<TVertex, Int64> edge) : base(edge.Source, edge.Destination, edge.Weight)
+        {
+        }
+    }
+
+    public static class WeightedEdgeExtension
+    {
+        public static WeightedEdge<TVertex> ToSimpleEdge<TVertex>(this WeightedEdge<TVertex, Int64> edge)
+            where TVertex : IComparable<TVertex>
+        {
+            return new WeightedEdge<TVertex>(edge.Source, edge.Destination, edge.Weight);
+        }
     }
 }

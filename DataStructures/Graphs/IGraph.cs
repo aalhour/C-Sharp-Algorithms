@@ -125,4 +125,3 @@ namespace DataStructures.Graphs
         void Clear();
     }
 }
-

@@ -27,6 +27,20 @@ namespace Algorithms.Graphs
         private readonly TGraph _graph;
         private readonly TVertex _source;
 
+        private long GetEdgeWeight(IEdge<TVertex> edge)
+        {
+            // TODO: Change Dijkstra algorithm to support edge weights that are not Int64 compatible.
+            if (edge.IsWeighted)
+            {
+                var e = edge as WeightedEdge<TVertex>;
+                return e.Weight;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+
         public DijkstraShortestPaths(TGraph graph, TVertex source)
         {
             if (graph == null)
@@ -38,7 +52,7 @@ namespace Algorithms.Graphs
             if (!graph.HasVertex(source))
                 throw new ArgumentException("The source vertex doesn't belong to graph.");
 
-            if (graph.Edges.Any(edge => edge.Weight < 0))
+            if (graph.Edges.Any(edge => GetEdgeWeight(edge) < 0))
                 throw new ArgumentException("Negative edge weight detected.");
 
             _graph = graph;
@@ -62,7 +76,7 @@ namespace Algorithms.Graphs
                 foreach (var outgoingEdge in outgoingEdges)
                 {
                     var adjacentIndex = _nodesToIndices[outgoingEdge.Destination];
-                    var delta = _distances[currentVertexIndex] != Infinity ? _distances[currentVertexIndex] + outgoingEdge.Weight : Infinity;
+                    var delta = _distances[currentVertexIndex] != Infinity ? _distances[currentVertexIndex] + GetEdgeWeight(outgoingEdge) : Infinity;
 
                     if (delta < _distances[adjacentIndex])
                     {

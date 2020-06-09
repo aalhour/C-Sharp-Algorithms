@@ -24,13 +24,6 @@ namespace DataStructures.Graphs
         /// </summary>
         /// <value>The destination.</value>
         TVertex Destination { get; set; }
-
-        /// <summary>
-        /// Gets or sets the weight of edge.
-        /// Unwighted edges can be thought of as edges of the same weight
-        /// </summary>
-        /// <value>The weight.</value>
-        Int64 Weight { get; set; }
     }
 }
 

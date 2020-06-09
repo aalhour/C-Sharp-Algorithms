@@ -12,20 +12,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DataStructures.Common;
 using DataStructures.Lists;
 
 namespace DataStructures.Graphs
 {
-    public class UndirectedWeightedSparseGraph<T> : IGraph<T>, IWeightedGraph<T> where T : IComparable<T>
+    public class UndirectedWeightedSparseGraph<T, W> : IGraph<T>, IWeightedGraph<T, W> where T : IComparable<T> where W : IComparable<W>
     {
         /// <summary>
         /// INSTANCE VARIABLES
         /// </summary>
-        private const long EMPTY_EDGE_VALUE = 0;
+        private static readonly W EMPTY_EDGE_VALUE = default(W);
         protected virtual int _edgesCount { get; set; }
         protected virtual T _firstInsertedNode { get; set; }
-        protected virtual Dictionary<T, DLinkedList<WeightedEdge<T>>> _adjacencyList { get; set; }
+        protected virtual Dictionary<T, DLinkedList<WeightedEdge<T, W>>> _adjacencyList { get; set; }
 
 
         /// <summary>
@@ -36,20 +37,20 @@ namespace DataStructures.Graphs
         public UndirectedWeightedSparseGraph(uint initialCapacity)
         {
             _edgesCount = 0;
-            _adjacencyList = new Dictionary<T, DLinkedList<WeightedEdge<T>>>((int)initialCapacity);
+            _adjacencyList = new Dictionary<T, DLinkedList<WeightedEdge<T, W>>>((int)initialCapacity);
         }
 
 
         /// <summary>
         /// Helper function. Returns edge object from source to destination, if exists; otherwise, null.
         /// </summary>
-        protected virtual WeightedEdge<T> _tryGetEdge(T source, T destination)
+        protected virtual WeightedEdge<T, W> _tryGetEdge(T source, T destination)
         {
             var success = false;
-            WeightedEdge<T> edge = null;
+            WeightedEdge<T, W> edge = null;
 
-            var sourceToDestinationPredicate = new Predicate<WeightedEdge<T>>((item) => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
-            var destinationToSourcePredicate = new Predicate<WeightedEdge<T>>((item) => item.Source.IsEqualTo<T>(destination) && item.Destination.IsEqualTo<T>(source));
+            var sourceToDestinationPredicate = new Predicate<WeightedEdge<T, W>>((item) => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
+            var destinationToSourcePredicate = new Predicate<WeightedEdge<T, W>>((item) => item.Source.IsEqualTo<T>(destination) && item.Destination.IsEqualTo<T>(source));
 
             if(_adjacencyList.ContainsKey(source))
                 success = _adjacencyList[source].TryFindFirst(sourceToDestinationPredicate, out edge);
@@ -73,7 +74,7 @@ namespace DataStructures.Graphs
         /// Helper function. Gets the weight of a undirected edge.
         /// Presumes edge does already exist.
         /// </summary>
-        private long _getEdgeWeight(T source, T destination)
+        private W _getEdgeWeight(T source, T destination)
         {
             return _tryGetEdge(source, destination).Weight;
         }
@@ -143,7 +144,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// An enumerable collection of all weighted edges in Graph.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> Edges
+        public virtual IEnumerable<WeightedEdge<T, W>> Edges
         {
             get
             {
@@ -169,19 +170,19 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get all incoming weighted edges to a vertex
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex)
+        public virtual IEnumerable<WeightedEdge<T, W>> IncomingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
             
             foreach(var edge in _adjacencyList[vertex])
-                yield return (new WeightedEdge<T>(edge.Destination, edge.Source, edge.Weight));
+                yield return (new WeightedEdge<T, W>(edge.Destination, edge.Source, edge.Weight));
         }
 
         /// <summary>
         /// Get all outgoing weighted edges from a vertex.
         /// </summary>
-        public virtual IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex)
+        public virtual IEnumerable<WeightedEdge<T, W>> OutgoingEdges(T vertex)
         {
             if (!HasVertex(vertex))
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
@@ -203,10 +204,10 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Connects two vertices together with a weight, in the direction: first->second.
         /// </summary>
-        public bool AddEdge(T source, T destination, long weight)
+        public bool AddEdge(T source, T destination, W weight)
         {
             // Check existence of nodes, the validity of the weight value, and the non-existence of edge
-            if (weight == EMPTY_EDGE_VALUE)
+            if (EMPTY_EDGE_VALUE.Equals(weight))
                 return false;
             if (!HasVertex(source) || !HasVertex(destination))
                 return false;
@@ -214,8 +215,8 @@ namespace DataStructures.Graphs
                 return false;
 
             // Add edge from source to destination
-            var sourceDdge = new WeightedEdge<T>(source, destination, weight);
-            var destinationEdge = new WeightedEdge<T>(destination, source, weight);
+            var sourceDdge = new WeightedEdge<T, W>(source, destination, weight);
+            var destinationEdge = new WeightedEdge<T, W>(destination, source, weight);
 
             _adjacencyList[source].Append(sourceDdge);
             _adjacencyList[destination].Append(destinationEdge);
@@ -235,12 +236,12 @@ namespace DataStructures.Graphs
             if (!HasVertex(source) || !HasVertex(destination))
                 return false;
 
-            WeightedEdge<T> edge1, edge2;
+            WeightedEdge<T, W> edge1, edge2;
 
-            var sourceToDestinationPredicate = new Predicate<WeightedEdge<T>>((item) => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
+            var sourceToDestinationPredicate = new Predicate<WeightedEdge<T, W>>((item) => item.Source.IsEqualTo<T>(source) && item.Destination.IsEqualTo<T>(destination));
             _adjacencyList[source].TryFindFirst(sourceToDestinationPredicate, out edge1);
 
-            var destinationToSourcePredicate = new Predicate<WeightedEdge<T>>((item) => item.Source.IsEqualTo<T>(destination) && item.Destination.IsEqualTo<T>(source));
+            var destinationToSourcePredicate = new Predicate<WeightedEdge<T, W>>((item) => item.Source.IsEqualTo<T>(destination) && item.Destination.IsEqualTo<T>(source));
             _adjacencyList[destination].TryFindFirst(destinationToSourcePredicate, out edge2);
 
             // If edge doesn't exist, return false
@@ -261,10 +262,10 @@ namespace DataStructures.Graphs
             return true;
         }
 
-        public bool UpdateEdgeWeight(T source, T destination, long weight)
+        public bool UpdateEdgeWeight(T source, T destination, W weight)
         {
             // Check existence of vertices and validity of the weight value
-            if (weight == EMPTY_EDGE_VALUE)
+            if (EMPTY_EDGE_VALUE.Equals(weight))
                 return false;
             if (!HasVertex(source) || !HasVertex(destination))
                 return false;
@@ -300,7 +301,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Get edge object from source to destination.
         /// </summary>
-        public virtual WeightedEdge<T> GetEdge(T source, T destination)
+        public virtual WeightedEdge<T, W> GetEdge(T source, T destination)
         {
             if (!HasVertex(source) || !HasVertex(destination))
                 throw new KeyNotFoundException("Either one of the vertices or both of them don't exist.");
@@ -318,7 +319,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the edge weight from source to destination.
         /// </summary>
-        public virtual long GetEdgeWeight(T source, T destination)
+        public virtual W GetEdgeWeight(T source, T destination)
         {
             return GetEdge(source, destination).Weight;
         }
@@ -346,7 +347,7 @@ namespace DataStructures.Graphs
             if (_adjacencyList.Count == 0)
                 _firstInsertedNode = vertex;
 
-            _adjacencyList.Add(vertex, new DLinkedList<WeightedEdge<T>>());
+            _adjacencyList.Add(vertex, new DLinkedList<WeightedEdge<T, W>>());
 
             return true;
         }
@@ -414,13 +415,13 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours of a vertex as a dictionary of nodes-to-weights.
         /// </summary>
-        public Dictionary<T, long> NeighboursMap(T vertex)
+        public Dictionary<T, W> NeighboursMap(T vertex)
         {
             if (!HasVertex(vertex))
                 return null;
 
             var neighbors = _adjacencyList[vertex];
-            var map = new Dictionary<T, long>(neighbors.Count);
+            var map = new Dictionary<T, W>(neighbors.Count);
 
             foreach (var adjacent in neighbors)
                 map.Add(adjacent.Destination, adjacent.Weight);
@@ -567,5 +568,21 @@ namespace DataStructures.Graphs
             _adjacencyList.Clear();
         }
     }
+    
+    public class UndirectedWeightedSparseGraph<T> : UndirectedWeightedSparseGraph<T, Int64>, IGraph<T>, IWeightedGraph<T> where T : IComparable<T>
+    {
+        public new IEnumerable<WeightedEdge<T>> Edges => base.Edges.Select(edge => edge.ToSimpleEdge());
 
+        public new WeightedEdge<T> GetEdge(T source, T destination) => base.GetEdge(source, destination).ToSimpleEdge();
+
+        public new IEnumerable<WeightedEdge<T>> IncomingEdges(T vertex) => base.IncomingEdges(vertex).Select(edge => edge.ToSimpleEdge());
+
+        public new IEnumerable<WeightedEdge<T>> OutgoingEdges(T vertex) => base.OutgoingEdges(vertex).Select(edge => edge.ToSimpleEdge());
+
+        IEnumerable<IEdge<T>> IGraph<T>.Edges => this.Edges;
+
+        IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex) => this.IncomingEdges(vertex);
+
+        IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex) => this.OutgoingEdges(vertex);
+    }
 }

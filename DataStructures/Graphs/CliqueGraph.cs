@@ -824,7 +824,6 @@ namespace DataStructures.Graphs
             enumerator.Dispose();
             return ret;
         }
-
     }
 
     internal class UnordererPair<T> : Tuple<T, T>, IEquatable<UnordererPair<T>> where T : IEquatable<T>
