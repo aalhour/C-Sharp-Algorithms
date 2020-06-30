@@ -190,6 +190,8 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs)
   * [Edit Distance](Algorithms/Strings/EditDistance.cs)
     + Uses a generic custom class for passing costs: [EditDistanceCostsMap\<T\>](Algorithms/Strings/EditDistanceCostsMap.cs)
+  * [Aho-Corasick](Algorithms/Strings/AhoCorasick.cs)
+    + Uses a class to store information about vertices and transitions between them.: [AhoCorasickVertex](Algorithms/Strings/AhoCorasickVertex.cs)
 
 #### Numeric:
 
