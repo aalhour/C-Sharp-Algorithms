@@ -28,22 +28,6 @@ namespace DataStructures.Lists
         private readonly int MaxLevel = 32;
         private readonly double Probability = 0.5;
 
-
-        /// <summary>
-        /// Private helper. Used in Add method.
-        /// </summary>
-        /// <returns></returns>
-        private int _getNextLevel()
-        {
-            int lvl = 0;
-
-            while (_randomizer.NextDouble() < Probability && lvl <= _currentMaxLevel && lvl < MaxLevel)
-                ++lvl;
-
-            return lvl;
-        }
-
-
         /// <summary>
         /// CONSTRUCTOR
         /// </summary>
@@ -94,12 +78,15 @@ namespace DataStructures.Lists
         /// <summary>
         /// Access elements by index
         /// </summary>
-        public T this[int index]
+        public T this[T item]
         {
             get
             {
-                // TODO:
-                throw new NotImplementedException();
+                return Find(item, out var result) ? result : throw new KeyNotFoundException();
+            }
+            set
+            {
+                Add(item);
             }
         }
 
@@ -118,8 +105,6 @@ namespace DataStructures.Lists
 
                 toBeUpdated[i] = current;
             }
-
-            current = current.Forwards[0];
 
             // Get the next node level, and update list level if required.
             int lvl = _getNextLevel();
@@ -150,8 +135,7 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Remove(T item)
         {
-            T deleted;
-            return Remove(item, out deleted);
+            return Remove(item, out var _);
         }
 
         /// <summary>
@@ -185,8 +169,12 @@ namespace DataStructures.Lists
             // We know that the node is in the list.
             // Unlink it from the levels where it exists.
             for (int i = 0; i < _currentMaxLevel; ++i)
+            {
                 if (toBeUpdated[i].Forwards[i] == current)
+                {
                     toBeUpdated[i].Forwards[i] = current.Forwards[i];
+                }
+            }
 
             // Decrement the count
             --_count;
@@ -367,6 +355,19 @@ namespace DataStructures.Lists
         }
         #endregion
 
+        /// <summary>
+        /// Private helper. Used in Add method.
+        /// </summary>
+        /// <returns></returns>
+        private int _getNextLevel()
+        {
+            int lvl = 1;
+
+            while (_randomizer.NextDouble() < Probability && lvl <= _currentMaxLevel && lvl < MaxLevel)
+                ++lvl;
+
+            return lvl;
+        }
     }
 
 }

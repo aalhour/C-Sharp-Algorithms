@@ -5,12 +5,6 @@ namespace DataStructures.Lists
     public class SkipListNode<T> : IComparable<SkipListNode<T>> where T : IComparable<T>
     {
         /// <summary>
-        /// Instance variables
-        /// </summary>
-        private T _value;
-        private SkipListNode<T>[] _forwards;
-
-        /// <summary>
         /// CONSTRUCTORS
         /// </summary>
         public SkipListNode(T value, int level)
@@ -25,20 +19,12 @@ namespace DataStructures.Lists
         /// <summary>
         /// Get and set node's value
         /// </summary>
-        public virtual T Value
-        {
-            get { return this._value; }
-            private set { this._value = value; }
-        }
+        public virtual T Value { get; private set; }
 
         /// <summary>
         /// Get and set node's forwards links
         /// </summary>
-        public virtual SkipListNode<T>[] Forwards
-        {
-            get { return this._forwards; }
-            private set { this._forwards = value; }
-        }
+        public virtual SkipListNode<T>[] Forwards { get; private set; }
 
         /// <summary>
         /// Return level of node.
@@ -55,7 +41,7 @@ namespace DataStructures.Lists
         {
             if (other == null)
                 return -1;
-
+            
             return this.Value.CompareTo(other.Value);
         }
     }
