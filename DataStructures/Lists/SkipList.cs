@@ -194,7 +194,8 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Contains(T item)
         {
-            return Find(item, out var _);
+            T itemOut;
+            return Find(item, out itemOut);
         }
 
         /// <summary>
@@ -202,12 +203,6 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Find(T item, out T result)
         {
-            result = default;
-            if(IsEmpty)
-            {
-                return false;
-            }
-
             var current = _firstNode;
 
             // Walk after all the nodes that have values less than the node we are looking for
@@ -224,6 +219,7 @@ namespace DataStructures.Lists
                 return true;
             }
 
+            result = default(T);
             return false;
         }
 

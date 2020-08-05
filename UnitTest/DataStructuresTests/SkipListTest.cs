@@ -7,16 +7,6 @@ namespace UnitTest.DataStructuresTests
     public static class SkipListTest
     {
         [Fact]
-        public static void EmptyList()
-        {
-            var skipList = new SkipList<int>();
-
-            Assert.True(skipList.Count == 0);
-            Assert.True(skipList.IsEmpty);
-            Assert.DoesNotContain(0, skipList);
-        }
-
-        [Fact]
         public static void AddOneElement()
         {
             var skipList = new SkipList<int>();
