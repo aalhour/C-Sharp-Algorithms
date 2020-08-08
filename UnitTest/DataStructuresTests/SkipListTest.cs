@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using DataStructures.Lists;
+﻿using DataStructures.Lists;
 using Xunit;
 
 namespace UnitTest.DataStructuresTests
@@ -17,6 +16,17 @@ namespace UnitTest.DataStructuresTests
         }
 
         [Fact]
+        public static void InitializationWithReferencyTypeAsGeneric_ListIsEmpty()
+        {
+            var skipList = new SkipList<string>();
+
+            Assert.True(skipList.Count == 0);
+            Assert.True(skipList.IsEmpty);
+            Assert.DoesNotContain(null, skipList);
+            Assert.DoesNotContain(string.Empty, skipList);
+        }
+
+        [Fact]
         public static void Add_NullElement_ListContainNullElement()
         {
             var skipList = new SkipList<string>();
@@ -25,6 +35,19 @@ namespace UnitTest.DataStructuresTests
 
             Assert.True(skipList.Count == 1);
             Assert.Contains(null, skipList);
+        }
+
+        [Fact]
+        public static void Add_NullElementAfterNonNull_ListContainNullElement()
+        {
+            var skipList = new SkipList<string>();
+
+            skipList.Add("1");
+            skipList.Add(null);
+
+            Assert.True(skipList.Count == 2);
+            Assert.Contains(null, skipList);
+            Assert.Contains("1", skipList);
         }
 
         [Theory]

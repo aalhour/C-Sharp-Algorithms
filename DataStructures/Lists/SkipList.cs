@@ -208,12 +208,31 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Find(T item, out T result)
         {
+            result = default(T);
+
             var current = _firstNode;
+
+            // If find null element then check first element after first node
+            if (item == null)
+            {
+                current = current.Forwards[0];
+                return current != null && current.Value == null;
+            }
+
+            // Skip null element (in first postion) if contain
+            if (!IsEmpty && current.Forwards[0].Value == null)
+            {
+                current = current.Forwards[0];
+            }
 
             // Walk after all the nodes that have values less than the node we are looking for
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
+            {
                 while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
+                {
                     current = current.Forwards[i];
+                }
+            }   
 
             current = current.Forwards[0];
 
@@ -224,7 +243,6 @@ namespace DataStructures.Lists
                 return true;
             }
 
-            result = default(T);
             return false;
         }
 
