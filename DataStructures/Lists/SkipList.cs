@@ -37,9 +37,6 @@ namespace DataStructures.Lists
             _currentMaxLevel = 1;
             _randomizer = new Random();
             _firstNode = new SkipListNode<T>(default(T), MaxLevel);
-
-            for (int i = 0; i < MaxLevel; ++i)
-                _firstNode.Forwards[i] = _firstNode;
         }
 
 
@@ -98,36 +95,43 @@ namespace DataStructures.Lists
             var current = _firstNode;
             var toBeUpdated = new SkipListNode<T>[MaxLevel];
 
+            // Get nodes for updated
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
             {
-                while (current.Forwards[i] != _firstNode && current.Forwards[i].Value.IsLessThan(item))
+                while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
+                {
                     current = current.Forwards[i];
+                }
 
                 toBeUpdated[i] = current;
             }
 
-            // Get the next node level, and update list level if required.
-            int lvl = _getNextLevel();
-            if (lvl > _currentMaxLevel)
+            // Desired position to insert key
+            current = current.Forwards[0];
+
+            if(current == null || !current.Value.Equals(item))
             {
-                for (int i = _currentMaxLevel; i < lvl; ++i)
-                    toBeUpdated[i] = _firstNode;
+                // Get the next node level, and update list level if required.
+                int lvl = _getNextLevel();
+                if (lvl > _currentMaxLevel)
+                {
+                    for (int i = _currentMaxLevel; i < lvl; ++i)
+                        toBeUpdated[i] = _firstNode;
 
-                _currentMaxLevel = lvl;
+                    _currentMaxLevel = lvl;
+                }
+
+                var newNode = new SkipListNode<T>(item, lvl);
+
+                // Insert the new node into the skip list
+                for (int i = 0; i < lvl; ++i)
+                {
+                    newNode.Forwards[i] = toBeUpdated[i].Forwards[i];
+                    toBeUpdated[i].Forwards[i] = newNode;
+                }
+
+                ++_count;
             }
-
-            // New node
-            var newNode = new SkipListNode<T>(item, lvl);
-
-            // Insert the new node into the skip list
-            for (int i = 0; i < lvl; ++i)
-            {
-                newNode.Forwards[i] = toBeUpdated[i].Forwards[i];
-                toBeUpdated[i].Forwards[i] = newNode;
-            }
-
-            // Increment the count
-            ++_count;
         }
 
         /// <summary>
@@ -151,7 +155,7 @@ namespace DataStructures.Lists
             // Mark all nodes as toBeUpdated.
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
             {
-                while (current.Forwards[i] != _firstNode && current.Forwards[i].Value.IsLessThan(item))
+                while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
                     current = current.Forwards[i];
 
                 toBeUpdated[i] = current;
@@ -160,7 +164,7 @@ namespace DataStructures.Lists
             current = current.Forwards[0];
 
             // Return default value of T if the item was not found
-            if (current.Value.IsEqualTo(item) == false)
+            if (current == null || current.Value.IsEqualTo(item) == false)
             {
                 deleted = default(T);
                 return false;
@@ -170,10 +174,12 @@ namespace DataStructures.Lists
             // Unlink it from the levels where it exists.
             for (int i = 0; i < _currentMaxLevel; ++i)
             {
-                if (toBeUpdated[i].Forwards[i] == current)
+                if (toBeUpdated[i].Forwards[i] != current)
                 {
-                    toBeUpdated[i].Forwards[i] = current.Forwards[i];
+                    break;
                 }
+
+                toBeUpdated[i].Forwards[i] = current.Forwards[i];
             }
 
             // Decrement the count
@@ -181,7 +187,7 @@ namespace DataStructures.Lists
 
             // Check to see if we've deleted the highest-level node
             // Decrement level
-            while (_currentMaxLevel > 1 && _firstNode.Forwards[_currentMaxLevel - 1] == _firstNode)
+            while (_currentMaxLevel > 1 && _firstNode.Forwards[_currentMaxLevel - 1] == null)
                 --_currentMaxLevel;
 
             // Assign the deleted output parameter to the node.Value
@@ -194,8 +200,7 @@ namespace DataStructures.Lists
         /// </summary>
         public bool Contains(T item)
         {
-            T itemOut;
-            return Find(item, out itemOut);
+            return Find(item, out var _);
         }
 
         /// <summary>
@@ -207,13 +212,13 @@ namespace DataStructures.Lists
 
             // Walk after all the nodes that have values less than the node we are looking for
             for (int i = _currentMaxLevel - 1; i >= 0; --i)
-                while (current.Forwards[i] != _firstNode && current.Forwards[i].Value.IsLessThan(item))
+                while (current.Forwards[i] != null && current.Forwards[i].Value.IsLessThan(item))
                     current = current.Forwards[i];
 
             current = current.Forwards[0];
 
             // Return true if we found the element; false otherwise
-            if (current.Value.IsEqualTo(item))
+            if (current != null && current.Value.IsEqualTo(item))
             {
                 result = current.Value;
                 return true;
@@ -290,7 +295,7 @@ namespace DataStructures.Lists
         public IEnumerator<T> GetEnumerator()
         {
             var node = _firstNode;
-            while (node.Forwards[0] != null && node.Forwards[0] != _firstNode)
+            while (node.Forwards[0] != null && node.Forwards[0] != null)
             {
                 node = node.Forwards[0];
                 yield return node.Value;
@@ -349,9 +354,6 @@ namespace DataStructures.Lists
             _currentMaxLevel = 1;
             _randomizer = new Random();
             _firstNode = new SkipListNode<T>(default(T), MaxLevel);
-
-            for (int i = 0; i < MaxLevel; ++i)
-                _firstNode.Forwards[i] = _firstNode;
         }
         #endregion
 
@@ -364,7 +366,9 @@ namespace DataStructures.Lists
             int lvl = 1;
 
             while (_randomizer.NextDouble() < Probability && lvl <= _currentMaxLevel && lvl < MaxLevel)
+            {
                 ++lvl;
+            }
 
             return lvl;
         }
