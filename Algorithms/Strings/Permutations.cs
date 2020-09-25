@@ -73,19 +73,12 @@ namespace Algorithms.Strings
                 return true;
 
             int len = source.Length;
-            // Hash set which will contains all the characters present in input source.
-            var hashSetSourceChars = new HashSet<char>();
-            var hashSetOtherChars = new HashSet<char>();
-            for (int i = 0; i < len; i++)
+            for(int i = 0; i<len;i++)
             {
-                hashSetSourceChars.Add(source[i]);
-                hashSetOtherChars.Add(other[i]);
-            }
-            for (int i = 0; i < len; i++)
-            {
-                // Inputs are not Anargram if characers from *other are not present in *source.
-                if (!hashSetSourceChars.Contains(other[i])) return false;
-                if (!hashSetOtherChars.Contains(source[i])) return false;
+                int index = other.IndexOf(source[i]);
+                if(index==-1)
+                    return false;
+                other.Remove(index);
             }
             return true;
         }
