@@ -73,6 +73,7 @@ namespace Algorithms.Strings
                 return true;
 
             int len = source.Length;
+            //loops and removes chars from other string so they wouldn't count the same char twice
             for(int i = 0; i<len;i++)
             {
                 int index = other.IndexOf(source[i]);
