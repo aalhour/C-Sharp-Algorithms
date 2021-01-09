@@ -35,7 +35,7 @@ namespace Algorithms.Sorting
         }
 
         /// <summary>
-        /// Public API: Sorts ascending
+        /// Public API: Sorts descending
         /// Uses Min-Heaps
         /// </summary>
         public static void HeapSortDescending<T>(this IList<T> collection, Comparer<T> comparer = null)
