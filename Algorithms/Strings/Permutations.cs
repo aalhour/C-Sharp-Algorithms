@@ -61,9 +61,9 @@ namespace Algorithms.Strings
         }
 
         /// <summary>
-        /// Determines if the Other string is an anargram of the Source string.
+        /// Determines if the Other string is an anagram of the Source string.
         /// </summary>
-        public static bool IsAnargram(string source, string other)
+        public static bool IsAnagram(string source, string other)
         {
             if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(other))
                 return false;
@@ -83,7 +83,7 @@ namespace Algorithms.Strings
             }
             for (int i = 0; i < len; i++)
             {
-                // Inputs are not Anargram if characers from *other are not present in *source.
+                // Inputs are not Anagram if characers from *other are not present in *source.
                 if (!hashSetSourceChars.Contains(other[i])) return false;
                 if (!hashSetOtherChars.Contains(source[i])) return false;
             }
