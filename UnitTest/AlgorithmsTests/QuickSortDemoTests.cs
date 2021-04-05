@@ -17,5 +17,14 @@ namespace UnitTest.AlgorithmsTests
             long[] sortedList = { 0, 2, 3, 4, 8, 9, 12, 15, 16, 23, 25, 34, 42, 46, 55 };
             Assert.True(list.SequenceEqual(sortedList));
         }
+
+        [Fact(DisplayName = "demo test 2")]
+        public static void DoTest2()
+        {
+            var list = new List<long>() { 6, 9 , 34, 12, 25, 0, 9 , 18 , 11};
+            list.QuickSortDemoSort();
+            long[] sortedList = { 0, 6, 9, 9, 11, 12, 18, 25, 34};
+            Assert.True(list.SequenceEqual(sortedList));
+        }
     }
 }
