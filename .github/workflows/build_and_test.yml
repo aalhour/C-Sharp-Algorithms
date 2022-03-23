@@ -6,11 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 2.2.108
+         dotnet-version: '6.0.x'
+         include-prerelease: true
     - name: Build with .NET Core
       run: dotnet build --configuration Release
   test:
