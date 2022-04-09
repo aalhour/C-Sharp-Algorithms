@@ -80,19 +80,12 @@ namespace UnitTest.DataStructuresTests
             var result2 = circularBuffer.Pop();
             var result3 = circularBuffer.Pop();
             var result4 = circularBuffer.Pop();
-            var result5 = circularBuffer.Pop();
-            var result6 = circularBuffer.Pop();
-            var result7 = circularBuffer.Pop();
-            var result8 = circularBuffer.Pop();
 
             Assert.Equal(13, result1);
             Assert.Equal(43, result2);
             Assert.Equal(23, result3);
             Assert.Equal(2, result4);
-            Assert.Equal(0, result5);
-            Assert.Equal(0, result6);
-            Assert.Equal(0, result7);
-            Assert.Equal(0, result8);
+            Assert.Throws<InvalidOperationException>(()=> circularBuffer.Pop());
         }
 
         [Fact]
@@ -147,7 +140,7 @@ namespace UnitTest.DataStructuresTests
             circularBuffer.Add(34);
             circularBuffer.Add(24);
             //Testing contains
-            Assert.True(circularBuffer.Contains(3));
+            Assert.Contains<byte>(3, circularBuffer);
             
             //Testing CopyTo
             var array = new byte[3];
@@ -160,9 +153,7 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(3, circularBuffer.Count);
             //Testing clear
             circularBuffer.Clear();
-            Assert.Equal(0, circularBuffer.Pop());
-            Assert.Equal(0, circularBuffer.Pop());
-            Assert.Equal(0, circularBuffer.Pop());
+            Assert.Throws<InvalidOperationException>(() => circularBuffer.Pop());
             Assert.Empty(circularBuffer);
         }
         [Fact]
@@ -254,6 +245,86 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal("three", stringBuffer.Pop());
             Assert.Equal("four", stringBuffer.Pop());
             Assert.Equal("five", stringBuffer.Pop());
+
+
+            //Test for removing overrided buffer
+            circularBuffer = new CircularBuffer<byte>(12);
+            circularBuffer.Add(1);
+            circularBuffer.Add(0);
+            circularBuffer.Add(2);
+            circularBuffer.Add(0);
+            circularBuffer.Add(3);
+            circularBuffer.Add(0);
+            circularBuffer.Add(4);
+            circularBuffer.Add(0);
+            circularBuffer.Add(5);
+            circularBuffer.Add(0);
+            circularBuffer.Add(6);
+            circularBuffer.Add(0);
+            circularBuffer.Add(7);
+            circularBuffer.Add(0);
+            circularBuffer.Add(8);
+
+
+            circularBuffer.Remove(0);
+            Assert.Equal(6, circularBuffer.Count);
+
+            Assert.Equal(3, circularBuffer.Pop());
+            Assert.Equal(4, circularBuffer.Pop());
+            Assert.Equal(5, circularBuffer.Pop());
+            Assert.Equal(6, circularBuffer.Pop());
+            Assert.Equal(7, circularBuffer.Pop());
+            Assert.Equal(8, circularBuffer.Pop());
+        }
+
+        [Fact]
+        public static void TestImplimentEnumerator()
+        {
+            Random rnd = new Random();
+            int[] values = new int[20];
+            for (int i = 0; i < values.Length; i++)
+                values[i] = rnd.Next(1, 99);
+            string arrayValue = string.Join(", ", values);
+
+            // buffer write two circles 
+            CircularBuffer<int> buffer = new CircularBuffer<int>(values.Length / 2);
+            var subvalues = new int[buffer.Length];
+
+            Array.Copy(values, values.Length - buffer.Length, subvalues, 0, buffer.Length);
+
+            foreach (int value in values)
+                buffer.Add(value);
+
+            string arraySubValue = string.Join(", ", subvalues);
+            string bufferValue = string.Join(", ", buffer);
+
+            Assert.Equal(arraySubValue, bufferValue);
+
+
+            // buffer not write full circle
+            buffer = new CircularBuffer<int>(values.Length + 2);
+            foreach (int value in values)
+                buffer.Add(value);
+
+            bufferValue = string.Join(", ", buffer);
+
+            Assert.Equal(arrayValue, bufferValue);
+
+
+            // buffer write over one circle
+            buffer = new CircularBuffer<int>(values.Length/2 + 2);
+            foreach (int value in values)
+                buffer.Add(value);
+
+            buffer.Pop();
+            buffer.Pop();
+
+            subvalues = new int[10];
+            Array.Copy(values, values.Length - 10, subvalues, 0, 10);
+            arraySubValue = string.Join(", ", subvalues);
+            bufferValue = string.Join(", ", buffer);
+
+            Assert.Equal(arraySubValue, bufferValue);
         }
     }
 }
