@@ -288,6 +288,12 @@ namespace UnitTest.DataStructuresTests
 
             // buffer write two circles 
             CircularBuffer<int> buffer = new CircularBuffer<int>(values.Length / 2);
+
+            string bufferValue = string.Join(", ", buffer);
+            Assert.Empty(bufferValue);
+
+
+
             var subvalues = new int[buffer.Length];
 
             Array.Copy(values, values.Length - buffer.Length, subvalues, 0, buffer.Length);
@@ -296,7 +302,7 @@ namespace UnitTest.DataStructuresTests
                 buffer.Add(value);
 
             string arraySubValue = string.Join(", ", subvalues);
-            string bufferValue = string.Join(", ", buffer);
+            bufferValue = string.Join(", ", buffer);
 
             Assert.Equal(arraySubValue, bufferValue);
 
