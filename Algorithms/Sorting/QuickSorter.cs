@@ -23,7 +23,8 @@ namespace Algorithms.Sorting
         //
         // Private static method
         // The recursive quick sort algorithm
-        private static void InternalQuickSort<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex, Comparer<T> comparer)
+        private static void InternalQuickSort<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex,
+            Comparer<T> comparer)
         {
             //
             // Recursive call check
@@ -39,7 +40,8 @@ namespace Algorithms.Sorting
         //
         // Private static method
         // The partition function, used in the quick sort algorithm
-        private static int InternalPartition<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex, Comparer<T> comparer)
+        private static int InternalPartition<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex,
+            Comparer<T> comparer)
         {
             int wallIndex, pivotIndex;
 
@@ -65,8 +67,5 @@ namespace Algorithms.Sorting
 
             return wallIndex;
         }
-
     }
-
 }
-

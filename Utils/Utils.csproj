@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RhinoMocks" Version="3.6.1" />
+      <PackageReference Include="xunit" Version="2.4.1" />
+    </ItemGroup>
+
+</Project>
