@@ -1,61 +1,52 @@
-﻿using Algorithms.Common;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Algorithms.Sorting
+﻿namespace Algorithms.Sorting
 {
     public static class QuickSortDemo
     {
-        //public API for quick sort algorithm
-        public static void QuickSortDemoSort<T>(this IList<T> collection, Comparer<T> comparer = null)
+        public static void QuickSort(int[] array)
         {
-            int startIndex = 0;
-            int endIndex = collection.Count - 1;
-
-            comparer = comparer ?? Comparer<T>.Default;
-            collection.InternalQuickSortDemo(startIndex, endIndex, comparer);
+            QuickSort(array, 0, array.Length - 1);
         }
 
-        //recursive quick sort algorithm
-        private static void InternalQuickSortDemo<T>(this IList<T> collection, int leftMostIndex, int rightMostIndex, Comparer<T> comparer)
+        private static void QuickSort(int[] array, int left, int right)
         {
-            //recursive call check
-            if (leftMostIndex < rightMostIndex)
+            // stop it if left >= right
+            if (left>= right)
             {
-                int wallIndex = collection.InternalPartitionDemo(leftMostIndex, rightMostIndex, comparer);
-                collection.InternalQuickSortDemo(leftMostIndex, wallIndex - 1, comparer);
-                collection.InternalQuickSortDemo(wallIndex + 1, rightMostIndex, comparer);
+                return;
             }
+
+            var index = Partition(array, left, right);
+            
+            //recursive method left & right 
+            QuickSort(array, left, index -1);
+            QuickSort(array, index+ 1, right);
         }
 
-        //partition function
-        private static int InternalPartitionDemo<T>(this IList<T> collection, int leftmostIndex, int rightmostIndex, Comparer<T> comparer)
+        private static int Partition(int[] array, int left, int right)
         {
-            int wallIndex, pivotIndex;
+            var result = left;
+            var pivotValue = array[right];
 
-            //set the pivot - always the right most index
-            pivotIndex = rightmostIndex;
-            T pivotValue = collection[pivotIndex];
-
-            wallIndex = leftmostIndex;
-            //comparing remaining array elements against pivotvalue
-            //starts from left most index
-            //add 1 
-            //until to the end 
-            for (int i = leftmostIndex; i <= (rightmostIndex - 1); i++)
+            for (var i = left; i <= right - 1; i++)
             {
-                //check if collection[i] <= pivot
-                if (comparer.Compare(collection[i], pivotValue) <= 0)
-                {
-                    //swap element
-                    collection.Swap(i, wallIndex);
-                    wallIndex++;
-                }
+                if (array[i] > pivotValue) continue;
+                Swap(array, i, result);
+                result++;
+            }
+            
+            Swap(array, result, right);
+
+            return result;
+        }
+
+        private static void Swap(int[] array, int left, int right)
+        {
+            if (array.Length < 2 || left == right)
+            {
+                return;
             }
 
-            collection.Swap(wallIndex, pivotIndex);
-            return wallIndex;
+            (array[left], array[right]) = (array[right], array[left]);
         }
     }
 }
