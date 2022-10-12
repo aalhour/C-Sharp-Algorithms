@@ -56,16 +56,12 @@ namespace DataStructures.Common
         {
             return (firstValue.IsEqualTo(secondValue) || firstValue.IsLessThan(secondValue));
         }
-
-
-        //
+        
         // METHODS FOR BINARY SEARCH TREE
-        // COMAPRES THE VALUE OF TWO NODES TOGETHER
+        // COMPARES THE VALUE OF TWO NODES TOGETHER
         private static bool HandleNullCases<T>(BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            if (first == null || second == null)
-                return false;
-            return true;
+            return first != null && second != null;
         }
 
         public static bool IsEqualTo<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
