@@ -92,18 +92,12 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the number of elements in heap
         /// </summary>
-        public int Count
-        {
-            get { return _collection.Count; }
-        }
+        public int Count => _collection.Count;
 
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return (_collection.Count == 0); }
-        }
+        public bool IsEmpty => (_collection.Count == 0);
 
         /// <summary>
         /// Gets or sets the at the specified index.
@@ -113,7 +107,7 @@ namespace DataStructures.Heaps
         {
             get
             {
-                if (index < 0 || index > this.Count || this.Count == 0)
+                if (index < 0 || index > Count || Count == 0)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -122,7 +116,7 @@ namespace DataStructures.Heaps
             }
             set
             {
-                if (index < 0 || index >= this.Count)
+                if (index < 0 || index >= Count)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -284,8 +278,8 @@ namespace DataStructures.Heaps
         /// </summary>
         public IMaxHeap<T> ToMaxHeap()
         {
-            BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(this.Count, this._heapComparer);
-            newMaxHeap.Initialize(this._collection.ToArray());
+            BinaryMaxHeap<T> newMaxHeap = new BinaryMaxHeap<T>(Count, _heapComparer);
+            newMaxHeap.Initialize(_collection.ToArray());
             return newMaxHeap;
         }
 

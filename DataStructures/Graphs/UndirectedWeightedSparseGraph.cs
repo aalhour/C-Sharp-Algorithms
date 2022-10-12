@@ -82,34 +82,22 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is undirected; false otherwise.
         /// </summary>
-        public virtual bool IsDirected
-        {
-            get { return false; }
-        }
+        public virtual bool IsDirected => false;
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public virtual bool IsWeighted
-        {
-            get { return true; }
-        }
+        public virtual bool IsWeighted => true;
 
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
-        public int EdgesCount
-        {
-            get { return _edgesCount; }
-        }
+        public int EdgesCount => _edgesCount;
 
         /// <summary>
         /// Gets the count of edges.
         /// </summary>
-        public int VerticesCount
-        {
-            get { return _adjacencyList.Count; }
-        }
+        public int VerticesCount => _adjacencyList.Count;
 
         /// <summary>
         /// Returns the list of Vertices.
@@ -124,19 +112,16 @@ namespace DataStructures.Graphs
         }
 
 
-        IEnumerable<IEdge<T>> IGraph<T>.Edges
-        {
-            get { return this.Edges; }
-        }
+        IEnumerable<IEdge<T>> IGraph<T>.Edges => Edges;
 
         IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
         {
-            return this.IncomingEdges(vertex);
+            return IncomingEdges(vertex);
         }
 
         IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
         {
-            return this.OutgoingEdges(vertex);
+            return OutgoingEdges(vertex);
         }
 
 
@@ -486,7 +471,7 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("The source vertex doesn't exist.");
 
             var visited = new HashSet<T>();
-            var stack = new DataStructures.Lists.Stack<T>();
+            var stack = new Lists.Stack<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
             stack.Push(source);
@@ -531,7 +516,7 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("The source vertex doesn't exist.");
 
             var visited = new HashSet<T>();
-            var queue = new DataStructures.Lists.Queue<T>();
+            var queue = new Lists.Queue<T>();
             var listOfNodes = new ArrayList<T>(VerticesCount);
 
             listOfNodes.Add(source);

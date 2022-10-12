@@ -105,7 +105,7 @@ namespace DataStructures.Trees
             if (other == null)
                 return -1;
 
-            return this.Key.CompareTo(other.Key);
+            return Key.CompareTo(other.Key);
 
         }
 

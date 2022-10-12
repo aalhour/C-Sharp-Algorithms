@@ -13,8 +13,8 @@ namespace DataStructures.Trees
         /// </summary>
         public new AVLTreeNode<T> Root
         {
-            get { return (AVLTreeNode<T>)base.Root; }
-            internal set { base.Root = value; }
+            get => (AVLTreeNode<T>)base.Root;
+            internal set => base.Root = value;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == this.Root);
+            bool isRootNode = (currentNode == Root);
 
             // Perform the rotation
             currentNode.RightChild = pivotNode.LeftChild;
@@ -111,7 +111,7 @@ namespace DataStructures.Trees
 
             //Update the entire tree's Root if necessary
             if (isRootNode)
-                this.Root = pivotNode;
+                Root = pivotNode;
 
             // Update the original parent's child node
             if (isLeftChild)
@@ -143,7 +143,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == this.Root);
+            bool isRootNode = (currentNode == Root);
 
             // Perform the rotation
             currentNode.LeftChild = pivotNode.RightChild;
@@ -158,7 +158,7 @@ namespace DataStructures.Trees
 
             // Update the entire tree's Root if necessary
             if (isRootNode)
-                this.Root = pivotNode;
+                Root = pivotNode;
 
             // Update the original parent's child node
             if (isLeftChild)
@@ -301,7 +301,7 @@ namespace DataStructures.Trees
 
             if (collection.Length > 0)
                 for (int i = 0; i < collection.Length; ++i)
-                    this.Insert(collection[i]);
+                    Insert(collection[i]);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace DataStructures.Trees
 
             if (collection.Count > 0)
                 for (int i = 0; i < collection.Count; ++i)
-                    this.Insert(collection[i]);
+                    Insert(collection[i]);
         }
 
         /// <summary>

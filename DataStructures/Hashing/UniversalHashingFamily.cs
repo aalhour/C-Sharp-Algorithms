@@ -47,10 +47,7 @@ namespace DataStructures.Hashing
         /// <summary>
         /// Returns number of member hash functions.
         /// </summary>
-        public int NumberOfFunctions
-        {
-            get { return _numberOfHashFunctions; }
-        }
+        public int NumberOfFunctions => _numberOfHashFunctions;
 
         /// <summary>
         /// Generates new hash functions with new randomized multipliers.

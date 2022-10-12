@@ -31,24 +31,18 @@ namespace DataStructures.Trees
         public TrieMap()
         {
             _count = 0;
-            _root = new TrieMapNode<TRecord>(' ', default(TRecord), false);
+            _root = new TrieMapNode<TRecord>(' ', default, false);
         }
 
         /// <summary>
         /// Return count of words.
         /// </summary>
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
         /// <summary>
         /// Checks if element is empty.
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return _count == 0; }
-        }
+        public bool IsEmpty => _count == 0;
 
         /// <summary>
         /// Add word to trie
@@ -64,7 +58,7 @@ namespace DataStructures.Trees
             {
                 if (!current.Children.ContainsKey(word[i]))
                 {
-                    var newTrieNode = new TrieMapNode<TRecord>(word[i], default(TRecord));
+                    var newTrieNode = new TrieMapNode<TRecord>(word[i], default);
                     newTrieNode.Parent = current;
                     current.Children.Add(word[i], newTrieNode);
                 }
@@ -135,7 +129,7 @@ namespace DataStructures.Trees
         public bool ContainsWord(string word)
         {
             TRecord record;
-            return this.SearchByWord(word, out record);
+            return SearchByWord(word, out record);
         }
 
         /// <summary>
@@ -167,7 +161,7 @@ namespace DataStructures.Trees
             if (string.IsNullOrEmpty(word))
                 throw new InvalidOperationException("Word is either null or empty.");
 
-            record = default(TRecord);
+            record = default;
             var current = _root;
 
             for (int i = 0; i < word.Length; ++i)
@@ -213,15 +207,12 @@ namespace DataStructures.Trees
         {
             _count = 0;
             _root.Clear();
-            _root = new TrieMapNode<TRecord>(' ', default(TRecord), false);
+            _root = new TrieMapNode<TRecord>(' ', default, false);
         }
 
 
         #region IDictionary implementation
-        bool ICollection<KeyValuePair<string, TRecord>>.IsReadOnly
-        {
-            get { return false; }
-        }
+        bool ICollection<KeyValuePair<string, TRecord>>.IsReadOnly => false;
 
         /// <summary>
         /// Checks whether a specific key exists in trie as a word (terminal word).
@@ -305,15 +296,12 @@ namespace DataStructures.Trees
                     return record;
                 throw new KeyNotFoundException();
             }
-            set
-            {
-                UpdateWord(key, value);
-            }
+            set => UpdateWord(key, value);
         }
 
         void ICollection<KeyValuePair<string, TRecord>>.Add(KeyValuePair<string, TRecord> item)
         {
-            this.Add(item.Key, item.Value);
+            Add(item.Key, item.Value);
         }
 
         /// <summary>
@@ -323,7 +311,7 @@ namespace DataStructures.Trees
         {
             try
             {
-                this.Remove(word: key);
+                Remove(word: key);
                 return true;
             }
             catch
@@ -339,7 +327,7 @@ namespace DataStructures.Trees
         {
             try
             {
-                this.Remove(word: item.Key);
+                Remove(word: item.Key);
                 return true;
             }
             catch

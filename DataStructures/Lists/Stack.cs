@@ -15,7 +15,7 @@ namespace DataStructures.Lists
         /// Count: Public Getter for returning the number of elements.
         /// </summary>
         private ArrayList<T> _collection { get; set; }
-        public int Count { get { return _collection.Count; } }
+        public int Count => _collection.Count;
 
 
         /// <summary>
@@ -46,13 +46,7 @@ namespace DataStructures.Lists
         /// Checks whether the stack is empty.
         /// </summary>
         /// <returns>True if stack is empty, false otherwise.</returns>
-        public bool IsEmpty
-        {
-            get
-            {
-                return _collection.IsEmpty;
-            }
-        }
+        public bool IsEmpty => _collection.IsEmpty;
 
 
         /// <summary>
@@ -130,7 +124,7 @@ namespace DataStructures.Lists
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
     }

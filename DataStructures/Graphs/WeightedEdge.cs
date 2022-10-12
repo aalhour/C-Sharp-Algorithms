@@ -30,10 +30,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Gets a value indicating whether this edge is weighted.
         /// </summary>
-        public bool IsWeighted
-        {
-            get { return true; }
-        }
+        public bool IsWeighted => true;
 
         /// <summary>
         /// CONSTRUCTOR

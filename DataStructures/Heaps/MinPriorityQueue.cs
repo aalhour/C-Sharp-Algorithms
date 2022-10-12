@@ -48,7 +48,7 @@ namespace DataStructures.Heaps
 
             // Initialize.
             _keys = new Dictionary<TKey, long>();
-            _heap = new BinaryMinHeap<PriorityQueueNode<TKey, TPriority>>((int)capacity, this._priorityComparer);
+            _heap = new BinaryMinHeap<PriorityQueueNode<TKey, TPriority>>((int)capacity, _priorityComparer);
         }
 
 
@@ -90,18 +90,12 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the count of elements in the queue.
         /// </summary>
-        public int Count
-        {
-            get { return _heap.Count; }
-        }
+        public int Count => _heap.Count;
 
         /// <summary>
         /// Checks if the queue is empty
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return _heap.IsEmpty; }
-        }
+        public bool IsEmpty => _heap.IsEmpty;
 
         /// <summary>
         /// Get the default max priority, if set, raises an exception if not set.
@@ -269,12 +263,12 @@ namespace DataStructures.Heaps
         public TKey Key { get; set; }
         public TPriority Priority { get; set; }
 
-        public PriorityQueueNode() : this(default(TKey), default(TPriority)) { }
+        public PriorityQueueNode() : this(default, default) { }
 
         public PriorityQueueNode(TKey value, TPriority priority)
         {
-            this.Key = value;
-            this.Priority = priority;
+            Key = value;
+            Priority = priority;
         }
 
         public int CompareTo(PriorityQueueNode<TKey, TPriority> other)
@@ -282,7 +276,7 @@ namespace DataStructures.Heaps
             if (other == null)
                 return -1;
 
-            return this.Priority.CompareTo(other.Priority);
+            return Priority.CompareTo(other.Priority);
         }
     }//end-of-node-class
 

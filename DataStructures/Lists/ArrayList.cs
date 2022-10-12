@@ -90,7 +90,7 @@ namespace DataStructures.Lists
                     IsMaximumCapacityReached = true;
                 }
 
-                this._resizeCapacity(newCapacity);
+                _resizeCapacity(newCapacity);
             }
         }
 
@@ -125,35 +125,20 @@ namespace DataStructures.Lists
         /// Gets the the number of elements in list.
         /// </summary>
         /// <value>Int.</value>
-        public int Count
-        {
-            get
-            {
-                return _size;
-            }
-        }
+        public int Count => _size;
 
 
         /// <summary>
         /// Returns the capacity of list, which is the total number of slots.
         /// </summary>
-        public int Capacity
-        {
-            get { return _collection.Length; }
-        }
+        public int Capacity => _collection.Length;
 
 
         /// <summary>
         /// Determines whether this list is empty.
         /// </summary>
         /// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (Count == 0);
-            }
-        }
+        public bool IsEmpty => (Count == 0);
 
 
         /// <summary>
@@ -256,7 +241,7 @@ namespace DataStructures.Lists
                 _ensureCapacity(_size + elements.Count());
 
                 foreach (var element in elements)
-                    this.Add(element);
+                    Add(element);
             }
         }
 
@@ -278,7 +263,7 @@ namespace DataStructures.Lists
                 _ensureCapacity(_size + count);
 
                 for (int i = 0; i < count; i++)
-                    this.Add(value);
+                    Add(value);
             }
         }
 
@@ -359,7 +344,7 @@ namespace DataStructures.Lists
             }
 
             // Reset the writable cell to the default value of type T.
-            _collection[_size] = default(T);
+            _collection[_size] = default;
         }
 
 
@@ -382,7 +367,7 @@ namespace DataStructures.Lists
         /// </summary>
         public void Resize(int newSize)
         {
-            Resize(newSize, default(T));
+            Resize(newSize, default);
         }
 
 
@@ -391,20 +376,20 @@ namespace DataStructures.Lists
         /// </summary>
         public void Resize(int newSize, T defaultValue)
         {
-            int currentSize = this.Count;
+            int currentSize = Count;
 
             if (newSize < currentSize)
             {
-                this._ensureCapacity(newSize);
+                _ensureCapacity(newSize);
             }
             else if (newSize > currentSize)
             {
                 // Optimisation step.
                 // This is just to avoid multiple automatic capacity changes.
-                if (newSize > this._collection.Length)
-                    this._ensureCapacity(newSize + 1);
+                if (newSize > _collection.Length)
+                    _ensureCapacity(newSize + 1);
 
-                this.AddRange(Enumerable.Repeat<T>(defaultValue, newSize - currentSize));
+                AddRange(Enumerable.Repeat<T>(defaultValue, newSize - currentSize));
             }
         }
 
@@ -677,7 +662,7 @@ namespace DataStructures.Lists
             }
 
             // Not found, return the default value of the type T.
-            return default(T);
+            return default;
         }
 
 
@@ -765,11 +750,11 @@ namespace DataStructures.Lists
         /// <returns>Array.</returns>
         public List<T> ToList()
         {
-            var newList = new List<T>(this.Count);
+            var newList = new List<T>(Count);
 
-            if (this.Count > 0)
+            if (Count > 0)
             {
-                for (int i = 0; i < this.Count; ++i)
+                for (int i = 0; i < Count; ++i)
                 {
                     newList.Add(_collection[i]);
                 }
@@ -818,7 +803,7 @@ namespace DataStructures.Lists
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
     }

@@ -28,7 +28,7 @@ namespace DataStructures.Dictionaries
             public TValue Value { get; set; }
             public bool IsActive { get; set; }
 
-            public CHashEntry() : this(default(TKey), default(TValue), false) { }
+            public CHashEntry() : this(default, default, false) { }
 
             public CHashEntry(TKey key, TValue value, bool isActive)
             {
@@ -117,11 +117,11 @@ namespace DataStructures.Dictionaries
             int primeCapacity = PRIMES.GetNextPrime(newCapacity);
 
             var oldSize = _size;
-            var oldCollection = this._collection;
+            var oldCollection = _collection;
 
             try
             {
-                this._collection = new CHashEntry<TKey, TValue>[newCapacity];
+                _collection = new CHashEntry<TKey, TValue>[newCapacity];
 
                 // Reset size
                 _size = 0;
@@ -351,7 +351,7 @@ namespace DataStructures.Dictionaries
         /// </summary>
         public void Clear()
         {
-            this._size = 0;
+            _size = 0;
 
             Parallel.ForEach(_collection,
                 (item) =>

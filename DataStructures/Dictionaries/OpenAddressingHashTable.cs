@@ -54,7 +54,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < _table.Length; i++)
             {
                 //initialize each slot
-                _table[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                _table[i] = new OAHashEntry<TKey, TValue>(default, default, false);
             }
         }
 
@@ -70,7 +70,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < exp.Length; i++)
             {
                 //initialize each slot
-                exp[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                exp[i] = new OAHashEntry<TKey, TValue>(default, default, false);
             }
 
             _inTable = 0;
@@ -95,7 +95,7 @@ namespace DataStructures.Dictionaries
             for (int i = 0; i < rehash.Length; i++)
             {
                 //initialize each slot
-                rehash[i] = new OAHashEntry<TKey, TValue>(default(TKey), default(TValue), false);
+                rehash[i] = new OAHashEntry<TKey, TValue>(default, default, false);
             }
 
             _inTable = 0;
@@ -252,8 +252,8 @@ namespace DataStructures.Dictionaries
                 _keys.Clear();
                 _values.Clear();
 
-                _table[index].key = default(TKey);
-                _table[index].value = default(TValue);
+                _table[index].key = default;
+                _table[index].value = default;
                 _table[index].occupied = false;
 
                 //number of items in the table decreases
@@ -280,8 +280,8 @@ namespace DataStructures.Dictionaries
             _values.Clear();
             for (int i = 0; i < _table.Length; i++)
             {
-                _table[i].key = default(TKey);
-                _table[i].value = default(TValue);
+                _table[i].key = default;
+                _table[i].value = default;
                 _table[i].occupied = false;
             }
             _inTable = 0;
@@ -300,7 +300,7 @@ namespace DataStructures.Dictionaries
             }
 
             //not found
-            value = default(TValue);
+            value = default;
             return false;
         }
 
@@ -313,7 +313,7 @@ namespace DataStructures.Dictionaries
             {
                 //calculate index
                 int index = _double_hash(key, i);
-                if (IComparable.Equals(_table[index].key, key))
+                if (Equals(_table[index].key, key))
                 {
                     return index;
                 }
@@ -346,28 +346,16 @@ namespace DataStructures.Dictionaries
         }
 
         //returns the number of items in the table
-        public int Count
-        {
-            get { return _inTable;}
-        }
+        public int Count => _inTable;
 
         //returns bool depending on whether or not the table is read only
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         //returns a list of keys in the table
-        public ICollection<TKey> Keys
-        {
-            get { return _keys; }
-        }
+        public ICollection<TKey> Keys => _keys;
 
         //returns a list of values in the table
-        public ICollection<TValue> Values
-        {
-            get { return _values; }
-        }
+        public ICollection<TValue> Values => _values;
 
         //----------------------------------------------------------------------
         //-----------------------NOT IMPLEMENTED YET----------------------------

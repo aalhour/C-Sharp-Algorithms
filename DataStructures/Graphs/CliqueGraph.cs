@@ -235,7 +235,7 @@ namespace DataStructures.Graphs
         ISet<UnordererPair<T>> getPairs(ICollection<T> vertices)
         {
             T[] arr = new T[vertices.Count];
-            ISet<UnordererPair<T>> ret = new System.Collections.Generic.HashSet<UnordererPair<T>>(new PairComparer());
+            ISet<UnordererPair<T>> ret = new HashSet<UnordererPair<T>>(new PairComparer());
             vertices.CopyTo(arr, 0);
             for (int i = 0; i < vertices.Count; i++)
             {
@@ -476,9 +476,9 @@ namespace DataStructures.Graphs
         /// Returns the neighbours doubly-linked list for the specified vertex.
         /// </summary>
         /// <param name="vertex">Vertex.</param>
-        public DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
+        public DLinkedList<T> Neighbours(T vertex)
         {
-            DataStructures.Lists.DLinkedList<T> returnList = new DataStructures.Lists.DLinkedList<T>();
+            DLinkedList<T> returnList = new DLinkedList<T>();
 
             foreach (var c in _cliques)
             {
@@ -538,45 +538,21 @@ namespace DataStructures.Graphs
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
         /// <value><c>true</c> if this instance is directed; otherwise, <c>false</c>.</value>
-        public bool IsDirected
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsDirected => false;
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
         /// <value><c>true</c> if this instance is weighted; otherwise, <c>false</c>.</value>
-        public bool IsWeighted
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsWeighted => false;
 
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
         /// <value>The vertices count.</value>
-        public int VerticesCount
-        {
-            get
-            {
-                return _vertices.Count;
-            }
-        }
+        public int VerticesCount => _vertices.Count;
 
-        public int EdgesCount
-        {
-            get
-            {
-                return getEdges().Count;
-            }
-        }
+        public int EdgesCount => getEdges().Count;
 
         /// <summary>
         /// Returns the list of edges.
@@ -598,25 +574,13 @@ namespace DataStructures.Graphs
         /// Returns the list of Vertices.
         /// </summary>
         /// <value>The vertices.</value>
-        IEnumerable<T> IGraph<T>.Vertices
-        {
-            get
-            {
-                return _vertices;
-            }
-        }
+        IEnumerable<T> IGraph<T>.Vertices => _vertices;
 
         /// <summary>
         /// Returns the list of Vertices.
         /// </summary>
         /// <value>The vertices.</value>
-        public ICollection<T> Vertices
-        {
-            get
-            {
-                return _vertices;
-            }
-        }
+        public ICollection<T> Vertices => _vertices;
 
         /// <summary>
         /// Gets the cloud of a collection of vetices.
@@ -691,27 +655,16 @@ namespace DataStructures.Graphs
         /// Returns the list of maximal cliques
         /// </summary>
         /// <value>The get cliques.</value>
-        public IReadOnlyCollection<Clique> getCliques
-        {
-            get
-            {
-                // TODO: getCliques, this does not return all the maximal cliques; 
-                // only return enough of them.
-                return (IReadOnlyCollection<Clique>)_cliques;
-            }
-        }
+        public IReadOnlyCollection<Clique> getCliques =>
+            // TODO: getCliques, this does not return all the maximal cliques; 
+            // only return enough of them.
+            (IReadOnlyCollection<Clique>)_cliques;
 
         /// <summary>
         /// Returns the clique number of the current graph.
         /// </summary>
         /// <value>The clique number.</value>
-        public int cliqueNumber
-        {
-            get
-            {
-                return Pick<Clique>(getMaximumCliques).Count;
-            }
-        }
+        public int cliqueNumber => Pick<Clique>(getMaximumCliques).Count;
 
         /// <summary>
         /// Returns the collection of the maxium-sized cliques
@@ -804,7 +757,7 @@ namespace DataStructures.Graphs
                 intersection = new HashSet<T>(listPath[i]);
                 intersection.IntersectWith(listPath[i + 1]); // intersection is never empty because 'path' should be a path in a dual graph.
 
-                returnPath.Add(CliqueGraph<T>.Pick(intersection));
+                returnPath.Add(Pick(intersection));
             }
 
             return returnPath;

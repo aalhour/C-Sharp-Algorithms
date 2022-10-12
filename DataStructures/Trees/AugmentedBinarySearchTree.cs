@@ -11,9 +11,7 @@ namespace DataStructures.Trees
 
     public class BSTRankedNode<T> : BSTNode<T> where T : IComparable<T>
     {
-        private int _subtreeSize = 0;
-
-        public BSTRankedNode() : this(default(T), 0, null, null, null) { }
+        public BSTRankedNode() : this(default, 0, null, null, null) { }
         public BSTRankedNode(T value) : this(value, 0, null, null, null) { }
         public BSTRankedNode(T value, int subtreeSize, BSTRankedNode<T> parent, BSTRankedNode<T> left, BSTRankedNode<T> right)
         {
@@ -25,28 +23,24 @@ namespace DataStructures.Trees
         }
 
         // Size of subtrees
-        public virtual int SubtreeSize
-        {
-            get { return this._subtreeSize; }
-            set { this._subtreeSize = value; }
-        }
+        public virtual int SubtreeSize { get; set; } = 0;
 
         public new BSTRankedNode<T> Parent
         {
-            get { return (BSTRankedNode<T>)base.Parent; }
-            set { base.Parent = value; }
+            get => (BSTRankedNode<T>)base.Parent;
+            set => base.Parent = value;
         }
 
         public new BSTRankedNode<T> LeftChild
         {
-            get { return (BSTRankedNode<T>)base.LeftChild; }
-            set { base.LeftChild = value; }
+            get => (BSTRankedNode<T>)base.LeftChild;
+            set => base.LeftChild = value;
         }
 
         public new BSTRankedNode<T> RightChild
         {
-            get { return (BSTRankedNode<T>)base.RightChild; }
-            set { base.RightChild = value; }
+            get => (BSTRankedNode<T>)base.RightChild;
+            set => base.RightChild = value;
         }
     }
 
@@ -66,8 +60,8 @@ namespace DataStructures.Trees
         /// </summary>
         public new BSTRankedNode<T> Root
         {
-            get { return (BSTRankedNode<T>)base.Root; }
-            set { base.Root = value; }
+            get => (BSTRankedNode<T>)base.Root;
+            set => base.Root = value;
         }
 
 
@@ -95,8 +89,8 @@ namespace DataStructures.Trees
                 if (IsEmpty)
                     return 0;
 
-                var currentNode = this.Root;
-                return this._getTreeHeight(currentNode);
+                var currentNode = Root;
+                return _getTreeHeight(currentNode);
             }
         }
 
@@ -231,7 +225,7 @@ namespace DataStructures.Trees
 
             if (collection.Length > 0)
                 for (int i = 0; i < collection.Length; ++i)
-                    this.Insert(collection[i]);
+                    Insert(collection[i]);
         }
 
         /// <summary>
@@ -244,7 +238,7 @@ namespace DataStructures.Trees
 
             if (collection.Count > 0)
                 for (int i = 0; i < collection.Count; ++i)
-                    this.Insert(collection[i]);
+                    Insert(collection[i]);
         }
 
         /// <summary>
@@ -256,9 +250,9 @@ namespace DataStructures.Trees
             if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
+            var node = (BSTRankedNode<T>)base._findNode(Root, item);
             bool status = _remove(node);
-            this._updateSubtreeSize(node.Parent);
+            _updateSubtreeSize(node.Parent);
 
             // If the element was found, remove it.
             if (status == false)
@@ -273,12 +267,12 @@ namespace DataStructures.Trees
             if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)_findMinNode(this.Root);
+            var node = (BSTRankedNode<T>)_findMinNode(Root);
             var parent = node.Parent;
-            this._remove(node);
+            _remove(node);
 
             // Update the subtrees-sizes
-            this._updateSubtreeSize(parent);
+            _updateSubtreeSize(parent);
         }
 
         /// <summary>
@@ -289,12 +283,12 @@ namespace DataStructures.Trees
             if (IsEmpty)
                 throw new Exception("Tree is empty.");
 
-            var node = (BSTRankedNode<T>)_findMaxNode(this.Root);
+            var node = (BSTRankedNode<T>)_findMaxNode(Root);
             var parent = node.Parent;
-            this._remove(node);
+            _remove(node);
 
             // Update the subtrees-sizes
-            this._updateSubtreeSize(parent);
+            _updateSubtreeSize(parent);
         }
 
         /// <summary>
@@ -304,11 +298,11 @@ namespace DataStructures.Trees
         /// <returns>Rank(item) if found; otherwise throws an exception.</returns>
         public virtual int Rank(T item)
         {
-            var node = (BSTRankedNode<T>)base._findNode(this.Root, item);
+            var node = (BSTRankedNode<T>)base._findNode(Root, item);
 
             if (node == null)
                 throw new Exception("Item was not found.");
-            return (this._subtreeSize(node.LeftChild) + 1);
+            return (_subtreeSize(node.LeftChild) + 1);
         }
 
     }

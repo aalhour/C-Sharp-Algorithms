@@ -32,18 +32,12 @@ namespace DataStructures.Trees
         /// <summary>
         /// Return count of words.
         /// </summary>
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
         /// <summary>
         /// Checks if element is empty.
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return _count == 0; }
-        }
+        public bool IsEmpty => _count == 0;
 
         /// <summary>
         /// Add word to trie

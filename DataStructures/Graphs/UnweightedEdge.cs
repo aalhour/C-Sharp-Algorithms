@@ -29,18 +29,14 @@ namespace DataStructures.Graphs
         /// <value>The weight.</value>
         public Int64 Weight
         {
-            get { throw new NotImplementedException("Unweighted edges don't have weights."); }
-            set { throw new NotImplementedException("Unweighted edges can't have weights."); }
+            get => throw new NotImplementedException("Unweighted edges don't have weights.");
+            set => throw new NotImplementedException("Unweighted edges can't have weights.");
         }
 
         /// <summary>
         /// Gets a value indicating whether this edge is weighted.
         /// </summary>
-        public bool IsWeighted
-        {
-            get
-            { return false; }
-        }
+        public bool IsWeighted => false;
 
         /// <summary>
         /// CONSTRUCTOR

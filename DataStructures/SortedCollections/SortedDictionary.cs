@@ -29,23 +29,14 @@ namespace DataStructures.SortedCollections
         /// <summary>
         /// Gets the count of enteries in dictionary.
         /// </summary>
-        public int Count
-        {
-            get { return _collection.Count; }
-        }
+        public int Count => _collection.Count;
 
         /// <summary>
         /// Returns true if dictionary is empty; otherwise, false.
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return Count == 0; }
-        }
+        public bool IsEmpty => Count == 0;
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Determines whether the current dictionary contains an entry with the specified key.
@@ -77,7 +68,7 @@ namespace DataStructures.SortedCollections
         public bool TryGetValue(TKey key, out TValue value)
         {
             // Set value to the default value of type TValue
-            value = default(TValue);
+            value = default;
 
             try
             {
@@ -132,7 +123,7 @@ namespace DataStructures.SortedCollections
         {
             get
             {
-                var keys = new System.Collections.Generic.List<TKey>(Count);
+                var keys = new List<TKey>(Count);
                 var enumerator = _collection.GetInOrderEnumerator();
 
                 while (enumerator.MoveNext())
@@ -149,7 +140,7 @@ namespace DataStructures.SortedCollections
         {
             get
             {
-                var values = new System.Collections.Generic.List<TValue>(Count);
+                var values = new List<TValue>(Count);
                 var enumerator = _collection.GetInOrderEnumerator();
 
                 while (enumerator.MoveNext())

@@ -15,35 +15,17 @@ namespace DataStructures.Lists
         /// <summary>
         /// Returns the length of the buffer
         /// </summary>
-        public int Length 
-        {
-            get 
-            {
-                return _circularBuffer.Length - 1;
-            }
-        }
+        public int Length => _circularBuffer.Length - 1;
 
         /// <summary>
         ///  Checks if no element is inserted into the buffer
         /// </summary>
-        public bool IsEmpty 
-        {
-            get 
-            {
-                return _count == 0;
-            }
-        }
+        public bool IsEmpty => Count == 0;
 
         /// <summary>
         /// Checks if the buffer is filled up
         /// </summary>
-        public bool IsFilledUp 
-        {
-            get 
-            {
-                return ((_end + 1) % _circularBuffer.Length == _start) && !_circularBuffer[_start].Equals(_circularBuffer[_end]);
-            }
-        }
+        public bool IsFilledUp => ((_end + 1) % _circularBuffer.Length == _start) && !_circularBuffer[_start].Equals(_circularBuffer[_end]);
 
         /// <summary>
         /// Controls whether data should be overridden when it is continously inserted without reading
@@ -100,7 +82,7 @@ namespace DataStructures.Lists
             }
 
             // Count should not be greater than the length of the buffer when overriding 
-            _count = _count < Length ? ++_count : _count;
+            Count = Count < Length ? ++Count : Count;
         }
 
         /// <summary>
@@ -112,7 +94,7 @@ namespace DataStructures.Lists
             _circularBuffer[_start] = _circularBuffer[_end];
             _start = (_start + 1) % _circularBuffer.Length;
             //Count should not go below Zero when poping an empty buffer.
-            _count = _count > 0 ? --_count : _count;
+            Count = Count > 0 ? --Count : Count;
             return result;
         }
 
@@ -132,33 +114,23 @@ namespace DataStructures.Lists
         #endregion
 
         #region ICollection Implementation
-        private int _count;
+
         /// <summary>
         /// Returns the number of elements.
         /// </summary>
-        public int Count 
-        {
-            get 
-            {
-                return _count;
-            }
-        }
+        public int Count { get; private set; }
+
         /// <summary>
         /// Checks whether this collection is readonly
         /// </summary>
-        public bool IsReadOnly 
-        {
-            get 
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
+
         /// <summary>
         /// Clears this instance
         /// </summary>
         public void Clear() 
         {
-            _count = 0;
+            Count = 0;
             _start = 0;
             _end = 0;
             _circularBuffer = new T[Length + 1];
@@ -216,12 +188,12 @@ namespace DataStructures.Lists
                 if (!Equals(item,default(T))) 
                 {
                     _end = sourceArray.Length - 1;
-                    _count = sourceArray.Length-1;
+                    Count = sourceArray.Length-1;
                 }
                 else 
                 {
                     _end = sourceArray.Length;
-                    _count = sourceArray.Length;
+                    Count = sourceArray.Length;
                 }
 
                 return true;

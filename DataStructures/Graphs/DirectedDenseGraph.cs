@@ -59,34 +59,22 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-        public virtual bool IsDirected
-        {
-            get { return true; }
-        }
+        public virtual bool IsDirected => true;
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public virtual bool IsWeighted
-        {
-            get { return false; }
-        }
+        public virtual bool IsWeighted => false;
 
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
-        public virtual int VerticesCount
-        {
-            get { return _verticesCount; }
-        }
+        public virtual int VerticesCount => _verticesCount;
 
         /// <summary>
         /// Gets the count of edges.
         /// </summary>
-        public virtual int EdgesCount
-        {
-            get { return _edgesCount; }
-        }
+        public virtual int EdgesCount => _edgesCount;
 
         /// <summary>
         /// Returns the list of Vertices.
@@ -102,19 +90,16 @@ namespace DataStructures.Graphs
         }
 
 
-        IEnumerable<IEdge<T>> IGraph<T>.Edges
-        {
-            get { return this.Edges; }
-        }
+        IEnumerable<IEdge<T>> IGraph<T>.Edges => Edges;
 
         IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
         {
-            return this.IncomingEdges(vertex);
+            return IncomingEdges(vertex);
         }
 
         IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
         {
-            return this.OutgoingEdges(vertex);
+            return OutgoingEdges(vertex);
         }
 
 
@@ -337,7 +322,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns the neighbours doubly-linked list for the specified vertex.
         /// </summary>
-        public virtual DataStructures.Lists.DLinkedList<T> Neighbours(T vertex)
+        public virtual DLinkedList<T> Neighbours(T vertex)
         {
             var neighbors = new DLinkedList<T>();
             int source = _vertices.IndexOf(vertex);

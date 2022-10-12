@@ -117,15 +117,7 @@ namespace UnitTest.DataStructuresTests
 
         }
 
-        int ToInt
-        {
-            get
-            {
-                return Item1 * multiplier + Item2;
-            }
-        }
-
-
+        int ToInt => Item1 * multiplier + Item2;
     }
 }
 

@@ -48,34 +48,22 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is directed; false otherwise.
         /// </summary>
-        public virtual bool IsDirected
-        {
-            get { return false; }
-        }
+        public virtual bool IsDirected => false;
 
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public virtual bool IsWeighted
-        {
-            get { return false; }
-        }
+        public virtual bool IsWeighted => false;
 
         /// <summary>
         /// Gets the count of vetices.
         /// </summary>
-        public virtual int VerticesCount
-        {
-            get { return _adjacencyList.Count; }
-        }
+        public virtual int VerticesCount => _adjacencyList.Count;
 
         /// <summary>
         /// Gets the count of edges.
         /// </summary>
-        public virtual int EdgesCount
-        {
-            get { return _edgesCount; }
-        }
+        public virtual int EdgesCount => _edgesCount;
 
         /// <summary>
         /// Returns the list of Vertices.
@@ -93,19 +81,16 @@ namespace DataStructures.Graphs
         }
 
 
-        IEnumerable<IEdge<T>> IGraph<T>.Edges
-        {
-            get { return this.Edges; }
-        }
+        IEnumerable<IEdge<T>> IGraph<T>.Edges => Edges;
 
         IEnumerable<IEdge<T>> IGraph<T>.IncomingEdges(T vertex)
         {
-            return this.IncomingEdges(vertex);
+            return IncomingEdges(vertex);
         }
 
         IEnumerable<IEdge<T>> IGraph<T>.OutgoingEdges(T vertex)
         {
-            return this.OutgoingEdges(vertex);
+            return OutgoingEdges(vertex);
         }
 
 
@@ -207,7 +192,7 @@ namespace DataStructures.Graphs
                 throw new ArgumentNullException();
 
             foreach (var item in collection)
-                this.AddVertex(item);
+                AddVertex(item);
         }
 
         /// <summary>

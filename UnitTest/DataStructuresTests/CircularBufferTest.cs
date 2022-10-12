@@ -175,7 +175,7 @@ namespace UnitTest.DataStructuresTests
             circularBuffer.Add(14);
             
             //Removing default(T) from the buffer. buffer should not be affected since default is not contained
-            circularBuffer.Remove(default(byte));
+            circularBuffer.Remove(default);
             Assert.Equal(3, circularBuffer.Pop());
             Assert.Equal(34, circularBuffer.Pop());
             Assert.Equal(24, circularBuffer.Pop());

@@ -11,13 +11,10 @@ namespace DataStructures.Lists
     /// <typeparam name="T"></typeparam>
     public class SLinkedListNode<T> : IComparable<SLinkedListNode<T>> where T : IComparable<T>
     {
-        private T _data;
-        private SLinkedListNode<T> _next;
-
         public SLinkedListNode()
         {
             Next = null;
-            Data = default(T);
+            Data = default;
         }
 
         public SLinkedListNode(T dataItem)
@@ -26,23 +23,15 @@ namespace DataStructures.Lists
             Data = dataItem;
         }
 
-        public T Data
-        {
-            get { return this._data; }
-            set { this._data = value; }
-        }
+        public T Data { get; set; }
 
-        public SLinkedListNode<T> Next
-        {
-            get { return this._next; }
-            set { this._next = value; }
-        }
+        public SLinkedListNode<T> Next { get; set; }
 
         public int CompareTo(SLinkedListNode<T> other)
         {
             if (other == null) return -1;
 
-            return this.Data.CompareTo(other.Data);
+            return Data.CompareTo(other.Data);
         }
     }
 
@@ -52,22 +41,15 @@ namespace DataStructures.Lists
     /// </summary>
     public class SLinkedList<T> : IEnumerable<T> where T : IComparable<T>
     {
-        /// <summary>
-        /// Instance variables
-        /// </summary>
-        private int _count;
         private SLinkedListNode<T> _firstNode { get; set; }
         private SLinkedListNode<T> _lastNode { get; set; }
 
-        public int Count
-        {
-            get { return _count; }
-        }
+        /// <summary>
+        /// Instance variables
+        /// </summary>
+        public int Count { get; private set; }
 
-        public virtual SLinkedListNode<T> Head
-        {
-            get { return this._firstNode; }
-        }
+        public virtual SLinkedListNode<T> Head => _firstNode;
 
         /// <summary>
         /// CONSTRUCTOR
@@ -76,7 +58,7 @@ namespace DataStructures.Lists
         {
             _firstNode = null;
             _lastNode = null;
-            _count = 0;
+            Count = 0;
         }
 
         /// <summary>
@@ -91,13 +73,7 @@ namespace DataStructures.Lists
         /// <summary>
         /// Getter function that returns the first element
         /// </summary>
-        public T First
-        {
-            get
-            {
-                return (_firstNode == null ? default(T) : _firstNode.Data);
-            }
-        }
+        public T First => (_firstNode == null ? default : _firstNode.Data);
 
         /// <summary>
         /// Getter function that returns the last element
@@ -146,7 +122,7 @@ namespace DataStructures.Lists
             }
 
             // Increment the count.
-            _count++;
+            Count++;
         }
 
         /// <summary>
@@ -169,7 +145,7 @@ namespace DataStructures.Lists
             }
 
             // Increment the count.
-            _count++;
+            Count++;
         }
 
         /// <summary>
@@ -203,7 +179,7 @@ namespace DataStructures.Lists
                 currentNode.Next = newNode;
 
                 // Increment the count
-                _count++;
+                Count++;
             }
             else
             {
@@ -227,7 +203,7 @@ namespace DataStructures.Lists
                 _firstNode = _firstNode.Next;
 
                 // Decrement count.
-                _count--;
+                Count--;
             }
             else if (index == Count - 1)
             {
@@ -240,7 +216,7 @@ namespace DataStructures.Lists
                 _lastNode = currentNode;
 
                 // Decrement count.
-                _count--;
+                Count--;
             }
             else
             {
@@ -253,7 +229,7 @@ namespace DataStructures.Lists
                         currentNode.Next = currentNode.Next.Next;
 
                         // Decrement the count.
-                        _count--;
+                        Count--;
                         break;
                     }
 
@@ -270,7 +246,7 @@ namespace DataStructures.Lists
         {
             _firstNode = null;
             _lastNode = null;
-            _count = 0;
+            Count = 0;
         }
 
         /// <summary>
@@ -312,7 +288,7 @@ namespace DataStructures.Lists
         public SLinkedList<T> GetRange(int index, int countOfElements)
         {
             SLinkedList<T> newList = new SLinkedList<T>();
-            var currentNode = this._firstNode;
+            var currentNode = _firstNode;
 
             // Handle Index out of Bound errors
             if (Count == 0)
@@ -465,25 +441,19 @@ namespace DataStructures.Lists
 
             public SLinkedListEnumerator(SLinkedList<T> list)
             {
-                this._doublyLinkedList = list;
-                this._current = list.Head;
+                _doublyLinkedList = list;
+                _current = list.Head;
             }
 
-            public T Current
-            {
-                get { return this._current.Data; }
-            }
+            public T Current => _current.Data;
 
-            object System.Collections.IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object System.Collections.IEnumerator.Current => Current;
 
             public bool MoveNext()
             {
                 _current = _current.Next;
 
-                return (this._current != null);
+                return (_current != null);
             }
 
             public void Reset()

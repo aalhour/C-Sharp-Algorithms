@@ -65,10 +65,7 @@ namespace DataStructures.Graphs
         /// <summary>
         /// Returns true, if graph is weighted; false otherwise.
         /// </summary>
-        public override bool IsWeighted
-        {
-            get { return true; }
-        }
+        public override bool IsWeighted => true;
 
         /// <summary>
         /// An enumerable collection of edges.

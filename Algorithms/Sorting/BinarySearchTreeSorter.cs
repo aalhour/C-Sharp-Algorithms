@@ -93,7 +93,7 @@ namespace Algorithms.Sorting
 
             public Node()
             {
-                Value = default(T);
+                Value = default;
                 Parent = null;
                 Left = null;
                 Right = null;
@@ -102,7 +102,7 @@ namespace Algorithms.Sorting
             public int CompareTo(Node<T> other)
             {
                 if (other == null) return -1;
-                return this.Value.CompareTo(other.Value);
+                return Value.CompareTo(other.Value);
             }
         }
     }

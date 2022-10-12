@@ -93,10 +93,7 @@ namespace DataStructures.Common
         /// <summary>
         /// Return count of primes.
         /// </summary>
-        public int Count
-        {
-            get { return _primes.Count; }
-        }
+        public int Count => _primes.Count;
 
         /// <summary>
         /// Returns prime number at the specified index.
@@ -186,10 +183,7 @@ namespace DataStructures.Common
         /// <summary>
         /// Returns the read-only IList of primes
         /// </summary>
-        public IList<int> GetAll
-        {
-            get { return _primes.AsReadOnly(); }
-        }
+        public IList<int> GetAll => _primes.AsReadOnly();
 
         /// <summary>
         /// Copy the primes list to an array, starting from a specified index.

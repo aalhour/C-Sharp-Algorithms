@@ -100,18 +100,12 @@ namespace DataStructures.Lists
         /// <summary>
         /// Returns count of elements in queue
         /// </summary>
-        public int Count
-        {
-            get { return _size; }
-        }
+        public int Count => _size;
 
         /// <summary>
         /// Checks whether the queue is empty.
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return _size == 0; }
-        }
+        public bool IsEmpty => _size == 0;
 
         /// <summary>
         /// Returns the top element in queue
@@ -166,7 +160,7 @@ namespace DataStructures.Lists
                 throw new Exception("Queue is empty.");
 
             var topItem = _collection[_headPointer];
-            _collection[_headPointer] = default(T);
+            _collection[_headPointer] = default;
 
             // Decrement the size
             _size--;
@@ -240,7 +234,7 @@ namespace DataStructures.Lists
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
     }

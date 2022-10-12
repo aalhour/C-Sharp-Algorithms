@@ -35,8 +35,8 @@ namespace Algorithms.Trees
                 return;
 
             Action(BinaryTreeRoot.Value);
-            BinaryTreeRecursiveWalker.PreOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
-            BinaryTreeRecursiveWalker.PreOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
+            PreOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
+            PreOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
         }
 
         /// <summary>
@@ -47,9 +47,9 @@ namespace Algorithms.Trees
             if (BinaryTreeRoot == null)
                 return;
 
-            BinaryTreeRecursiveWalker.InOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
+            InOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
             Action(BinaryTreeRoot.Value);
-            BinaryTreeRecursiveWalker.InOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
+            InOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
         }
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace Algorithms.Trees
             if (BinaryTreeRoot == null)
                 return;
 
-            BinaryTreeRecursiveWalker.PostOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
-            BinaryTreeRecursiveWalker.PostOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
+            PostOrderVisitor<T>(BinaryTreeRoot.LeftChild, Action);
+            PostOrderVisitor<T>(BinaryTreeRoot.RightChild, Action);
             Action(BinaryTreeRoot.Value);
         }
 
@@ -109,13 +109,13 @@ namespace Algorithms.Trees
             if (IsBinarySearchTree == true)
             {
                 if (hasLeft && current.IsGreaterThan(Value))
-                    return BinaryTreeRecursiveWalker.InOrderSearcher<T>(BinaryTreeRoot.LeftChild, Value);
+                    return InOrderSearcher<T>(BinaryTreeRoot.LeftChild, Value);
 
                 if (current.IsEqualTo(Value))
                     return true;
 
                 if (hasRight && current.IsLessThan(Value))
-                    return BinaryTreeRecursiveWalker.InOrderSearcher<T>(BinaryTreeRoot.RightChild, Value);
+                    return InOrderSearcher<T>(BinaryTreeRoot.RightChild, Value);
             }
             else
             {
@@ -144,10 +144,10 @@ namespace Algorithms.Trees
             if (IsBinarySearchTree == true)
             {
                 if (hasLeft && current.IsGreaterThan(Value))
-                    return BinaryTreeRecursiveWalker.PostOrderSearcher<T>(BinaryTreeRoot.LeftChild, Value);
+                    return PostOrderSearcher<T>(BinaryTreeRoot.LeftChild, Value);
 
                 if (hasRight && current.IsLessThan(Value))
-                    return BinaryTreeRecursiveWalker.PostOrderSearcher<T>(BinaryTreeRoot.RightChild, Value);
+                    return PostOrderSearcher<T>(BinaryTreeRoot.RightChild, Value);
 
                 if (current.IsEqualTo(Value))
                     return true;
@@ -183,10 +183,10 @@ namespace Algorithms.Trees
                 throw new ArgumentNullException("Tree root cannot be null.");
 
             var printAction = new Action<T>((T nodeValue) =>
-                System.Console.Write(String.Format("{0} ", nodeValue)));
+                Console.Write(String.Format("{0} ", nodeValue)));
 
-            BinaryTreeRecursiveWalker.ForEach(BinaryTreeRoot, printAction, Mode);
-            System.Console.WriteLine();
+            ForEach(BinaryTreeRoot, printAction, Mode);
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -205,16 +205,16 @@ namespace Algorithms.Trees
             switch (Mode)
             {
                 case TraversalMode.PreOrder:
-                    BinaryTreeRecursiveWalker.PreOrderVisitor(BinaryTreeRoot, Action);
+                    PreOrderVisitor(BinaryTreeRoot, Action);
                     return;
                 case TraversalMode.InOrder:
-                    BinaryTreeRecursiveWalker.InOrderVisitor(BinaryTreeRoot, Action);
+                    InOrderVisitor(BinaryTreeRoot, Action);
                     return;
                 case TraversalMode.PostOrder:
-                    BinaryTreeRecursiveWalker.PostOrderVisitor(BinaryTreeRoot, Action);
+                    PostOrderVisitor(BinaryTreeRoot, Action);
                     return;
                 default:
-                    BinaryTreeRecursiveWalker.InOrderVisitor(BinaryTreeRoot, Action);
+                    InOrderVisitor(BinaryTreeRoot, Action);
                     return;
             }
         }
@@ -233,13 +233,13 @@ namespace Algorithms.Trees
             switch (Mode)
             {
                 case TraversalMode.PreOrder:
-                    return BinaryTreeRecursiveWalker.PreOrderSearcher(BinaryTreeRoot, Value);
+                    return PreOrderSearcher(BinaryTreeRoot, Value);
                 case TraversalMode.InOrder:
-                    return BinaryTreeRecursiveWalker.InOrderSearcher(BinaryTreeRoot, Value);
+                    return InOrderSearcher(BinaryTreeRoot, Value);
                 case TraversalMode.PostOrder:
-                    return BinaryTreeRecursiveWalker.PostOrderSearcher(BinaryTreeRoot, Value);
+                    return PostOrderSearcher(BinaryTreeRoot, Value);
                 default:
-                    return BinaryTreeRecursiveWalker.InOrderSearcher(BinaryTreeRoot, Value);
+                    return InOrderSearcher(BinaryTreeRoot, Value);
             }
         }
 
@@ -257,13 +257,13 @@ namespace Algorithms.Trees
             switch (Mode)
             {
                 case TraversalMode.PreOrder:
-                    return BinaryTreeRecursiveWalker.PreOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
+                    return PreOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
                 case TraversalMode.InOrder:
-                    return BinaryTreeRecursiveWalker.InOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
+                    return InOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
                 case TraversalMode.PostOrder:
-                    return BinaryTreeRecursiveWalker.PostOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree:true);
+                    return PostOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree:true);
                 default:
-                    return BinaryTreeRecursiveWalker.InOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
+                    return InOrderSearcher(BinaryTreeRoot, Value, IsBinarySearchTree: true);
             }
         }
 

@@ -49,7 +49,7 @@ namespace DataStructures.Heaps
                     _priorityComparer = priorityComparer;
                 }
 
-                _heap = new BinaryMaxHeap<PriorityQueueNode<K, V, P>>(capacity, this._priorityComparer);
+                _heap = new BinaryMaxHeap<PriorityQueueNode<K, V, P>>(capacity, _priorityComparer);
                 _keysMap = new Dictionary<K, int>();
             }
             else
@@ -62,20 +62,14 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns the count of elements in the queue.
         /// </summary>
-        public int Count
-        {
-            get { return _heap.Count; }
-        }
+        public int Count => _heap.Count;
 
 
         /// <summary>
         /// Checks if the queue is empty
         /// <returns>True if queue is empty; false otherwise.</returns>
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return _heap.IsEmpty; }
-        }
+        public bool IsEmpty => _heap.IsEmpty;
 
 
         /// <summary>
@@ -114,7 +108,7 @@ namespace DataStructures.Heaps
         /// <param name="value">Value.</param>
         public void Enqueue(K key, V value)
         {
-            Enqueue(key, value, default(P));
+            Enqueue(key, value, default);
         }
 
 
@@ -263,13 +257,13 @@ namespace DataStructures.Heaps
         public V Value { get; set; }
         public P Priority { get; set; }
 
-        public PriorityQueueNode() : this(default(K), default(V), default(P)) { }
+        public PriorityQueueNode() : this(default, default, default) { }
 
         public PriorityQueueNode(K key, V value, P priority)
         {
-            this.Key = key;
-            this.Value = value;
-            this.Priority = priority;
+            Key = key;
+            Value = value;
+            Priority = priority;
         }
 
         public int CompareTo(PriorityQueueNode<K, V, P> other)
@@ -277,7 +271,7 @@ namespace DataStructures.Heaps
             if (other == null)
                 return -1;
 
-            return this.Priority.CompareTo(other.Priority);
+            return Priority.CompareTo(other.Priority);
         }
     }//end-of-node-class
 

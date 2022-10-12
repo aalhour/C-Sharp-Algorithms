@@ -19,7 +19,7 @@ namespace DataStructures.Dictionaries
             public TValue Value { get; set; }
             public EntryStatus Status { get; set; }
 
-            public HashTableEntry() : this(default(TKey), default(TValue)) { }
+            public HashTableEntry() : this(default, default) { }
             public HashTableEntry(TKey key, TValue value, EntryStatus status = EntryStatus.Occupied)
             {
                 Key = key;
@@ -27,11 +27,11 @@ namespace DataStructures.Dictionaries
                 Status = status;
             }
 
-            public bool IsEmpty { get { return this.Status == EntryStatus.Empty; } }
+            public bool IsEmpty => Status == EntryStatus.Empty;
 
-            public bool IsOccupied { get { return this.Status == EntryStatus.Occupied; } }
+            public bool IsOccupied => Status == EntryStatus.Occupied;
 
-            public bool IsDeleted { get { return this.Status == EntryStatus.Deleted; } }
+            public bool IsDeleted => Status == EntryStatus.Deleted;
         }
 
 
@@ -203,10 +203,7 @@ namespace DataStructures.Dictionaries
             throw new NotImplementedException();
         }
 
-        public ICollection<TKey> Keys
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public ICollection<TKey> Keys => throw new NotImplementedException();
 
         public bool Remove(TKey key)
         {
@@ -218,21 +215,12 @@ namespace DataStructures.Dictionaries
             throw new NotImplementedException();
         }
 
-        public ICollection<TValue> Values
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public ICollection<TValue> Values => throw new NotImplementedException();
 
         public TValue this[TKey key]
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         public void Add(KeyValuePair<TKey, TValue> item)
@@ -255,15 +243,9 @@ namespace DataStructures.Dictionaries
             throw new NotImplementedException();
         }
 
-        public int Count
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int Count => throw new NotImplementedException();
 
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsReadOnly => throw new NotImplementedException();
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {

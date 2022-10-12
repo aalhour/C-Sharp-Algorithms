@@ -22,7 +22,7 @@ namespace DataStructures.Heaps
             public BinomialNode<T> Child { get; set; }      // Left-Child
 
             // Constructors
-            public BinomialNode() : this(default(T), null, null, null) { }
+            public BinomialNode() : this(default, null, null, null) { }
             public BinomialNode(T value) : this(value, null, null, null) { }
             public BinomialNode(T value, BinomialNode<T> parent, BinomialNode<T> sibling, BinomialNode<T> child)
             {
@@ -33,15 +33,9 @@ namespace DataStructures.Heaps
             }
 
             // Helper boolean flags
-            public bool HasSiblings
-            {
-                get { return this.Sibling != null; }
-            }
+            public bool HasSiblings => Sibling != null;
 
-            public bool HasChildren
-            {
-                get { return this.Child != null; }
-            }
+            public bool HasChildren => Child != null;
         }
 
 
@@ -168,19 +162,13 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Returns count of elements in heap.
         /// </summary>
-        public int Count
-        {
-            get { return _size; }
-        }
+        public int Count => _size;
 
         /// <summary>
         /// Checks if heap is empty
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty
-        {
-            get { return (_size == 0); }
-        }
+        public bool IsEmpty => (_size == 0);
 
         /// <summary>
         /// Initializes this heap with a collection of elements.
@@ -196,7 +184,7 @@ namespace DataStructures.Heaps
             _forest = new ArrayList<BinomialNode<T>>(newCollection.Count + 1);
 
             for (int i = 0; i < newCollection.Count; ++i)
-                this.Add(newCollection[i]);
+                Add(newCollection[i]);
         }
 
         /// <summary>
@@ -277,8 +265,8 @@ namespace DataStructures.Heaps
             // One capacity-change step
             if (_size > _forest.Count)
             {
-                int newSize = Math.Max(this._forest.Count, otherHeap._forest.Count) + 1;
-                this._forest.Resize(newSize);
+                int newSize = Math.Max(_forest.Count, otherHeap._forest.Count) + 1;
+                _forest.Resize(newSize);
             }
 
             for (int i = 0, j = 1; j <= _size; i++, j *= 2)
@@ -297,29 +285,29 @@ namespace DataStructures.Heaps
                     case 1:     /* Only this */
                         break;
                     case 2:     /* Only otherHeap */
-                        this._forest[i] = treeRoot2;
+                        _forest[i] = treeRoot2;
                         otherHeap._forest[i] = null;
                         break;
                     case 4:     /* Only carryNode */
-                        this._forest[i] = carryNode;
+                        _forest[i] = carryNode;
                         carryNode = null;
                         break;
 
                     /*** BINARY CASES ***/
                     case 3:     /* this and otherHeap */
                         carryNode = _combineTrees(treeRoot1, treeRoot2);
-                        this._forest[i] = otherHeap._forest[i] = null;
+                        _forest[i] = otherHeap._forest[i] = null;
                         break;
                     case 5:     /* this and carryNode */
                         carryNode = _combineTrees(treeRoot1, carryNode);
-                        this._forest[i] = null;
+                        _forest[i] = null;
                         break;
                     case 6:     /* otherHeap and carryNode */
                         carryNode = _combineTrees(treeRoot2, carryNode);
                         otherHeap._forest[i] = null;
                         break;
                     case 7:     /* all the nodes */
-                        this._forest[i] = carryNode;
+                        _forest[i] = carryNode;
                         carryNode = _combineTrees(treeRoot1, treeRoot2);
                         otherHeap._forest[i] = null;
                         break;

@@ -9,24 +9,24 @@ namespace DataStructures.Trees
         public virtual TernaryTreeNode Parent { get; private set; }
         protected virtual TernaryTreeNode[] childs { get; set; }
 
-        public virtual TernaryTreeNode GetLeftChild { get { return childs[0]; } }
-        public virtual TernaryTreeNode GetMiddleChild { get { return childs[1]; } }
-        public virtual TernaryTreeNode GetRightChild { get { return childs[2]; } }
+        public virtual TernaryTreeNode GetLeftChild => childs[0];
+        public virtual TernaryTreeNode GetMiddleChild => childs[1];
+        public virtual TernaryTreeNode GetRightChild => childs[2];
 
         public virtual bool FinalLetter { get; set; }
         public virtual char Value { get; set; }
 
         public TernaryTreeNode(TernaryTreeNode parent)
         {
-            this.Parent = parent;
+            Parent = parent;
             childs = new TernaryTreeNode[3];
         }
 
         public TernaryTreeNode(TernaryTreeNode parent, char value, bool isFinal)
         {
-            this.Parent = parent;
-            this.Value = value;
-            this.FinalLetter = isFinal;
+            Parent = parent;
+            Value = value;
+            FinalLetter = isFinal;
             childs = new TernaryTreeNode[3];
         }
 

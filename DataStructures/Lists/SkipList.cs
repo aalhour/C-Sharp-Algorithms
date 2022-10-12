@@ -52,7 +52,7 @@ namespace DataStructures.Lists
             _count = 0;
             _currentMaxLevel = 1;
             _randomizer = new Random();
-            _firstNode = new SkipListNode<T>(default(T), MaxLevel);
+            _firstNode = new SkipListNode<T>(default, MaxLevel);
 
             for (int i = 0; i < MaxLevel; ++i)
                 _firstNode.Forwards[i] = _firstNode;
@@ -62,46 +62,29 @@ namespace DataStructures.Lists
         /// <summary>
         /// Getter accessor for the first node
         /// </summary>
-        public SkipListNode<T> Root
-        {
-            get { return _firstNode; }
-        }
+        public SkipListNode<T> Root => _firstNode;
 
         /// <summary>
         /// Checks if list is empty or not
         /// </summary>
-        public bool IsEmpty
-        {
-            get { return Count == 0; }
-        }
+        public bool IsEmpty => Count == 0;
 
         /// <summary>
         /// Return count of elements
         /// </summary>
-        public int Count
-        {
-            get { return _count; }
-        }
+        public int Count => _count;
 
         /// <summary>
         /// Return current max-node level
         /// </summary>
-        public int Level
-        {
-            get { return _currentMaxLevel; }
-        }
+        public int Level => _currentMaxLevel;
 
         /// <summary>
         /// Access elements by index
         /// </summary>
-        public T this[int index]
-        {
-            get
-            {
-                // TODO:
-                throw new NotImplementedException();
-            }
-        }
+        public T this[int index] => throw
+            // TODO:
+            new NotImplementedException();
 
         /// <summary>
         /// Adds item to the list
@@ -178,7 +161,7 @@ namespace DataStructures.Lists
             // Return default value of T if the item was not found
             if (current.Value.IsEqualTo(item) == false)
             {
-                deleted = default(T);
+                deleted = default;
                 return false;
             }
 
@@ -231,7 +214,7 @@ namespace DataStructures.Lists
                 return true;
             }
 
-            result = default(T);
+            result = default;
             return false;
         }
 
@@ -257,7 +240,7 @@ namespace DataStructures.Lists
         {
             if (IsEmpty)
             {
-                result = default(T);
+                result = default;
                 return false;
             }
 
@@ -286,7 +269,7 @@ namespace DataStructures.Lists
         {
             if (IsEmpty)
             {
-                result = default(T);
+                result = default;
                 return false;
             }
 
@@ -323,10 +306,7 @@ namespace DataStructures.Lists
         /// <summary>
         /// Checks whether this collection is readonly
         /// </summary>
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Copy this list to an array
@@ -340,7 +320,7 @@ namespace DataStructures.Lists
                 throw new IndexOutOfRangeException();
 
             // Get enumerator
-            var enumarator = this.GetEnumerator();
+            var enumarator = GetEnumerator();
 
             // Copy elements as long as there is any in the list and as long as the index is within the valid range
             for (int i = arrayIndex; i < array.Length; ++i)
@@ -360,7 +340,7 @@ namespace DataStructures.Lists
             _count = 0;
             _currentMaxLevel = 1;
             _randomizer = new Random();
-            _firstNode = new SkipListNode<T>(default(T), MaxLevel);
+            _firstNode = new SkipListNode<T>(default, MaxLevel);
 
             for (int i = 0; i < MaxLevel; ++i)
                 _firstNode.Forwards[i] = _firstNode;
