@@ -5,226 +5,225 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace DataStructures.Common
+namespace DataStructures.Common;
+
+/// <summary>
+/// Provides a list of the first 10,000 primes.
+/// This class is a singleton, and read the primes from the file @"Data\PrimesList_10K.csv".
+/// </summary>
+public sealed class PrimesList
 {
+    //
+    // Singleton implementation with an attempted thread-safety using double-check locking
+    // internal datastorage singleton container
+    private static PrimesList _instance;
+
+    // lock for thread-safety laziness
+    private static readonly object Mutex = new object();
+
+    //
+    // INSTANCE VARIABLES
+    private readonly static List<int> _primes = new List<int>();
+
+    // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
+    // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
+    // The choice is largely arbitrary.
+    public const int HASH_PRIME = 101;
+
+
     /// <summary>
-    /// Provides a list of the first 10,000 primes.
-    /// This class is a singleton, and read the primes from the file @"Data\PrimesList_10K.csv".
+    /// Empty private constructor.
     /// </summary>
-    public sealed class PrimesList
+    private PrimesList() { }
+
+    /// <summary>
+    /// Returns the singleton instance of this class.
+    /// </summary>
+    public static PrimesList Instance
     {
-        //
-        // Singleton implementation with an attempted thread-safety using double-check locking
-        // internal datastorage singleton container
-        private static PrimesList _instance;
-
-        // lock for thread-safety laziness
-        private static readonly object Mutex = new object();
-
-        //
-        // INSTANCE VARIABLES
-        private readonly static List<int> _primes = new List<int>();
-
-        // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
-        // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
-        // The choice is largely arbitrary.
-        public const int HASH_PRIME = 101;
-
-
-        /// <summary>
-        /// Empty private constructor.
-        /// </summary>
-        private PrimesList() { }
-
-        /// <summary>
-        /// Returns the singleton instance of this class.
-        /// </summary>
-        public static PrimesList Instance
+        get
         {
-            get
+            if (_instance == null)
             {
-                if (_instance == null)
+                lock (Mutex)
                 {
-                    lock (Mutex)
+                    if (_instance == null)
                     {
-                        if (_instance == null)
-                        {
-                            _initializeData();
-                            _instance = new PrimesList();
-                        }
-                    }
-                }
-
-                return _instance;
-            }
-        }
-
-        /// <summary>
-        /// Initializes the primes document path and list.
-        /// </summary>
-        private static void _initializeData()
-        {
-			string[] lines = _readResource("DataStructures.Data.PrimesDocument_10K.csv");
-
-			foreach (var line in lines)
-            {
-                // Split the line by commas and convert the collection to a list.
-                var numbersAsStrings = line.Split(',').ToList<string>();
-
-                // defensive check against empty strings.
-                numbersAsStrings.RemoveAll(item => string.IsNullOrEmpty(item) == true);
-
-                if (numbersAsStrings.Count > 0)
-                {
-                    try
-                    {
-                        // cast them into integers and add them to the primes list
-                        var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
-                        _primes.AddRange(numbers);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new Exception(line.Replace("\r","{\\r}").Replace("\n", "{\\n}"), e);
+                        _initializeData();
+                        _instance = new PrimesList();
                     }
                 }
             }
+
+            return _instance;
         }
+    }
 
-        /// <summary>
-        /// Return count of primes.
-        /// </summary>
-        public int Count => _primes.Count;
+    /// <summary>
+    /// Initializes the primes document path and list.
+    /// </summary>
+    private static void _initializeData()
+    {
+        string[] lines = _readResource("DataStructures.Data.PrimesDocument_10K.csv");
 
-        /// <summary>
-        /// Returns prime number at the specified index.
-        /// </summary>
-        public int this[int index]
+        foreach (var line in lines)
         {
-            get
+            // Split the line by commas and convert the collection to a list.
+            var numbersAsStrings = line.Split(',').ToList<string>();
+
+            // defensive check against empty strings.
+            numbersAsStrings.RemoveAll(item => string.IsNullOrEmpty(item) == true);
+
+            if (numbersAsStrings.Count > 0)
             {
-                if (index < 0 || index >= _primes.Count)
-                    throw new ArgumentOutOfRangeException();
-
-                return _primes[index];
-            }
-        }
-
-        /// <summary>
-        /// Checks if a number is a Prime Number.
-        /// </summary>
-        public bool IsPrime(int candidate)
-        {
-            if ((candidate & 1) != 0)
-            {
-                int limit = (int)Math.Sqrt(candidate);
-
-                for (int divisor = 3; divisor <= limit; divisor += 2)
+                try
                 {
-                    if (candidate % divisor == 0)
-                        return false;
+                    // cast them into integers and add them to the primes list
+                    var numbers = numbersAsStrings.Select(item => Convert.ToInt32(item)).ToList<int>();
+                    _primes.AddRange(numbers);
                 }
-
-                return true;
+                catch (Exception e)
+                {
+                    throw new Exception(line.Replace("\r","{\\r}").Replace("\n", "{\\n}"), e);
+                }
             }
-
-            return candidate == 2;
         }
+    }
 
-        /// <summary>
-        /// Returns the next biggest prime number.
-        /// </summary>
-        /// <param name="number"></param>
-        /// <returns></returns>
-        public int GetNextPrime(int number)
+    /// <summary>
+    /// Return count of primes.
+    /// </summary>
+    public int Count => _primes.Count;
+
+    /// <summary>
+    /// Returns prime number at the specified index.
+    /// </summary>
+    public int this[int index]
+    {
+        get
         {
-            if (number < 0)
-                throw new ArgumentException("Number should be greater than or equal to 0.");
-
-            for (int i = 0; i < _primes.Count; i++)
-            {
-                if (_primes[i] >= number)
-                    return _primes[i];
-            }
-
-            // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = number | 1; i < Int32.MaxValue; i += 2)
-            {
-                if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
-                    return i;
-            }
-
-            return number;
-        }
-
-        /// <summary>
-        /// Returns the next minimum prime number.
-        /// </summary>
-        public int GetPreviousPrime(int number)
-        {
-            if (number < 0)
-                throw new ArgumentException("Number should be greater than or equal to 0.");
-
-            for (int i = 0; i < _primes.Count; i++)
-            {
-                if (_primes[i] >= number)
-                    return _primes[i];
-            }
-
-            // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = number | 1; i < Int32.MaxValue; i += 2)
-            {
-                if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
-                    return i;
-            }
-
-            return number;
-        }
-
-        /// <summary>
-        /// Returns the read-only IList of primes
-        /// </summary>
-        public IList<int> GetAll => _primes.AsReadOnly();
-
-        /// <summary>
-        /// Copy the primes list to an array, starting from a specified index.
-        /// </summary>
-        public void CopyTo(int[] array, int index = 0)
-        {
-            if (array == null)
-                array = new int[_primes.Count];
-
-            if (array.Length <= index)
+            if (index < 0 || index >= _primes.Count)
                 throw new ArgumentOutOfRangeException();
 
-            int count = array.Length - index;
-            int arrayIndex = index;
+            return _primes[index];
+        }
+    }
 
-            if (count - _primes.Count > 0)
-                count = _primes.Count;
+    /// <summary>
+    /// Checks if a number is a Prime Number.
+    /// </summary>
+    public bool IsPrime(int candidate)
+    {
+        if ((candidate & 1) != 0)
+        {
+            int limit = (int)Math.Sqrt(candidate);
 
-            for (int i = 0; i < count; i++)
+            for (int divisor = 3; divisor <= limit; divisor += 2)
             {
-                array[arrayIndex] = _primes[i];
-                arrayIndex++;
+                if (candidate % divisor == 0)
+                    return false;
             }
+
+            return true;
         }
 
-        /// <summary>
-        /// Reads an embedded resource as a text file.
-        /// </summary>
-        /// <returns></returns>
-        private static string[] _readResource(string resourceName)
+        return candidate == 2;
+    }
+
+    /// <summary>
+    /// Returns the next biggest prime number.
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    public int GetNextPrime(int number)
+    {
+        if (number < 0)
+            throw new ArgumentException("Number should be greater than or equal to 0.");
+
+        for (int i = 0; i < _primes.Count; i++)
         {
-	        try
-	        {
-		        using (var stream = typeof(PrimesList).GetTypeInfo().Assembly.GetManifestResourceStream(resourceName))
-		        using (var reader = new StreamReader(stream ?? throw new InvalidOperationException("Failed to read resource"), Encoding.UTF8))
-			        return reader.ReadToEnd().Split("\n");
-	        }
-	        catch (Exception ex)
-	        {
-		        throw new Exception($"Failed to read resource {resourceName}", ex);
-	        }
+            if (_primes[i] >= number)
+                return _primes[i];
+        }
+
+        // Outside of our predefined table. Compute the prime the hard way. 
+        for (int i = number | 1; i < Int32.MaxValue; i += 2)
+        {
+            if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
+                return i;
+        }
+
+        return number;
+    }
+
+    /// <summary>
+    /// Returns the next minimum prime number.
+    /// </summary>
+    public int GetPreviousPrime(int number)
+    {
+        if (number < 0)
+            throw new ArgumentException("Number should be greater than or equal to 0.");
+
+        for (int i = 0; i < _primes.Count; i++)
+        {
+            if (_primes[i] >= number)
+                return _primes[i];
+        }
+
+        // Outside of our predefined table. Compute the prime the hard way. 
+        for (int i = number | 1; i < Int32.MaxValue; i += 2)
+        {
+            if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
+                return i;
+        }
+
+        return number;
+    }
+
+    /// <summary>
+    /// Returns the read-only IList of primes
+    /// </summary>
+    public IList<int> GetAll => _primes.AsReadOnly();
+
+    /// <summary>
+    /// Copy the primes list to an array, starting from a specified index.
+    /// </summary>
+    public void CopyTo(int[] array, int index = 0)
+    {
+        if (array == null)
+            array = new int[_primes.Count];
+
+        if (array.Length <= index)
+            throw new ArgumentOutOfRangeException();
+
+        int count = array.Length - index;
+        int arrayIndex = index;
+
+        if (count - _primes.Count > 0)
+            count = _primes.Count;
+
+        for (int i = 0; i < count; i++)
+        {
+            array[arrayIndex] = _primes[i];
+            arrayIndex++;
+        }
+    }
+
+    /// <summary>
+    /// Reads an embedded resource as a text file.
+    /// </summary>
+    /// <returns></returns>
+    private static string[] _readResource(string resourceName)
+    {
+        try
+        {
+            using (var stream = typeof(PrimesList).GetTypeInfo().Assembly.GetManifestResourceStream(resourceName))
+            using (var reader = new StreamReader(stream ?? throw new InvalidOperationException("Failed to read resource"), Encoding.UTF8))
+                return reader.ReadToEnd().Split("\n");
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to read resource {resourceName}", ex);
         }
     }
 }

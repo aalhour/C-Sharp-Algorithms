@@ -1,25 +1,23 @@
-﻿namespace Algorithms.Trees
+﻿namespace Algorithms.Trees;
+
+/// <summary>
+/// Simple Iterative Tree Traversal and Search Algorithms.
+/// </summary>
+public static class BinaryTreeIterativeWalker
 {
     /// <summary>
-    /// Simple Iterative Tree Traversal and Search Algorithms.
+    /// Specifies the mode of travelling through the tree.
     /// </summary>
-    public static class BinaryTreeIterativeWalker
+    public enum TraversalMode
     {
-        /// <summary>
-        /// Specifies the mode of travelling through the tree.
-        /// </summary>
-        public enum TraversalMode
-        {
-            InOrder = 0,
-            PreOrder = 1,
-            PostOrder = 2
-        }
-
-
-        /************************************************************************************
-         * PRIVATE HELPERS SECTION 
-         * 
-         */
+        InOrder = 0,
+        PreOrder = 1,
+        PostOrder = 2
     }
-}
 
+
+    /************************************************************************************
+     * PRIVATE HELPERS SECTION 
+     * 
+     */
+}
