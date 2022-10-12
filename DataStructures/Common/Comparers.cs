@@ -13,18 +13,23 @@ namespace DataStructures.Common
         /// <typeparam name="T">The Type of value.</typeparam>
         public static bool IsNumber<T>(this T value)
         {
-            if (value is sbyte) return true;
-            if (value is byte) return true;
-            if (value is short) return true;
-            if (value is ushort) return true;
-            if (value is int) return true;
-            if (value is uint) return true;
-            if (value is long) return true;
-            if (value is ulong) return true;
-            if (value is float) return true;
-            if (value is double) return true;
-            if (value is decimal) return true;
-            return false;
+            switch (value)
+            {
+                case sbyte:
+                case byte:
+                case short:
+                case ushort:
+                case int:
+                case uint:
+                case long:
+                case ulong:
+                case float:
+                case double:
+                case decimal:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public static bool IsEqualTo<T>(this T firstValue, T secondValue) where T : IComparable<T>
