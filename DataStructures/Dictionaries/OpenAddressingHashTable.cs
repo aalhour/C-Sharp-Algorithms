@@ -135,7 +135,7 @@ namespace DataStructures.Dictionaries
                 //calculates first hash values
                 hash_value = Convert.ToInt32(string_value) % _size;
                 //calculate second hash value
-                second_hash_value = 1 + (Convert.ToInt32(string_value) % (_size - 1));
+                second_hash_value = 1 + Convert.ToInt32(string_value) % (_size - 1);
             }
             //grabs a hash value for a char
             else if (typeof(TKey) == typeof(char))
@@ -149,18 +149,18 @@ namespace DataStructures.Dictionaries
                 //calculates first hash values
                 hash_value = Convert.ToInt32(char_value) % _size;
                 //calculate second hash value
-                second_hash_value = 1 + (Convert.ToInt32(char_value) % (_size - 1));
+                second_hash_value = 1 + Convert.ToInt32(char_value) % (_size - 1);
             }
             else
             {
                 //calculates first hash values
                 hash_value = Convert.ToInt32(key) % _size;
                 //calculate second hash value
-                second_hash_value = 1 + (Convert.ToInt32(key) % (_size - 1));
+                second_hash_value = 1 + Convert.ToInt32(key) % (_size - 1);
             }
 
             //slot index based on first hash value, second hash value as an offset based on a counter, will also guarentee that the slot will be within the range 0 to size
-            slot = (hash_value + (i * second_hash_value)) % _size;
+            slot = (hash_value + i * second_hash_value) % _size;
 
             return slot;
         }

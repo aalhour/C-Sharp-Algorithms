@@ -79,7 +79,7 @@ namespace Algorithms.Sorting
         private static void MaxHeapify<T>(this IList<T> collection, int nodeIndex, int lastIndex, Comparer<T> comparer)
         {
             // assume left(i) and right(i) are max-heaps
-            int left = (nodeIndex * 2) + 1;
+            int left = nodeIndex * 2 + 1;
             int right = left + 1;
             int largest = nodeIndex;
 
@@ -120,7 +120,7 @@ namespace Algorithms.Sorting
         private static void MinHeapify<T>(this IList<T> collection, int nodeIndex, int lastIndex, Comparer<T> comparer)
         {
             // assume left(i) and right(i) are max-heaps
-            int left = (nodeIndex * 2) + 1;
+            int left = nodeIndex * 2 + 1;
             int right = left + 1;
             int smallest = nodeIndex;
 

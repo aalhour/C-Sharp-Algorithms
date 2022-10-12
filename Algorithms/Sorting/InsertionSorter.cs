@@ -24,7 +24,7 @@ namespace Algorithms.Sorting
                 T value = list[i];
                 j = i - 1;
 
-                while ((j >= 0) && (comparer.Compare(list[j], value) > 0))
+                while (j >= 0 && comparer.Compare(list[j], value) > 0)
                 {
                     list[j + 1] = list[j];
                     j--;

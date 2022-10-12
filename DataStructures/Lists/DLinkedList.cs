@@ -71,7 +71,7 @@ namespace DataStructures.Lists
                 return First;
             }
 
-            if (index == (Count - 1))
+            if (index == Count - 1)
             {
                 return Last;
             }
@@ -81,10 +81,10 @@ namespace DataStructures.Lists
             // Decide from which reference to traverse the list, and then move the currentNode reference to the index
             // If index > half then traverse it from the end (_lastNode reference)
             // Otherwise, traverse it from the beginning (_firstNode refrence)
-            if (index > (Count / 2))
+            if (index > Count / 2)
             {
                 currentNode = _lastNode;
-                for (int i = (Count - 1); i > index; --i)
+                for (int i = Count - 1; i > index; --i)
                 {
                     currentNode = currentNode.Previous;
                 }
@@ -115,7 +115,7 @@ namespace DataStructures.Lists
             {
                 _firstNode.Data = value;
             }
-            else if (index == (Count - 1))
+            else if (index == Count - 1)
             {
                 _lastNode.Data = value;
             }
@@ -126,10 +126,10 @@ namespace DataStructures.Lists
                 // Decide from which reference to traverse the list, and then move the currentNode reference to the index
                 // If index > half then traverse it from the end (_lastNode reference)
                 // Otherwise, traverse it from the beginning (_firstNode refrence)
-                if (index > (Count / 2))
+                if (index > Count / 2)
                 {
                     currentNode = _lastNode;
-                    for (int i = (Count - 1); i > index; --i)
+                    for (int i = Count - 1; i > index; --i)
                     {
                         currentNode = currentNode.Previous;
                     }
@@ -164,7 +164,7 @@ namespace DataStructures.Lists
         /// <returns><c>true</c> if this list is empty; otherwise, <c>false</c>.</returns>
         public virtual bool IsEmpty()
         {
-            return (Count == 0);
+            return Count == 0;
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace DataStructures.Lists
                 i++;
             }//end-while
 
-            return (found == true ? i : -1);
+            return found == true ? i : -1;
         }
 
         /// <summary>
@@ -671,10 +671,10 @@ namespace DataStructures.Lists
             // Decide from which reference to traverse the list, and then move the currentNode reference to the index
             // If index > half then traverse it from the end (_lastNode reference)
             // Otherwise, traverse it from the beginning (_firstNode refrence)
-            if (index > (Count / 2))
+            if (index > Count / 2)
             {
                 currentNode = _lastNode;
-                for (int i = (Count - 1); i > index; --i)
+                for (int i = Count - 1; i > index; --i)
                 {
                     currentNode = currentNode.Previous;
                 }

@@ -39,7 +39,7 @@ namespace Algorithms.Numeric
                 if (!CachedCatalanNumbers.ContainsKey(i)) CachedCatalanNumbers.Add(i, firstPart);
                 if (!CachedCatalanNumbers.ContainsKey(lastRank - i)) CachedCatalanNumbers.Add(lastRank - i, secondPart);
 
-                number = number + (firstPart * secondPart);
+                number = number + firstPart * secondPart;
             }
 
             return number;

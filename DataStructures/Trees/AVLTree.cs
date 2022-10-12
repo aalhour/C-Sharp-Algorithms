@@ -74,7 +74,7 @@ namespace DataStructures.Trees
             if (node == null)
                 return -1;
 
-            return (_getNodeHeight(node.RightChild) - _getNodeHeight(node.LeftChild));
+            return _getNodeHeight(node.RightChild) - _getNodeHeight(node.LeftChild);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == Root);
+            bool isRootNode = currentNode == Root;
 
             // Perform the rotation
             currentNode.RightChild = pivotNode.LeftChild;
@@ -143,7 +143,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == Root);
+            bool isRootNode = currentNode == Root;
 
             // Perform the rotation
             currentNode.LeftChild = pivotNode.RightChild;

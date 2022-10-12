@@ -57,12 +57,12 @@
         /// <summary>
         /// Returns the sibling of this node.
         /// </summary>
-        public virtual RedBlackTreeMapNode<TKey, TValue> Sibling => (Parent == null ? null : (IsLeftChild ? Parent.RightChild : Parent.LeftChild));
+        public virtual RedBlackTreeMapNode<TKey, TValue> Sibling => Parent == null ? null : IsLeftChild ? Parent.RightChild : Parent.LeftChild;
 
         /// <summary>
         /// Returns the grandparent of this node.
         /// </summary>
-        public virtual RedBlackTreeMapNode<TKey, TValue> GrandParent => (Parent == null ? null : Parent.Parent);
+        public virtual RedBlackTreeMapNode<TKey, TValue> GrandParent => Parent == null ? null : Parent.Parent;
     }
 
 }

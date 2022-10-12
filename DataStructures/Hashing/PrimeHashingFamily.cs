@@ -71,7 +71,7 @@ namespace DataStructures.Hashing
             int multiplier = _multipliersVector[whichHashFunction - 1];
             var characters = preHashedKey.ToString().ToCharArray();
 
-            return (multiplier * preHashValue);
+            return multiplier * preHashValue;
         }
 
         /// <summary>

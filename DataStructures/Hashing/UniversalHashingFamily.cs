@@ -95,7 +95,7 @@ namespace DataStructures.Hashing
             int a = _firstMultipliersVector[whichHashFunction - 1];
             int b = _secondMultipliersVector[whichHashFunction - 1];
 
-            return ((a * preHashedKey) + b) % BIG_PRIME;
+            return (a * preHashedKey + b) % BIG_PRIME;
         }
 
         /// <summary>

@@ -120,14 +120,14 @@ namespace DataStructures.Common
 
                 for (int divisor = 3; divisor <= limit; divisor += 2)
                 {
-                    if ((candidate % divisor) == 0)
+                    if (candidate % divisor == 0)
                         return false;
                 }
 
                 return true;
             }
 
-            return (candidate == 2);
+            return candidate == 2;
         }
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace DataStructures.Common
             }
 
             // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = (number | 1); i < Int32.MaxValue; i += 2)
+            for (int i = number | 1; i < Int32.MaxValue; i += 2)
             {
-                if (IsPrime(i) && ((i - 1) % HASH_PRIME != 0))
+                if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
                     return i;
             }
 
@@ -171,9 +171,9 @@ namespace DataStructures.Common
             }
 
             // Outside of our predefined table. Compute the prime the hard way. 
-            for (int i = (number | 1); i < Int32.MaxValue; i += 2)
+            for (int i = number | 1; i < Int32.MaxValue; i += 2)
             {
-                if (IsPrime(i) && ((i - 1) % HASH_PRIME != 0))
+                if (IsPrime(i) && (i - 1) % HASH_PRIME != 0)
                     return i;
             }
 

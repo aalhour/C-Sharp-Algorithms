@@ -67,13 +67,13 @@ namespace DataStructures.Lists
         /// <returns>true, if the list is empty, false otherwise.</returns>
         public bool IsEmpty()
         {
-            return (Count == 0);
+            return Count == 0;
         }
 
         /// <summary>
         /// Getter function that returns the first element
         /// </summary>
-        public T First => (_firstNode == null ? default : _firstNode.Data);
+        public T First => _firstNode == null ? default : _firstNode.Data;
 
         /// <summary>
         /// Getter function that returns the last element
@@ -261,12 +261,12 @@ namespace DataStructures.Lists
                 return First;
             }
 
-            if (index == (Count - 1))
+            if (index == Count - 1)
             {
                 return Last;
             }
 
-            if (index > 0 && index < (Count - 1))
+            if (index > 0 && index < Count - 1)
             {
                 var currentNode = _firstNode;
                 for (int i = 0; i < index; ++i)
@@ -453,7 +453,7 @@ namespace DataStructures.Lists
             {
                 _current = _current.Next;
 
-                return (_current != null);
+                return _current != null;
             }
 
             public void Reset()

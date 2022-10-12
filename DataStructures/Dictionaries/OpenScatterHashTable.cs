@@ -113,11 +113,11 @@ namespace DataStructures.Dictionaries
         private void _contractCapacity()
         {
             // Only contract the array if the number of elements is less than 1/3 of the total array size.
-            int oneThird = (_hashTableStore.Length / 3);
+            int oneThird = _hashTableStore.Length / 3;
 
             if (_size <= oneThird)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
+                int newCapacity = _hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length);
 
                 // Try to expand the size
                 HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
@@ -138,7 +138,7 @@ namespace DataStructures.Dictionaries
         {
             if (_hashTableStore.Length < minCapacity)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getExpandPrime(_hashTableStore.Length * 2));
+                int newCapacity = _hashTableStore.Length == 0 ? _defaultCapacity : _getExpandPrime(_hashTableStore.Length * 2);
 
                 if (newCapacity >= MAX_PRIME_ARRAY_LENGTH)
                     newCapacity = MAX_PRIME_ARRAY_LENGTH;
@@ -171,7 +171,7 @@ namespace DataStructures.Dictionaries
         {
             // If the size of the internal collection is less than or equal to third of 
             // ... the total capacity then contract the internal collection
-            int oneThird = (_hashTableStore.Length / 3);
+            int oneThird = _hashTableStore.Length / 3;
 
             if (mode == CapacityManagementMode.Contract && _size <= oneThird)
             {

@@ -50,7 +50,7 @@ namespace DataStructures.Graphs
         /// </summary>
         protected virtual bool _doesEdgeExist(int index1, int index2)
         {
-            return (_adjacencyMatrix[index1, index2] || _adjacencyMatrix[index2, index1]);
+            return _adjacencyMatrix[index1, index2] || _adjacencyMatrix[index2, index1];
         }
 
         /// <summary>
@@ -157,10 +157,10 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                 {
-                    yield return (new UnweightedEdge<T>(
+                    yield return new UnweightedEdge<T>(
                         (T)_vertices[adjacent], // from
                         vertex                  // to
-                    ));
+                    );
                 }
             }//end-for
         }
@@ -179,10 +179,10 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                 {
-                    yield return (new UnweightedEdge<T>(
+                    yield return new UnweightedEdge<T>(
                         vertex,                 // from
                         (T)_vertices[adjacent]  // to
-                    ));
+                    );
                 }
             }//end-for
         }
@@ -323,7 +323,7 @@ namespace DataStructures.Graphs
             int indexOfSecond = _vertices.IndexOf(secondVertex);
 
             // Check the existence of vertices and the directed edge
-            return (indexOfFirst != -1 && indexOfSecond != -1 && _doesEdgeExist(indexOfFirst, indexOfSecond) == true);
+            return indexOfFirst != -1 && indexOfSecond != -1 && _doesEdgeExist(indexOfFirst, indexOfSecond) == true;
         }
 
         /// <summary>

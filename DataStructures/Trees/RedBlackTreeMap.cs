@@ -100,12 +100,12 @@ namespace DataStructures.Trees
 
         protected virtual bool _safeCheckIsBlack(RedBlackTreeMapNode<TKey, TValue> node)
         {
-            return (node == null || (node != null && node.IsBlack));
+            return node == null || (node != null && node.IsBlack);
         }
 
         protected virtual bool _safeCheckIsRed(RedBlackTreeMapNode<TKey, TValue> node)
         {
-            return (node != null && node.IsRed);
+            return node != null && node.IsRed;
         }
 
 
@@ -136,7 +136,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == Root);
+            bool isRootNode = currentNode == Root;
 
             // Perform the rotation
             currentNode.RightChild = pivotNode.LeftChild;
@@ -179,7 +179,7 @@ namespace DataStructures.Trees
             bool isLeftChild = currentNode.IsLeftChild;
 
             // Check if currentNode is the Root
-            bool isRootNode = (currentNode == Root);
+            bool isRootNode = currentNode == Root;
 
             // Perform the rotation
             currentNode.LeftChild = pivotNode.RightChild;

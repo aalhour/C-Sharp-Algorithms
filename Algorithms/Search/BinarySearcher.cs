@@ -53,7 +53,7 @@ namespace Algorithms.Search
             Reset();
             _item = item;
 
-            while ((_leftIndex <= _rightIndex) && notFound)
+            while (_leftIndex <= _rightIndex && notFound)
             {
                 notFound = MoveNext();
             }

@@ -272,7 +272,7 @@ namespace DataStructures.Trees
         {
             TRecord record;
             var status = SearchByWord(item.Key, out record);
-            return (status == true && _recordsComparer.Equals(item.Value, record));
+            return status == true && _recordsComparer.Equals(item.Value, record);
         }
 
         void ICollection<KeyValuePair<string, TRecord>>.CopyTo(KeyValuePair<string, TRecord>[] array, int arrayIndex)

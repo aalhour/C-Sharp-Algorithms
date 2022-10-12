@@ -49,12 +49,12 @@ namespace DataStructures.Common
 
         public static bool IsGreaterThanOrEqualTo<T>(this T firstValue, T secondValue) where T : IComparable<T>
         {
-            return (firstValue.IsEqualTo(secondValue) || firstValue.IsGreaterThan(secondValue));
+            return firstValue.IsEqualTo(secondValue) || firstValue.IsGreaterThan(secondValue);
         }
 
         public static bool IsLessThanOrEqualTo<T>(this T firstValue, T secondValue) where T : IComparable<T>
         {
-            return (firstValue.IsEqualTo(secondValue) || firstValue.IsLessThan(secondValue));
+            return firstValue.IsEqualTo(secondValue) || firstValue.IsLessThan(secondValue);
         }
         
         // METHODS FOR BINARY SEARCH TREE
@@ -66,27 +66,27 @@ namespace DataStructures.Common
 
         public static bool IsEqualTo<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            return (HandleNullCases(first, second) && first.Value.CompareTo(second.Value) == 0);
+            return HandleNullCases(first, second) && first.Value.CompareTo(second.Value) == 0;
         }
 
         public static bool IsGreaterThan<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            return (HandleNullCases(first, second) && first.Value.CompareTo(second.Value) > 0);
+            return HandleNullCases(first, second) && first.Value.CompareTo(second.Value) > 0;
         }
 
         public static bool IsLessThan<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            return (HandleNullCases(first, second) && first.Value.CompareTo(second.Value) < 0);
+            return HandleNullCases(first, second) && first.Value.CompareTo(second.Value) < 0;
         }
 
         public static bool IsLessThanOrEqualTo<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            return (first.IsEqualTo(second) || first.IsLessThan(second));
+            return first.IsEqualTo(second) || first.IsLessThan(second);
         }
 
         public static bool IsGreaterThanOrEqualTo<T>(this BSTNode<T> first, BSTNode<T> second) where T : IComparable<T>
         {
-            return (first.IsEqualTo(second) || first.IsGreaterThan(second));
+            return first.IsEqualTo(second) || first.IsGreaterThan(second);
         }
     }
 

@@ -80,7 +80,7 @@ namespace Algorithms.Graphs
 
                     // calculate a new possible weighted path if the edge weight is less than infinity
                     var delta = Infinity;
-                    if (edge.Weight < Infinity && (Infinity - edge.Weight) > _distances[fromIndex])  // Handles overflow
+                    if (edge.Weight < Infinity && Infinity - edge.Weight > _distances[fromIndex])  // Handles overflow
                         delta = _distances[fromIndex] + edge.Weight;
 
                     // Relax the edge
@@ -103,7 +103,7 @@ namespace Algorithms.Graphs
 
                 // calculate a new possible weighted path if the edge weight is less than infinity
                 var delta = Infinity;
-                if (edge.Weight < Infinity && (Infinity - edge.Weight) > _distances[fromIndex])  // Handles overflow
+                if (edge.Weight < Infinity && Infinity - edge.Weight > _distances[fromIndex])  // Handles overflow
                     delta = _distances[fromIndex] + edge.Weight;
 
                 // if check is true a negative-weight cycle is detected
@@ -209,7 +209,7 @@ namespace Algorithms.Graphs
                 if (!vertex.IsEqualTo(edge.Destination))
                     return false;
 
-                if ((_distances[v] + edge.Weight) != _distances[w])
+                if (_distances[v] + edge.Weight != _distances[w])
                 {
                     Console.WriteLine("edge " + edge.Source + "-" + edge.Destination + " on shortest path not tight");
                     return false;

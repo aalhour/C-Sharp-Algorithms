@@ -147,7 +147,7 @@ namespace Algorithms.Graphs
                     if (!_visited[adjIndex])
                     {
                         _visited[adjIndex] = true;
-                        _nodesColors[adjIndex] = (_nodesColors[currIndex] == BipartiteColor.Red) ? BipartiteColor.Blue : BipartiteColor.Red;
+                        _nodesColors[adjIndex] = _nodesColors[currIndex] == BipartiteColor.Red ? BipartiteColor.Blue : BipartiteColor.Red;
 
                         queue.Enqueue(adjacent);
                     }

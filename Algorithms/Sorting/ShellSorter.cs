@@ -18,11 +18,11 @@ namespace Algorithms.Sorting
         {
             bool flag = true;
             int d = collection.Count;
-            while (flag || (d > 1))
+            while (flag || d > 1)
             {
                 flag = false;
                 d = (d + 1) / 2;
-                for (int i = 0; i < (collection.Count - d); i++)
+                for (int i = 0; i < collection.Count - d; i++)
                 {
                     if (comparer.Compare(collection[i + d], collection[i]) < 0)
                     {
@@ -40,11 +40,11 @@ namespace Algorithms.Sorting
         {
             bool flag = true;
             int d = collection.Count;
-            while (flag || (d > 1))
+            while (flag || d > 1)
             {
                 flag = false;
                 d = (d + 1) / 2;
-                for (int i = 0; i < (collection.Count - d); i++)
+                for (int i = 0; i < collection.Count - d; i++)
                 {
                     if (comparer.Compare(collection[i + d], collection[i])>0)
                     {

@@ -61,7 +61,7 @@ namespace DataStructures.Heaps
             if (capacity <= 0)
                 throw new ArgumentOutOfRangeException();
 
-            capacity = (capacity < _defaultCapacity ? _defaultCapacity : capacity);
+            capacity = capacity < _defaultCapacity ? _defaultCapacity : capacity;
 
             _size = 0;
             _forest = new ArrayList<BinomialNode<T>>(capacity);
@@ -90,7 +90,7 @@ namespace DataStructures.Heaps
             deletedForest._forest.Resize(minIndex + 1);
             deletedForest._size = (1 << minIndex) - 1;
 
-            for (int i = (minIndex - 1); i >= 0; --i)
+            for (int i = minIndex - 1; i >= 0; --i)
             {
                 deletedForest._forest[i] = deletedTreeRoot;
                 deletedTreeRoot = deletedTreeRoot.Sibling;
@@ -120,7 +120,7 @@ namespace DataStructures.Heaps
 
             // Loop over the trees in forest, and return the index of the slot that has the tree with the min-valued root
             for (minIndex = i; i < _forest.Count; ++i)
-                if (_forest[i] != null && (_forest[i].Value.IsLessThan(_forest[minIndex].Value)))
+                if (_forest[i] != null && _forest[i].Value.IsLessThan(_forest[minIndex].Value))
                     minIndex = i;
 
             return minIndex;
@@ -168,7 +168,7 @@ namespace DataStructures.Heaps
         /// Checks if heap is empty
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty => (_size == 0);
+        public bool IsEmpty => _size == 0;
 
         /// <summary>
         /// Initializes this heap with a collection of elements.
@@ -271,12 +271,12 @@ namespace DataStructures.Heaps
 
             for (int i = 0, j = 1; j <= _size; i++, j *= 2)
             {
-                BinomialNode<T> treeRoot1 = (_forest.IsEmpty == true ? null : _forest[i]);
-                BinomialNode<T> treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
+                BinomialNode<T> treeRoot1 = _forest.IsEmpty == true ? null : _forest[i];
+                BinomialNode<T> treeRoot2 = i < otherHeap._forest.Count ? otherHeap._forest[i] : null;
 
-                int whichCase = (treeRoot1 == null ? 0 : 1);
-                whichCase += (treeRoot2 == null ? 0 : 2);
-                whichCase += (carryNode == null ? 0 : 4);
+                int whichCase = treeRoot1 == null ? 0 : 1;
+                whichCase += treeRoot2 == null ? 0 : 2;
+                whichCase += carryNode == null ? 0 : 4;
 
                 switch (whichCase)
                 {

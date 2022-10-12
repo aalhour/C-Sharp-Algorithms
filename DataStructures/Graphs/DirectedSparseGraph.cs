@@ -43,7 +43,7 @@ namespace DataStructures.Graphs
         /// </summary>
         protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
         {
-            return (_adjacencyList[vertex1].Contains(vertex2));
+            return _adjacencyList[vertex1].Contains(vertex2);
         }
 
 
@@ -102,10 +102,10 @@ namespace DataStructures.Graphs
             {
                 foreach (var vertex in _adjacencyList)
                     foreach (var adjacent in vertex.Value)
-                        yield return (new UnweightedEdge<T>(
+                        yield return new UnweightedEdge<T>(
                             vertex.Key,   // from
                             adjacent      // to
-                        ));
+                        );
             }
         }
 
@@ -120,10 +120,10 @@ namespace DataStructures.Graphs
             foreach(var adjacent in _adjacencyList.Keys)
             {
                 if (_adjacencyList[adjacent].Contains(vertex))
-                    yield return (new UnweightedEdge<T>(
+                    yield return new UnweightedEdge<T>(
                         adjacent,   // from
                         vertex      // to
-                    ));
+                    );
             }//end-foreach
         }
 
@@ -136,10 +136,10 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
 
             foreach(var adjacent in _adjacencyList[vertex])
-                yield return (new UnweightedEdge<T>(
+                yield return new UnweightedEdge<T>(
                     vertex,     // from
                     adjacent    // to
-                ));
+                );
         }
 
 
@@ -246,7 +246,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool HasEdge(T source, T destination)
         {
-            return (_adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination));
+            return _adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination);
         }
 
         /// <summary>

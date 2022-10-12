@@ -67,7 +67,7 @@ namespace DataStructures.Trees
             List<string> rightLines = _recursivelyDrawTree(node.RightChild, out rightPosition, out rightWidth);
 
             // Calculate pads
-            int middle = Math.Max(Math.Max(2, nodeLabel.Length), (rightPosition + leftWidth - leftPosition + 1));
+            int middle = Math.Max(Math.Max(2, nodeLabel.Length), rightPosition + leftWidth - leftPosition + 1);
             int position_out = leftPosition + middle / 2;
             int width_out = leftPosition + middle + rightWidth - rightPosition;
 
@@ -77,7 +77,7 @@ namespace DataStructures.Trees
             while (rightLines.Count < leftLines.Count)
                 rightLines.Add(new String(' ', rightWidth));
 
-            if ((middle - nodeLabel.Length % 2 == 1) && (nodeLabel.Length < middle) && (node.Parent != null && node.IsLeftChild))
+            if (middle - nodeLabel.Length % 2 == 1 && nodeLabel.Length < middle && node.Parent != null && node.IsLeftChild)
                 nodeLabel += ".";
 
             // Format the node's label
@@ -101,16 +101,16 @@ namespace DataStructures.Trees
             List<string> listOfLines = new List<string>()
             {
                 // 0
-                (new String(' ', leftPosition )) + nodeLabel + (new String(' ', (rightWidth - rightPosition))),
+                new String(' ', leftPosition ) + nodeLabel + new String(' ', rightWidth - rightPosition),
 
                 // 1
-                (new String(' ', leftPosition)) + leftBranch + (new String(' ', (middle - 2))) + rightBranch + (new String(' ', (rightWidth - rightPosition)))
+                new String(' ', leftPosition) + leftBranch + new String(' ', middle - 2) + rightBranch + new String(' ', rightWidth - rightPosition)
             };
 
             //
             // Add the right lines and left lines to the final list of lines.
             listOfLines.AddRange(leftLines.Zip(rightLines, (leftLine, rightLine) =>
-                            leftLine + (new String(' ', (width_out - leftWidth - rightWidth))) + rightLine));
+                            leftLine + new String(' ', width_out - leftWidth - rightWidth) + rightLine));
 
             //
             // Return
@@ -165,7 +165,7 @@ namespace DataStructures.Trees
             rightLines = _recursivelyDrawTree(node.RightChild, out rightPosition, out rightWidth, includeValues);
 
             // Calculate pads
-            middle = Math.Max(Math.Max(padValue, nodeLabel.Length), (rightPosition + leftWidth - leftPosition + 1));
+            middle = Math.Max(Math.Max(padValue, nodeLabel.Length), rightPosition + leftWidth - leftPosition + 1);
             position_out = leftPosition + middle;
             width_out = leftPosition + middle + rightWidth - rightPosition;
 
@@ -175,7 +175,7 @@ namespace DataStructures.Trees
             while (rightLines.Count < leftLines.Count)
                 rightLines.Add(new String(' ', rightWidth));
 
-            if ((middle - nodeLabel.Length % padValue == 1) && (nodeLabel.Length < middle) && (node.Parent != null && node.IsLeftChild))
+            if (middle - nodeLabel.Length % padValue == 1 && nodeLabel.Length < middle && node.Parent != null && node.IsLeftChild)
                 nodeLabel += ".";
 
             // Format the node's label
@@ -196,10 +196,10 @@ namespace DataStructures.Trees
             listOfLines = new List<string>()
                 {
                     // 0
-                    (new String(' ', leftPosition )) + nodeLabel + (new String(' ', (rightWidth - rightPosition))),
+                    new String(' ', leftPosition ) + nodeLabel + new String(' ', rightWidth - rightPosition),
 
                     // 1
-                    (new String(' ', leftPosition)) + "/" + (new String(' ', (middle - padValue))) + "\\" + (new String(' ', (rightWidth - rightPosition)))
+                    new String(' ', leftPosition) + "/" + new String(' ', middle - padValue) + "\\" + new String(' ', rightWidth - rightPosition)
                 };
 
             //
@@ -208,7 +208,7 @@ namespace DataStructures.Trees
                 listOfLines.Concat(
                     leftLines.Zip(
                         rightLines, (left_line, right_line) =>
-                        left_line + (new String(' ', (width_out - leftWidth - rightWidth))) + right_line)
+                        left_line + new String(' ', width_out - leftWidth - rightWidth) + right_line)
                 ).ToList();
 
             //

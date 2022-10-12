@@ -75,11 +75,11 @@ namespace DataStructures.Lists
             // ... then maximize the inner collection.
             if (_collection.Length < minCapacity && IsMaximumCapacityReached == false)
             {
-                int newCapacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
+                int newCapacity = _collection.Length == 0 ? _defaultCapacity : _collection.Length * 2;
 
                 // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
                 // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-                int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
+                int maxCapacity = DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86;
 
                 if (newCapacity < minCapacity)
                     newCapacity = minCapacity;
@@ -138,7 +138,7 @@ namespace DataStructures.Lists
         /// Determines whether this list is empty.
         /// </summary>
         /// <returns><c>true</c> if list is empty; otherwise, <c>false</c>.</returns>
-        public bool IsEmpty => (Count == 0);
+        public bool IsEmpty => Count == 0;
 
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace DataStructures.Lists
                 throw new ArgumentNullException();
 
             // make sure the size won't overflow by adding the range
-            if (((uint)_size + elements.Count()) > MAXIMUM_ARRAY_LENGTH_x64)
+            if ((uint)_size + elements.Count() > MAXIMUM_ARRAY_LENGTH_x64)
                 throw new OverflowException();
 
             // grow the internal collection once to avoid doing multiple redundant grows
@@ -254,7 +254,7 @@ namespace DataStructures.Lists
             if (count < 0)
                 throw new ArgumentOutOfRangeException();
 
-            if (((uint)_size + count) > MAXIMUM_ARRAY_LENGTH_x64)
+            if ((uint)_size + count > MAXIMUM_ARRAY_LENGTH_x64)
                 throw new OverflowException();
 
             // grow the internal collection once to avoid doing multiple redundant grows
@@ -292,7 +292,7 @@ namespace DataStructures.Lists
             // The cell at "index" will become available.
             if (index < _size)
             {
-                Array.Copy(_collection, index, _collection, index + 1, (_size - index));
+                Array.Copy(_collection, index, _collection, index + 1, _size - index);
             }
 
             // Write the dataItem to the available cell.
@@ -340,7 +340,7 @@ namespace DataStructures.Lists
             // This operation is O(N), where N = size - index.
             if (index < _size)
             {
-                Array.Copy(_collection, index + 1, _collection, index, (_size - index));
+                Array.Copy(_collection, index + 1, _collection, index, _size - index);
             }
 
             // Reset the writable cell to the default value of type T.
@@ -417,7 +417,7 @@ namespace DataStructures.Lists
             }
 
             // Handle the bounds of count and startIndex with respect to _size.
-            if (count < 0 || startIndex > (_size - count))
+            if (count < 0 || startIndex > _size - count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -521,7 +521,7 @@ namespace DataStructures.Lists
         {
             // Use the FindIndex to look through the collection
             // If the returned index != -1 then it does exist, otherwise it doesn't.
-            return (FindIndex(searchMatch) != -1);
+            return FindIndex(searchMatch) != -1;
         }
 
 
@@ -544,7 +544,7 @@ namespace DataStructures.Lists
         /// <param name="searchMatch">Match predicate.</param>
         public int FindIndex(int startIndex, Predicate<T> searchMatch)
         {
-            return FindIndex(startIndex, (_size - startIndex), searchMatch);
+            return FindIndex(startIndex, _size - startIndex, searchMatch);
         }
 
 
@@ -564,7 +564,7 @@ namespace DataStructures.Lists
             }
 
             // CHeck the bounds of count and startIndex with respect to _size
-            if (count < 0 || startIndex > (_size - count))
+            if (count < 0 || startIndex > _size - count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -626,7 +626,7 @@ namespace DataStructures.Lists
             }
 
             // Check the bounds of count and starting index with respect to _size.
-            if (count < 0 || startIndex > (_size - count))
+            if (count < 0 || startIndex > _size - count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -710,7 +710,7 @@ namespace DataStructures.Lists
             }
 
             // Handle the bound errors of count and startIndex with respect to _size
-            if (count < 0 || startIndex > (_size - count))
+            if (count < 0 || startIndex > _size - count)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -774,7 +774,7 @@ namespace DataStructures.Lists
             int i = 0;
             string listAsString = string.Empty;
 
-            string preLineIndent = (addHeader == false ? "" : "\t");
+            string preLineIndent = addHeader == false ? "" : "\t";
 
             for (i = 0; i < Count; ++i)
             {

@@ -138,7 +138,7 @@ namespace DataStructures.Trees
             {
                 var successor = _findNextLarger(node);
                 node.Value = successor.Value;
-                return (true && _remove(successor));
+                return true && _remove(successor);
             }
 
             if (node.HasLeftChild) // if the node has only a LEFT child
@@ -177,18 +177,18 @@ namespace DataStructures.Trees
             if (node.ChildrenCount == 2) // it has both a right child and a left child
             {
                 if (node.LeftChild.SubtreeSize > node.RightChild.SubtreeSize)
-                    return (1 + _getTreeHeight(node.LeftChild));
-                return (1 + _getTreeHeight(node.RightChild));
+                    return 1 + _getTreeHeight(node.LeftChild);
+                return 1 + _getTreeHeight(node.RightChild);
             }
 
             if (node.HasLeftChild)
             {
-                return (1 + _getTreeHeight(node.LeftChild));
+                return 1 + _getTreeHeight(node.LeftChild);
             }
 
             if (node.HasRightChild)
             {
-                return (1 + _getTreeHeight(node.RightChild));
+                return 1 + _getTreeHeight(node.RightChild);
             }
 
             // return-functions-fix
@@ -302,7 +302,7 @@ namespace DataStructures.Trees
 
             if (node == null)
                 throw new Exception("Item was not found.");
-            return (_subtreeSize(node.LeftChild) + 1);
+            return _subtreeSize(node.LeftChild) + 1;
         }
 
     }

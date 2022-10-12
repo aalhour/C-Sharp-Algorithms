@@ -41,7 +41,7 @@ namespace DataStructures.Graphs
         /// </summary>
         protected virtual bool _doesEdgeExist(T vertex1, T vertex2)
         {
-            return (_adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1));
+            return _adjacencyList[vertex1].Contains(vertex2) || _adjacencyList[vertex2].Contains(vertex1);
         }
 
 
@@ -114,7 +114,7 @@ namespace DataStructures.Graphs
                             continue;
                         seen.Add(outgoingEdge);
 
-                        yield return (new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value));
+                        yield return new UnweightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value);
                     }
                 }//end-foreach
             }
@@ -129,7 +129,7 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
 
             foreach(var adjacent in _adjacencyList[vertex])
-                yield return (new UnweightedEdge<T>(adjacent, vertex));
+                yield return new UnweightedEdge<T>(adjacent, vertex);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
 
             foreach(var adjacent in _adjacencyList[vertex])
-                yield return (new UnweightedEdge<T>(vertex, adjacent));
+                yield return new UnweightedEdge<T>(vertex, adjacent);
         }
 
 
@@ -246,7 +246,7 @@ namespace DataStructures.Graphs
             if (!_adjacencyList.ContainsKey(firstVertex) || !_adjacencyList.ContainsKey(secondVertex))
                 return false;
 
-            return (_adjacencyList[firstVertex].Contains(secondVertex) || _adjacencyList[secondVertex].Contains(firstVertex));
+            return _adjacencyList[firstVertex].Contains(secondVertex) || _adjacencyList[secondVertex].Contains(firstVertex);
         }
 
         /// <summary>

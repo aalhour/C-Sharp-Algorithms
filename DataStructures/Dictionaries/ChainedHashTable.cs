@@ -101,12 +101,12 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private void _contractCapacity()
         {
-            int oneThird = (_hashTableStore.Length / 3);
+            int oneThird = _hashTableStore.Length / 3;
             int twoThirds = 2 * oneThird;
 
             if (_size <= oneThird)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : twoThirds);
+                int newCapacity = _hashTableStore.Length == 0 ? _defaultCapacity : twoThirds;
 
                 // Try to expand the size
                 DLinkedList<TKey, TValue>[] newHashTableStore = new DLinkedList<TKey, TValue>[newCapacity];
@@ -128,7 +128,7 @@ namespace DataStructures.Dictionaries
         {
             if (_hashTableStore.Length < minCapacity)
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _hashTableStore.Length * 2);
+                int newCapacity = _hashTableStore.Length == 0 ? _defaultCapacity : _hashTableStore.Length * 2;
 
                 // Make sure it doesn't divide by 2 or 10
                 if (newCapacity % 2 == 0 || newCapacity % 10 == 0)
@@ -169,7 +169,7 @@ namespace DataStructures.Dictionaries
         {
             // If the size of the internal collection is less than or equal to third of 
             // ... the total capacity then contract the internal collection
-            int oneThird = (_hashTableStore.Length / 3);
+            int oneThird = _hashTableStore.Length / 3;
 
             if (mode == CapacityManagementMode.Contract && _size <= oneThird)
             {
@@ -197,7 +197,7 @@ namespace DataStructures.Dictionaries
             int a = 197, b = 4049, p = 7199369;
 
             prehash = _getPreHashOfKey(key);
-            hash = Convert.ToUInt32(((a * prehash + b) % p) % length);
+            hash = Convert.ToUInt32((a * prehash + b) % p % length);
 
             return hash;
         }
@@ -219,7 +219,7 @@ namespace DataStructures.Dictionaries
 
                 for (int i = 0; i < stringKey.Length; ++i)
                 {
-                    hash = (hash ^ stringKey[i]) + ((hash << 26) + (hash >> 6));
+                    hash = (hash ^ stringKey[i]) + (hash << 26) + (hash >> 6);
                 }
 
                 if (hash > length)
@@ -228,7 +228,7 @@ namespace DataStructures.Dictionaries
             else
             {
                 prehash = _getPreHashOfKey(key);
-                hash = Convert.ToUInt32((37 * prehash) % length);
+                hash = Convert.ToUInt32(37 * prehash % length);
             }
 
             return hash;

@@ -56,12 +56,12 @@
         /// <summary>
         /// Returns the sibling of this node.
         /// </summary>
-        public virtual RedBlackTreeNode<TKey> Sibling => (Parent == null ? null : (IsLeftChild ? Parent.RightChild : Parent.LeftChild));
+        public virtual RedBlackTreeNode<TKey> Sibling => Parent == null ? null : IsLeftChild ? Parent.RightChild : Parent.LeftChild;
 
         /// <summary>
         /// Returns the grandparent of this node.
         /// </summary>
-        public virtual RedBlackTreeNode<TKey> GrandParent => (Parent == null ? null : Parent.Parent);
+        public virtual RedBlackTreeNode<TKey> GrandParent => Parent == null ? null : Parent.Parent;
     }
 
 }

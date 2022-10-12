@@ -72,12 +72,12 @@ namespace DataStructures.Trees
                 return 1;
             // Has two children
             if (node.ChildrenCount == 2)
-                return (1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild)));
+                return 1 + Math.Max(_getTreeHeight(node.LeftChild), _getTreeHeight(node.RightChild));
             // Has only left
             if (node.HasLeftChild)
-                return (1 + _getTreeHeight(node.LeftChild));
+                return 1 + _getTreeHeight(node.LeftChild);
             // Has only right
-            return (1 + _getTreeHeight(node.RightChild));
+            return 1 + _getTreeHeight(node.RightChild);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace DataStructures.Trees
                 var successor = node.RightChild;
                 node.Key = successor.Key;
                 node.Value = successor.Value;
-                return (true && _remove(successor));
+                return true && _remove(successor);
             }
 
             if (node.HasLeftChild) // if the node has only a LEFT child
@@ -332,7 +332,7 @@ namespace DataStructures.Trees
         /// <summary>
         /// Checks if tree is empty.
         /// </summary>
-        public virtual bool IsEmpty => (_count == 0);
+        public virtual bool IsEmpty => _count == 0;
 
         /// <summary>
         /// Returns the height of the tree.
@@ -512,7 +512,7 @@ namespace DataStructures.Trees
         /// </summary>
         public virtual bool Contains(TKey key)
         {
-            return (_findNode(_root, key) != null);
+            return _findNode(_root, key) != null;
         }
 
         /// <summary>
@@ -698,7 +698,7 @@ namespace DataStructures.Trees
                 else
                     current = null;
 
-                return (current != null);
+                return current != null;
             }
         }
 
@@ -752,7 +752,7 @@ namespace DataStructures.Trees
                 else
                     current = null;
 
-                return (current != null);
+                return current != null;
             }
         }
 
@@ -805,7 +805,7 @@ namespace DataStructures.Trees
                 else
                     current = null;
 
-                return (current != null);
+                return current != null;
             }
         }
 

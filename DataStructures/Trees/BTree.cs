@@ -112,7 +112,7 @@ namespace DataStructures.Trees
 
         public List<BTreeNode<T>> Children { set; get; }
 
-        public bool IsLeaf => (Children.Count == 0);
+        public bool IsLeaf => Children.Count == 0;
 
         /// <summary>
         /// A utility function that returns the index of the first key
@@ -140,7 +140,7 @@ namespace DataStructures.Trees
                 if (IsLeaf)
                     return;
 
-                var didMergeLast = (index == Children.Count);
+                var didMergeLast = index == Children.Count;
 
                 if (Children[index].Keys.Count < _degree)
                     Fill(index);

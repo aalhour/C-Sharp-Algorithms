@@ -51,7 +51,7 @@ namespace DataStructures.Graphs
         /// </summary>
         protected override bool _doesEdgeExist(int source, int destination)
         {
-            return (_adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT) || (_adjacencyMatrix[destination, source] != EMPTY_EDGE_SLOT);
+            return _adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT || _adjacencyMatrix[destination, source] != EMPTY_EDGE_SLOT;
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace DataStructures.Graphs
         /// </summary>
         private long _getEdgeWeight(int source, int destination)
         {
-            return (_adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT ? _adjacencyMatrix[source, destination] : _adjacencyMatrix[destination, source]);
+            return _adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT ? _adjacencyMatrix[source, destination] : _adjacencyMatrix[destination, source];
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace DataStructures.Graphs
                                 continue;
                             seen.Add(outgoingEdge);
 
-                            yield return (new WeightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value, weight));
+                            yield return new WeightedEdge<T>(outgoingEdge.Key, outgoingEdge.Value, weight);
                         }
                     }
                 }//end-foreach
@@ -116,11 +116,11 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                 {
-                    yield return (new WeightedEdge<T>(
+                    yield return new WeightedEdge<T>(
                         (T)_vertices[adjacent],             // from
                         vertex,                             // to
                         _getEdgeWeight(source, adjacent)    // weight
-                    ));
+                    );
                 }
             }
         }
@@ -138,11 +138,11 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                 {
-                    yield return (new WeightedEdge<T>(
+                    yield return new WeightedEdge<T>(
                         vertex,                             // from
                         (T)_vertices[adjacent],             // to
                         _getEdgeWeight(source, adjacent)    // weight
-                    ));
+                    );
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace DataStructures.Graphs
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 return null;
 
-            return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));
+            return new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex));
         }
 
         /// <summary>

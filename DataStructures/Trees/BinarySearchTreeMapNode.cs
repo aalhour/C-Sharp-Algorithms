@@ -32,32 +32,32 @@ namespace DataStructures.Trees
         /// <summary>
         /// Checks whether this node has any children.
         /// </summary>
-        public virtual bool HasChildren => (ChildrenCount > 0);
+        public virtual bool HasChildren => ChildrenCount > 0;
 
         /// <summary>
         /// Checks whether this node has left child.
         /// </summary>
-        public virtual bool HasLeftChild => (LeftChild != null);
+        public virtual bool HasLeftChild => LeftChild != null;
 
         /// <summary>
         /// Checks whether this node has right child.
         /// </summary>
-        public virtual bool HasRightChild => (RightChild != null);
+        public virtual bool HasRightChild => RightChild != null;
 
         /// <summary>
         /// Checks whether this node is the left child of it's parent.
         /// </summary>
-        public virtual bool IsLeftChild => (Parent != null && Parent.LeftChild == this);
+        public virtual bool IsLeftChild => Parent != null && Parent.LeftChild == this;
 
         /// <summary>
         /// Checks whether this node is the left child of it's parent.
         /// </summary>
-        public virtual bool IsRightChild => (Parent != null && Parent.RightChild == this);
+        public virtual bool IsRightChild => Parent != null && Parent.RightChild == this;
 
         /// <summary>
         /// Checks whether this node is a leaf node.
         /// </summary>
-        public virtual bool IsLeafNode => (ChildrenCount == 0);
+        public virtual bool IsLeafNode => ChildrenCount == 0;
 
         /// <summary>
         /// Returns number of direct descendents: 0, 1, 2 (none, left or right, or both).

@@ -56,11 +56,11 @@ namespace DataStructures.Lists
         {
             if (newSize > _size && !IsMaximumCapacityReached)
             {
-                int capacity = (_collection.Length == 0 ? _defaultCapacity : _collection.Length * 2);
+                int capacity = _collection.Length == 0 ? _defaultCapacity : _collection.Length * 2;
 
                 // Allow the list to grow to maximum possible capacity (~2G elements) before encountering overflow.
                 // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-                int maxCapacity = (DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86);
+                int maxCapacity = DefaultMaxCapacityIsX64 == true ? MAXIMUM_ARRAY_LENGTH_x64 : MAXIMUM_ARRAY_LENGTH_x86;
 
                 // Handle the new proper size
                 if (capacity < newSize)
@@ -180,7 +180,7 @@ namespace DataStructures.Lists
                 var tail = _collection[_tailPointer];
 
                 // Shrink
-                _resize((_collection.Length / 3) * 2);
+                _resize(_collection.Length / 3 * 2);
 
                 // Update head and tail pointers
                 _headPointer = Array.IndexOf(_collection, head);

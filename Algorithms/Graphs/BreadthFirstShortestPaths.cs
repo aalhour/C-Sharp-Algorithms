@@ -213,7 +213,7 @@ namespace Algorithms.Graphs
                         Console.WriteLine("hasPathTo(" + adjacent + ") = " + HasPathTo(adjacent));
                         return false;
                     }
-                    if (HasPathTo(node) && (_distances[w] > _distances[v] + 1))
+                    if (HasPathTo(node) && _distances[w] > _distances[v] + 1)
                     {
                         Console.WriteLine("edge " + node + "-" + adjacent);
                         Console.WriteLine("distanceTo[" + node + "] = " + _distances[v]);
@@ -259,7 +259,7 @@ namespace Algorithms.Graphs
                 throw new Exception("Graph doesn't have the specified vertex.");
 
             int dstIndex = _nodesToIndices[destination];
-            return (_visited[dstIndex]);
+            return _visited[dstIndex];
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Algorithms.Graphs
                 throw new Exception("Graph doesn't have the specified vertex.");
 
             int dstIndex = _nodesToIndices[destination];
-            return (_distances[dstIndex]);
+            return _distances[dstIndex];
         }
 
         /// <summary>

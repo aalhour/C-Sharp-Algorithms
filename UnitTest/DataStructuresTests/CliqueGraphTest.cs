@@ -95,7 +95,7 @@ namespace UnitTest.DataStructuresTests
         {
             int myInt = ToInt;
             int otherInt = other.ToInt;
-            return myInt < otherInt ? -1 : (myInt > otherInt ? 1 : 0);
+            return myInt < otherInt ? -1 : myInt > otherInt ? 1 : 0;
         }
 
         #endregion

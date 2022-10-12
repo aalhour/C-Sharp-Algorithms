@@ -57,7 +57,7 @@ namespace DataStructures.Graphs
         /// </summary>
         protected override bool _doesEdgeExist(int source, int destination)
         {
-            return (_adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT);
+            return _adjacencyMatrix[source, destination] != EMPTY_EDGE_SLOT;
         }
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(adjacent, source))
                 {
-                    yield return (new WeightedEdge<T>(
+                    yield return new WeightedEdge<T>(
                         (T)_vertices[adjacent],             // from
                         vertex,                             // to
                         _getEdgeWeight(source, adjacent)    // weight
-                    ));
+                    );
                 }
             }//end-for
         }
@@ -124,11 +124,11 @@ namespace DataStructures.Graphs
             {
                 if (_vertices[adjacent] != null && _doesEdgeExist(source, adjacent))
                 {
-                    yield return (new WeightedEdge<T>(
+                    yield return new WeightedEdge<T>(
                         vertex,                             // from
                         (T)_vertices[adjacent],             // to
                         _getEdgeWeight(source, adjacent)    // weight
-                    ));
+                    );
                 }
             }//end-for
         }
@@ -280,7 +280,7 @@ namespace DataStructures.Graphs
             if (!_doesEdgeExist(srcIndex, dstIndex))
                 throw new Exception("Edge doesn't exist.");
 
-            return (new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex)));
+            return new WeightedEdge<T>(source, destination, _getEdgeWeight(srcIndex, dstIndex));
         }
 
         /// <summary>

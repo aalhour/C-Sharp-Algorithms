@@ -25,7 +25,7 @@ namespace DataStructures.Lists
         /// <summary>
         /// Checks if the buffer is filled up
         /// </summary>
-        public bool IsFilledUp => ((_end + 1) % _circularBuffer.Length == _start) && !_circularBuffer[_start].Equals(_circularBuffer[_end]);
+        public bool IsFilledUp => (_end + 1) % _circularBuffer.Length == _start && !_circularBuffer[_start].Equals(_circularBuffer[_end]);
 
         /// <summary>
         /// Controls whether data should be overridden when it is continously inserted without reading

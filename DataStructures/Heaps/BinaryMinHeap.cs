@@ -37,7 +37,7 @@ namespace DataStructures.Heaps
         private void _buildMinHeap()
         {
             int lastIndex = _collection.Count - 1;
-            int lastNodeWithChildren = (lastIndex / 2);
+            int lastNodeWithChildren = lastIndex / 2;
 
             for (int node = lastNodeWithChildren; node >= 0; node--)
             {
@@ -68,7 +68,7 @@ namespace DataStructures.Heaps
         private void _minHeapify(int nodeIndex, int lastIndex)
         {
             // assume that the subtrees left(node) and right(node) are max-heaps
-            int left = (nodeIndex * 2) + 1;
+            int left = nodeIndex * 2 + 1;
             int right = left + 1;
             int smallest = nodeIndex;
 
@@ -97,7 +97,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Checks whether this heap is empty
         /// </summary>
-        public bool IsEmpty => (_collection.Count == 0);
+        public bool IsEmpty => _collection.Count == 0;
 
         /// <summary>
         /// Gets or sets the at the specified index.

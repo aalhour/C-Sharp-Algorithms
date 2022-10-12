@@ -160,7 +160,7 @@ namespace DataStructures.Graphs
                 throw new KeyNotFoundException("Vertex doesn't belong to graph.");
             
             foreach(var edge in _adjacencyList[vertex])
-                yield return (new WeightedEdge<T>(edge.Destination, edge.Source, edge.Weight));
+                yield return new WeightedEdge<T>(edge.Destination, edge.Source, edge.Weight);
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool HasEdge(T source, T destination)
         {
-            return (_adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination));
+            return _adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination);
         }
 
         /// <summary>

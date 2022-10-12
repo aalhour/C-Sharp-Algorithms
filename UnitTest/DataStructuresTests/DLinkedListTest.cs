@@ -51,7 +51,7 @@ namespace UnitTest.DataStructuresTests
 
             listOfStrings.InsertAt("InsertedAtLast1", listOfStrings.Count);
             listOfStrings.InsertAt("InsertedAtLast2", listOfStrings.Count);
-            listOfStrings.InsertAt("InsertedAtMiddle", (listOfStrings.Count / 2));
+            listOfStrings.InsertAt("InsertedAtMiddle", listOfStrings.Count / 2);
             listOfStrings.InsertAt("InsertedAt 4", 4);
             listOfStrings.InsertAt("InsertedAt 9", 9);
             listOfStrings.InsertAfter("InsertedAfter 11", 11);

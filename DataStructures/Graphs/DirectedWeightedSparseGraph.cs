@@ -337,7 +337,7 @@ namespace DataStructures.Graphs
         /// </summary>
         public virtual bool HasEdge(T source, T destination)
         {
-            return (_adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination));
+            return _adjacencyList.ContainsKey(source) && _adjacencyList.ContainsKey(destination) && _doesEdgeExist(source, destination);
         }
 
         /// <summary>

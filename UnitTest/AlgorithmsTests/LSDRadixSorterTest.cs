@@ -16,10 +16,10 @@ namespace UnitTest.AlgorithmsTests
             var number1 = "0987654321";
             var number2 = "000999888777111222333777666555";
 
-            name1 = (name1.LSDRadixSort()).Trim();
+            name1 = name1.LSDRadixSort().Trim();
             Assert.True(name1 == ".AAMadhhlmorru");
 
-            name2 = (name2.LSDRadixSort()).Trim();
+            name2 = name2.LSDRadixSort().Trim();
             Assert.True(name2 == ".AHJMaacfhnnnooprrst");
 
             number1 = number1.LSDRadixSort();

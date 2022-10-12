@@ -51,7 +51,7 @@ namespace Algorithms.Sorting
             wallIndex = leftmostIndex;
 
             // Loop until pivot: exclusive!
-            for (int i = leftmostIndex; i <= (rightmostIndex - 1); i++)
+            for (int i = leftmostIndex; i <= rightmostIndex - 1; i++)
             {
                 // check if collection[i] <= pivotValue
                 if (comparer.Compare(collection[i], pivotValue) <= 0)

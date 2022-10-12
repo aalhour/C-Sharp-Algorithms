@@ -45,7 +45,7 @@ namespace UnitTest.DataStructuresTests
 
             //
             // Compare sort order
-            while (enumerator.MoveNext() && (index < expectedSort.Length))
+            while (enumerator.MoveNext() && index < expectedSort.Length)
             {
                 Assert.Equal(enumerator.Current, expectedSort[index]);
                 index++;
@@ -113,7 +113,7 @@ namespace UnitTest.DataStructuresTests
             Assert.True(sortedList.Count == newExpectedSort.Length, "Wrong number of items.");
 
             // Compare sort order
-            while (enumerator.MoveNext() && (index < newExpectedSort.Length))
+            while (enumerator.MoveNext() && index < newExpectedSort.Length)
             {
                 // TODO: Verify
                 Assert.True(enumerator.Current == newExpectedSort[index], "Wrong sorting order.");

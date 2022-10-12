@@ -79,7 +79,7 @@ namespace DataStructures.Dictionaries
         /// </summary>
         private void _expandCapacity(int minCapacity)
         {
-            int newCapacity = (_collection.Length == 0 ? DEFAULT_CAPACITY : _collection.Length * 2);
+            int newCapacity = _collection.Length == 0 ? DEFAULT_CAPACITY : _collection.Length * 2;
 
             // Handle overflow
             if (newCapacity >= MAX_ARRAY_LENGTH)
@@ -166,7 +166,7 @@ namespace DataStructures.Dictionaries
             if (index < 0 || index > _collection.Length)
                 throw new IndexOutOfRangeException();
 
-            return (_collection[index] != null && _collection[index].IsActive == true);
+            return _collection[index] != null && _collection[index].IsActive == true;
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace DataStructures.Dictionaries
         /// </summary>
         public bool IsEmpty()
         {
-            return (_size == 0);
+            return _size == 0;
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace DataStructures.Dictionaries
         /// <returns></returns>
         public bool ContainsKey(TKey key)
         {
-            return (_findPosition(key) != -1);
+            return _findPosition(key) != -1;
         }
 
         /// <summary>
