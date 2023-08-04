@@ -180,7 +180,7 @@ namespace Algorithms.Trees
         public static void PrintAll<T>(BSTNode<T> BinaryTreeRoot, TraversalMode Mode=TraversalMode.InOrder) where T : IComparable<T>
         {
             if (BinaryTreeRoot == null)
-                throw new ArgumentNullException("Tree root cannot be null.");
+                throw new ArgumentNullException(nameof(BinaryTreeRoot), "Tree root cannot be null.");
 
             var printAction = new Action<T>((T nodeValue) =>
                 System.Console.Write(String.Format("{0} ", nodeValue)));
@@ -196,10 +196,10 @@ namespace Algorithms.Trees
         public static void ForEach<T>(BSTNode<T> BinaryTreeRoot, Action<T> Action, TraversalMode Mode=TraversalMode.InOrder) where T : IComparable<T>
         {
             if (BinaryTreeRoot == null)
-                throw new ArgumentNullException("Tree root cannot be null.");
+                throw new ArgumentNullException(nameof(BinaryTreeRoot), "Tree root cannot be null.");
             
             if (Action == null)
-                throw new ArgumentNullException("Action<T> Action cannot be null.");
+                throw new ArgumentNullException(nameof(Action), "Action<T> Action cannot be null.");
 
             // Traverse
             switch (Mode)
@@ -226,7 +226,7 @@ namespace Algorithms.Trees
         public static bool Contains<T>(BSTNode<T> BinaryTreeRoot, T Value, TraversalMode Mode=TraversalMode.InOrder) where T : IComparable<T>
         {
             if (BinaryTreeRoot == null)
-                throw new ArgumentNullException("Tree root cannot be null.");
+                throw new ArgumentNullException(nameof(BinaryTreeRoot), "Tree root cannot be null.");
 
             // Traverse
             // Traverse
@@ -250,7 +250,7 @@ namespace Algorithms.Trees
         public static bool BinarySearch<T>(BSTNode<T> BinaryTreeRoot, T Value, TraversalMode Mode=TraversalMode.InOrder) where T : IComparable<T>
         {
             if (BinaryTreeRoot == null)
-                throw new ArgumentNullException("Tree root cannot be null.");
+                throw new ArgumentNullException(nameof(BinaryTreeRoot), "Tree root cannot be null.");
 
             // Traverse
             // Traverse

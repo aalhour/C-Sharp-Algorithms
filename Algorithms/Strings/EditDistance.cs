@@ -14,8 +14,15 @@ namespace Algorithms.Strings
         public static Int64 GetMinDistance(string source, string destination, EditDistanceCostsMap<Int64> distances)
         {
             // Validate parameters and TCost.
-            if (source == null || destination == null || distances == null)
-                throw new ArgumentNullException("Some of the parameters are null.");
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+
+            if (distances == null)
+                throw new ArgumentNullException(nameof(distances));
+
             if (source == destination)
                 return 0;
 
@@ -59,8 +66,15 @@ namespace Algorithms.Strings
         public static Int32 GetMinDistance(string source, string destination, EditDistanceCostsMap<Int32> distances)
         {
             // Validate parameters and TCost.
-            if (source == null || destination == null || distances == null)
-                throw new ArgumentNullException("Some of the parameters are null.");
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+
+            if (distances == null)
+                throw new ArgumentNullException(nameof(distances));
+
             var longDistance = new EditDistanceCostsMap<long>(
                 insertionCost: Convert.ToInt64(distances.InsertionCost),
                 deletionCost: Convert.ToInt64(distances.DeletionCost),
@@ -75,8 +89,15 @@ namespace Algorithms.Strings
         public static Int16 GetMinDistance(string source, string destination, EditDistanceCostsMap<Int16> distances)
         {
             // Validate parameters and TCost.
-            if (source == null || destination == null || distances == null)
-                throw new ArgumentNullException("Some of the parameters are null.");
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            if (destination == null)
+                throw new ArgumentNullException(nameof(destination));
+
+            if (distances == null)
+                throw new ArgumentNullException(nameof(distances));
+
             var longDistance = new EditDistanceCostsMap<long>(
                 insertionCost: Convert.ToInt64(distances.InsertionCost),
                 deletionCost: Convert.ToInt64(distances.DeletionCost),
