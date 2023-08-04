@@ -137,8 +137,11 @@ namespace DataStructures.Heaps
         /// </summary>
         private BinomialNode<T> _combineTrees(BinomialNode<T> firstTreeRoot, BinomialNode<T> secondTreeRoot)
         {
-            if (firstTreeRoot == null || secondTreeRoot == null)
-                throw new ArgumentNullException("Either one of the nodes or both are null.");
+            if (firstTreeRoot == null)
+                throw new ArgumentNullException(nameof(firstTreeRoot), "First node is null.");
+
+            if (secondTreeRoot == null)
+                throw new ArgumentNullException(nameof(secondTreeRoot), "Second node is null.");
 
             if (secondTreeRoot.Value.IsLessThan(firstTreeRoot.Value))
                 return _combineTrees(secondTreeRoot, firstTreeRoot);

@@ -180,7 +180,7 @@ namespace DataStructures.SortedCollections
         {
             // Validate the array argument
             if(array == null)
-                throw new ArgumentNullException("Array cannot be Null.");
+                throw new ArgumentNullException(nameof(array), "Array cannot be Null.");
             
             var enumerator = this._collection.GetInOrderEnumerator();
 

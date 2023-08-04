@@ -250,8 +250,11 @@ namespace DataStructures.Heaps
         /// </summary>
         public BinaryMaxHeap<T> Union(ref BinaryMaxHeap<T> firstMaxHeap, ref BinaryMaxHeap<T> secondMaxHeap)
         {
-            if (firstMaxHeap == null || secondMaxHeap == null)
-                throw new ArgumentNullException("Null heaps are not allowed.");
+            if (firstMaxHeap == null)
+                throw new ArgumentNullException(nameof(firstMaxHeap), "Null heaps are not allowed.");
+
+            if (secondMaxHeap == null)
+                throw new ArgumentNullException(nameof(secondMaxHeap), "Null heaps are not allowed.");
 
             // Create a new heap with reserved size.
             int size = firstMaxHeap.Count + secondMaxHeap.Count;

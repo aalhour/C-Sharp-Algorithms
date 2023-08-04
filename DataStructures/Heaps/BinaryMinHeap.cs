@@ -259,8 +259,11 @@ namespace DataStructures.Heaps
         /// </summary>
         public BinaryMinHeap<T> Union(ref BinaryMinHeap<T> firstMinHeap, ref BinaryMinHeap<T> secondMinHeap)
         {
-            if (firstMinHeap == null || secondMinHeap == null)
-                throw new ArgumentNullException("Null heaps are not allowed.");
+            if (firstMinHeap == null)
+                throw new ArgumentNullException(nameof(firstMinHeap), "Null heaps are not allowed.");
+
+            if (secondMinHeap == null)
+                throw new ArgumentNullException(nameof(secondMinHeap), "Null heaps are not allowed.");
 
             // Create a new heap with reserved size.
             int size = firstMinHeap.Count + secondMinHeap.Count;

@@ -177,7 +177,7 @@ namespace DataStructures.Lists
         {
             if (array == null) 
             {
-                throw new ArgumentNullException("array can not be null");
+                throw new ArgumentNullException(nameof(array), "array can not be null");
             }
 
             if (array.Length == 0 || arrayIndex >= array.Length || arrayIndex < 0) 
