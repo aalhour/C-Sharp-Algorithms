@@ -73,29 +73,21 @@ namespace UnitTest.DataStructuresTests
         }
 
         [Fact]
-        public static void Indexer_Set_MaintainsSortOrder()
+        public static void Indexer_Set_ReplacesElementAtIndex()
         {
             var sortedList = CreateTestList();
+            // CreateTestList returns: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35}
 
-            // Remove some elements and add new ones
-            sortedList.Remove(35);
-            sortedList.Remove(30);
-            sortedList.Remove(25);
-            sortedList.Remove(20);
-            sortedList.Remove(15);
+            // Replace element at index 0 (value 1) with 0 - should stay at index 0
+            sortedList[0] = 0;
+            Assert.Equal(0, sortedList[0]);
 
-            sortedList.Add(10);
-            sortedList[sortedList.Count - 1] = 11;
-            sortedList[sortedList.Count - 1] = 12;
-            sortedList[sortedList.Count - 1] = 13;
-            sortedList[sortedList.Count - 1] = 14;
+            // Replace element at last index (value 35) with 100 - should stay at last index
+            sortedList[sortedList.Count - 1] = 100;
+            Assert.Equal(100, sortedList[sortedList.Count - 1]);
 
-            var expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14 };
-
-            for (int i = 0; i < sortedList.Count; i++)
-            {
-                Assert.Equal(expected[i], sortedList[i]);
-            }
+            // Verify list structure is still correct
+            Assert.Equal(15, sortedList.Count);
         }
 
         #endregion

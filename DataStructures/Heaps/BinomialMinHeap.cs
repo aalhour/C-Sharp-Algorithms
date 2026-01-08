@@ -14,17 +14,17 @@ namespace DataStructures.Heaps
         /// <summary>
         /// The Heap Node class.
         /// </summary>
-        private class BinomialNode<T> where T : IComparable<T>
+        private class BinomialNode
         {
             public T Value { get; set; }
-            public BinomialNode<T> Parent { get; set; }
-            public BinomialNode<T> Sibling { get; set; }    // Right-Sibling
-            public BinomialNode<T> Child { get; set; }      // Left-Child
+            public BinomialNode Parent { get; set; }
+            public BinomialNode Sibling { get; set; }    // Right-Sibling
+            public BinomialNode Child { get; set; }      // Left-Child
 
             // Constructors
             public BinomialNode() : this(default(T), null, null, null) { }
             public BinomialNode(T value) : this(value, null, null, null) { }
-            public BinomialNode(T value, BinomialNode<T> parent, BinomialNode<T> sibling, BinomialNode<T> child)
+            public BinomialNode(T value, BinomialNode parent, BinomialNode sibling, BinomialNode child)
             {
                 Value = value;
                 Parent = parent;
@@ -50,7 +50,7 @@ namespace DataStructures.Heaps
         /// </summary>
         private int _size { get; set; }
         private const int _defaultCapacity = 8;
-        private ArrayList<BinomialNode<T>> _forest { get; set; }
+        private ArrayList<BinomialNode> _forest { get; set; }
 
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace DataStructures.Heaps
             capacity = (capacity < _defaultCapacity ? _defaultCapacity : capacity);
 
             _size = 0;
-            _forest = new ArrayList<BinomialNode<T>>(capacity);
+            _forest = new ArrayList<BinomialNode>(capacity);
         }
 
 
@@ -85,7 +85,7 @@ namespace DataStructures.Heaps
         {
             // Get the deletedTree
             // The min-root lies at _forest[minIndex]
-            BinomialNode<T> deletedTreeRoot = _forest[minIndex].Child;
+            BinomialNode deletedTreeRoot = _forest[minIndex].Child;
 
             // Remove the tree from forest and decrement size by 1 (for the removed root)
             _forest[minIndex] = null;
@@ -123,7 +123,7 @@ namespace DataStructures.Heaps
             if (otherHeap == null || otherHeap._forest.Count == 0)
                 return;
 
-            BinomialNode<T> carryNode = null;
+            BinomialNode carryNode = null;
 
             // Ensure capacity
             int maxCount = Math.Max(this._forest.Count, otherHeap._forest.Count) + 1;
@@ -132,8 +132,8 @@ namespace DataStructures.Heaps
 
             for (int i = 0; i < maxCount; i++)
             {
-                BinomialNode<T> treeRoot1 = (i < _forest.Count ? _forest[i] : null);
-                BinomialNode<T> treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
+                BinomialNode treeRoot1 = (i < _forest.Count ? _forest[i] : null);
+                BinomialNode treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
 
                 int whichCase = (treeRoot1 == null ? 0 : 1);
                 whichCase += (treeRoot2 == null ? 0 : 2);
@@ -192,7 +192,7 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Combines two trees and returns the new tree root node.
         /// </summary>
-        private BinomialNode<T> _combineTrees(BinomialNode<T> firstTreeRoot, BinomialNode<T> secondTreeRoot)
+        private BinomialNode _combineTrees(BinomialNode firstTreeRoot, BinomialNode secondTreeRoot)
         {
             if (firstTreeRoot == null || secondTreeRoot == null)
                 throw new ArgumentNullException("Either one of the nodes or both are null.");
@@ -210,11 +210,11 @@ namespace DataStructures.Heaps
         /// <summary>
         /// Clones a tree, given it's root node.
         /// </summary>
-        private BinomialNode<T> _cloneTree(BinomialNode<T> treeRoot)
+        private BinomialNode _cloneTree(BinomialNode treeRoot)
         {
             if (treeRoot == null)
                 return null;
-            return new BinomialNode<T>() { Value = treeRoot.Value, Child = _cloneTree(treeRoot.Child), Sibling = _cloneTree(treeRoot.Sibling) };
+            return new BinomialNode() { Value = treeRoot.Value, Child = _cloneTree(treeRoot.Child), Sibling = _cloneTree(treeRoot.Sibling) };
         }
 
 
@@ -250,7 +250,7 @@ namespace DataStructures.Heaps
             if (newCollection.Count > ArrayList<T>.MAXIMUM_ARRAY_LENGTH_x64)
                 throw new OverflowException();
 
-            _forest = new ArrayList<BinomialNode<T>>(newCollection.Count + 1);
+            _forest = new ArrayList<BinomialNode>(newCollection.Count + 1);
 
             for (int i = 0; i < newCollection.Count; ++i)
                 this.Add(newCollection[i]);
@@ -262,7 +262,7 @@ namespace DataStructures.Heaps
         public void Add(T heapKey)
         {
             var tempHeap = new BinomialMinHeap<T>();
-            tempHeap._forest.Add(new BinomialNode<T>(heapKey));
+            tempHeap._forest.Add(new BinomialNode(heapKey));
             tempHeap._size = 1;
 
             // Merge this with tempHeap
@@ -326,7 +326,7 @@ namespace DataStructures.Heaps
             if (otherHeap == null || otherHeap.IsEmpty)
                 return;
 
-            BinomialNode<T> carryNode = null;
+            BinomialNode carryNode = null;
             _size = _size + otherHeap._size;
 
             // One capacity-change step
@@ -338,8 +338,8 @@ namespace DataStructures.Heaps
 
             for (int i = 0, j = 1; j <= _size; i++, j *= 2)
             {
-                BinomialNode<T> treeRoot1 = (_forest.IsEmpty == true ? null : _forest[i]);
-                BinomialNode<T> treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
+                BinomialNode treeRoot1 = (_forest.IsEmpty == true ? null : _forest[i]);
+                BinomialNode treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
 
                 int whichCase = (treeRoot1 == null ? 0 : 1);
                 whichCase += (treeRoot2 == null ? 0 : 2);

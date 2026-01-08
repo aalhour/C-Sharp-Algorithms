@@ -71,7 +71,8 @@ namespace Algorithms.Graphs
 
             // First pass
             // Calculate shortest paths and relax all edges.
-            for (int i = 1; i < graph.VerticesCount - 1; ++i)
+            // Bellman-Ford requires V-1 iterations to find all shortest paths
+            for (int i = 0; i < graph.VerticesCount - 1; ++i)
             {
                 foreach (var edge in edges)
                 {
@@ -182,6 +183,10 @@ namespace Algorithms.Graphs
             foreach (var vertex in graph.Vertices)
             {
                 int v = _nodesToIndices[vertex];
+
+                // Skip unreachable vertices - they cannot relax any edges
+                if (_distances[v] == Infinity)
+                    continue;
 
                 foreach (var edge in graph.NeighboursMap(vertex))
                 {

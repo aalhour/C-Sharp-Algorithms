@@ -4,22 +4,21 @@ using DataStructures.Common;
 
 namespace DataStructures.Dictionaries
 {
-
     /// <summary>
-    /// Hash Table with Open Addressing.
+    /// Hash Table with Open Addressing (Linear Probing).
     /// </summary>
     public class OpenScatterHashTable<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
         /// Hash Table Cell.
         /// </summary>
-        private class HashTableEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class HashTableEntry
         {
             public TKey Key { get; set; }
             public TValue Value { get; set; }
             public EntryStatus Status { get; set; }
 
-            public HashTableEntry() : this(default(TKey), default(TValue)) { }
+            public HashTableEntry() : this(default(TKey), default(TValue), EntryStatus.Empty) { }
             public HashTableEntry(TKey key, TValue value, EntryStatus status = EntryStatus.Occupied)
             {
                 Key = key;
@@ -27,257 +26,402 @@ namespace DataStructures.Dictionaries
                 Status = status;
             }
 
-            public bool IsEmpty { get { return this.Status == EntryStatus.Empty; } }
-
-            public bool IsOccupied { get { return this.Status == EntryStatus.Occupied; } }
-
-            public bool IsDeleted { get { return this.Status == EntryStatus.Deleted; } }
+            public bool IsEmpty { get { return Status == EntryStatus.Empty; } }
+            public bool IsOccupied { get { return Status == EntryStatus.Occupied; } }
+            public bool IsDeleted { get { return Status == EntryStatus.Deleted; } }
         }
 
-
-
         /// <summary>
-        /// INSTANCE VARIABLES
-        /// </summary>
-        private int _size;
-        private decimal _loadFactor;
-        private HashTableEntry<TKey, TValue>[] _hashTableStore;
-
-        // Initialization-related
-        private const int _defaultCapacity = 7;
-        private static readonly HashTableEntry<TKey, TValue>[] _emptyArray = new HashTableEntry<TKey, TValue>[_defaultCapacity];
-
-        // Helper collections.
-        private List<TKey> _keysCollection { get; set; }
-        private List<TValue> _valuesCollection { get; set; }
-
-        // Keys and Values Comparers
-        private EqualityComparer<TKey> _keysComparer { get; set; }
-        private EqualityComparer<TValue> _valuesComparer { get; set; }
-
-        // A collection of prime numbers to use as hash table sizes. 
-        internal static readonly PrimesList _primes = PrimesList.Instance;
-
-        // This is the maximum prime that is smaller than the C# maximum allowed size of arrays.
-        // Check the following reference: 
-        // C# Maximum Array Length (before encountering overflow).
-        // Link: http://referencesource.microsoft.com/#mscorlib/system/array.cs,2d2b551eabe74985
-        private const int MAX_PRIME_ARRAY_LENGTH = 0x7FEFFFFD;
-
-        // Picked the HashPrime to be (101) because it is prime, and if the ‘hashSize - 1’ is not a multiple of this HashPrime, which is 
-        // enforced in _getUpperBoundPrime, then expand function has the potential of being every value from 1 to hashSize - 1. 
-        // The choice is largely arbitrary.
-        private const int HASH_PRIME = 101;
-
-        /// <summary>
-        /// The hash table cell status modes: Empty cell, Occupied cell, Deleted cell.
+        /// The hash table cell status modes.
         /// </summary>
         private enum EntryStatus { Empty = 0, Occupied = 1, Deleted = 2 }
 
-        /// <summary>
-        /// Used in the ensure capacity function
-        /// </summary>
-        private enum CapacityManagementMode { Contract = 0, Expand = 1 }
+        // Instance variables
+        private int _size;
+        private HashTableEntry[] _hashTableStore;
+        private const int _defaultCapacity = 7;
+        private const double _maxLoadFactor = 0.7;
+        private const double _minLoadFactor = 0.2;
 
+        // Comparers
+        private readonly EqualityComparer<TKey> _keysComparer;
+
+        // A collection of prime numbers to use as hash table sizes.
+        private static readonly PrimesList _primes = PrimesList.Instance;
 
         /// <summary>
-        /// Returns the next biggest prime that is greater than twice the size of the interal array (size * 2).
+        /// Constructor.
         /// </summary>
-        private int _getExpandPrime(int oldSize)
+        public OpenScatterHashTable()
         {
-            int newSize = 2 * oldSize;
+            _size = 0;
+            _hashTableStore = new HashTableEntry[_defaultCapacity];
+            _keysComparer = EqualityComparer<TKey>.Default;
 
-            // Allow the hashtables to grow to maximum possible size (~2G elements) before encoutering capacity overflow.
-            // Note that this check works even when _items.Length overflowed thanks to the (uint) cast
-            if ((uint)newSize > MAX_PRIME_ARRAY_LENGTH && MAX_PRIME_ARRAY_LENGTH > oldSize)
+            // Initialize all slots as empty
+            for (int i = 0; i < _hashTableStore.Length; i++)
+                _hashTableStore[i] = new HashTableEntry();
+        }
+
+        /// <summary>
+        /// Constructor with initial capacity.
+        /// </summary>
+        public OpenScatterHashTable(int capacity)
+        {
+            if (capacity < 0)
+                throw new ArgumentOutOfRangeException("capacity");
+
+            int actualCapacity = _primes.GetNextPrime(Math.Max(capacity, _defaultCapacity));
+            _size = 0;
+            _hashTableStore = new HashTableEntry[actualCapacity];
+            _keysComparer = EqualityComparer<TKey>.Default;
+
+            for (int i = 0; i < _hashTableStore.Length; i++)
+                _hashTableStore[i] = new HashTableEntry();
+        }
+
+        /// <summary>
+        /// Computes the hash index for a key.
+        /// </summary>
+        private int _hash(TKey key)
+        {
+            int hashCode = _keysComparer.GetHashCode(key) & 0x7FFFFFFF;
+            return hashCode % _hashTableStore.Length;
+        }
+
+        /// <summary>
+        /// Finds the slot for a key. Returns the index if found, or -1 if not found.
+        /// </summary>
+        private int _findSlot(TKey key)
+        {
+            int index = _hash(key);
+            int startIndex = index;
+
+            do
             {
-                return MAX_PRIME_ARRAY_LENGTH;
+                var entry = _hashTableStore[index];
+
+                if (entry.IsEmpty)
+                    return -1; // Key not found
+
+                if (entry.IsOccupied && _keysComparer.Equals(entry.Key, key))
+                    return index; // Found
+
+                index = (index + 1) % _hashTableStore.Length;
             }
+            while (index != startIndex);
 
-            return _primes.GetNextPrime(newSize);
+            return -1;
         }
 
         /// <summary>
-        /// Get the next smaller prime that is smaller than half the size of the internal array (size / 2);
+        /// Finds a slot for insertion. Returns the index of an empty or deleted slot.
         /// </summary>
-        private int _getContractPrime(int oldSize)
+        private int _findInsertSlot(TKey key)
         {
-            int newSize = oldSize / 2;
+            int index = _hash(key);
+            int startIndex = index;
+            int firstDeletedIndex = -1;
 
-            return _primes.GetNextPrime(newSize);
-        }
-
-        /// <summary>
-        /// Contracts the capacity of the keys and values arrays.
-        /// </summary>
-        private void _contractCapacity()
-        {
-            // Only contract the array if the number of elements is less than 1/3 of the total array size.
-            int oneThird = (_hashTableStore.Length / 3);
-
-            if (_size <= oneThird)
+            do
             {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getContractPrime(_hashTableStore.Length));
+                var entry = _hashTableStore[index];
 
-                // Try to expand the size
-                HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
+                if (entry.IsEmpty)
+                    return firstDeletedIndex >= 0 ? firstDeletedIndex : index;
 
-                if (_size > 0)
+                if (entry.IsDeleted && firstDeletedIndex < 0)
+                    firstDeletedIndex = index;
+
+                if (entry.IsOccupied && _keysComparer.Equals(entry.Key, key))
+                    return index; // Key already exists
+
+                index = (index + 1) % _hashTableStore.Length;
+            }
+            while (index != startIndex);
+
+            return firstDeletedIndex >= 0 ? firstDeletedIndex : -1;
+        }
+
+        /// <summary>
+        /// Resizes the hash table.
+        /// </summary>
+        private void _resize(int newCapacity)
+        {
+            var oldStore = _hashTableStore;
+            _hashTableStore = new HashTableEntry[newCapacity];
+
+            for (int i = 0; i < _hashTableStore.Length; i++)
+                _hashTableStore[i] = new HashTableEntry();
+
+            _size = 0;
+
+            // Rehash all existing entries
+            foreach (var entry in oldStore)
+            {
+                if (entry != null && entry.IsOccupied)
                 {
-                    // REHASH
-                }
-
-                _hashTableStore = newKeysMap;
-            }
-        }
-
-        /// <summary>
-        /// Expands the capacity of the keys and values arrays.
-        /// </summary>
-        private void _expandCapacity(int minCapacity)
-        {
-            if (_hashTableStore.Length < minCapacity)
-            {
-                int newCapacity = (_hashTableStore.Length == 0 ? _defaultCapacity : _getExpandPrime(_hashTableStore.Length * 2));
-
-                if (newCapacity >= MAX_PRIME_ARRAY_LENGTH)
-                    newCapacity = MAX_PRIME_ARRAY_LENGTH;
-
-                // Try to expand the size
-                try
-                {
-                    HashTableEntry<TKey, TValue>[] newKeysMap = new HashTableEntry<TKey, TValue>[newCapacity];
-
-                    if (_size > 0)
-                    {
-                        // REHASH
-                    }
-
-                    _hashTableStore = newKeysMap;
-                }
-                catch (OutOfMemoryException)
-                {
-                    throw;
+                    int index = _findInsertSlot(entry.Key);
+                    _hashTableStore[index].Key = entry.Key;
+                    _hashTableStore[index].Value = entry.Value;
+                    _hashTableStore[index].Status = EntryStatus.Occupied;
+                    _size++;
                 }
             }
         }
 
         /// <summary>
-        /// A high-level functon that handles both contraction and expansion of the internal collection.
+        /// Expands the table if load factor is too high.
         /// </summary>
-        /// <param name="mode">Contract or Expand.</param>
-        /// <param name="newSize">The new expansion size.</param>
-        private void _ensureCapacity(CapacityManagementMode mode, int newSize = -1)
+        private void _expandIfNeeded()
         {
-            // If the size of the internal collection is less than or equal to third of 
-            // ... the total capacity then contract the internal collection
-            int oneThird = (_hashTableStore.Length / 3);
-
-            if (mode == CapacityManagementMode.Contract && _size <= oneThird)
+            double loadFactor = (double)_size / _hashTableStore.Length;
+            if (loadFactor >= _maxLoadFactor)
             {
-                _contractCapacity();
-            }
-            else if (mode == CapacityManagementMode.Expand && newSize > 0)
-            {
-                _expandCapacity(newSize);
+                int newCapacity = _primes.GetNextPrime(_hashTableStore.Length * 2);
+                _resize(newCapacity);
             }
         }
 
         /// <summary>
-        /// Returns an integer that represents the key.
-        /// Used in the _hashKey function.
+        /// Contracts the table if load factor is too low.
         /// </summary>
-        private int _getPreHashOfKey(TKey key)
+        private void _contractIfNeeded()
         {
-            return Math.Abs(_keysComparer.GetHashCode(key));
+            if (_hashTableStore.Length <= _defaultCapacity)
+                return;
+
+            double loadFactor = (double)_size / _hashTableStore.Length;
+            if (loadFactor <= _minLoadFactor)
+            {
+                int newCapacity = _primes.GetNextPrime(_hashTableStore.Length / 2);
+                newCapacity = Math.Max(newCapacity, _defaultCapacity);
+                _resize(newCapacity);
+            }
         }
 
+        #region IDictionary Implementation
 
         public void Add(TKey key, TValue value)
         {
-            throw new NotImplementedException();
+            if (key == null)
+                throw new ArgumentNullException("key");
+
+            _expandIfNeeded();
+
+            int index = _findInsertSlot(key);
+            if (index < 0)
+                throw new InvalidOperationException("Hash table is full.");
+
+            var entry = _hashTableStore[index];
+            if (entry.IsOccupied && _keysComparer.Equals(entry.Key, key))
+                throw new ArgumentException("An item with the same key has already been added.", "key");
+
+            _hashTableStore[index].Key = key;
+            _hashTableStore[index].Value = value;
+            _hashTableStore[index].Status = EntryStatus.Occupied;
+            _size++;
         }
 
         public bool ContainsKey(TKey key)
         {
-            throw new NotImplementedException();
+            if (key == null)
+                throw new ArgumentNullException("key");
+
+            return _findSlot(key) >= 0;
         }
 
         public ICollection<TKey> Keys
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                var keys = new List<TKey>(_size);
+                foreach (var entry in _hashTableStore)
+                {
+                    if (entry != null && entry.IsOccupied)
+                        keys.Add(entry.Key);
+                }
+                return keys;
+            }
         }
 
         public bool Remove(TKey key)
         {
-            throw new NotImplementedException();
+            if (key == null)
+                throw new ArgumentNullException("key");
+
+            int index = _findSlot(key);
+            if (index < 0)
+                return false;
+
+            _hashTableStore[index].Status = EntryStatus.Deleted;
+            _hashTableStore[index].Key = default(TKey);
+            _hashTableStore[index].Value = default(TValue);
+            _size--;
+
+            _contractIfNeeded();
+            return true;
         }
 
         public bool TryGetValue(TKey key, out TValue value)
         {
-            throw new NotImplementedException();
+            if (key == null)
+                throw new ArgumentNullException("key");
+
+            int index = _findSlot(key);
+            if (index >= 0)
+            {
+                value = _hashTableStore[index].Value;
+                return true;
+            }
+
+            value = default(TValue);
+            return false;
         }
 
         public ICollection<TValue> Values
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                var values = new List<TValue>(_size);
+                foreach (var entry in _hashTableStore)
+                {
+                    if (entry != null && entry.IsOccupied)
+                        values.Add(entry.Value);
+                }
+                return values;
+            }
         }
 
         public TValue this[TKey key]
         {
             get
             {
-                throw new NotImplementedException();
+                if (key == null)
+                    throw new ArgumentNullException("key");
+
+                int index = _findSlot(key);
+                if (index < 0)
+                    throw new KeyNotFoundException("The given key was not present in the dictionary.");
+
+                return _hashTableStore[index].Value;
             }
             set
             {
-                throw new NotImplementedException();
+                if (key == null)
+                    throw new ArgumentNullException("key");
+
+                _expandIfNeeded();
+
+                int index = _findInsertSlot(key);
+                if (index < 0)
+                    throw new InvalidOperationException("Hash table is full.");
+
+                bool isNewEntry = !_hashTableStore[index].IsOccupied || 
+                                  !_keysComparer.Equals(_hashTableStore[index].Key, key);
+
+                _hashTableStore[index].Key = key;
+                _hashTableStore[index].Value = value;
+                _hashTableStore[index].Status = EntryStatus.Occupied;
+
+                if (isNewEntry)
+                    _size++;
             }
         }
 
+        #endregion
+
+        #region ICollection Implementation
+
         public void Add(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            Add(item.Key, item.Value);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _size = 0;
+            _hashTableStore = new HashTableEntry[_defaultCapacity];
+            for (int i = 0; i < _hashTableStore.Length; i++)
+                _hashTableStore[i] = new HashTableEntry();
         }
 
         public bool Contains(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            int index = _findSlot(item.Key);
+            if (index < 0)
+                return false;
+
+            return EqualityComparer<TValue>.Default.Equals(_hashTableStore[index].Value, item.Value);
         }
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array == null)
+                throw new ArgumentNullException("array");
+            if (arrayIndex < 0)
+                throw new ArgumentOutOfRangeException("arrayIndex");
+            if (array.Length - arrayIndex < _size)
+                throw new ArgumentException("The destination array is not large enough.");
+
+            int j = arrayIndex;
+            foreach (var entry in _hashTableStore)
+            {
+                if (entry != null && entry.IsOccupied)
+                {
+                    array[j++] = new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+                }
+            }
         }
 
         public int Count
         {
-            get { throw new NotImplementedException(); }
+            get { return _size; }
         }
 
         public bool IsReadOnly
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public bool Remove(KeyValuePair<TKey, TValue> item)
         {
-            throw new NotImplementedException();
+            int index = _findSlot(item.Key);
+            if (index < 0)
+                return false;
+
+            if (!EqualityComparer<TValue>.Default.Equals(_hashTableStore[index].Value, item.Value))
+                return false;
+
+            _hashTableStore[index].Status = EntryStatus.Deleted;
+            _hashTableStore[index].Key = default(TKey);
+            _hashTableStore[index].Value = default(TValue);
+            _size--;
+
+            _contractIfNeeded();
+            return true;
         }
+
+        #endregion
+
+        #region IEnumerable Implementation
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (var entry in _hashTableStore)
+            {
+                if (entry != null && entry.IsOccupied)
+                {
+                    yield return new KeyValuePair<TKey, TValue>(entry.Key, entry.Value);
+                }
+            }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
+
+        #endregion
     }
 }

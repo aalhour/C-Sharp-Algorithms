@@ -20,9 +20,9 @@ namespace DataStructures.Dictionaries
     public class CuckooHashTable<TKey, TValue> where TKey : IComparable<TKey>
     {
         /// <summary>
-        /// THE CUCKOO HASH TABLE ENTERY
+        /// THE CUCKOO HASH TABLE ENTRY
         /// </summary>
-        private class CHashEntry<TKey, TValue> where TKey : IComparable<TKey>
+        private class CHashEntry
         {
             public TKey Key { get; set; }
             public TValue Value { get; set; }
@@ -53,7 +53,7 @@ namespace DataStructures.Dictionaries
 
         private int _size { get; set; }
         private int _numberOfRehashes { get; set; }
-        private CHashEntry<TKey, TValue>[] _collection { get; set; }
+        private CHashEntry[] _collection { get; set; }
         private UniversalHashingFamily _universalHashingFamily { get; set; }
         private EqualityComparer<TKey> _equalityComparer = EqualityComparer<TKey>.Default;
 
@@ -70,7 +70,7 @@ namespace DataStructures.Dictionaries
             _size = 0;
             _numberOfRehashes = 0;
             _randomizer = new Random();
-            _collection = new CHashEntry<TKey, TValue>[DEFAULT_CAPACITY];
+            _collection = new CHashEntry[DEFAULT_CAPACITY];
             _universalHashingFamily = new UniversalHashingFamily(NUMBER_OF_HASH_FUNCTIONS);
         }
 
@@ -121,7 +121,7 @@ namespace DataStructures.Dictionaries
 
             try
             {
-                this._collection = new CHashEntry<TKey, TValue>[newCapacity];
+                this._collection = new CHashEntry[newCapacity];
 
                 // Reset size
                 _size = 0;
@@ -192,7 +192,7 @@ namespace DataStructures.Dictionaries
         private void _insertHelper(TKey key, TValue value)
         {
             int COUNT_LIMIT = 100;
-            var newEntry = new CHashEntry<TKey, TValue>(key, value, isActive: true);
+            var newEntry = new CHashEntry(key, value, isActive: true);
 
             while (true)
             {
