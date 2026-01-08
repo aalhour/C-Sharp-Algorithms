@@ -174,9 +174,9 @@ namespace UnitTest.DataStructuresTests
         private static void AssertCase_1(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
-            Assert.True(avlRoot.Value == 5, "Wrong root.");
-            Assert.True(avlRoot.LeftChild.Value == 4, "Wrong left child.");
-            Assert.True(avlRoot.RightChild.Value == 7, "Wrong right child.");
+            Assert.Equal(5, avlRoot.Value);
+            Assert.Equal(4, avlRoot.LeftChild.Value);
+            Assert.Equal(7, avlRoot.RightChild.Value);
 
             Assert.True(
                 avlRoot.LeftChild.Height == 0
@@ -189,12 +189,12 @@ namespace UnitTest.DataStructuresTests
         private static void AssertCase_2(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
-            Assert.True(avlRoot.Value == 5, "Wrong root.");
-            Assert.True(avlRoot.Height == 2, "Wrong root height!");
-            Assert.True(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
-            Assert.True(avlRoot.RightChild.Value == 7, "Wrong right child from root.");
-            Assert.True(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
-            Assert.True(avlRoot.LeftChild.RightChild.Value == 4, "Wrong value at {root->left->right}.");
+            Assert.Equal(5, avlRoot.Value);
+            Assert.Equal(2, avlRoot.Height);
+            Assert.Equal(2, avlRoot.LeftChild.Value);
+            Assert.Equal(7, avlRoot.RightChild.Value);
+            Assert.Equal(1, avlRoot.LeftChild.LeftChild.Value);
+            Assert.Equal(4, avlRoot.LeftChild.RightChild.Value);
 
             Assert.True(
                 avlRoot.LeftChild.LeftChild.Height == 0
@@ -208,13 +208,13 @@ namespace UnitTest.DataStructuresTests
         private static void AssertCase_3(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
-            Assert.True(avlRoot.Height == 2, "Wrong root height!");
-            Assert.True(avlRoot.Value == 4, "Wrong root.");
-            Assert.True(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
-            Assert.True(avlRoot.RightChild.Value == 5, "Wrong right child from root.");
-            Assert.True(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
-            Assert.True(avlRoot.LeftChild.RightChild.Value == 3, "Wrong value at {root->left->right}.");
-            Assert.True(avlRoot.RightChild.RightChild.Value == 7, "Wrong value at {root->right->right}.");
+            Assert.Equal(2, avlRoot.Height);
+            Assert.Equal(4, avlRoot.Value);
+            Assert.Equal(2, avlRoot.LeftChild.Value);
+            Assert.Equal(5, avlRoot.RightChild.Value);
+            Assert.Equal(1, avlRoot.LeftChild.LeftChild.Value);
+            Assert.Equal(3, avlRoot.LeftChild.RightChild.Value);
+            Assert.Equal(7, avlRoot.RightChild.RightChild.Value);
 
             Assert.True(
                 avlRoot.LeftChild.LeftChild.Height == 0
@@ -228,14 +228,14 @@ namespace UnitTest.DataStructuresTests
         private static void AssertCase_4(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
-            Assert.True(avlRoot.Height == 2, "Wrong root height!");
-            Assert.True(avlRoot.Value == 4, "Wrong root.");
-            Assert.True(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
-            Assert.True(avlRoot.RightChild.Value == 6, "Wrong right child from root.");
-            Assert.True(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
-            Assert.True(avlRoot.LeftChild.RightChild.Value == 3, "Wrong value at {root->left->right}.");
-            Assert.True(avlRoot.RightChild.LeftChild.Value == 5, "Wrong value at {root->right->left}.");
-            Assert.True(avlRoot.RightChild.RightChild.Value == 7, "Wrong value at {root->right->right}.");
+            Assert.Equal(2, avlRoot.Height);
+            Assert.Equal(4, avlRoot.Value);
+            Assert.Equal(2, avlRoot.LeftChild.Value);
+            Assert.Equal(6, avlRoot.RightChild.Value);
+            Assert.Equal(1, avlRoot.LeftChild.LeftChild.Value);
+            Assert.Equal(3, avlRoot.LeftChild.RightChild.Value);
+            Assert.Equal(5, avlRoot.RightChild.LeftChild.Value);
+            Assert.Equal(7, avlRoot.RightChild.RightChild.Value);
 
             Assert.True(
                 avlRoot.LeftChild.LeftChild.Height == 0
@@ -250,14 +250,14 @@ namespace UnitTest.DataStructuresTests
         private static void AssertCase_5(AVLTree<int> avlTree)
         {
             var avlRoot = avlTree.Root;
-            Assert.True(avlRoot.Height == 2, "Wrong root height!");
-            Assert.True(avlRoot.Value == 5, "Wrong root.");
-            Assert.True(avlRoot.LeftChild.Value == 2, "Wrong left child from root.");
-            Assert.True(avlRoot.RightChild.Value == 6, "Wrong right child from root.");
-            Assert.True(avlRoot.LeftChild.LeftChild.Value == 1, "Wrong value at {root->left->left}.");
-            Assert.True(avlRoot.LeftChild.RightChild.Value == 3, "Wrong value at {root->left->right}.");
-            Assert.True(avlRoot.RightChild.LeftChild == null, "Wrong value at {root->right->left}.");
-            Assert.True(avlRoot.RightChild.RightChild.Value == 7, "Wrong value at {root->right->right}.");
+            Assert.Equal(2, avlRoot.Height);
+            Assert.Equal(5, avlRoot.Value);
+            Assert.Equal(2, avlRoot.LeftChild.Value);
+            Assert.Equal(6, avlRoot.RightChild.Value);
+            Assert.Equal(1, avlRoot.LeftChild.LeftChild.Value);
+            Assert.Equal(3, avlRoot.LeftChild.RightChild.Value);
+            Assert.Null(avlRoot.RightChild.LeftChild);
+            Assert.Equal(7, avlRoot.RightChild.RightChild.Value);
 
             Assert.True(
                 avlRoot.LeftChild.LeftChild.Height == 0

@@ -14,7 +14,7 @@ namespace UnitTest.AlgorithmsTests
             var results = SieveOfEratosthenes.GeneratePrimesUpTo(MaxNumber);
             Assert.NotNull(results);
             Assert.True(results.Any());
-            Assert.Equal(results.Count(), 25);
+            Assert.Equal(25, results.Count());
             Assert.DoesNotContain(1, results);
             Assert.Contains(2, results);
             Assert.Contains(7, results);

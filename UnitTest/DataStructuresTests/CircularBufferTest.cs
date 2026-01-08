@@ -147,7 +147,7 @@ namespace UnitTest.DataStructuresTests
             circularBuffer.Add(34);
             circularBuffer.Add(24);
             //Testing contains
-            Assert.True(circularBuffer.Contains(3));
+            Assert.Contains((byte)3, circularBuffer);
             
             //Testing CopyTo
             var array = new byte[3];

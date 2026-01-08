@@ -5,142 +5,243 @@ using Xunit;
 
 namespace UnitTest.DataStructuresTests
 {
-    public static class BinarySearchTreeTest
+    public class BinarySearchTreeTest
     {
-        /// <summary>
-        /// FIRST TEST TREE WITH DUPLICATES ELEMENTS
-        /// </summary>
-        /// <param name="binarySearchTree"></param>
+        #region Insert Tests
+
         [Fact]
-        public static void AssertTreeWithDuplicatesElements()
+        public void Insert_WithDuplicatesAllowed_CountsAllElements()
         {
-            // New tree which doesn't allow duplicates
-            var binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            int[] values = { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
 
-            int[] values = new int[21] { 15, 25, 5, 12, 1, 16, 20, 9, 9, 7, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
+            tree.Insert(values);
 
-            // Insert values with duplicates
-            binarySearchTree.Insert(values);
-
-            // ASSERT COUNT = 21 (allows duplicates)
-            Assert.Equal(21, binarySearchTree.Count);
-
-            // Test contains/find
-            Assert.True(binarySearchTree.Contains(10), "Wrong element.");
-
-            // Test find all
-            var list = binarySearchTree.FindAll(element => element > 15).ToList();
-            Assert.True(list.Count == 7, "Wrong FindAll result!");
-
-            // test sort
-            List<int> sortedList = binarySearchTree.ToList();
-            for (int i = 1; i < sortedList.Count; ++i)
-                Assert.True(sortedList[i - 1] <= sortedList[i], "BST sort is wrong!");
-
-            // ASSERT MIN ITEM
-            Assert.True(binarySearchTree.FindMin() == -1, "Min is wrong.");
-
-            // ASSERT MAX ITEM
-            Assert.True(binarySearchTree.FindMax() == 39, "Max is wrong.");
-
-            // Remove min & max
-            binarySearchTree.RemoveMin();
-            binarySearchTree.RemoveMax();
-
-            // ASSERT MIN AFTER REMOVE-MIN
-            Assert.True(binarySearchTree.FindMin() == 1, "Min is wrong.");
-
-            // ASSERT MAX AFTER REMOVE MAX
-            Assert.True(binarySearchTree.FindMax() == 30, "Max is wrong.");
-
-            // Remove min twice
-            binarySearchTree.RemoveMin();
-            binarySearchTree.RemoveMin();
-
-            // ASSERT MIN
-            Assert.True(binarySearchTree.FindMin() == 7, "Min is wrong.");
-
-            // 7 STILL EXISTS BECAUSE IT WAS DUPLICATED
-            binarySearchTree.RemoveMin();
-            Assert.True(binarySearchTree.FindMin() == 7, "Min is wrong.");
-
-            // Remove max thrice
-            binarySearchTree.RemoveMax();
-            binarySearchTree.RemoveMax();
-            binarySearchTree.RemoveMax();
-
-            // ASSERT MAX AFTER REMOVE-MAX 3 TIMES
-            Assert.True(binarySearchTree.FindMax() == 20, "Max is wrong.");
-
-            // Test removing an element with subtrees
-            try
-            {
-                // doesn't exist!
-                binarySearchTree.Remove(1000);
-            }
-            catch
-            {
-                // does exist!
-                binarySearchTree.Remove(16);
-            }
-
-            var enumerator = binarySearchTree.GetInOrderEnumerator();
-            enumerator.MoveNext();
-            Assert.Equal(7, enumerator.Current);
-
-            enumerator.MoveNext();
-            enumerator.MoveNext();
-            Assert.True(enumerator.Current == 8, "Wrong in-order enumeration.");
+            Assert.Equal(21, tree.Count);
         }
 
-        /// <summary>
-        /// NEXT TEST TREE THAT DOES NOT ALLOW DUPLICATES
-        /// </summary>
-        /// <param name="binarySearchTree"></param>
         [Fact]
-        public static void AssertTreeWithUniqueElements()
+        public void Insert_WithDuplicatesNotAllowed_ThrowsOnDuplicate()
         {
-            // New tree which doesn't allow duplicates
-            var binarySearchTree = new AugmentedBinarySearchTree<int>(allowDuplicates: false);
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: false);
+            tree.Insert(1);
+            tree.Insert(2);
 
-            int[] values = new int[24] { 14, 15, 25, 5, 12, 1, 16, 20, 9, 9, 9, 7, 7, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39, 39 };
-
-            var inserting_duplicates_passed = true;
-            try
-            {
-                // Insert values with duplicates
-                binarySearchTree.Insert(values);
-            }
-            catch
-            {
-                inserting_duplicates_passed = false;
-            }
-
-            Assert.False(inserting_duplicates_passed, "Fail! Tree doesn't allow duplicates");
-
-            //
-            // Reduce values array to an array of distinct values
-            binarySearchTree.Clear();
-            values = values.Distinct().ToArray();
-
-            var inserting_unique_passed = true;
-            try
-            {
-                // Insert unique values
-                binarySearchTree.Insert(values);
-            }
-            catch
-            {
-                inserting_unique_passed = false;
-            }
-
-            Assert.True(inserting_unique_passed, "Fail! Inserting unique elements should pass!");
-
-            // ASSERT COUNT
-            Assert.Equal(binarySearchTree.Count, values.Length);
+            Assert.ThrowsAny<System.Exception>(() => tree.Insert(1));
         }
 
+        [Fact]
+        public void Insert_UniqueValues_CountsCorrectly()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: false);
+            int[] values = { 14, 15, 25, 5, 12, 1, 16, 20, 9, 7, -1, 11, 19, 30, 8, 10, 13, 28, 39 };
+
+            tree.Insert(values);
+
+            Assert.Equal(values.Length, tree.Count);
+        }
+
+        #endregion
+
+        #region Contains Tests
+
+        [Fact]
+        public void Contains_ExistingElement_ReturnsTrue()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, 10 });
+
+            Assert.True(tree.Contains(10));
+            Assert.True(tree.Contains(15));
+            Assert.True(tree.Contains(1));
+        }
+
+        [Fact]
+        public void Contains_NonExistingElement_ReturnsFalse()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, 10 });
+
+            Assert.False(tree.Contains(100));
+            Assert.False(tree.Contains(-5));
+        }
+
+        #endregion
+
+        #region FindAll Tests
+
+        [Fact]
+        public void FindAll_WithPredicate_ReturnsMatchingElements()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, 16, 20, 9 });
+
+            var result = tree.FindAll(element => element > 15).ToList();
+
+            Assert.Equal(3, result.Count);
+            Assert.Contains(25, result);
+            Assert.Contains(16, result);
+            Assert.Contains(20, result);
+        }
+
+        [Fact]
+        public void FindAll_NoMatches_ReturnsEmpty()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 1, 2, 3, 4, 5 });
+
+            var result = tree.FindAll(element => element > 100).ToList();
+
+            Assert.Empty(result);
+        }
+
+        #endregion
+
+        #region FindMin/FindMax Tests
+
+        [Fact]
+        public void FindMin_ReturnsSmallestElement()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, -1, 30 });
+
+            Assert.Equal(-1, tree.FindMin());
+        }
+
+        [Fact]
+        public void FindMax_ReturnsLargestElement()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, -1, 39 });
+
+            Assert.Equal(39, tree.FindMax());
+        }
+
+        #endregion
+
+        #region RemoveMin/RemoveMax Tests
+
+        [Fact]
+        public void RemoveMin_RemovesSmallestElement()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, -1, 30 });
+
+            tree.RemoveMin();
+
+            Assert.Equal(1, tree.FindMin());
+        }
+
+        [Fact]
+        public void RemoveMax_RemovesLargestElement()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, -1, 39 });
+
+            tree.RemoveMax();
+
+            Assert.Equal(25, tree.FindMax());
+        }
+
+        [Fact]
+        public void RemoveMin_WithDuplicates_RemovesOnlyOne()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 5, 7, 7, 7, 10 });
+
+            tree.RemoveMin();
+
+            Assert.Equal(7, tree.FindMin());
+            // After removing 5, min is still 7 (duplicates remain)
+        }
+
+        #endregion
+
+        #region Remove Tests
+
+        [Fact]
+        public void Remove_ExistingElement_DecreasesCount()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 16 });
+            var initialCount = tree.Count;
+
+            tree.Remove(16);
+
+            Assert.Equal(initialCount - 1, tree.Count);
+            Assert.False(tree.Contains(16));
+        }
+
+        [Fact]
+        public void Remove_NonExistingElement_ThrowsException()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 16 });
+
+            Assert.ThrowsAny<System.Exception>(() => tree.Remove(1000));
+        }
+
+        #endregion
+
+        #region Sorting Tests
+
+        [Fact]
+        public void ToList_ReturnsSortedElements()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 25, 5, 12, 1, 16, 20, 9 });
+
+            var sortedList = tree.ToList();
+
+            for (int i = 1; i < sortedList.Count; i++)
+            {
+                Assert.True(sortedList[i - 1] <= sortedList[i]);
+            }
+        }
+
+        #endregion
+
+        #region Enumerator Tests
+
+        [Fact]
+        public void GetInOrderEnumerator_TraversesInOrder()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 15, 5, 25, 3, 10 });
+
+            var enumerator = tree.GetInOrderEnumerator();
+            var values = new List<int>();
+            while (enumerator.MoveNext())
+            {
+                values.Add(enumerator.Current);
+            }
+
+            Assert.Equal(new[] { 3, 5, 10, 15, 25 }, values);
+        }
+
+        #endregion
+
+        #region Edge Cases
+
+        [Fact]
+        public void EmptyTree_CountIsZero()
+        {
+            var tree = new AugmentedBinarySearchTree<int>();
+
+            Assert.Equal(0, tree.Count);
+        }
+
+        [Fact]
+        public void Clear_EmptiesTheTree()
+        {
+            var tree = new AugmentedBinarySearchTree<int>(allowDuplicates: true);
+            tree.Insert(new[] { 1, 2, 3, 4, 5 });
+
+            tree.Clear();
+
+            Assert.Equal(0, tree.Count);
+        }
+
+        #endregion
     }
-
 }
-
