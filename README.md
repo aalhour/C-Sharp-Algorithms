@@ -16,217 +16,252 @@
 ```
 
 <p align="center">
-  <a href="LICENSE" alt="License">
-    <img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
-  </a>
-  <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors" alt="Contributors">
-    <img src="https://img.shields.io/github/contributors/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
-  </a>
-  <a href="https://github.com/aalhour/C-Sharp-Algorithms/pulse" alt="Activity">
-    <img src="https://img.shields.io/github/commit-activity/m/aalhour/C-Sharp-Algorithms?style=flat-square&color=blue" />
-  </a>
+  <strong>A plug-and-play library of classic data structures and algorithms in C#</strong>
 </p>
 
-##
-### WHAT IS C# ALGORITHMS?
+<p align="center">
+  <a href="https://github.com/aalhour/C-Sharp-Algorithms/actions"><img src="https://img.shields.io/github/actions/workflow/status/aalhour/C-Sharp-Algorithms/build_and_test.yml?style=for-the-badge&logo=github&label=build" alt="Build Status" /></a>
+  <a href="https://github.com/aalhour/C-Sharp-Algorithms/releases"><img src="https://img.shields.io/github/v/release/aalhour/C-Sharp-Algorithms?style=for-the-badge&logo=github" alt="Release" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/aalhour/C-Sharp-Algorithms?style=for-the-badge" alt="License" /></a>
+  <a href="https://github.com/aalhour/C-Sharp-Algorithms/stargazers"><img src="https://img.shields.io/github/stars/aalhour/C-Sharp-Algorithms?style=for-the-badge&logo=github" alt="Stars" /></a>
+</p>
 
-A plug-and-play class-library project of standard Data Structures and Algorithms, written in C#. It contains **75+** Data Structures and Algorithms, designed as Object-Oriented isolated components. Even though this project started for educational purposes, the implemented Data Structures and Algorithms are standard, efficient, stable and tested.
+<p align="center">
+  <img src="https://img.shields.io/badge/.NET-10.0-512BD4?style=flat-square&logo=dotnet" alt=".NET 10" />
+  <img src="https://img.shields.io/badge/tests-623%20passing-brightgreen?style=flat-square" alt="Tests" />
+  <img src="https://img.shields.io/badge/data%20structures-35+-blue?style=flat-square" alt="Data Structures" />
+  <img src="https://img.shields.io/badge/algorithms-40+-blue?style=flat-square" alt="Algorithms" />
+</p>
 
-##
-### BACK STORY
+---
 
-This project originally started out as an interview preparation project. However, after receiving a great amount of positive responses on [reddit](https://redd.it/3etf9f), and noticing excitement from a few [GitHubers](https://github.com/aalhour/C-Sharp-Algorithms#contributors) to contribute furthermore to it, the project took on a different meaning. So, I decided to keep maintaining it as a reference for data structures and algorithm implementations in C# as well as my own research side-project under these topics.
-
-##
-### DESCRIPTION
-
-#### Solution Hierarchy:
-
-This is a C#.NET solution-project, and it contains three subprojects:
-
-  1. [Algorithms](Algorithms): A class library project. Contains the Algorithms implementations
-  2. [Data Structures](DataStructures): A class library project. Contains the Data Structures implementations
-  3. [UnitTest](UnitTest): Unit-testing project for the Algorithms and Data Structures
-
-#### Requirements:
-
-  * [.NET 10.0 SDK](https://dotnet.microsoft.com/download) (or later)
-
-#### Building & Testing:
+## ⚡ Quick Start
 
 ```bash
-# Restore packages
-dotnet restore
+# Clone the repository
+git clone https://github.com/aalhour/C-Sharp-Algorithms.git
+cd C-Sharp-Algorithms
 
-# Build the solution
+# Build and test
 dotnet build
-
-# Run all tests
 dotnet test
 ```
 
-#### A Note to Contributors:
+**Requirements:** [.NET 10.0 SDK](https://dotnet.microsoft.com/download) or later
 
-If you wish to contribute to C# ALGORITHMS, then please make sure you check out the [Contribution Guidelines](.github/CONTRIBUTING.md) first.
+---
 
-##
-### DATA STRUCTURES
+## 📖 About
 
-#### Linear:
+This project started as interview prep and evolved into a comprehensive reference implementation of classic computer science data structures and algorithms. Every component is:
 
-  * [Skip List](DataStructures/Lists/SkipList.cs)
-  * [Array List](DataStructures/Lists/ArrayList.cs)
-  * [Stack](DataStructures/Lists/Stack.cs)
-  * [Queue](DataStructures/Lists/Queue.cs)
-  * [Single-Linked List](DataStructures/Lists/SLinkedList.cs)
-  * [Double-Linked List](DataStructures/Lists/DLinkedList.cs)
+- **Educational** — Clear, readable implementations with documentation
+- **Tested** — 623+ unit tests ensuring correctness
+- **Modular** — Use only what you need
 
-#### Circular:
-  
-  * [Circular Buffer](DataStructures/Lists/CircularBuffer.cs)
+### Project Structure
 
-#### Heaps:
+| Project | Description |
+|---------|-------------|
+| [`Algorithms`](Algorithms) | Sorting, searching, graph algorithms, and more |
+| [`DataStructures`](DataStructures) | Lists, trees, heaps, hash tables, graphs |
+| [`UnitTest`](UnitTest) | Comprehensive test coverage |
 
-  * [Binary-Min Heap](DataStructures/Heaps/BinaryMinHeap.cs)
-  * [Binary-Max Heap](DataStructures/Heaps/BinaryMaxHeap.cs)
-  * [Binomial-Min Heap](DataStructures/Heaps/BinomialMinHeap.cs)
- 
-#### Priority Queues:
+---
 
-  * [Min-Priority Queue](DataStructures/Heaps/MinPriorityQueue.cs)
-  * [Key-value Priority Queue](DataStructures/Heaps/KeyedPriorityQueue.cs)
- 
-#### Hashing Functions:
+## 📦 Data Structures
 
-  * [Prime Hashing Family](DataStructures/Hashing/PrimeHashingFamily.cs)
-  * [Universal Hashing Family](DataStructures/Hashing/UniversalHashingFamily.cs)
+<details>
+<summary><strong>Lists & Collections</strong></summary>
 
-#### Hash Tables:
+| Structure | Description |
+|-----------|-------------|
+| [ArrayList](DataStructures/Lists/ArrayList.cs) | Dynamic array with auto-resizing |
+| [Stack](DataStructures/Lists/Stack.cs) | LIFO collection |
+| [Queue](DataStructures/Lists/Queue.cs) | FIFO collection |
+| [SLinkedList](DataStructures/Lists/SLinkedList.cs) | Singly-linked list |
+| [DLinkedList](DataStructures/Lists/DLinkedList.cs) | Doubly-linked list |
+| [SkipList](DataStructures/Lists/SkipList.cs) | Probabilistic balanced structure |
+| [CircularBuffer](DataStructures/Lists/CircularBuffer.cs) | Fixed-size circular queue |
 
-  * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs)
-  * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs)
-  * [Open-Addressing Hash Table](DataStructures/Dictionaries/OpenAddressingHashTable.cs)
-  * [Open Scatter Hash Table](DataStructures/Dictionaries/OpenScatterHashTable.cs)
+</details>
 
-#### Sorted Collections (Tree-based):
+<details>
+<summary><strong>Heaps & Priority Queues</strong></summary>
 
-  * [Sorted List](DataStructures/SortedCollections/SortedList.cs)
-  * [Sorted Dictionary](DataStructures/SortedCollections/SortedDictionary.cs)
+| Structure | Description |
+|-----------|-------------|
+| [BinaryMinHeap](DataStructures/Heaps/BinaryMinHeap.cs) | Min-heap using binary tree |
+| [BinaryMaxHeap](DataStructures/Heaps/BinaryMaxHeap.cs) | Max-heap using binary tree |
+| [BinomialMinHeap](DataStructures/Heaps/BinomialMinHeap.cs) | Binomial heap (min) |
+| [MinPriorityQueue](DataStructures/Heaps/MinPriorityQueue.cs) | Priority queue (min) |
+| [KeyedPriorityQueue](DataStructures/Heaps/KeyedPriorityQueue.cs) | Key-value priority queue |
 
-#### Trees:
+</details>
 
-  
-  * Basic Search Trees:
-    + [Binary Search Tree](DataStructures/Trees/BinarySearchTree.cs)
-      * [Map version](DataStructures/Trees/BinarySearchTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-    + [\(Augmented\) Binary Search Tree](DataStructures/Trees/AugmentedBinarySearchTree.cs)
-    + [Ternary Search Tree](DataStructures/Trees/TernarySearchTree.cs)  
-  * Self-Balancing Trees:
-    + [AVL Tree](DataStructures/Trees/AVLTree.cs)
-    + [B-Tree](DataStructures/Trees/BTree.cs)
-    + [Red-Black Tree](DataStructures/Trees/RedBlackTree.cs)
-      * [Map version](DataStructures/Trees/RedBlackTreeMap.cs) _(supports key-value pairing; nodes indexed by keys)_
-  * Prefix Trees:
-    + [Trie](DataStructures/Trees/Trie.cs)
-    + [Trie Map](DataStructures/Trees/TrieMap.cs) _(associative prefix tree; complete words are keys to records)_
- 
-#### Graphs:
+<details>
+<summary><strong>Hash Tables</strong></summary>
 
-  * Undirected Graphs:
-    + [Clique Graphs](DataStructures/Graphs/CliqueGraph.cs)
-    + [Undirected Sparse Graph](DataStructures/Graphs/UndirectedSparseGraph.cs)
-    + [Undirected Dense Graph](DataStructures/Graphs/UndirectedDenseGraph.cs)
-  * Undirected Weighted Graphs:
-    + [Undirected Weighted Sparse Graph](DataStructures/Graphs/UndirectedWeightedSparseGraph.cs)
-    + [Undirected Weighted Dense Graph](DataStructures/Graphs/UndirectedWeightedDenseGraph.cs)
-  * Directed Graphs:
-    + [Directed Sparse Graph](DataStructures/Graphs/DirectedSparseGraph.cs)
-    + [Directed Dense Graph](DataStructures/Graphs/DirectedDenseGraph.cs)
-  * Directed Weighted Graphs:
-    + [Directed Weighted Sparse Graph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs)
-    + [Directed Weighted Dense Graph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs)
+| Structure | Description |
+|-----------|-------------|
+| [ChainedHashTable](DataStructures/Dictionaries/ChainedHashTable.cs) | Separate chaining collision resolution |
+| [CuckooHashTable](DataStructures/Dictionaries/CuckooHashTable.cs) | Cuckoo hashing |
+| [OpenScatterHashTable](DataStructures/Dictionaries/OpenScatterHashTable.cs) | Linear probing |
+| [OpenAddressingHashTable](DataStructures/Dictionaries/OpenAddressingHashTable.cs) | Open addressing with double hashing |
 
+**Hashing Functions:** [PrimeHashingFamily](DataStructures/Hashing/PrimeHashingFamily.cs) ・ [UniversalHashingFamily](DataStructures/Hashing/UniversalHashingFamily.cs)
 
-##
-### ALGORITHMS
+</details>
 
-#### Sorting:
+<details>
+<summary><strong>Trees</strong></summary>
 
-  * [Bubble Sort](Algorithms/Sorting/BubbleSorter.cs)
-  * [Bucket Sort](Algorithms/Sorting/BucketSorter.cs)
-  * [BST Sort](Algorithms/Sorting/BinarySearchTreeSorter.cs)
-  * [Comb Sort](Algorithms/Sorting/CombSorter.cs)
-  * [Counting Sort](Algorithms/Sorting/CountingSorter.cs)
-  * [Cycle Sort](Algorithms/Sorting/CycleSorter.cs)
-  * [Gnome Sort](Algorithms/Sorting/GnomeSorter.cs)
-  * [Heap Sort](Algorithms/Sorting/HeapSorter.cs)
-  * [Insertion Sort](Algorithms/Sorting/InsertionSorter.cs)
-  * [LSD Radix Sort](Algorithms/Sorting/LSDRadixSorter.cs)
-  * [Merge Sort](Algorithms/Sorting/MergeSorter.cs)
-  * [Selection Sort](Algorithms/Sorting/SelectionSorter.cs)
-  * [Shell Sort](Algorithms/Sorting/ShellSorter.cs)
-  * [OddEven Sort](Algorithms/Sorting/OddEvenSorter.cs)
-  * [PigeonHole Sort](Algorithms/Sorting/PigeonHoleSorter.cs)
-  * [Quick Sort](Algorithms/Sorting/QuickSorter.cs)
+**Search Trees**
+| Structure | Description |
+|-----------|-------------|
+| [BinarySearchTree](DataStructures/Trees/BinarySearchTree.cs) | Classic BST ([Map version](DataStructures/Trees/BinarySearchTreeMap.cs)) |
+| [AugmentedBinarySearchTree](DataStructures/Trees/AugmentedBinarySearchTree.cs) | BST with subtree counts |
+| [TernarySearchTree](DataStructures/Trees/TernarySearchTree.cs) | For string keys |
 
-#### Searching:
+**Self-Balancing Trees**
+| Structure | Description |
+|-----------|-------------|
+| [AVLTree](DataStructures/Trees/AVLTree.cs) | Height-balanced BST |
+| [RedBlackTree](DataStructures/Trees/RedBlackTree.cs) | Color-balanced BST ([Map version](DataStructures/Trees/RedBlackTreeMap.cs)) |
+| [BTree](DataStructures/Trees/BTree.cs) | B-tree for disk-based storage |
 
-  * [Binary Search](Algorithms/Search/BinarySearcher.cs)
+**Prefix Trees**
+| Structure | Description |
+|-----------|-------------|
+| [Trie](DataStructures/Trees/Trie.cs) | Prefix tree for strings |
+| [TrieMap](DataStructures/Trees/TrieMap.cs) | Associative prefix tree |
 
-#### Graphs:
+</details>
 
-  * Graph Search:
-    + [Depth-First Searcher](Algorithms/Graphs/DepthFirstSearcher.cs)
-    + [Breadth-First Searcher](Algorithms/Graphs/BreadthFirstSearcher.cs)
-  * Shortest Paths:
-    + [Breadth-First SPs](Algorithms/Graphs/BreadthFirstShortestPaths.cs)
-    + [Bellman-Ford SPs](Algorithms/Graphs/BellmanFordShortestPaths.cs)
-    + [Dijkstra SPs](Algorithms/Graphs/DijkstraShortestPaths.cs)
-    + [Dijkstra All-Pairs SPs](Algorithms/Graphs/DijkstraAllPairsShortestPaths.cs)
-  * DFS Applications:
-    + [Cycles Detector](Algorithms/Graphs/CyclesDetector.cs)
-    + [Topological Sorter](Algorithms/Graphs/TopologicalSorter.cs)
-  * BFS Applications:
-    + [Connected Components](Algorithms/Graphs/ConnectedComponents.cs)
-    + [Bipartite Graphs Coloring](Algorithms/Graphs/BipartiteColoring.cs)
+<details>
+<summary><strong>Graphs</strong></summary>
 
-#### Trees:
+| Type | Sparse | Dense |
+|------|--------|-------|
+| **Undirected** | [UndirectedSparseGraph](DataStructures/Graphs/UndirectedSparseGraph.cs) | [UndirectedDenseGraph](DataStructures/Graphs/UndirectedDenseGraph.cs) |
+| **Undirected Weighted** | [UndirectedWeightedSparseGraph](DataStructures/Graphs/UndirectedWeightedSparseGraph.cs) | [UndirectedWeightedDenseGraph](DataStructures/Graphs/UndirectedWeightedDenseGraph.cs) |
+| **Directed** | [DirectedSparseGraph](DataStructures/Graphs/DirectedSparseGraph.cs) | [DirectedDenseGraph](DataStructures/Graphs/DirectedDenseGraph.cs) |
+| **Directed Weighted** | [DirectedWeightedSparseGraph](DataStructures/Graphs/DirectedWeightedSparseGraph.cs) | [DirectedWeightedDenseGraph](DataStructures/Graphs/DirectedWeightedDenseGraph.cs) |
 
-  * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs)
-    + Methods: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder
-  * [Iterative Binary Tree Walker](Algorithms/Trees/BinaryTreeIterativeWalker.cs)
-    + Methods: PrintAll, ForEach. Traversal Modes: Preorder, Inorder & Postorder
+Also: [CliqueGraph](DataStructures/Graphs/CliqueGraph.cs)
 
-#### Strings:
+</details>
 
-  * [Permutations and Anagrams](Algorithms/Strings/Permutations.cs)
-  * [Edit Distance](Algorithms/Strings/EditDistance.cs)
-    + Uses a generic custom class for passing costs: [EditDistanceCostsMap\<T\>](Algorithms/Strings/EditDistanceCostsMap.cs)
+<details>
+<summary><strong>Sorted Collections</strong></summary>
 
-#### Numeric:
+| Structure | Description |
+|-----------|-------------|
+| [SortedList](DataStructures/SortedCollections/SortedList.cs) | Always-sorted list |
+| [SortedDictionary](DataStructures/SortedCollections/SortedDictionary.cs) | Sorted key-value store |
 
-  * [Binomial Coefficients](Algorithms/Numeric/BinomialCoefficients.cs)
-  * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs)
-  * [Greatest Common Divisor](Algorithms/Numeric/GreatestCommonDivisor.cs)
-  * [Sieve of Atkin](Algorithms/Numeric/SieveOfAtkin.cs)
-  * [Sieve of Eratosthenes](Algorithms/Numeric/SieveOfEratosthenes.cs)
+</details>
 
-#### Visualization:
+---
 
-  * [Tree Drawer](DataStructures/Trees/TreeDrawer.cs)
+## 🔧 Algorithms
 
+<details>
+<summary><strong>Sorting</strong> (16 algorithms)</summary>
 
-##
-### CONTRIBUTORS
+| Algorithm | Type | Complexity |
+|-----------|------|------------|
+| [QuickSort](Algorithms/Sorting/QuickSorter.cs) | Divide & Conquer | O(n log n) avg |
+| [MergeSort](Algorithms/Sorting/MergeSorter.cs) | Divide & Conquer | O(n log n) |
+| [HeapSort](Algorithms/Sorting/HeapSorter.cs) | Selection | O(n log n) |
+| [InsertionSort](Algorithms/Sorting/InsertionSorter.cs) | Insertion | O(n²) |
+| [SelectionSort](Algorithms/Sorting/SelectionSorter.cs) | Selection | O(n²) |
+| [BubbleSort](Algorithms/Sorting/BubbleSorter.cs) | Exchange | O(n²) |
+| [ShellSort](Algorithms/Sorting/ShellSorter.cs) | Insertion | O(n log² n) |
+| [CombSort](Algorithms/Sorting/CombSorter.cs) | Exchange | O(n²) |
+| [CountingSort](Algorithms/Sorting/CountingSorter.cs) | Non-comparison | O(n + k) |
+| [LSD RadixSort](Algorithms/Sorting/LSDRadixSorter.cs) | Non-comparison | O(nk) |
+| [BucketSort](Algorithms/Sorting/BucketSorter.cs) | Distribution | O(n + k) |
+| [BSTSort](Algorithms/Sorting/BinarySearchTreeSorter.cs) | Tree-based | O(n log n) |
+| [CycleSort](Algorithms/Sorting/CycleSorter.cs) | In-place | O(n²) |
+| [GnomeSort](Algorithms/Sorting/GnomeSorter.cs) | Exchange | O(n²) |
+| [OddEvenSort](Algorithms/Sorting/OddEvenSorter.cs) | Exchange | O(n²) |
+| [PigeonHoleSort](Algorithms/Sorting/PigeonHoleSorter.cs) | Distribution | O(n + k) |
+
+</details>
+
+<details>
+<summary><strong>Graph Algorithms</strong></summary>
+
+**Traversal**
+- [Depth-First Search](Algorithms/Graphs/DepthFirstSearcher.cs)
+- [Breadth-First Search](Algorithms/Graphs/BreadthFirstSearcher.cs)
+
+**Shortest Paths**
+- [Dijkstra](Algorithms/Graphs/DijkstraShortestPaths.cs) — Single-source, non-negative weights
+- [Dijkstra All-Pairs](Algorithms/Graphs/DijkstraAllPairsShortestPaths.cs) — All pairs shortest paths
+- [Bellman-Ford](Algorithms/Graphs/BellmanFordShortestPaths.cs) — Handles negative weights
+- [BFS Shortest Paths](Algorithms/Graphs/BreadthFirstShortestPaths.cs) — Unweighted graphs
+
+**Applications**
+- [Cycle Detection](Algorithms/Graphs/CyclesDetector.cs)
+- [Topological Sort](Algorithms/Graphs/TopologicalSorter.cs)
+- [Connected Components](Algorithms/Graphs/ConnectedComponents.cs)
+- [Bipartite Coloring](Algorithms/Graphs/BipartiteColoring.cs)
+
+</details>
+
+<details>
+<summary><strong>Trees, Strings & Numeric</strong></summary>
+
+**Tree Traversal**
+- [Recursive Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs) — Preorder, Inorder, Postorder
+- [Iterative Walker](Algorithms/Trees/BinaryTreeIterativeWalker.cs) — Stack-based traversal
+
+**String Algorithms**
+- [Permutations & Anagrams](Algorithms/Strings/Permutations.cs)
+- [Edit Distance](Algorithms/Strings/EditDistance.cs) (Levenshtein)
+
+**Numeric**
+- [Binomial Coefficients](Algorithms/Numeric/BinomialCoefficients.cs)
+- [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs)
+- [Greatest Common Divisor](Algorithms/Numeric/GreatestCommonDivisor.cs)
+- [Sieve of Eratosthenes](Algorithms/Numeric/SieveOfEratosthenes.cs)
+- [Sieve of Atkin](Algorithms/Numeric/SieveOfAtkin.cs)
+
+**Visualization**
+- [Tree Drawer](DataStructures/Trees/TreeDrawer.cs)
+
+</details>
+
+<details>
+<summary><strong>Searching</strong></summary>
+
+- [Binary Search](Algorithms/Search/BinarySearcher.cs)
+
+</details>
+
+---
+
+## 🚀 Roadmap
+
+See [TODO.md](TODO.md) for planned additions. Highlights:
+
+- **Data Structures:** Bloom Filters, Fibonacci Heaps, Disjoint Sets, Suffix Trees
+- **Algorithms:** A* Search, Minimum Spanning Trees, String Matching (KMP, Boyer-Moore)
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Please read the [Contribution Guidelines](.github/CONTRIBUTING.md) first.
 
 <a href="https://github.com/aalhour/C-Sharp-Algorithms/graphs/contributors">
   <img src="https://contributors-img.firebaseapp.com/image?repo=aalhour/C-Sharp-Algorithms" />
 </a>
 
-<br />
-<!-- Made with [contributors-img](https://contributors-img.firebaseapp.com). -->
+---
 
-##
-### LICENSE
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
