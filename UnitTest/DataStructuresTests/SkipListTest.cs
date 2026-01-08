@@ -432,6 +432,76 @@ namespace UnitTest.DataStructuresTests
 
         #endregion
 
+        #region Bug Regression Tests
+
+        /// <summary>
+        /// Bug #137: _getNextLevel() could return 0, causing items to not be added.
+        /// Fixed by starting level at 1 instead of 0.
+        /// </summary>
+        [Fact]
+        public static void Bug137_AddedElementIsAlwaysContained()
+        {
+            // Run multiple times to catch probabilistic failures
+            for (int trial = 0; trial < 100; trial++)
+            {
+                var skipList = new SkipList<int>();
+                var random = new Random(trial); // Different seed each trial
+
+                for (int i = 0; i < 10; i++)
+                {
+                    int value = random.Next(-1000, 1000);
+                    skipList.Add(value);
+                    Assert.True(skipList.Contains(value), 
+                        $"Trial {trial}: Added {value} but Contains returned false");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bug #138: Empty SkipList<int>.Contains(0) should return false.
+        /// The sentinel node has default(T) as its value, which is 0 for int.
+        /// The Contains method must not match the sentinel.
+        /// </summary>
+        [Fact]
+        public static void Bug138_EmptyIntList_ContainsZero_ReturnsFalse()
+        {
+            var skipList = new SkipList<int>();
+
+            // Empty list should not contain anything, including 0
+            Assert.False(skipList.Contains(0), 
+                "Empty SkipList<int> should not contain 0 (sentinel value issue)");
+        }
+
+        /// <summary>
+        /// Bug #139: Remove(0) on list with negative int should not remove sentinel.
+        /// </summary>
+        [Fact]
+        public static void Bug139_RemoveZeroOnListWithNegatives_DoesNotCorrupt()
+        {
+            var skipList = new SkipList<int>();
+            skipList.Add(-23);
+            skipList.Add(-5);
+            skipList.Add(-100);
+
+            // Attempt to remove 0 (which was never added)
+            var result = skipList.Remove(0);
+
+            // Should return false - 0 was never added
+            Assert.False(result, "Remove(0) should return false when 0 was never added");
+            
+            // List should still be intact
+            Assert.Equal(3, skipList.Count);
+            Assert.True(skipList.Contains(-23));
+            Assert.True(skipList.Contains(-5));
+            Assert.True(skipList.Contains(-100));
+            
+            // Enumeration should work
+            var items = skipList.ToList();
+            Assert.Equal(3, items.Count);
+        }
+
+        #endregion
+
         #region String Type Tests
 
         [Fact]

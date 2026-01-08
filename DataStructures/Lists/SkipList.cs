@@ -179,6 +179,15 @@ namespace DataStructures.Lists
 
             current = current.Forwards[0];
 
+            // BUG FIX: Don't match the sentinel node (_firstNode).
+            // The sentinel has default(T) as its value, which could match user queries.
+            // See: https://github.com/aalhour/C-Sharp-Algorithms/issues/139
+            if (current == _firstNode)
+            {
+                deleted = default(T);
+                return false;
+            }
+
             // Return default value of T if the item was not found
             if (current.Value.IsEqualTo(item) == false)
             {
@@ -227,6 +236,16 @@ namespace DataStructures.Lists
                     current = current.Forwards[i];
 
             current = current.Forwards[0];
+
+            // BUG FIX: Don't match the sentinel node (_firstNode).
+            // The sentinel has default(T) as its value, which could match user queries
+            // (e.g., 0 for int, null for reference types).
+            // See: https://github.com/aalhour/C-Sharp-Algorithms/issues/138
+            if (current == _firstNode)
+            {
+                result = default(T);
+                return false;
+            }
 
             // Return true if we found the element; false otherwise
             if (current.Value.IsEqualTo(item))
