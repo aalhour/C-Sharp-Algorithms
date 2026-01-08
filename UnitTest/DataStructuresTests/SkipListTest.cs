@@ -15,7 +15,7 @@ namespace UnitTest.DataStructuresTests
             var skipList = new SkipList<int>();
 
             Assert.True(skipList.IsEmpty);
-            Assert.Equal(0, skipList.Count);
+            Assert.Empty(skipList);
         }
 
         [Fact]
@@ -37,7 +37,7 @@ namespace UnitTest.DataStructuresTests
 
             skipList.Add(42);
 
-            Assert.Equal(1, skipList.Count);
+            Assert.Single(skipList);
             Assert.False(skipList.IsEmpty);
         }
 
@@ -106,9 +106,9 @@ namespace UnitTest.DataStructuresTests
             skipList.Add(-1);
 
             Assert.Equal(3, skipList.Count);
-            Assert.True(skipList.Contains(-5));
-            Assert.True(skipList.Contains(-10));
-            Assert.True(skipList.Contains(-1));
+            Assert.Contains(-5, skipList);
+            Assert.Contains(-10, skipList);
+            Assert.Contains(-1, skipList);
         }
 
         [Fact]
@@ -136,7 +136,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Add(20);
             skipList.Add(30);
 
-            Assert.True(skipList.Contains(20));
+            Assert.Contains(20, skipList);
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Add(20);
             skipList.Add(30);
 
-            Assert.False(skipList.Contains(25));
+            Assert.DoesNotContain(25, skipList);
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace UnitTest.DataStructuresTests
         {
             var skipList = new SkipList<int>();
 
-            Assert.False(skipList.Contains(42));
+            Assert.DoesNotContain(42, skipList);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Add(5);
             skipList.Add(15);
 
-            Assert.True(skipList.Contains(5)); // smallest
+            Assert.Contains(5, skipList); // smallest
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Add(5);
             skipList.Add(15);
 
-            Assert.True(skipList.Contains(15)); // largest
+            Assert.Contains(15, skipList); // largest
         }
 
         #endregion
@@ -208,7 +208,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Remove(20);
 
             Assert.Equal(2, skipList.Count);
-            Assert.False(skipList.Contains(20));
+            Assert.DoesNotContain(20, skipList);
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace UnitTest.DataStructuresTests
 
             skipList.Remove(5);
 
-            Assert.False(skipList.Contains(5));
+            Assert.DoesNotContain(5, skipList);
             Assert.Equal(2, skipList.Count);
         }
 
@@ -249,7 +249,7 @@ namespace UnitTest.DataStructuresTests
 
             skipList.Remove(15);
 
-            Assert.False(skipList.Contains(15));
+            Assert.DoesNotContain(15, skipList);
             Assert.Equal(2, skipList.Count);
         }
 
@@ -266,7 +266,7 @@ namespace UnitTest.DataStructuresTests
             skipList.Remove(30);
 
             Assert.True(skipList.IsEmpty);
-            Assert.Equal(0, skipList.Count);
+            Assert.Empty(skipList);
         }
 
         #endregion
@@ -283,7 +283,7 @@ namespace UnitTest.DataStructuresTests
 
             skipList.Clear();
 
-            Assert.Equal(0, skipList.Count);
+            Assert.Empty(skipList);
             Assert.True(skipList.IsEmpty);
         }
 
@@ -297,8 +297,8 @@ namespace UnitTest.DataStructuresTests
 
             skipList.Add(30);
 
-            Assert.Equal(1, skipList.Count);
-            Assert.True(skipList.Contains(30));
+            Assert.Single(skipList);
+            Assert.Contains(30, skipList);
         }
 
         #endregion
@@ -363,7 +363,7 @@ namespace UnitTest.DataStructuresTests
 
             Assert.Equal(10, min);
             Assert.Equal(2, skipList.Count);
-            Assert.False(skipList.Contains(10));
+            Assert.DoesNotContain(10, skipList);
         }
 
         [Fact]
@@ -491,9 +491,9 @@ namespace UnitTest.DataStructuresTests
             
             // List should still be intact
             Assert.Equal(3, skipList.Count);
-            Assert.True(skipList.Contains(-23));
-            Assert.True(skipList.Contains(-5));
-            Assert.True(skipList.Contains(-100));
+            Assert.Contains(-23, skipList);
+            Assert.Contains(-5, skipList);
+            Assert.Contains(-100, skipList);
             
             // Enumeration should work
             var items = skipList.ToList();
@@ -514,9 +514,9 @@ namespace UnitTest.DataStructuresTests
             skipList.Add("cherry");
 
             Assert.Equal(3, skipList.Count);
-            Assert.True(skipList.Contains("apple"));
-            Assert.True(skipList.Contains("banana"));
-            Assert.True(skipList.Contains("cherry"));
+            Assert.Contains("apple", skipList);
+            Assert.Contains("banana", skipList);
+            Assert.Contains("cherry", skipList);
         }
 
         [Fact]
@@ -565,7 +565,7 @@ namespace UnitTest.DataStructuresTests
             // Adding null doesn't throw but may cause issues
             skipList.Add(null);
             
-            Assert.Equal(1, skipList.Count);
+            Assert.Single(skipList);
         }
 
         #endregion

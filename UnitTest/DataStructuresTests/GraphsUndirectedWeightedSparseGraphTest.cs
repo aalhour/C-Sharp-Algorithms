@@ -29,7 +29,7 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(4, graph.OutgoingEdges("c").Count());
             Assert.Equal(2, graph.OutgoingEdges("v").Count());
             Assert.Equal(3, graph.OutgoingEdges("f").Count());
-            Assert.Equal(1, graph.OutgoingEdges("z").Count());
+            Assert.Single(graph.OutgoingEdges("z"));
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace UnitTest.DataStructuresTests
             Assert.Equal(4, graph.IncomingEdges("c").Count());
             Assert.Equal(2, graph.IncomingEdges("v").Count());
             Assert.Equal(3, graph.IncomingEdges("f").Count());
-            Assert.Equal(1, graph.IncomingEdges("z").Count());
+            Assert.Single(graph.IncomingEdges("z"));
         }
 
         [Fact]

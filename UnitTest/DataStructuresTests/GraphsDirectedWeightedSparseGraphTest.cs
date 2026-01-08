@@ -23,12 +23,12 @@ namespace UnitTest.DataStructuresTests
             var graph = CreateTestGraph();
 
             Assert.Equal(2, graph.OutgoingEdges("a").Count());
-            Assert.Equal(1, graph.OutgoingEdges("s").Count());
+            Assert.Single(graph.OutgoingEdges("s"));
             Assert.Equal(3, graph.OutgoingEdges("d").Count());
             Assert.Equal(3, graph.OutgoingEdges("x").Count());
             Assert.Equal(3, graph.OutgoingEdges("c").Count());
-            Assert.Equal(1, graph.OutgoingEdges("v").Count());
-            Assert.Equal(1, graph.OutgoingEdges("f").Count());
+            Assert.Single(graph.OutgoingEdges("v"));
+            Assert.Single(graph.OutgoingEdges("f"));
             Assert.Empty(graph.OutgoingEdges("z"));
         }
 
@@ -37,14 +37,14 @@ namespace UnitTest.DataStructuresTests
         {
             var graph = CreateTestGraph();
 
-            Assert.Equal(1, graph.IncomingEdges("a").Count());
+            Assert.Single(graph.IncomingEdges("a"));
             Assert.Equal(2, graph.IncomingEdges("s").Count());
             Assert.Equal(2, graph.IncomingEdges("d").Count());
-            Assert.Equal(1, graph.IncomingEdges("x").Count());
+            Assert.Single(graph.IncomingEdges("x"));
             Assert.Equal(3, graph.IncomingEdges("c").Count());
-            Assert.Equal(1, graph.IncomingEdges("v").Count());
+            Assert.Single(graph.IncomingEdges("v"));
             Assert.Equal(3, graph.IncomingEdges("f").Count());
-            Assert.Equal(1, graph.IncomingEdges("z").Count());
+            Assert.Single(graph.IncomingEdges("z"));
         }
 
         [Fact]

@@ -6,8 +6,6 @@
     <Nullable>disable</Nullable>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <!-- Suppress xUnit analyzer style warnings (use Assert.Single instead of Assert.Equal(1, x), etc.) -->
-    <NoWarn>xUnit2013;xUnit2017</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
