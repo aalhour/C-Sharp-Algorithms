@@ -9,7 +9,7 @@ namespace UnitTest.DataStructuresTests
         public static void DoTest()
         {
             int top;
-            Stack<int> stack = new Stack<int>();
+            var stack = new DataStructures.Lists.Stack<int>();
 
             stack.Push(1);
             stack.Push(2);

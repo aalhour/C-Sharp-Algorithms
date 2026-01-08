@@ -53,8 +53,20 @@ This is a C#.NET solution-project, and it contains three subprojects:
 
 #### Requirements:
 
-  1. .NET Core >= 2.0
-  2. XUnit
+  * [.NET 10.0 SDK](https://dotnet.microsoft.com/download) (or later)
+
+#### Building & Testing:
+
+```bash
+# Restore packages
+dotnet restore
+
+# Build the solution
+dotnet build
+
+# Run all tests
+dotnet test
+```
 
 #### A Note to Contributors:
 

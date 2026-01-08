@@ -1,8 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>    
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    
+    <!-- Package metadata -->
+    <PackageId>C-Sharp-Algorithms.DataStructures</PackageId>
+    <Description>A library of standard data structures implemented in C#</Description>
+    <Authors>Ahmad Alhour</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/aalhour/C-Sharp-Algorithms</RepositoryUrl>
+    <PackageTags>algorithms;data-structures;csharp</PackageTags>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="Data\PrimesDocument_10K.csv">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

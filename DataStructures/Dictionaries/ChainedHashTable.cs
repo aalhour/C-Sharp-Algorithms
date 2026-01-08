@@ -583,30 +583,21 @@ namespace DataStructures.Dictionaries
             int hashTableIndex = 0;
             var currentChainNode = new DLinkedListNode<TKey, TValue>();
 
-            while (true)
+            while (hashTableIndex < _hashTableStore.Length && i < array.Length)
             {
-                KeyValuePair<TKey, TValue> pair;
-
-                if (i >= array.Length)
-                    break;
-
                 if (_hashTableStore[hashTableIndex] != null)
                 {
                     currentChainNode = _hashTableStore[hashTableIndex].Head;
                     while (currentChainNode != null && i < array.Length)
                     {
-                        pair = new KeyValuePair<TKey, TValue>(currentChainNode.Key, currentChainNode.Value);
+                        var pair = new KeyValuePair<TKey, TValue>(currentChainNode.Key, currentChainNode.Value);
                         array[i] = pair;
                         i++;
-                        hashTableIndex++;
-
                         currentChainNode = currentChainNode.Next;
                     }
                 }
-                else
-                {
-                    hashTableIndex++;
-                }
+
+                hashTableIndex++;
             }
         }
 

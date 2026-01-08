@@ -8,7 +8,7 @@ namespace UnitTest.DataStructuresTests
         [Fact]
         public static void DoTest()
         {
-            var queue = new Queue<string>();
+            var queue = new DataStructures.Lists.Queue<string>();
             queue.Enqueue("aaa");
             queue.Enqueue("bbb");
             queue.Enqueue("ccc");
