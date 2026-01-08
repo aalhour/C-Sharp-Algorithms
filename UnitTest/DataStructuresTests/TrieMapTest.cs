@@ -16,7 +16,7 @@ namespace UnitTest.DataStructuresTests
 
             trieMap.Add("hello", 42);
 
-            Assert.Equal(1, trieMap.Count);
+            Assert.Single(trieMap);
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace UnitTest.DataStructuresTests
 
             trieMap.Remove("acting");
 
-            Assert.Equal(1, trieMap.Count);
+            Assert.Single(trieMap);
             Assert.False(trieMap.ContainsWord("acting"));
             Assert.True(trieMap.ContainsWord("active"));
         }
@@ -173,7 +173,7 @@ namespace UnitTest.DataStructuresTests
 
             // "acto" is a prefix but not a terminal word
             Assert.Throws<KeyNotFoundException>(() => trieMap.Remove("acto"));
-            Assert.Equal(1, trieMap.Count);
+            Assert.Single(trieMap);
         }
 
         [Fact]

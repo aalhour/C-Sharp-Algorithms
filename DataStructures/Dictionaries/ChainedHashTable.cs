@@ -620,12 +620,24 @@ namespace DataStructures.Dictionaries
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _hashTableStore.Length; i++)
+            {
+                var chain = _hashTableStore[i];
+                if (chain != null && chain.Count > 0)
+                {
+                    var node = chain.Head;
+                    while (node != null)
+                    {
+                        yield return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
+                        node = node.Next;
+                    }
+                }
+            }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
     }

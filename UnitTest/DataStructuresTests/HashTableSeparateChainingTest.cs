@@ -86,7 +86,7 @@ namespace UnitTest.DataStructuresTests
             table.Remove("Name1");
             table.Remove("Name3");
 
-            Assert.Equal(0, table.Count);
+            Assert.Empty(table);
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace UnitTest.DataStructuresTests
             table.Remove("Name1");
             table.Remove("Name3");
 
-            Assert.Equal(0, table.Count);
+            Assert.Empty(table);
             var array = new KeyValuePair<string, int>[table.Count];
             table.CopyTo(array, 0);
             

@@ -15,7 +15,6 @@ namespace UnitTest.DataStructuresTests
         {
             var hashTable = new OpenScatterHashTable<int, string>();
 
-            Assert.Equal(0, hashTable.Count);
             Assert.Empty(hashTable);
         }
 
@@ -24,7 +23,6 @@ namespace UnitTest.DataStructuresTests
         {
             var hashTable = new OpenScatterHashTable<int, string>(100);
 
-            Assert.Equal(0, hashTable.Count);
             Assert.Empty(hashTable);
         }
 
@@ -45,7 +43,7 @@ namespace UnitTest.DataStructuresTests
 
             hashTable.Add(1, "one");
 
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.True(hashTable.ContainsKey(1));
         }
 
@@ -105,7 +103,7 @@ namespace UnitTest.DataStructuresTests
 
             hashTable.Add(new KeyValuePair<int, string>(1, "one"));
 
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.Equal("one", hashTable[1]);
         }
 
@@ -137,7 +135,7 @@ namespace UnitTest.DataStructuresTests
 
             hashTable[1] = "one";
 
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.Equal("one", hashTable[1]);
         }
 
@@ -149,7 +147,7 @@ namespace UnitTest.DataStructuresTests
 
             hashTable[1] = "ONE";
 
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.Equal("ONE", hashTable[1]);
         }
 
@@ -224,7 +222,7 @@ namespace UnitTest.DataStructuresTests
             bool removed = hashTable.Remove(1);
 
             Assert.True(removed);
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.False(hashTable.ContainsKey(1));
             Assert.True(hashTable.ContainsKey(2));
         }
@@ -238,7 +236,7 @@ namespace UnitTest.DataStructuresTests
             bool removed = hashTable.Remove(99);
 
             Assert.False(removed);
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
         }
 
         [Fact]
@@ -250,12 +248,12 @@ namespace UnitTest.DataStructuresTests
             // Wrong value - should not remove
             bool removed1 = hashTable.Remove(new KeyValuePair<int, string>(1, "wrong"));
             Assert.False(removed1);
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
 
             // Correct key and value - should remove
             bool removed2 = hashTable.Remove(new KeyValuePair<int, string>(1, "one"));
             Assert.True(removed2);
-            Assert.Equal(0, hashTable.Count);
+            Assert.Empty(hashTable);
         }
 
         [Fact]
@@ -267,7 +265,7 @@ namespace UnitTest.DataStructuresTests
 
             hashTable.Add(1, "new one");
 
-            Assert.Equal(1, hashTable.Count);
+            Assert.Single(hashTable);
             Assert.Equal("new one", hashTable[1]);
         }
 
@@ -285,7 +283,6 @@ namespace UnitTest.DataStructuresTests
 
             hashTable.Clear();
 
-            Assert.Equal(0, hashTable.Count);
             Assert.Empty(hashTable);
             Assert.False(hashTable.ContainsKey(1));
         }
@@ -336,7 +333,7 @@ namespace UnitTest.DataStructuresTests
             var hashTable = new OpenScatterHashTable<int, string>();
             hashTable.Add(1, "one");
 
-            Assert.True(hashTable.Contains(new KeyValuePair<int, string>(1, "one")));
+            Assert.Contains(new KeyValuePair<int, string>(1, "one"), hashTable);
         }
 
         [Fact]
@@ -345,7 +342,7 @@ namespace UnitTest.DataStructuresTests
             var hashTable = new OpenScatterHashTable<int, string>();
             hashTable.Add(1, "one");
 
-            Assert.False(hashTable.Contains(new KeyValuePair<int, string>(1, "wrong")));
+            Assert.DoesNotContain(new KeyValuePair<int, string>(1, "wrong"), hashTable);
         }
 
         [Fact]
@@ -354,7 +351,7 @@ namespace UnitTest.DataStructuresTests
             var hashTable = new OpenScatterHashTable<int, string>();
             hashTable.Add(1, "one");
 
-            Assert.False(hashTable.Contains(new KeyValuePair<int, string>(99, "whatever")));
+            Assert.DoesNotContain(new KeyValuePair<int, string>(99, "whatever"), hashTable);
         }
 
         #endregion

@@ -99,9 +99,9 @@ namespace UnitTest.DataStructuresTests
         {
             var sortedList = CreateTestList();
 
-            Assert.True(sortedList.Contains(10));
-            Assert.True(sortedList.Contains(1));
-            Assert.True(sortedList.Contains(35));
+            Assert.Contains(10, sortedList);
+            Assert.Contains(1, sortedList);
+            Assert.Contains(35, sortedList);
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace UnitTest.DataStructuresTests
         {
             var sortedList = CreateTestList();
 
-            Assert.False(sortedList.Contains(999999999));
+            Assert.DoesNotContain(999999999, sortedList);
         }
 
         #endregion
@@ -124,7 +124,7 @@ namespace UnitTest.DataStructuresTests
             var result = sortedList.Remove(10);
 
             Assert.True(result);
-            Assert.False(sortedList.Contains(10));
+            Assert.DoesNotContain(10, sortedList);
         }
 
         [Fact]

@@ -155,7 +155,7 @@ namespace UnitTest.DataStructuresTests
 
             sortedDict.Clear();
 
-            Assert.Equal(0, sortedDict.Count);
+            Assert.Empty(sortedDict);
         }
 
         #endregion
