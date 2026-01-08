@@ -64,10 +64,6 @@
   * Big Integer representation.
   * Approximation Algorithms.
  
-### Bugfixing:
-
- * Bugfix Bellman-Ford algorithm.
- 
 ### References:
 
  * MIT's Introduction to Algorithms (6.006):

@@ -106,6 +106,7 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [Chained Hash Table](DataStructures/Dictionaries/ChainedHashTable.cs)
   * [Cuckoo Hash Table](DataStructures/Dictionaries/CuckooHashTable.cs)
   * [Open-Addressing Hash Table](DataStructures/Dictionaries/OpenAddressingHashTable.cs)
+  * [Open Scatter Hash Table](DataStructures/Dictionaries/OpenScatterHashTable.cs)
 
 #### Sorted Collections (Tree-based):
 
@@ -193,6 +194,8 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
 
   * [Recursive Binary Tree Walker](Algorithms/Trees/BinaryTreeRecursiveWalker.cs)
     + Methods: PrintAll, ForEach, Contains and BinarySearch. Traversal Modes: Preorder, Inorder & Postorder
+  * [Iterative Binary Tree Walker](Algorithms/Trees/BinaryTreeIterativeWalker.cs)
+    + Methods: PrintAll, ForEach. Traversal Modes: Preorder, Inorder & Postorder
 
 #### Strings:
 
@@ -205,6 +208,8 @@ If you wish to contribute to C# ALGORITHMS, then please make sure you check out 
   * [Binomial Coefficients](Algorithms/Numeric/BinomialCoefficients.cs)
   * [Catalan Numbers](Algorithms/Numeric/CatalanNumbers.cs)
   * [Greatest Common Divisor](Algorithms/Numeric/GreatestCommonDivisor.cs)
+  * [Sieve of Atkin](Algorithms/Numeric/SieveOfAtkin.cs)
+  * [Sieve of Eratosthenes](Algorithms/Numeric/SieveOfEratosthenes.cs)
 
 #### Visualization:
 
