@@ -9,142 +9,146 @@ namespace UnitTest.DataStructuresTests
     public static class HashTableSeparateChainingTest
     {
         [Fact]
-        public static void Adding_ThreeDifferentElements_ReturnsSuccessful()
+        public static void Add_ThreeElements_AllCanBeRetrieved()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
+            var table = new ChainedHashTable<string, int>();
 
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
-            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
+            table.Add(new KeyValuePair<string, int>("Name3", 3));
 
-            var mark = studentsMarks["Name1"];
-            Assert.True(mark == 1);
-
-            mark = studentsMarks["Name2"];
-            Assert.True(mark == 5);
-
-            mark = studentsMarks["Name3"];
-            Assert.True(mark == 3);
-
-            Assert.True(studentsMarks.Count == 3);
+            Assert.Equal(1, table["Name1"]);
+            Assert.Equal(5, table["Name2"]);
+            Assert.Equal(3, table["Name3"]);
+            Assert.Equal(3, table.Count);
         }
 
         [Fact]
-        public static void Adding_TwoDuplicateElements_ReturnsException()
+        public static void Add_DuplicateKey_ThrowsArgumentException()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
 
-            Action act = () => studentsMarks.Add("Name2", 7);
-            
-            var exception = Assert.Throws<ArgumentException>(act);
+            var exception = Assert.Throws<ArgumentException>(() => table.Add("Name2", 7));
+
             Assert.Equal("Key already exists in the hash table.", exception.Message);
-            Assert.True(studentsMarks.Count == 2);
+            Assert.Equal(2, table.Count);
         }
 
         [Fact]
-        public static void GetElement_ExistingElement_ReturnsElement()
+        public static void Indexer_ExistingKey_ReturnsValue()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
 
-            var value = studentsMarks["Name2"];
-
-            Assert.Equal(5, value);
-            Assert.True(studentsMarks.Count == 2);
+            Assert.Equal(5, table["Name2"]);
+            Assert.Equal(2, table.Count);
         }
 
         [Fact]
-        public static void GetElement_NonExistingElement_ReturnsException()
+        public static void Indexer_NonExistingKey_ThrowsKeyNotFoundException()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
 
-            int value;
-            Action act = () => value = studentsMarks["Name3"];
-
-            Assert.Throws<KeyNotFoundException>(act);
-            Assert.True(studentsMarks.Count == 2);
+            Assert.Throws<KeyNotFoundException>(() => _ = table["Name3"]);
+            Assert.Equal(2, table.Count);
         }
 
         [Fact]
-        public static void RemovingOneElement_ThreeDifferentElements_ReturnsSuccessful()
+        public static void Remove_ExistingKey_RemovesItem()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
-            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
+            table.Add("Name3", 3);
 
-            studentsMarks.Remove("Name2");
+            table.Remove("Name2");
 
-            var mark = studentsMarks["Name1"];
-            Assert.True(mark == 1);
-
-            mark = studentsMarks["Name3"];
-            Assert.True(mark == 3);
-
-            Assert.False(studentsMarks.ContainsKey("Name2"));
-
-            Assert.True(studentsMarks.Count == 2);
+            Assert.Equal(1, table["Name1"]);
+            Assert.Equal(3, table["Name3"]);
+            Assert.False(table.ContainsKey("Name2"));
+            Assert.Equal(2, table.Count);
         }
 
         [Fact]
-        public static void RemovingAllElement_ThreeDifferentElements_ReturnsSuccessful()
+        public static void Remove_AllKeys_EmptiesTable()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
-            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
+            table.Add("Name3", 3);
 
-            studentsMarks.Remove("Name2");
-            studentsMarks.Remove("Name1");
-            studentsMarks.Remove("Name3");
+            table.Remove("Name2");
+            table.Remove("Name1");
+            table.Remove("Name3");
 
-            Assert.True(studentsMarks.Count == 0);
+            Assert.Equal(0, table.Count);
         }
 
         [Fact]
-        public static void CopyTo_FilledHashTable_ReturnsSuccessful()
+        public static void CopyTo_FilledTable_CopiesAllItems()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
-            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
+            table.Add("Name3", 3);
 
-            var array = new KeyValuePair<string, int>[studentsMarks.Count];
-            studentsMarks.CopyTo(array, 0);
+            var array = new KeyValuePair<string, int>[table.Count];
+            table.CopyTo(array, 0);
 
-            Assert.True(studentsMarks.Count == 3);
-            Assert.True(array.Length == 3);
-            var arrayKeys = array.Select(x => x.Key).OrderBy(x => x).ToArray();
-            Assert.Equal("Name1", arrayKeys[0]);
-            Assert.Equal("Name2", arrayKeys[1]);
-            Assert.Equal("Name3", arrayKeys[2]);
-            var arrayValues = array.Select(x => x.Value).OrderBy(x => x).ToArray();
-            Assert.Equal(1, arrayValues[0]);
-            Assert.Equal(3, arrayValues[1]);
-            Assert.Equal(5, arrayValues[2]);
+            Assert.Equal(3, table.Count);
+            Assert.Equal(3, array.Length);
 
+            var keys = array.Select(x => x.Key).OrderBy(x => x).ToArray();
+            Assert.Equal("Name1", keys[0]);
+            Assert.Equal("Name2", keys[1]);
+            Assert.Equal("Name3", keys[2]);
+
+            var values = array.Select(x => x.Value).OrderBy(x => x).ToArray();
+            Assert.Equal(1, values[0]);
+            Assert.Equal(3, values[1]);
+            Assert.Equal(5, values[2]);
         }
 
         [Fact]
-        public static void CopyTo_EmptyHashTable_ReturnsSuccessful()
+        public static void CopyTo_EmptyTable_CopiesNothing()
         {
-            var studentsMarks = new ChainedHashTable<string, int>();
-            studentsMarks.Add("Name1", 1);
-            studentsMarks.Add("Name2", 5);
-            studentsMarks.Add(new KeyValuePair<string, int>("Name3", 3));
+            var table = new ChainedHashTable<string, int>();
+            table.Add("Name1", 1);
+            table.Add("Name2", 5);
+            table.Add("Name3", 3);
 
-            studentsMarks.Remove("Name2");
-            studentsMarks.Remove("Name1");
-            studentsMarks.Remove("Name3");
+            table.Remove("Name2");
+            table.Remove("Name1");
+            table.Remove("Name3");
 
-            Assert.True(studentsMarks.Count == 0);
-            var array = new KeyValuePair<string, int>[studentsMarks.Count];
-            studentsMarks.CopyTo(array, 0);
+            Assert.Equal(0, table.Count);
+            var array = new KeyValuePair<string, int>[table.Count];
+            table.CopyTo(array, 0);
+            
+            Assert.Empty(array);
+        }
+
+        [Fact]
+        public static void ContainsKey_ExistingKey_ReturnsTrue()
+        {
+            var table = new ChainedHashTable<string, int>();
+            table.Add("exists", 42);
+
+            Assert.True(table.ContainsKey("exists"));
+        }
+
+        [Fact]
+        public static void ContainsKey_NonExistingKey_ReturnsFalse()
+        {
+            var table = new ChainedHashTable<string, int>();
+            table.Add("exists", 42);
+
+            Assert.False(table.ContainsKey("does-not-exist"));
         }
     }
 }

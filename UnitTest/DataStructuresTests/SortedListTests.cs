@@ -6,16 +6,14 @@ namespace UnitTest.DataStructuresTests
 {
     public static class SortedListTests
     {
+        #region Add Tests
+
         [Fact]
-        public static void DoTest()
+        public static void Add_ArbitraryOrder_MaintainsSortedOrder()
         {
-            // New empty sorted list
             var sortedList = new SortedList<int>();
+            var expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35 };
 
-            // Expeted outcome
-            var expectedSort = new int[15] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35 };
-
-            // Insert items in arbitrary-order
             sortedList.Add(35);
             sortedList.Add(5);
             sortedList.Add(10);
@@ -32,94 +30,188 @@ namespace UnitTest.DataStructuresTests
             sortedList.Add(30);
             sortedList.Add(25);
 
+            Assert.Equal(expected.Length, sortedList.Count);
 
-            //
-            // Helper variables
-            int index = 0;
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], sortedList[i]);
+            }
+        }
+
+        #endregion
+
+        #region GetEnumerator Tests
+
+        [Fact]
+        public static void GetEnumerator_ReturnsItemsInSortedOrder()
+        {
+            var sortedList = CreateTestList();
+            var expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35 };
+
             var enumerator = sortedList.GetEnumerator();
+            var index = 0;
 
-            //
-            // Begin comparison
-            // Compare length and count
-            Assert.Equal(sortedList.Count, expectedSort.Length);
-
-            //
-            // Compare sort order
-            while (enumerator.MoveNext() && (index < expectedSort.Length))
+            while (enumerator.MoveNext() && index < expected.Length)
             {
-                Assert.Equal(enumerator.Current, expectedSort[index]);
-                index++;
-            }
-
-            //
-            // Assert index access
-            index = 0;
-            while (index < sortedList.Count && index < expectedSort.Length)
-            {
-                Assert.Equal(sortedList[index], expectedSort[index]);
-                index++;
-            }
-
-            //
-            // Assert removal of items correctly
-            Assert.True(sortedList.Contains(10), "Expected 10 to exist in sortedList.");
-            var remove10Status = sortedList.Remove(10);
-            Assert.True(remove10Status, "Expected 10 to be removed successfully.");
-            Assert.False(sortedList.Contains(10), "Expected 10 to be removed from sortedList.");
-
-            //
-            // Assert non-removal of non-existing items
-            Assert.False(sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
-            var remove999999999Status = sortedList.Remove(999999999);
-            Assert.False(remove999999999Status, "Expected 999999999 to not be removed successfully.");
-            Assert.False(sortedList.Contains(999999999), "Expected 999999999 to not exist in sortedList.");
-
-            //
-            // Assert throws exception
-            var threwException = false;
-
-            try
-            {
-                sortedList.RemoveAt(sortedList.Count * 2);  // illegal index
-            }
-            catch (IndexOutOfRangeException)
-            {
-                threwException = true;
-            }
-
-            Assert.True(threwException, "Expected to throw an exception on illegal index.");
-
-            //
-            // Assert indexOf returns correct information
-            Assert.True(0 == sortedList.IndexOf(1), "Expected 1 to be the smallest number and hence at index 0.");
-            Assert.True(-1 == sortedList.IndexOf(987654321), "Expected 987654321 not to be in sortedList.");
-
-            //
-            // Assert correct sort after updating on index
-            // Add back 10
-            sortedList.Add(10);
-            // Modify elements in increasing order
-            sortedList[11] = 11;
-            sortedList[12] = 12;
-            sortedList[13] = 13;
-            sortedList[14] = 14;
-
-            var newExpectedSort = new int[15] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-
-            index = 0;
-            enumerator = sortedList.GetEnumerator();
-
-            // Compare length and count
-            Assert.True(sortedList.Count == newExpectedSort.Length, "Wrong number of items.");
-
-            // Compare sort order
-            while (enumerator.MoveNext() && (index < newExpectedSort.Length))
-            {
-                // TODO: Verify
-                Assert.True(enumerator.Current == newExpectedSort[index], "Wrong sorting order.");
+                Assert.Equal(expected[index], enumerator.Current);
                 index++;
             }
         }
+
+        #endregion
+
+        #region Indexer Tests
+
+        [Fact]
+        public static void Indexer_Get_ReturnsCorrectElements()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.Equal(1, sortedList[0]);
+            Assert.Equal(5, sortedList[4]);
+            Assert.Equal(35, sortedList[sortedList.Count - 1]);
+        }
+
+        [Fact]
+        public static void Indexer_Set_MaintainsSortOrder()
+        {
+            var sortedList = CreateTestList();
+
+            // Remove some elements and add new ones
+            sortedList.Remove(35);
+            sortedList.Remove(30);
+            sortedList.Remove(25);
+            sortedList.Remove(20);
+            sortedList.Remove(15);
+
+            sortedList.Add(10);
+            sortedList[sortedList.Count - 1] = 11;
+            sortedList[sortedList.Count - 1] = 12;
+            sortedList[sortedList.Count - 1] = 13;
+            sortedList[sortedList.Count - 1] = 14;
+
+            var expected = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 14 };
+
+            for (int i = 0; i < sortedList.Count; i++)
+            {
+                Assert.Equal(expected[i], sortedList[i]);
+            }
+        }
+
+        #endregion
+
+        #region Contains Tests
+
+        [Fact]
+        public static void Contains_ExistingElement_ReturnsTrue()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.True(sortedList.Contains(10));
+            Assert.True(sortedList.Contains(1));
+            Assert.True(sortedList.Contains(35));
+        }
+
+        [Fact]
+        public static void Contains_NonExistingElement_ReturnsFalse()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.False(sortedList.Contains(999999999));
+        }
+
+        #endregion
+
+        #region Remove Tests
+
+        [Fact]
+        public static void Remove_ExistingElement_RemovesAndReturnsTrue()
+        {
+            var sortedList = CreateTestList();
+
+            var result = sortedList.Remove(10);
+
+            Assert.True(result);
+            Assert.False(sortedList.Contains(10));
+        }
+
+        [Fact]
+        public static void Remove_NonExistingElement_ReturnsFalse()
+        {
+            var sortedList = CreateTestList();
+
+            var result = sortedList.Remove(999999999);
+
+            Assert.False(result);
+        }
+
+        #endregion
+
+        #region RemoveAt Tests
+
+        [Fact]
+        public static void RemoveAt_InvalidIndex_ThrowsIndexOutOfRangeException()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.Throws<IndexOutOfRangeException>(() => sortedList.RemoveAt(sortedList.Count * 2));
+        }
+
+        [Fact]
+        public static void RemoveAt_ValidIndex_RemovesElement()
+        {
+            var sortedList = CreateTestList();
+            var previousCount = sortedList.Count;
+
+            sortedList.RemoveAt(0);
+
+            Assert.Equal(previousCount - 1, sortedList.Count);
+            Assert.Equal(2, sortedList[0]); // 1 was removed, now 2 is first
+        }
+
+        #endregion
+
+        #region IndexOf Tests
+
+        [Fact]
+        public static void IndexOf_SmallestElement_ReturnsZero()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.Equal(0, sortedList.IndexOf(1));
+        }
+
+        [Fact]
+        public static void IndexOf_NonExistingElement_ReturnsNegativeOne()
+        {
+            var sortedList = CreateTestList();
+
+            Assert.Equal(-1, sortedList.IndexOf(987654321));
+        }
+
+        #endregion
+
+        private static SortedList<int> CreateTestList()
+        {
+            var sortedList = new SortedList<int>();
+
+            sortedList.Add(35);
+            sortedList.Add(5);
+            sortedList.Add(10);
+            sortedList.Add(15);
+            sortedList.Add(20);
+            sortedList.Add(1);
+            sortedList.Add(6);
+            sortedList.Add(2);
+            sortedList.Add(7);
+            sortedList.Add(3);
+            sortedList.Add(8);
+            sortedList.Add(4);
+            sortedList.Add(9);
+            sortedList.Add(30);
+            sortedList.Add(25);
+
+            return sortedList;
+        }
     }
 }
-

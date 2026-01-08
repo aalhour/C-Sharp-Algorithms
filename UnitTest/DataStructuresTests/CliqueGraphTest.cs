@@ -1,131 +1,141 @@
 ﻿using System;
 using DataStructures.Graphs;
+using Xunit;
 
 namespace UnitTest.DataStructuresTests
 {
     public static class CliqueGraphTest
     {
-        public const int vertexPerCluster = 10;
-        public const int numClusters = 10;
-        static CliqueGraph<ComparableTuple> testGraph = new CliqueGraph<ComparableTuple>();
-        static IGraph<ComparableTuple> compareGraph;
+        public const int VertexPerCluster = 10;
+        public const int NumClusters = 10;
 
-        static void MakeGraph(IGraph<ComparableTuple> gra)
+        [Fact]
+        public static void Constructor_FromExistingGraph_CreatesCliqueGraph()
         {
+            var sourceGraph = CreateClusteredGraph();
 
-            for (int i = 0; i < numClusters; i++)
-            {
-                for (int j = 0; j < vertexPerCluster; j++)
-                {
-                    gra.AddVertex(new ComparableTuple(i, j));
-                }
-            }
+            var cliqueGraph = new CliqueGraph<ComparableTuple>(sourceGraph);
 
-            for (int i = 0; i < numClusters; i++)
-            {
-                MakeCluster(gra, i);
-                System.Diagnostics.Debug.WriteLine(string.Format("Cluster {0} finished.", i));
-            }
-
-            for (int i = 0; i < numClusters; i++)
-            {
-                for (int j = 0; j < numClusters; j++)
-                {
-                    gra.AddEdge(new ComparableTuple(i, 0), new ComparableTuple(j, 0));
-                }
-            }
-
-            System.Diagnostics.Debug.WriteLine(string.Format("Graph connected"));
+            Assert.NotNull(cliqueGraph);
+            Assert.True(cliqueGraph.VerticesCount > 0);
         }
 
-        static void MakeCluster(IGraph<ComparableTuple> gra, int i)
+        [Fact]
+        public static void RemoveEdge_RemovesEdgeFromGraph()
         {
-            for (int j = 0; j < vertexPerCluster; j++)
-            {
-                for (int k = j; k < vertexPerCluster; k++)
-                {
-                    gra.AddEdge(new ComparableTuple(i, j), new ComparableTuple(i, k));
-                }
-            }
+            var sourceGraph = CreateClusteredGraph();
+            var cliqueGraph = new CliqueGraph<ComparableTuple>(sourceGraph);
+
+            var v1 = new ComparableTuple(0, 0);
+            var v2 = new ComparableTuple(1, 0);
+            var hadEdgeBefore = cliqueGraph.HasEdge(v1, v2);
+
+            cliqueGraph.RemoveEdge(v1, v2);
+            var hasEdgeAfter = cliqueGraph.HasEdge(v1, v2);
+
+            Assert.True(hadEdgeBefore);
+            Assert.False(hasEdgeAfter);
         }
 
-
-        public static void DoTest()
+        [Fact]
+        public static void BuildDualGraph_CreatesDualGraph()
         {
-            compareGraph = new UndirectedDenseGraph<ComparableTuple>(numClusters * vertexPerCluster);
-            MakeGraph(compareGraph);
+            var sourceGraph = CreateClusteredGraph();
+            var cliqueGraph = new CliqueGraph<ComparableTuple>(sourceGraph);
 
-            testGraph = new CliqueGraph<ComparableTuple>(compareGraph);
-            // ICollection<ComparableTuple> component = testGraph.GetConnectedComponent(new ComparableTuple(0, 0));
-            // DataStructures.Lists.DLinkedList<ComparableTuple> neighbor = testGraph.Neighbours(new ComparableTuple(0, 0));
+            var dualGraph = cliqueGraph.buildDualGraph();
 
-            testGraph.RemoveEdge(new ComparableTuple(0, 0), new ComparableTuple(1, 0));
+            Assert.NotNull(dualGraph);
+            Assert.True(dualGraph.VerticesCount > 0);
+        }
 
-            IGraph<CliqueGraph<ComparableTuple>.Clique> dualGraph = testGraph.buildDualGraph();
+        [Fact]
+        public static void Edges_ReturnsAllEdges()
+        {
+            var sourceGraph = CreateClusteredGraph();
+            var cliqueGraph = new CliqueGraph<ComparableTuple>(sourceGraph);
 
-            foreach (var x in dualGraph.Vertices)
+            var edgeCount = 0;
+            foreach (var edge in cliqueGraph.Edges)
             {
-                foreach (var y in dualGraph.Neighbours(x))
+                edgeCount++;
+            }
+
+            Assert.True(edgeCount > 0);
+        }
+
+        [Fact]
+        public static void OutgoingEdges_ReturnsEdgesFromVertex()
+        {
+            var sourceGraph = CreateClusteredGraph();
+            var cliqueGraph = new CliqueGraph<ComparableTuple>(sourceGraph);
+            var vertex = new ComparableTuple(0, 0);
+
+            var outgoingCount = 0;
+            foreach (var edge in cliqueGraph.OutgoingEdges(vertex))
+            {
+                Assert.Equal(vertex.Item1, edge.Source.Item1);
+                Assert.Equal(vertex.Item2, edge.Source.Item2);
+                outgoingCount++;
+            }
+
+            Assert.True(outgoingCount > 0);
+        }
+
+        private static IGraph<ComparableTuple> CreateClusteredGraph()
+        {
+            var graph = new UndirectedDenseGraph<ComparableTuple>(NumClusters * VertexPerCluster);
+
+            // Add vertices
+            for (int i = 0; i < NumClusters; i++)
+            {
+                for (int j = 0; j < VertexPerCluster; j++)
                 {
-                    System.Diagnostics.Debug.WriteLine(string.Format("{0}-{1}", x, y));
+                    graph.AddVertex(new ComparableTuple(i, j));
                 }
             }
 
-            // CliqueGraph.Edges test
-            foreach (var edge in testGraph.Edges)
+            // Create clusters (complete subgraphs)
+            for (int i = 0; i < NumClusters; i++)
             {
-                //System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
+                for (int j = 0; j < VertexPerCluster; j++)
+                {
+                    for (int k = j; k < VertexPerCluster; k++)
+                    {
+                        graph.AddEdge(new ComparableTuple(i, j), new ComparableTuple(i, k));
+                    }
+                }
             }
 
-            foreach (var edge in testGraph.OutgoingEdges(new ComparableTuple(0, 0)))
+            // Connect clusters through first vertex of each
+            for (int i = 0; i < NumClusters; i++)
             {
-                System.Diagnostics.Debug.WriteLine(string.Format("{0} -> {1}\t", edge.Source, edge.Destination));
+                for (int j = 0; j < NumClusters; j++)
+                {
+                    graph.AddEdge(new ComparableTuple(i, 0), new ComparableTuple(j, 0));
+                }
             }
 
-
+            return graph;
         }
     }
 
     class ComparableTuple : Tuple<int, int>, IComparable<ComparableTuple>, IEquatable<ComparableTuple>
     {
-        #region IComparable implementation
+        private static readonly int Multiplier = CliqueGraphTest.NumClusters;
 
+        public ComparableTuple(int item1, int item2) : base(item1, item2) { }
 
-        int IComparable<ComparableTuple>.CompareTo(ComparableTuple other)
+        private int ToInt => Item1 * Multiplier + Item2;
+
+        public int CompareTo(ComparableTuple other)
         {
-            int myInt = ToInt;
-            int otherInt = other.ToInt;
-            return myInt < otherInt ? -1 : (myInt > otherInt ? 1 : 0);
+            return ToInt.CompareTo(other?.ToInt ?? 0);
         }
 
-        #endregion
-
-        #region IEquatable implementation
-
-        bool IEquatable<ComparableTuple>.Equals(ComparableTuple other)
+        public bool Equals(ComparableTuple other)
         {
-            return ToInt == other.ToInt;
+            return other != null && ToInt == other.ToInt;
         }
-
-        #endregion
-
-        static readonly int multiplier = CliqueGraphTest.numClusters;
-
-        public ComparableTuple(int item1, int item2)
-            : base(item1, item2)
-        {
-
-        }
-
-        int ToInt
-        {
-            get
-            {
-                return Item1 * multiplier + Item2;
-            }
-        }
-
-
     }
 }
-

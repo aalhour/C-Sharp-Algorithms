@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using DataStructures.Trees;
 using Xunit;
@@ -8,133 +7,267 @@ namespace UnitTest.DataStructuresTests
 {
     public static class TrieMapTest
     {
+        #region Add and Count Tests
+
         [Fact]
-        public static void DoTest()
+        public static void Add_SingleWord_IncreasesCount()
         {
             var trieMap = new TrieMap<int>();
 
-            // Insert some how to words
-            const string prefixHowTo = "How to make";
-            var wordHowToSand = prefixHowTo + " a sandwitch";
-            var wordHowToRobot = prefixHowTo + " a robot";
-            var wordHowToOmelet = prefixHowTo + " an omelet";
-            var wordHowToProp = prefixHowTo + " a proposal";
-            var listOfHow = new List<string> { wordHowToSand, wordHowToRobot, wordHowToOmelet, wordHowToProp };
-            trieMap.Add(wordHowToOmelet, 7);
-            trieMap.Add(wordHowToSand, 11);
-            trieMap.Add(wordHowToRobot, 15);
-            trieMap.Add(wordHowToProp, 19);
+            trieMap.Add("hello", 42);
 
-            // Count of words = 4
-            Debug.Assert(trieMap.Count == 4);
+            Assert.Equal(1, trieMap.Count);
+        }
 
-            // Insert some dictionary words
-            var prefixAct = "act";
-            var wordActs = prefixAct + "s";
-            var wordActor = prefixAct + "or";
-            var wordActing = prefixAct + "ing";
-            var wordActress = prefixAct + "ress";
-            var wordActive = prefixAct + "ive";
-            var listOfActWords = new List<string> { wordActs, wordActor, wordActing, wordActress, wordActive };
-            trieMap.Add(wordActress, 82);
-            trieMap.Add(wordActive, 65);
-            trieMap.Add(wordActing, 34);
-            trieMap.Add(wordActs, 81);
-            trieMap.Add(wordActor, 32);
+        [Fact]
+        public static void Add_MultipleWords_TracksCount()
+        {
+            var trieMap = new TrieMap<int>();
 
-            // Count of words = 9
-            Assert.Equal(9, trieMap.Count);
+            trieMap.Add("hello", 1);
+            trieMap.Add("world", 2);
+            trieMap.Add("help", 3);
 
-            // ASSERT THE WORDS IN TRIE.
+            Assert.Equal(3, trieMap.Count);
+        }
 
-            // Search for a word that doesn't exist
-            Assert.False(trieMap.ContainsWord(prefixHowTo));
+        #endregion
 
-            // Search for prefix
-            Assert.True(trieMap.ContainsPrefix(prefixHowTo));
+        #region ContainsWord Tests
 
-            // Search for a prefix using a word
-            Assert.True(trieMap.ContainsPrefix(wordHowToSand));
+        [Fact]
+        public static void ContainsWord_ExistingWord_ReturnsTrue()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 42);
 
-            // Get all words that start with the how-to prefix
-            var someHowToWords = trieMap.SearchByPrefix(prefixHowTo).ToList();
-            Assert.Equal(someHowToWords.Count, listOfHow.Count);
+            Assert.True(trieMap.ContainsWord("hello"));
+        }
 
-            // Assert there are only two words under the prefix "acti" -> active, & acting
-            var someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList();
-            Assert.Equal(2, someActiWords.Count);
-            Assert.Contains(wordActing, someActiWords);
-            Assert.Contains(wordActive, someActiWords);
+        [Fact]
+        public static void ContainsWord_NonExistingWord_ReturnsFalse()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 42);
 
-            // Assert that "acto" is not a word
-            Assert.False(trieMap.ContainsWord("acto"));
+            Assert.False(trieMap.ContainsWord("world"));
+        }
 
-            //
-            // TEST GETTING VALUES ASSOCIATED TO WORDS
-            int actressRecord;
-            trieMap.SearchByWord(wordActress, out actressRecord);
+        [Fact]
+        public static void ContainsWord_PrefixOnly_ReturnsFalse()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 42);
+
+            Assert.False(trieMap.ContainsWord("hel"));
+        }
+
+        #endregion
+
+        #region ContainsPrefix Tests
+
+        [Fact]
+        public static void ContainsPrefix_ExistingPrefix_ReturnsTrue()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 42);
+            trieMap.Add("help", 43);
+
+            Assert.True(trieMap.ContainsPrefix("hel"));
+            Assert.True(trieMap.ContainsPrefix("hello"));
+        }
+
+        [Fact]
+        public static void ContainsPrefix_NonExistingPrefix_ReturnsFalse()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 42);
+
+            Assert.False(trieMap.ContainsPrefix("world"));
+        }
+
+        #endregion
+
+        #region SearchByPrefix Tests
+
+        [Fact]
+        public static void SearchByPrefix_ReturnsMatchingWords()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("active", 65);
+            trieMap.Add("acting", 34);
+            trieMap.Add("actor", 32);
+            trieMap.Add("acts", 81);
+
+            var actiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList();
+
+            Assert.Equal(2, actiWords.Count);
+            Assert.Contains("acting", actiWords);
+            Assert.Contains("active", actiWords);
+        }
+
+        [Fact]
+        public static void SearchByPrefix_HowToWords_ReturnsAll()
+        {
+            var trieMap = new TrieMap<int>();
+            const string prefix = "How to make";
+            var words = new List<string>
+            {
+                prefix + " a sandwitch",
+                prefix + " a robot",
+                prefix + " an omelet",
+                prefix + " a proposal"
+            };
+
+            for (int i = 0; i < words.Count; i++)
+            {
+                trieMap.Add(words[i], i);
+            }
+
+            var results = trieMap.SearchByPrefix(prefix).ToList();
+
+            Assert.Equal(words.Count, results.Count);
+        }
+
+        #endregion
+
+        #region SearchByWord Tests
+
+        [Fact]
+        public static void SearchByWord_ReturnsAssociatedValue()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("actress", 82);
+            trieMap.Add("proposal", 19);
+
+            trieMap.SearchByWord("actress", out int actressRecord);
+            trieMap.SearchByWord("proposal", out int proposalRecord);
+
             Assert.Equal(82, actressRecord);
-            int howToProposeRequests;
-            trieMap.SearchByWord(wordHowToProp, out howToProposeRequests);
-            Assert.Equal(19, howToProposeRequests);
+            Assert.Equal(19, proposalRecord);
+        }
 
-            //
-            // TEST DELETING SOMETHINGS
+        #endregion
 
-            // Removing a prefix should fail
-            bool removingActoFails;
-            try
+        #region Remove Tests
+
+        [Fact]
+        public static void Remove_ExistingWord_DecreasesCount()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("acting", 34);
+            trieMap.Add("active", 65);
+
+            trieMap.Remove("acting");
+
+            Assert.Equal(1, trieMap.Count);
+            Assert.False(trieMap.ContainsWord("acting"));
+            Assert.True(trieMap.ContainsWord("active"));
+        }
+
+        [Fact]
+        public static void Remove_NonTerminalPrefix_ThrowsKeyNotFoundException()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("actor", 32);
+
+            // "acto" is a prefix but not a terminal word
+            Assert.Throws<KeyNotFoundException>(() => trieMap.Remove("acto"));
+            Assert.Equal(1, trieMap.Count);
+        }
+
+        [Fact]
+        public static void Remove_NonExistingWord_ThrowsKeyNotFoundException()
+        {
+            var trieMap = new TrieMap<int>();
+            trieMap.Add("hello", 1);
+
+            Assert.Throws<KeyNotFoundException>(() => trieMap.Remove("world"));
+        }
+
+        #endregion
+
+        #region Enumerator Tests
+
+        [Fact]
+        public static void GetEnumerator_ReturnsAllWords()
+        {
+            var trieMap = new TrieMap<int>();
+            var words = new List<string> { "active", "acting", "actor", "acts" };
+
+            for (int i = 0; i < words.Count; i++)
             {
-                // try removing a non-terminal word
-                trieMap.Remove("acto");
-                removingActoFails = false;
-            }
-            catch
-            {
-                // if exception occured then code works, word doesn't exist.
-                removingActoFails = true;
+                trieMap.Add(words[i], i);
             }
 
-            Assert.True(removingActoFails);
-            Assert.Equal(9, trieMap.Count);
-
-            // Removing a word should work
-            bool removingActingPasses;
-            try
-            {
-                // try removing a non-terminal word
-                trieMap.Remove(wordActing);
-                removingActingPasses = true;
-            }
-            catch
-            {
-                // if exception occured then code DOESN'T work, word does exist.
-                removingActingPasses = false;
-            }
-
-            Assert.True(removingActingPasses);
-            Assert.Equal(8, trieMap.Count);
-            someActiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList();
-            Assert.Single(someActiWords);
-            Assert.Contains(wordActive, someActiWords);
-
-            //
-            // TEST ENUMERATOR
+            var enumeratedWords = new List<string>();
             var enumerator = trieMap.GetEnumerator();
-            var allWords = new List<string>();
             while (enumerator.MoveNext())
             {
-                allWords.Add(enumerator.Current.Key);
+                enumeratedWords.Add(enumerator.Current.Key);
             }
 
-            // Assert size
-            Assert.Equal(allWords.Count, trieMap.Count);
-
-            // Assert each element
-            foreach (var word in allWords)
+            Assert.Equal(trieMap.Count, enumeratedWords.Count);
+            foreach (var word in words)
             {
-                Assert.True(listOfActWords.Contains(word) || listOfHow.Contains(word));
+                Assert.Contains(word, enumeratedWords);
             }
         }
+
+        #endregion
+
+        #region Integration Test
+
+        [Fact]
+        public static void IntegrationTest_FullWorkflow()
+        {
+            var trieMap = new TrieMap<int>();
+
+            // Add "How to make" words
+            const string prefixHowTo = "How to make";
+            var howToWords = new List<string>
+            {
+                prefixHowTo + " a sandwitch",
+                prefixHowTo + " a robot",
+                prefixHowTo + " an omelet",
+                prefixHowTo + " a proposal"
+            };
+            trieMap.Add(howToWords[0], 11);
+            trieMap.Add(howToWords[1], 15);
+            trieMap.Add(howToWords[2], 7);
+            trieMap.Add(howToWords[3], 19);
+
+            // Add "act" words
+            var actWords = new List<string> { "acts", "actor", "acting", "actress", "active" };
+            trieMap.Add("actress", 82);
+            trieMap.Add("active", 65);
+            trieMap.Add("acting", 34);
+            trieMap.Add("acts", 81);
+            trieMap.Add("actor", 32);
+
+            Assert.Equal(9, trieMap.Count);
+
+            // Prefix is not a word
+            Assert.False(trieMap.ContainsWord(prefixHowTo));
+            Assert.True(trieMap.ContainsPrefix(prefixHowTo));
+
+            // "acto" is prefix but not word
+            Assert.False(trieMap.ContainsWord("acto"));
+            Assert.True(trieMap.ContainsPrefix("acto"));
+
+            // Get values
+            trieMap.SearchByWord("actress", out int actressVal);
+            Assert.Equal(82, actressVal);
+
+            // Remove and verify
+            trieMap.Remove("acting");
+            Assert.Equal(8, trieMap.Count);
+
+            var actiWords = trieMap.SearchByPrefix("acti").Select(item => item.Key).ToList();
+            Assert.Single(actiWords);
+            Assert.Contains("active", actiWords);
+        }
+
+        #endregion
     }
 }

@@ -1,70 +1,94 @@
 ﻿using System;
-using System.Diagnostics;
-
 using DataStructures.Graphs;
 using Algorithms.Graphs;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-	public static class GraphsDepthFirstSearchTest
-	{
-		public static void DoTest ()
-		{
-			IGraph<string> graph = new UndirectedSparseGraph<string>();
+    public static class GraphsDepthFirstSearchTest
+    {
+        private static IGraph<string> CreateTestGraph()
+        {
+            //
+            // Graph structure:
+            //
+            //     a --- s --- x --- d --- f
+            //     |         / \   / |   /
+            //     z        /   \ /  |  /
+            //             +-----c---+-+
+            //                   |
+            //                   v
+            //
+            var graph = new UndirectedSparseGraph<string>();
 
-			// Add vertices
-			var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
-			graph.AddVertices (verticesSet1);
+            var vertices = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
+            graph.AddVertices(vertices);
 
-			// Add edges
-			graph.AddEdge("a", "s");
-			graph.AddEdge("a", "z");
-			graph.AddEdge("s", "x");
-			graph.AddEdge("x", "d");
-			graph.AddEdge("x", "c");
-			graph.AddEdge("d", "f");
-			graph.AddEdge("d", "c");
-			graph.AddEdge("c", "f");
-			graph.AddEdge("c", "v");
-			graph.AddEdge("v", "f");
+            graph.AddEdge("a", "s");
+            graph.AddEdge("a", "z");
+            graph.AddEdge("s", "x");
+            graph.AddEdge("x", "d");
+            graph.AddEdge("x", "c");
+            graph.AddEdge("d", "f");
+            graph.AddEdge("d", "c");
+            graph.AddEdge("c", "f");
+            graph.AddEdge("c", "v");
+            graph.AddEdge("v", "f");
 
-			// Print the nodes in graph
-            Console.WriteLine(" [*] DFS PrintAll: ");
-            DepthFirstSearcher.PrintAll(graph, "d");
-            Console.WriteLine("\r\n");
+            return graph;
+        }
 
-			string searchResult = null;
-			string startFromNode = "d";
-			Action<string> writeToConsole = (node) => Console.Write (String.Format ("({0}) ", node));
-			Predicate<string> searchPredicate = (node) => node == "f" || node == "c";
+        [Fact]
+        public static void VisitAll_VisitsAllConnectedVertices()
+        {
+            var graph = CreateTestGraph();
+            var visitedNodes = new System.Collections.Generic.List<string>();
 
-			Console.WriteLine ("[*] DFS Visit All Nodes:");
-			Console.WriteLine ("Graph traversal started at node: '" + startFromNode + "'");
+            DepthFirstSearcher.VisitAll(ref graph, "d", node => visitedNodes.Add(node));
 
-			DepthFirstSearcher.VisitAll (ref graph, startFromNode, writeToConsole);
+            Assert.Equal(8, visitedNodes.Count);
+            Assert.Contains("a", visitedNodes);
+            Assert.Contains("z", visitedNodes);
+            Assert.Contains("s", visitedNodes);
+            Assert.Contains("x", visitedNodes);
+            Assert.Contains("d", visitedNodes);
+            Assert.Contains("c", visitedNodes);
+            Assert.Contains("f", visitedNodes);
+            Assert.Contains("v", visitedNodes);
+        }
 
-			Console.WriteLine ("\r\n");
+        [Fact]
+        public static void FindFirstMatch_ReturnsMatchingNode()
+        {
+            var graph = CreateTestGraph();
 
-			try 
-			{
-				searchResult = DepthFirstSearcher.FindFirstMatch(graph, startFromNode, searchPredicate);
+            var result = DepthFirstSearcher.FindFirstMatch(graph, "d", node => node == "f" || node == "c");
 
-				Debug.Assert(searchResult == "c" || searchResult == "f");
+            Assert.True(result == "c" || result == "f");
+        }
 
-				Console.WriteLine("[*] DFS Find First Match:");
-				Console.WriteLine(
-					String.Format(
-						"Search result: '{0}'. The search started from node: '{1}'."
-						, searchResult
-						, startFromNode));
-			}
-			catch(Exception) 
-			{
-				Console.WriteLine ("Search predicate was not matched by any node in the graph.");
-			}
+        /// <summary>
+        /// Note: DepthFirstSearcher.FindFirstMatch throws an Exception when no match is found.
+        /// This is by design - use try-catch to handle the "not found" case.
+        /// </summary>
+        [Fact]
+        public static void FindFirstMatch_ThrowsException_WhenNoMatch()
+        {
+            var graph = CreateTestGraph();
 
-			Console.WriteLine ("\r\n");
-		}
-	}
+            Assert.Throws<Exception>(() => 
+                DepthFirstSearcher.FindFirstMatch(graph, "d", node => node == "nonexistent"));
+        }
+
+        [Fact]
+        public static void PrintAll_DoesNotThrow()
+        {
+            var graph = CreateTestGraph();
+
+            // Should not throw
+            var exception = Record.Exception(() => DepthFirstSearcher.PrintAll(graph, "d"));
+            
+            Assert.Null(exception);
+        }
+    }
 }
-

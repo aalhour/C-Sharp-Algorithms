@@ -1,10 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-
+﻿using System.Linq;
 using Algorithms.Graphs;
 using DataStructures.Graphs;
-using DataStructures.Lists;
 using Xunit;
 
 namespace UnitTest.AlgorithmsTests
@@ -12,64 +8,118 @@ namespace UnitTest.AlgorithmsTests
     public static class GraphsTopologicalSorterTest
     {
         [Fact]
-        public static void DoTest()
+        public static void Sort_StringDAG_ReturnsTopologicalOrder()
         {
-            var V01 = new string[] { "A", "B", "C", "D", "E", "X" };
-            var DAG01 = new DirectedSparseGraph<string>();
+            //
+            // DAG: A -> B -> C -> D -> E -> X
+            //      A -> X
+            //
+            var vertices = new[] { "A", "B", "C", "D", "E", "X" };
+            var dag = new DirectedSparseGraph<string>();
+            dag.AddVertices(vertices);
 
-            // Insert new values of V
-            DAG01.AddVertices(V01);
+            dag.AddEdge("A", "B");
+            dag.AddEdge("A", "X");
+            dag.AddEdge("B", "C");
+            dag.AddEdge("C", "D");
+            dag.AddEdge("D", "E");
+            dag.AddEdge("E", "X");
 
-            // Insert new value for edges
-            DAG01.AddEdge("A", "B");
-            DAG01.AddEdge("A", "X");
-            DAG01.AddEdge("B", "C");
-            DAG01.AddEdge("C", "D");
-            DAG01.AddEdge("D", "E");
-            DAG01.AddEdge("E", "X");
+            var sorted = TopologicalSorter.Sort(dag).ToList();
 
-            // PRINT THE GRAPH
-            // [*] DAG (Directed Asyclic Graph):
+            // Verify topological order: each vertex comes before its dependents
+            Assert.Equal(6, sorted.Count);
 
-            // CALCULATE THE TOPOLOGICAL SORT
-            var topologicalSort01 = TopologicalSorter.Sort<string>(DAG01);
+            // A must come before B, X
+            Assert.True(sorted.IndexOf("A") < sorted.IndexOf("B"));
+            Assert.True(sorted.IndexOf("A") < sorted.IndexOf("X"));
 
-            var output01 = string.Empty;
-            foreach (var node in topologicalSort01)
-            {
-                output01 = String.Format("{0}({1}) ", output01, node);
-            }
+            // B must come before C
+            Assert.True(sorted.IndexOf("B") < sorted.IndexOf("C"));
 
-            var V02 = new int[] { 7, 5, 3, 11, 8, 2, 9, 10 };
-            var DAG02 = new DirectedSparseGraph<int>();
+            // C must come before D
+            Assert.True(sorted.IndexOf("C") < sorted.IndexOf("D"));
 
-            // Insert new values of V
-            DAG02.AddVertices(V02);
+            // D must come before E
+            Assert.True(sorted.IndexOf("D") < sorted.IndexOf("E"));
 
-            // Insert new value for edges
-            DAG02.AddEdge(7, 11);
-            DAG02.AddEdge(7, 8);
-            DAG02.AddEdge(5, 11);
-            DAG02.AddEdge(3, 8);
-            DAG02.AddEdge(3, 10);
-            DAG02.AddEdge(11, 2);
-            DAG02.AddEdge(11, 9);
-            DAG02.AddEdge(11, 10);
-            DAG02.AddEdge(8, 9);
-
-            // PRINT THE GRAPH
-            // [*] DAG (Directed Asyclic Graph):
-            // CALCULATE THE TOPOLOGICAL SORT
-            var topologicalSort02 = TopologicalSorter.Sort<int>(DAG02);
-
-            var output02 = string.Empty;
-            foreach (var node in topologicalSort02)
-            {
-                output02 = String.Format("{0}({1}) ", output02, node);
-            }
+            // E must come before X
+            Assert.True(sorted.IndexOf("E") < sorted.IndexOf("X"));
         }
 
+        [Fact]
+        public static void Sort_IntDAG_ReturnsTopologicalOrder()
+        {
+            //
+            // DAG structure:
+            // 7 -> 11, 8
+            // 5 -> 11
+            // 3 -> 8, 10
+            // 11 -> 2, 9, 10
+            // 8 -> 9
+            //
+            var vertices = new[] { 7, 5, 3, 11, 8, 2, 9, 10 };
+            var dag = new DirectedSparseGraph<int>();
+            dag.AddVertices(vertices);
+
+            dag.AddEdge(7, 11);
+            dag.AddEdge(7, 8);
+            dag.AddEdge(5, 11);
+            dag.AddEdge(3, 8);
+            dag.AddEdge(3, 10);
+            dag.AddEdge(11, 2);
+            dag.AddEdge(11, 9);
+            dag.AddEdge(11, 10);
+            dag.AddEdge(8, 9);
+
+            var sorted = TopologicalSorter.Sort(dag).ToList();
+
+            Assert.Equal(8, sorted.Count);
+
+            // Verify some topological constraints
+            // 7 must come before 11 and 8
+            Assert.True(sorted.IndexOf(7) < sorted.IndexOf(11));
+            Assert.True(sorted.IndexOf(7) < sorted.IndexOf(8));
+
+            // 5 must come before 11
+            Assert.True(sorted.IndexOf(5) < sorted.IndexOf(11));
+
+            // 11 must come before 2, 9, 10
+            Assert.True(sorted.IndexOf(11) < sorted.IndexOf(2));
+            Assert.True(sorted.IndexOf(11) < sorted.IndexOf(9));
+            Assert.True(sorted.IndexOf(11) < sorted.IndexOf(10));
+
+            // 8 must come before 9
+            Assert.True(sorted.IndexOf(8) < sorted.IndexOf(9));
+        }
+
+        [Fact]
+        public static void Sort_SingleVertex_ReturnsSingleVertex()
+        {
+            var dag = new DirectedSparseGraph<string>();
+            dag.AddVertex("A");
+
+            var sorted = TopologicalSorter.Sort(dag).ToList();
+
+            Assert.Single(sorted);
+            Assert.Equal("A", sorted[0]);
+        }
+
+        [Fact]
+        public static void Sort_DisconnectedVertices_ReturnsAllVertices()
+        {
+            var dag = new DirectedSparseGraph<string>();
+            dag.AddVertex("A");
+            dag.AddVertex("B");
+            dag.AddVertex("C");
+            // No edges - all vertices are independent
+
+            var sorted = TopologicalSorter.Sort(dag).ToList();
+
+            Assert.Equal(3, sorted.Count);
+            Assert.Contains("A", sorted);
+            Assert.Contains("B", sorted);
+            Assert.Contains("C", sorted);
+        }
     }
-
 }
-

@@ -1,19 +1,17 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using DataStructures.Graphs;
+using Xunit;
 
 namespace UnitTest.DataStructuresTests
 {
     public static class GraphsDirectedWeightedDenseGraphTest
     {
-        public static void DoTest()
+        [Fact]
+        public static void AddVerticesAndEdges_SetsCorrectCounts()
         {
             var graph = new DirectedWeightedDenseGraph<string>();
-
-            var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
-
-            graph.AddVertices(verticesSet1);
+            var vertices = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
+            graph.AddVertices(vertices);
 
             graph.AddEdge("a", "s", 1);
             graph.AddEdge("a", "z", 2);
@@ -32,136 +30,153 @@ namespace UnitTest.DataStructuresTests
 
             var allEdges = graph.Edges.ToList();
 
-            Debug.Assert(graph.VerticesCount == 8, "Wrong vertices count.");
-            Debug.Assert(graph.EdgesCount == 14, "Wrong edges count.");
-            Debug.Assert(graph.EdgesCount == allEdges.Count, "Wrong edges count.");
+            Assert.Equal(8, graph.VerticesCount);
+            Assert.Equal(14, graph.EdgesCount);
+            Assert.Equal(14, allEdges.Count);
+        }
 
-            Debug.Assert(graph.OutgoingEdges("a").ToList().Count == 2, "Wrong outgoing edges from 'a'.");
-            Debug.Assert(graph.OutgoingEdges("s").ToList().Count == 1, "Wrong outgoing edges from 's'.");
-            Debug.Assert(graph.OutgoingEdges("d").ToList().Count == 3, "Wrong outgoing edges from 'd'.");
-            Debug.Assert(graph.OutgoingEdges("x").ToList().Count == 3, "Wrong outgoing edges from 'x'.");
-            Debug.Assert(graph.OutgoingEdges("c").ToList().Count == 3, "Wrong outgoing edges from 'c'.");
-            Debug.Assert(graph.OutgoingEdges("v").ToList().Count == 1, "Wrong outgoing edges from 'v'.");
-            Debug.Assert(graph.OutgoingEdges("f").ToList().Count == 1, "Wrong outgoing edges from 'f'.");
-            Debug.Assert(graph.OutgoingEdges("z").ToList().Count == 0, "Wrong outgoing edges from 'z'.");
+        [Fact]
+        public static void OutgoingEdges_ReturnsCorrectCounts()
+        {
+            var graph = CreateTestGraph();
 
-            Debug.Assert(graph.IncomingEdges("a").ToList().Count == 1, "Wrong incoming edges from 'a'.");
-            Debug.Assert(graph.IncomingEdges("s").ToList().Count == 2, "Wrong incoming edges from 's'.");
-            Debug.Assert(graph.IncomingEdges("d").ToList().Count == 2, "Wrong incoming edges from 'd'.");
-            Debug.Assert(graph.IncomingEdges("x").ToList().Count == 1, "Wrong incoming edges from 'x'.");
-            Debug.Assert(graph.IncomingEdges("c").ToList().Count == 3, "Wrong incoming edges from 'c'.");
-            Debug.Assert(graph.IncomingEdges("v").ToList().Count == 1, "Wrong incoming edges from 'v'.");
-            Debug.Assert(graph.IncomingEdges("f").ToList().Count == 3, "Wrong incoming edges from 'f'.");
-            Debug.Assert(graph.IncomingEdges("z").ToList().Count == 1, "Wrong incoming edges from 'z'.");
+            Assert.Equal(2, graph.OutgoingEdges("a").Count());
+            Assert.Equal(1, graph.OutgoingEdges("s").Count());
+            Assert.Equal(3, graph.OutgoingEdges("d").Count());
+            Assert.Equal(3, graph.OutgoingEdges("x").Count());
+            Assert.Equal(3, graph.OutgoingEdges("c").Count());
+            Assert.Equal(1, graph.OutgoingEdges("v").Count());
+            Assert.Equal(1, graph.OutgoingEdges("f").Count());
+            Assert.Empty(graph.OutgoingEdges("z"));
+        }
 
-            Console.WriteLine("[*] Directed Weighted Dense Graph:");
-            Console.WriteLine("Graph nodes and edges:");
-            Console.WriteLine(graph.ToReadable() + "\r\n");
+        [Fact]
+        public static void IncomingEdges_ReturnsCorrectCounts()
+        {
+            var graph = CreateTestGraph();
 
-            var f_to_c = graph.HasEdge("f", "c");
-            var f_to_c_weight = graph.GetEdgeWeight("f", "c");
-            Debug.Assert(f_to_c == true, "Edge f->c doesn't exist.");
-            Debug.Assert(f_to_c_weight == 2, "Edge f->c must have a weight of 2.");
-            Console.WriteLine("Is there an edge from f to c? " + f_to_c + ". If yes it's weight is: " + f_to_c_weight + ".");
+            Assert.Equal(1, graph.IncomingEdges("a").Count());
+            Assert.Equal(2, graph.IncomingEdges("s").Count());
+            Assert.Equal(2, graph.IncomingEdges("d").Count());
+            Assert.Equal(1, graph.IncomingEdges("x").Count());
+            Assert.Equal(3, graph.IncomingEdges("c").Count());
+            Assert.Equal(1, graph.IncomingEdges("v").Count());
+            Assert.Equal(3, graph.IncomingEdges("f").Count());
+            Assert.Equal(1, graph.IncomingEdges("z").Count());
+        }
 
-            var d_to_s = graph.HasEdge("d", "s");
-            var d_to_s_weight = graph.GetEdgeWeight("d", "s");
-            Debug.Assert(d_to_s == true, "Edge d->s doesn't exist.");
-            Debug.Assert(d_to_s_weight == 3, "Edge d->s must have a weight of 3.");
-            Console.WriteLine("Is there an edge from d to d? " + d_to_s + ". If yes it's weight is: " + d_to_s_weight + ".");
+        [Fact]
+        public static void HasEdge_ReturnsCorrectResult()
+        {
+            var graph = CreateTestGraph();
 
-            Console.WriteLine();
+            Assert.True(graph.HasEdge("f", "c"));
+            Assert.True(graph.HasEdge("d", "s"));
+            Assert.False(graph.HasEdge("z", "a")); // reverse direction doesn't exist
+        }
+
+        [Fact]
+        public static void GetEdgeWeight_ReturnsCorrectWeight()
+        {
+            var graph = CreateTestGraph();
+
+            Assert.Equal(2, graph.GetEdgeWeight("f", "c"));
+            Assert.Equal(3, graph.GetEdgeWeight("d", "s"));
+        }
+
+        [Fact]
+        public static void RemoveEdge_UpdatesCounts()
+        {
+            var graph = CreateTestGraph();
 
             graph.RemoveEdge("d", "c");
             graph.RemoveEdge("c", "v");
             graph.RemoveEdge("a", "z");
-            Debug.Assert(graph.VerticesCount == 8, "Wrong vertices count.");
-            Debug.Assert(graph.EdgesCount == 11, "Wrong edges count.");
 
-            Console.WriteLine("After removing edges (d-c), (c-v), (a-z):");
-            Console.WriteLine(graph.ToReadable() + "\r\n");
+            Assert.Equal(8, graph.VerticesCount);
+            Assert.Equal(11, graph.EdgesCount);
+        }
+
+        [Fact]
+        public static void RemoveVertex_RemovesConnectedEdges()
+        {
+            var graph = CreateTestGraph();
 
             graph.RemoveVertex("x");
-            Debug.Assert(graph.VerticesCount == 7, "Wrong vertices count.");
-            Debug.Assert(graph.EdgesCount == 7, "Wrong edges count.");
 
-            Console.WriteLine("After removing node (x):");
-            Console.WriteLine(graph.ToReadable() + "\r\n");
+            Assert.Equal(7, graph.VerticesCount);
+            Assert.Equal(10, graph.EdgesCount);
+        }
 
-            graph.AddVertex("x");
+        [Fact]
+        public static void BreadthFirstWalk_TraversesGraph()
+        {
+            var graph = CreateTestGraph();
+
+            var bfsWalk = graph.BreadthFirstWalk("a").ToList();
+
+            Assert.NotEmpty(bfsWalk);
+            Assert.Equal("a", bfsWalk[0]); // starts from source
+        }
+
+        [Fact]
+        public static void DepthFirstWalk_TraversesGraph()
+        {
+            var graph = CreateTestGraph();
+
+            var dfsWalk = graph.DepthFirstWalk("a").ToList();
+
+            Assert.NotEmpty(dfsWalk);
+            Assert.Equal("a", dfsWalk[0]); // starts from source
+        }
+
+        [Fact]
+        public static void Clear_RemovesAllVerticesAndEdges()
+        {
+            var graph = CreateTestGraph();
+
+            graph.Clear();
+
+            Assert.Equal(0, graph.VerticesCount);
+            Assert.Equal(0, graph.EdgesCount);
+        }
+
+        [Fact]
+        public static void SelfLoop_IsSupported()
+        {
+            var graph = new DirectedWeightedDenseGraph<string>();
+            graph.AddVertices(new[] { "a", "b", "c", "d", "e", "f" });
+
+            graph.AddEdge("a", "b", 1);
+            graph.AddEdge("f", "f", 1); // self-loop
+
+            Assert.Equal(6, graph.VerticesCount);
+            Assert.Equal(2, graph.EdgesCount);
+            Assert.True(graph.HasEdge("f", "f"));
+        }
+
+        private static DirectedWeightedDenseGraph<string> CreateTestGraph()
+        {
+            var graph = new DirectedWeightedDenseGraph<string>();
+            var vertices = new string[] { "a", "z", "s", "x", "d", "c", "f", "v" };
+            graph.AddVertices(vertices);
+
+            graph.AddEdge("a", "s", 1);
+            graph.AddEdge("a", "z", 2);
             graph.AddEdge("s", "x", 3);
             graph.AddEdge("x", "d", 1);
             graph.AddEdge("x", "c", 2);
             graph.AddEdge("x", "a", 3);
+            graph.AddEdge("d", "f", 1);
             graph.AddEdge("d", "c", 2);
-            graph.AddEdge("c", "v", 2);
-            graph.AddEdge("a", "z", 2);
-            Console.WriteLine("Re-added the deleted vertices and edges to the graph.");
-            Console.WriteLine(graph.ToReadable() + "\r\n");
-
-            // BFS from A
-            Console.WriteLine("Walk the graph using BFS from A:");
-            var bfsWalk = graph.BreadthFirstWalk("a");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in bfsWalk) Console.Write(String.Format("({0})", node));
-            Console.WriteLine("\r\n");
-
-            // DFS from A
-            Console.WriteLine("Walk the graph using DFS from A:");
-            var dfsWalk = graph.DepthFirstWalk("a");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
-            Console.WriteLine("\r\n");
-
-            // BFS from F
-            Console.WriteLine("Walk the graph using BFS from F:");
-            bfsWalk = graph.BreadthFirstWalk("f");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in bfsWalk) Console.Write(String.Format("({0})", node));
-            Console.WriteLine("\r\n");
-
-            // DFS from F
-            Console.WriteLine("Walk the graph using DFS from F:");
-            dfsWalk = graph.DepthFirstWalk("f");		// output: (s) (a) (x) (z) (d) (c) (f) (v)
-            foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
-            Console.WriteLine("\r\n");
-
-            Console.ReadLine();
-
-
-            /********************************************************************/
-
-
-            Console.WriteLine("***************************************************\r\n");
-
-            graph.Clear();
-            Console.WriteLine("Cleared the graph from all vertices and edges.\r\n");
-
-            var verticesSet2 = new string[] { "a", "b", "c", "d", "e", "f" };
-
-            graph.AddVertices(verticesSet2);
-
-            graph.AddEdge("a", "b", 1);
-            graph.AddEdge("a", "d", 2);
-            graph.AddEdge("b", "e", 3);
-            graph.AddEdge("d", "b", 1);
-            graph.AddEdge("d", "e", 2);
-            graph.AddEdge("e", "c", 3);
+            graph.AddEdge("d", "s", 3);
             graph.AddEdge("c", "f", 1);
-            graph.AddEdge("f", "f", 1);
+            graph.AddEdge("c", "v", 2);
+            graph.AddEdge("c", "d", 3);
+            graph.AddEdge("v", "f", 1);
+            graph.AddEdge("f", "c", 2);
 
-            Debug.Assert(graph.VerticesCount == 6, "Wrong vertices count.");
-            Debug.Assert(graph.EdgesCount == 8, "Wrong edges count.");
-
-            Console.WriteLine("[*] NEW Directed Weighted Dense Graph:");
-            Console.WriteLine("Graph nodes and edges:");
-            Console.WriteLine(graph.ToReadable() + "\r\n");
-
-            Console.WriteLine("Walk the graph using DFS:");
-            dfsWalk = graph.DepthFirstWalk();		// output: (a) (b) (e) (d) (c) (f) 
-            foreach (var node in dfsWalk) Console.Write(String.Format("({0})", node));
-
-            Console.ReadLine();
+            return graph;
         }
-
     }
-
 }
-

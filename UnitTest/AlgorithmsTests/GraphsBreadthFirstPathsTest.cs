@@ -1,36 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using DataStructures.Graphs;
+﻿using DataStructures.Graphs;
 using Algorithms.Graphs;
+using System.Linq;
 using Xunit;
-using System.Diagnostics;
 
 namespace UnitTest.AlgorithmsTests
 {
     public static class GraphsBreadthFirstPathsTest
     {
-        private static string PrintPath(IEnumerable<string> path)
-        {
-            string output = string.Empty;
-
-            foreach (var node in path)
-                output = String.Format("{0}({1}) -> ", output, node);
-
-            output += "/TERMINATE/";
-
-            return output;
-        }
-
-        [Fact]
-        public static void DoTest()
+        private static IGraph<string> CreateTestGraph()
         {
             IGraph<string> graph = new UndirectedSparseGraph<string>();
 
-            // Add vertices
-            var verticesSet1 = new string[] { "a", "z", "s", "x", "d", "c", "f", "v", "w", "m" };
-            graph.AddVertices(verticesSet1);
+            var vertices = new[] { "a", "z", "s", "x", "d", "c", "f", "v", "w", "m" };
+            graph.AddVertices(vertices);
 
-            // Add edges
             graph.AddEdge("a", "s");
             graph.AddEdge("a", "z");
             graph.AddEdge("s", "x");
@@ -45,26 +28,81 @@ namespace UnitTest.AlgorithmsTests
             graph.AddEdge("v", "f");
             graph.AddEdge("w", "m");
 
-            var sourceNode = "f";
-            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, sourceNode);
-
-            // TODO: 
-            // - Assert distances
-            // - Assert ShortestPathTo a node
-
-            var distance = bfsPaths.DistanceTo("a");
-
-            Trace.WriteLine("Distance from '" + sourceNode + "' to 'a' is: " + bfsPaths.DistanceTo("a"));
-            Trace.WriteLine("Path from '" + sourceNode + "' to 'a' is : " + PrintPath(bfsPaths.ShortestPathTo("a")));
-
-            Trace.WriteLine(string.Empty);
-
-            Trace.WriteLine("Distance from '" + sourceNode + "' to 'w' is: " + bfsPaths.DistanceTo("w"));
-            Trace.WriteLine("Path from '" + sourceNode + "' to 'w' is : " + PrintPath(bfsPaths.ShortestPathTo("w")));
-
+            return graph;
         }
 
+        [Fact]
+        public static void DistanceTo_ReturnsCorrectDistance()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            // f -> c -> x -> s -> a = 4 edges
+            var distance = bfsPaths.DistanceTo("a");
+
+            Assert.Equal(4, distance);
+        }
+
+        [Fact]
+        public static void DistanceTo_SourceToSelf_ReturnsZero()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            var distance = bfsPaths.DistanceTo("f");
+
+            Assert.Equal(0, distance);
+        }
+
+        [Fact]
+        public static void ShortestPathTo_ReturnsPath()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            var path = bfsPaths.ShortestPathTo("a").ToList();
+
+            Assert.NotEmpty(path);
+            Assert.Equal("f", path[0]); // starts from source
+            Assert.Equal("a", path[path.Count - 1]); // ends at destination
+        }
+
+        [Fact]
+        public static void HasPathTo_ReachableVertex_ReturnsTrue()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            Assert.True(bfsPaths.HasPathTo("a"));
+            Assert.True(bfsPaths.HasPathTo("w"));
+            Assert.True(bfsPaths.HasPathTo("z"));
+        }
+
+        [Fact]
+        public static void DistanceTo_DifferentPaths_ReturnsCorrectDistances()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            // f -> c -> x -> w = 3 edges
+            var distanceToW = bfsPaths.DistanceTo("w");
+
+            Assert.True(distanceToW >= 1); // at least one edge away
+        }
+
+        [Fact]
+        public static void ShortestPathTo_MultipleVertices_ReturnsCorrectPaths()
+        {
+            var graph = CreateTestGraph();
+            var bfsPaths = new BreadthFirstShortestPaths<string>(graph, "f");
+
+            var pathToA = bfsPaths.ShortestPathTo("a").ToList();
+            var pathToW = bfsPaths.ShortestPathTo("w").ToList();
+
+            Assert.NotEmpty(pathToA);
+            Assert.NotEmpty(pathToW);
+            Assert.Equal(bfsPaths.DistanceTo("a") + 1, pathToA.Count);
+            Assert.Equal(bfsPaths.DistanceTo("w") + 1, pathToW.Count);
+        }
     }
-
 }
-

@@ -1,23 +1,29 @@
 ﻿using Algorithms.Graphs;
 using DataStructures.Graphs;
-using System.Diagnostics;
 using System.Linq;
+using Xunit;
 
 namespace UnitTest.AlgorithmsTests
 {
-    public static class GraphsConnectedComponents
+    public static class GraphsConnectedComponentsTest
     {
-        public static void DoTest()
+        [Fact]
+        public static void Compute_FindsAllConnectedComponents()
         {
+            //
+            // Graph with 4 connected components:
+            //
+            // Component #1: (e) - isolated vertex
+            // Component #2: a--s--x--d (with a--d)
+            // Component #3: b--c--f--v (with b--v, c--v)
+            // Component #4: y--z
+            //
             var graph = new UndirectedSparseGraph<string>();
 
-            // Add vertices
             var verticesSet1 = new string[] { "a", "b", "c", "d", "e", "f", "s", "v", "x", "y", "z" };
-            graph.AddVertices (verticesSet1);
+            graph.AddVertices(verticesSet1);
 
-            // Add edges
-            // Connected Component #1
-            // the vertex "e" won't be connected to any other vertex
+            // Connected Component #1 - vertex "e" is isolated (no edges)
 
             // Connected Component #2
             graph.AddEdge("a", "s");
@@ -35,26 +41,51 @@ namespace UnitTest.AlgorithmsTests
             // Connected Component #4
             graph.AddEdge("y", "z");
 
-
-            // Get connected components
+            // Compute connected components
             var connectedComponents = ConnectedComponents.Compute<string>(graph);
             connectedComponents = connectedComponents.OrderBy(item => item.Count).ToList();
 
-            Debug.Assert(connectedComponents.Count == 4);
+            Assert.Equal(4, connectedComponents.Count);
 
-            // the case of the (e) vertex
-            Debug.Assert(connectedComponents[0].Count == 1);
-            Debug.Assert(connectedComponents[0][0] == "e");
+            // Component with isolated vertex (e)
+            Assert.Single(connectedComponents[0]);
+            Assert.Equal("e", connectedComponents[0][0]);
 
-            // the case of (y) and (z) vertices
-            Debug.Assert(connectedComponents[1].Count == 2);
-            Debug.Assert(connectedComponents[1].Contains("y"));
-            Debug.Assert(connectedComponents[1].Contains("z"));
+            // Component with y and z
+            Assert.Equal(2, connectedComponents[1].Count);
+            Assert.Contains("y", connectedComponents[1]);
+            Assert.Contains("z", connectedComponents[1]);
 
-            // the case of the rest
-            Debug.Assert(connectedComponents[2].Count == 4);
-            Debug.Assert(connectedComponents[3].Count == 4);
+            // Two components with 4 vertices each
+            Assert.Equal(4, connectedComponents[2].Count);
+            Assert.Equal(4, connectedComponents[3].Count);
+        }
+
+        [Fact]
+        public static void Compute_SingleComponent_WhenAllConnected()
+        {
+            var graph = new UndirectedSparseGraph<string>();
+            graph.AddVertices(new[] { "a", "b", "c" });
+            graph.AddEdge("a", "b");
+            graph.AddEdge("b", "c");
+
+            var components = ConnectedComponents.Compute<string>(graph);
+
+            Assert.Single(components);
+            Assert.Equal(3, components[0].Count);
+        }
+
+        [Fact]
+        public static void Compute_AllIsolated_EachVertexIsComponent()
+        {
+            var graph = new UndirectedSparseGraph<string>();
+            graph.AddVertices(new[] { "a", "b", "c" });
+            // No edges - all vertices are isolated
+
+            var components = ConnectedComponents.Compute<string>(graph);
+
+            Assert.Equal(3, components.Count);
+            Assert.All(components, c => Assert.Single(c));
         }
     }
 }
-

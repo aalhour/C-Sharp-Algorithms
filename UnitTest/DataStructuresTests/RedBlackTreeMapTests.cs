@@ -7,231 +7,217 @@ namespace UnitTest.DataStructuresTests
 {
     public static class RedBlackTreeMapTests
     {
+        #region Insert Tests
+
         [Fact]
-        public static void DoTest()
+        public static void Insert_SortedElements_MaintainsBalance()
         {
-            // Red-Black Tree Map collection
-            var redBlackTree = new RedBlackTreeMap<int, string>(false);
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            var values = CreateTestData(10);
 
-            // Testing data
-            var values = new KeyValuePair<int, string>[10];
-
-            // Prepare the values array
-            for (var i = 1; i <= 10; ++i)
+            for (var i = 0; i < values.Length; ++i)
             {
-                var keyValPair = new KeyValuePair<int, string>(i, string.Format("Integer: {0}", i));
-                values[i - 1] = keyValPair;
+                tree.Insert(values[i].Key, values[i].Value);
             }
 
-            // Test singular insert
-            for (var i = 0; i < 10; ++i)
-            {
-                redBlackTree.Insert(values[i].Key, values[i].Value);
-            }
+            Assert.Equal(values.Length, tree.Count);
+            Assert.True(tree.Height < tree.Count, "Tree should be balanced - height should be less than count");
+        }
 
-            Assert.True(redBlackTree.Count == values.Length, "Expected the same number of items.");
-            Assert.True(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
-
-            redBlackTree.Clear();
-
-            // Test collection insert
-            redBlackTree.Insert(values);
-
-            Assert.True(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
-
-            // Test enumeration of key-value pairs is still in oreder
-            var enumerator = redBlackTree.GetInOrderEnumerator();
-            for (var i = 0; i < 10; ++i)
-            {
-                if (enumerator.MoveNext())
-                {
-                    var curr = enumerator.Current;
-                    if (curr.Key != values[i].Key || curr.Value != values[i].Value)
-                    {
-                        throw new Exception();
-                    }
-                }
-            }
-
-            // Test against re-shuffled insertions (not like above order)
-            redBlackTree = new RedBlackTreeMap<int, string>(false);
-
-            redBlackTree.Insert(4, "int4");
-            redBlackTree.Insert(5, "int5");
-            redBlackTree.Insert(7, "int7");
-            redBlackTree.Insert(2, "int2");
-            redBlackTree.Insert(1, "int1");
-            redBlackTree.Insert(3, "int3");
-            redBlackTree.Insert(6, "int6");
-            //redBlackTree.Insert(0, "int0");
-            redBlackTree.Insert(8, "int8");
-            redBlackTree.Insert(10, "int10");
-            redBlackTree.Insert(9, "int9");
-
-            Assert.True(redBlackTree.Count == values.Length, "Expected the same number of items.");
-            Assert.True(redBlackTree.Height < redBlackTree.Count, "Fail! Tree doesn't rebalance against sorted elements!");
-
-            // ASSERT INSERTING DUPLICATES WOULD BREAK
-            bool insertDuplicatePassed;
-            try
-            {
-                // 2 already exists in tree
-                redBlackTree.Insert(2, "int2");
-                insertDuplicatePassed = true;
-            }
-            catch
-            {
-                insertDuplicatePassed = false;
-            }
-
-            Assert.True(insertDuplicatePassed == false, "Fail! The tree doesn't allow duplicates");
-
-            // Test find
-            Assert.True(redBlackTree.Find(5).Key == 5, "Wrong find result!");
-            Assert.True(redBlackTree.FindMin().Key == 1, "Wrong min!");
-            Assert.True(redBlackTree.FindMax().Key == 10, "Wrong max!");
-
-            // Assert find raises exception on non-existing elements
-            var threwKeyNotFoundError = false;
-
-            try
-            {
-                redBlackTree.Find(999999999);
-            }
-            catch (KeyNotFoundException)
-            {
-                threwKeyNotFoundError = true;
-            }
-
-            Assert.True(threwKeyNotFoundError, "Expected to catch KeyNotFoundException.");
-
-            // PRINT TREE
-            //Console.WriteLine("********************");
-            //Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
-            //Console.WriteLine("********************");
-            //Console.WriteLine(redBlackTree.DrawTree());
-            //Console.WriteLine("\r\n");
-
-            // Assert count
-            Assert.True(redBlackTree.Count == 10);
-
-            // Assert existence and nonexistence of some items
-            Assert.True(redBlackTree.Contains(1));
-            Assert.True(redBlackTree.Contains(3));
-            Assert.True(redBlackTree.Contains(999) == false);
-
-            // ASSERT THAT EACH LEVEL HAS A DIFFERENT COLOR
-            // TODO: Wrong color element "int4"
-            // AssetLevelsDifferentColors(redBlackTree);
-
-            // Do some deletions
-            redBlackTree.Remove(7);
-            redBlackTree.Remove(1);
-            redBlackTree.Remove(3);
-
-            // Assert count
-            Assert.True(redBlackTree.Count == 7);
-
-            // Assert nonexistence of previously existing items
-            Assert.True(redBlackTree.Contains(1) == false);
-            Assert.True(redBlackTree.Contains(3) == false);
-
-            // Remove root value
-            var oldRootKey = redBlackTree.Root.Key;
-            redBlackTree.Remove(redBlackTree.Root.Key);
-
-            // Assert count
-            Assert.True(redBlackTree.Count == 6);
-
-            // Assert nonexistence of old root's key
-            Assert.True(redBlackTree.Contains(oldRootKey) == false);
-
-            // PRINT TREE
-            //Console.WriteLine("********************");
-            //Console.WriteLine(" [*] RED-BLACK TREE:\r\n");
-            //Console.WriteLine("********************");
-            //Console.WriteLine(redBlackTree.DrawTree(includeValues: true));
-            //Console.WriteLine("\r\n");
-
-            //Console.ReadLine();
-        } //end-do-test
-
-
-        /// <summary>
-        /// Testing helper to assert that all items at every level of the tree has the same color and each level has different color than the other levels
-        /// </summary>
-        private static void AssetLevelsDifferentColors<TKey, TValue>(RedBlackTreeMap<TKey, TValue> redBlackTree)
-            where TKey : IComparable<TKey>
+        [Fact]
+        public static void Insert_Collection_MaintainsBalance()
         {
-            var root = redBlackTree.Root;
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            var values = CreateTestData(10);
 
-            var height = GetMaxHeight(root);
-            var levels = new List<List<RedBlackTreeMapNode<TKey, TValue>>>();
+            tree.Insert(values);
 
-            // Initialize the list
-            for (var i = 0; i < height; ++i)
-            {
-                levels.Add(new List<RedBlackTreeMapNode<TKey, TValue>>());
-            }
+            Assert.True(tree.Height < tree.Count, "Tree should be balanced");
+        }
 
-            var levelsIndex = 0;
-            var nodesInNextLevel = 0;
-            var nodesInCurrentLevel = 1;
-
-            var queue = new Queue<RedBlackTreeMapNode<TKey, TValue>>();
-            queue.Enqueue(root);
-
-            while (queue.Count > 0)
-            {
-                var curr = queue.Dequeue();
-                nodesInCurrentLevel--;
-
-                if (curr != null)
-                {
-                    levels[levelsIndex].Add(curr);
-                    queue.Enqueue(curr.LeftChild);
-                    queue.Enqueue(curr.RightChild);
-                    nodesInNextLevel += 2;
-                }
-
-                if (nodesInCurrentLevel == 0)
-                {
-                    levelsIndex++;
-                    nodesInCurrentLevel = nodesInNextLevel;
-                    nodesInNextLevel = 0;
-                }
-            }
-
-            // [*] Assert that levels have different alternating colors:
-
-            var color = RedBlackTreeColors.Black;
-            for (var i = 0; i < levels.Count; ++i)
-            {
-                for (var j = 0; j < levels[i].Count; ++j)
-                {
-                    Assert.True(levels[i][j].Color == color);
-
-                    //if (levels[i][j].Color != color)
-                    //Console.WriteLine(" [-] Level: {0}. Node Value: {1}. Node color: {2}. Expected color: {3}.", i, levels[i][j].Value, levels[i][j].Color, color.ToString());
-                }
-
-                color = color == RedBlackTreeColors.Black ? RedBlackTreeColors.Red : RedBlackTreeColors.Black;
-            }
-        } //end-test-case
-
-
-        /// <summary>
-        /// Helper function to calculate the Maximum Height
-        /// </summary>
-        private static int GetMaxHeight<TKey, TValue>(RedBlackTreeMapNode<TKey, TValue> tree)
-            where TKey : IComparable<TKey>
+        [Fact]
+        public static void Insert_Duplicate_ThrowsException()
         {
-            if (tree == null)
-            {
-                return 0;
-            }
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(2, "int2");
 
-            return 1 + Math.Max(GetMaxHeight(tree.LeftChild), GetMaxHeight(tree.RightChild));
+            Assert.Throws<InvalidOperationException>(() => tree.Insert(2, "int2 duplicate"));
+        }
+
+        [Fact]
+        public static void Insert_RandomOrder_MaintainsBalance()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+
+            tree.Insert(4, "int4");
+            tree.Insert(5, "int5");
+            tree.Insert(7, "int7");
+            tree.Insert(2, "int2");
+            tree.Insert(1, "int1");
+            tree.Insert(3, "int3");
+            tree.Insert(6, "int6");
+            tree.Insert(8, "int8");
+            tree.Insert(10, "int10");
+            tree.Insert(9, "int9");
+
+            Assert.Equal(10, tree.Count);
+            Assert.True(tree.Height < tree.Count, "Tree should be balanced");
+        }
+
+        #endregion
+
+        #region GetInOrderEnumerator Tests
+
+        [Fact]
+        public static void GetInOrderEnumerator_ReturnsItemsInOrder()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            var values = CreateTestData(10);
+            tree.Insert(values);
+
+            var enumerator = tree.GetInOrderEnumerator();
+            var prevKey = int.MinValue;
+
+            while (enumerator.MoveNext())
+            {
+                Assert.True(enumerator.Current.Key > prevKey, "Items should be in ascending order");
+                prevKey = enumerator.Current.Key;
+            }
+        }
+
+        #endregion
+
+        #region Find Tests
+
+        [Fact]
+        public static void Find_ExistingKey_ReturnsCorrectItem()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(5, "int5");
+            tree.Insert(3, "int3");
+            tree.Insert(7, "int7");
+
+            var result = tree.Find(5);
+
+            Assert.Equal(5, result.Key);
+        }
+
+        [Fact]
+        public static void Find_NonExistingKey_ThrowsKeyNotFoundException()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(1, "one");
+
+            Assert.Throws<KeyNotFoundException>(() => tree.Find(999));
+        }
+
+        [Fact]
+        public static void FindMin_ReturnsSmallestKey()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(5, "five");
+            tree.Insert(1, "one");
+            tree.Insert(10, "ten");
+
+            var min = tree.FindMin();
+
+            Assert.Equal(1, min.Key);
+        }
+
+        [Fact]
+        public static void FindMax_ReturnsLargestKey()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(5, "five");
+            tree.Insert(1, "one");
+            tree.Insert(10, "ten");
+
+            var max = tree.FindMax();
+
+            Assert.Equal(10, max.Key);
+        }
+
+        #endregion
+
+        #region Contains Tests
+
+        [Fact]
+        public static void Contains_ExistingKey_ReturnsTrue()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(1, "one");
+            tree.Insert(3, "three");
+
+            Assert.True(tree.Contains(1));
+            Assert.True(tree.Contains(3));
+        }
+
+        [Fact]
+        public static void Contains_NonExistingKey_ReturnsFalse()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(1, "one");
+
+            Assert.False(tree.Contains(999));
+        }
+
+        #endregion
+
+        #region Remove Tests
+
+        [Fact]
+        public static void Remove_ExistingKeys_DecreasesCount()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(4, "int4");
+            tree.Insert(5, "int5");
+            tree.Insert(7, "int7");
+            tree.Insert(2, "int2");
+            tree.Insert(1, "int1");
+            tree.Insert(3, "int3");
+            tree.Insert(6, "int6");
+            tree.Insert(8, "int8");
+            tree.Insert(10, "int10");
+            tree.Insert(9, "int9");
+
+            tree.Remove(7);
+            tree.Remove(1);
+            tree.Remove(3);
+
+            Assert.Equal(7, tree.Count);
+            Assert.False(tree.Contains(7));
+            Assert.False(tree.Contains(1));
+            Assert.False(tree.Contains(3));
+        }
+
+        [Fact]
+        public static void Remove_RootKey_UpdatesRoot()
+        {
+            var tree = new RedBlackTreeMap<int, string>(allowDuplicates: false);
+            tree.Insert(5, "five");
+            tree.Insert(3, "three");
+            tree.Insert(7, "seven");
+            tree.Insert(2, "two");
+            tree.Insert(4, "four");
+            tree.Insert(6, "six");
+
+            var oldRootKey = tree.Root.Key;
+            tree.Remove(oldRootKey);
+
+            Assert.False(tree.Contains(oldRootKey));
+            Assert.Equal(5, tree.Count);
+        }
+
+        #endregion
+
+        private static KeyValuePair<int, string>[] CreateTestData(int count)
+        {
+            var values = new KeyValuePair<int, string>[count];
+            for (var i = 1; i <= count; ++i)
+            {
+                values[i - 1] = new KeyValuePair<int, string>(i, $"Integer: {i}");
+            }
+            return values;
         }
     }
 }

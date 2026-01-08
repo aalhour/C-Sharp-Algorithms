@@ -87,14 +87,20 @@ namespace DataStructures.Heaps
             // The min-root lies at _forest[minIndex]
             BinomialNode<T> deletedTreeRoot = _forest[minIndex].Child;
 
+            // Remove the tree from forest and decrement size by 1 (for the removed root)
+            _forest[minIndex] = null;
+            --_size;
+
             // Exit if there was no children under old-min-root
             if (deletedTreeRoot == null)
                 return;
 
-            // CONSTRUCT H'' (double-prime)
+            // CONSTRUCT H'' (double-prime) from the children of the removed root
+            // The children need to be merged back into the main heap
             BinomialMinHeap<T> deletedForest = new BinomialMinHeap<T>();
-            deletedForest._forest.Resize(minIndex + 1);
-            deletedForest._size = (1 << minIndex) - 1;
+            deletedForest._forest.Resize(minIndex);
+            // Set size to 0 because Merge will add it; we handle sizing separately
+            deletedForest._size = 0;
 
             for (int i = (minIndex - 1); i >= 0; --i)
             {
@@ -103,14 +109,65 @@ namespace DataStructures.Heaps
                 deletedForest._forest[i].Sibling = null;
             }
 
-            // CONSTRUCT H' (single-prime)
-            _forest[minIndex] = null;
-            _size = deletedForest._size + 1;
+            // Merge children back - but don't let Merge mess with our size
+            // We need to manually handle the merge without size tracking
+            _mergeForestOnly(deletedForest);
+        }
 
-            Merge(deletedForest);
+        /// <summary>
+        /// Merges forest structure only, without modifying _size.
+        /// Used internally by _removeAtIndex.
+        /// </summary>
+        private void _mergeForestOnly(BinomialMinHeap<T> otherHeap)
+        {
+            if (otherHeap == null || otherHeap._forest.Count == 0)
+                return;
 
-            // Decrease the size
-            --_size;
+            BinomialNode<T> carryNode = null;
+
+            // Ensure capacity
+            int maxCount = Math.Max(this._forest.Count, otherHeap._forest.Count) + 1;
+            if (_forest.Count < maxCount)
+                this._forest.Resize(maxCount);
+
+            for (int i = 0; i < maxCount; i++)
+            {
+                BinomialNode<T> treeRoot1 = (i < _forest.Count ? _forest[i] : null);
+                BinomialNode<T> treeRoot2 = (i < otherHeap._forest.Count ? otherHeap._forest[i] : null);
+
+                int whichCase = (treeRoot1 == null ? 0 : 1);
+                whichCase += (treeRoot2 == null ? 0 : 2);
+                whichCase += (carryNode == null ? 0 : 4);
+
+                switch (whichCase)
+                {
+                    case 0: /* No trees */
+                    case 1: /* Only this */
+                        break;
+                    case 2: /* Only otherHeap */
+                        this._forest[i] = treeRoot2;
+                        break;
+                    case 4: /* Only carryNode */
+                        this._forest[i] = carryNode;
+                        carryNode = null;
+                        break;
+                    case 3: /* this and otherHeap */
+                        carryNode = _combineTrees(treeRoot1, treeRoot2);
+                        this._forest[i] = null;
+                        break;
+                    case 5: /* this and carryNode */
+                        carryNode = _combineTrees(treeRoot1, carryNode);
+                        this._forest[i] = null;
+                        break;
+                    case 6: /* otherHeap and carryNode */
+                        carryNode = _combineTrees(treeRoot2, carryNode);
+                        break;
+                    case 7: /* all the nodes */
+                        this._forest[i] = carryNode;
+                        carryNode = _combineTrees(treeRoot1, treeRoot2);
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -209,10 +266,8 @@ namespace DataStructures.Heaps
             tempHeap._size = 1;
 
             // Merge this with tempHeap
+            // Note: Merge already updates _size, so we don't increment it here
             Merge(tempHeap);
-
-            // Increase the _size
-            ++_size;
         }
 
         /// <summary>
