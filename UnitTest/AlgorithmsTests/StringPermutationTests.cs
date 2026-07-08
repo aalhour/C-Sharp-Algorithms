@@ -37,6 +37,10 @@ namespace UnitTest.AlgorithmsTests
             one = "I am legion";    // L is small
             two = "legion I am";    // L is small
             Assert.True(Permutations.IsAnargram(one, two) == true);
+
+            one = "aab";
+            two = "abb";
+            Assert.False(Permutations.IsAnargram(one, two));
         }
     }
 }
