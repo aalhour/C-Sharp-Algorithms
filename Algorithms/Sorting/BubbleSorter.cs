@@ -44,5 +44,26 @@ namespace Algorithms.Sorting
                 }
             }
         }
+
+        /// <summary>
+        /// Public API:  Optimization
+        /// </summary>
+       public static void OptimizationBubbleSortDescending<T>(this List<T> collection,Comparer<T> comparer)
+        {
+            for (int i = 0; i < collection.Count -1; i++)
+            {
+                bool noSwap = true;
+                for (int index = 0; index < collection.Count - 1; index++)
+                {
+                    if(comparer.Compare(collection[index],collection[index - 1]) > 0)
+                    {
+                        collection.Swap(index - 1, index);
+                        noSwap = false;
+                    }
+                }
+                if(noSwap)
+                    break;
+            }
+        }
     }
 }
