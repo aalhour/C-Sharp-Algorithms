@@ -557,14 +557,7 @@ namespace DataStructures.Lists
         /// <returns>True if found; false otherwise.</returns>
         public virtual bool Contains(T dataItem)
         {
-            try
-            {
-                return Find(dataItem).IsEqualTo(dataItem);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return TryFind(dataItem, out var found) && found.IsEqualTo(dataItem);
         }
 
         /// <summary>
@@ -587,6 +580,33 @@ namespace DataStructures.Lists
             }
 
             throw new Exception("Item was not found.");
+        }
+
+        /// <summary>
+        /// Tries to find the specified item in the list.
+        /// </summary>
+        /// <param name="dataItem">Value to find.</param>
+        /// <param name="found">Value if found, default otherwise.</param>
+        /// <returns>value.</returns>
+        public virtual bool TryFind(T dataItem, out T found)
+        {
+            found = default;
+
+            if (IsEmpty()) return false;
+
+            var currentNode = _firstNode;
+            while (currentNode != null)
+            {
+                if (currentNode.Data.IsEqualTo(dataItem))
+                {
+                    found = dataItem;
+                    return true;
+                }
+
+                currentNode = currentNode.Next;
+            }
+
+            return false;
         }
 
         /// <summary>
