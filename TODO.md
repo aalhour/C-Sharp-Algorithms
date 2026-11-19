@@ -24,7 +24,6 @@
  * Treaps.
  * Fibonacci heaps.
  * Binomial-Max Heaps.
- * Disjoint Set.
  * Bit Arrays and Bit Sets.
  * van Emde Boas data structure.
  * Hash Tables / Maps:
