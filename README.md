@@ -162,6 +162,15 @@ Also: [CliqueGraph](DataStructures/Graphs/CliqueGraph.cs)
 
 </details>
 
+<details>
+<summary><strong>Sets</strong></summary>
+
+| Structure | Description |
+|-----------|-------------|
+| [DisjointSet](DataStructures/Sets/DisjointSet.cs) | Union-Find: tracks groups with Find, Union, and Connected |
+
+</details>
+
 ---
 
 ## 🔧 Algorithms
